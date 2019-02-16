@@ -1,5 +1,5 @@
 import Link from 'next/link'
-const App = () => (
+const Index = () => (
 	<div>
 		<p>Hello,  This is Dishin App</p>
 		<Link href={`/test-server/DrMac`}>
@@ -8,4 +8,4 @@ const App = () => (
 	</div>
 )
 
-export default App
+export default Index

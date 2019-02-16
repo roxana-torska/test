@@ -7,17 +7,26 @@ const handle = app.getRequestHandler()
 
 app.prepare()
 	.then(() => {
-		const server = express()
+		const server = express();
+
+		// give all Nextjs's request to Nextjs before anything else
+		server.get('/_next/*', (req, res) => {
+			handle(req, res);
+		});
+
+		server.get('/static/*', (req, res) => {
+			handle(req, res);
+		});
 
 		server.get('/', (req, res) => {
-			const actualPage = '/'
+			const actualPage = '/login'
 			app.render(req, res, actualPage)
 		});
 		server.get('/test-server/:title', (req, res) => {
 			const actualPage = '/test'
 			const queryParams = { title: req.params.title }
 			app.render(req, res, actualPage, queryParams)
-		})
+		});
 
 		server.get('*', (req, res) => {
 			return handle(req, res)

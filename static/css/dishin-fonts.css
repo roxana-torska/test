@@ -1,0 +1,13 @@
+@font-face {
+	font-family: 'BebasNeue';
+	font-style: normal;
+	font-weight: 400;
+	src: local('BebasNeue'), local('BebasNeue-Regular'), url(/static/fonts/BebasNeue/BebasNeue-Regular.ttf) format('truetype'), url(/static/fonts/BebasNeue/BebasNeue-Regular.otf) format('opentype');
+  }
+
+  @font-face {
+	font-family: 'BebasNeue';
+	font-style: normal;
+	font-weight: 400;
+	src: local('BebasNeue'), local('BebasNeue-Bold'), url(/static/fonts/BebasNeue/BebasNeue-Bold.ttf) format('truetype'), url(/static/fonts/BebasNeue/BebasNeue-Bold.otf) format('opentype');
+  }
