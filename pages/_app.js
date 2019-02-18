@@ -46,7 +46,7 @@ class DishinApp extends App {
           >
             <CssBaseline />
             <Provider store={store}>
-              <Component {...pageProps} />
+              <Component pageContext={this.pageContext}  {...pageProps} />
             </Provider>
           </MuiThemeProvider>
         </JssProvider>
