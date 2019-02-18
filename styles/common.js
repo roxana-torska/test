@@ -25,7 +25,10 @@ const styles = theme => ({
 		padding: '5px',
 		boxShadow: '0 2px 2px 1px rgba(0, 0, 0, .2)',
 		fontWeight: '600',
-		borderRadius: '3px'
+		borderRadius: '3px',
+		'&:hover': {
+			backgroundColor: theme.palette.primary.main
+		}
 	},
 	inputField: {
 		color: '#757575',
@@ -95,6 +98,21 @@ const styles = theme => ({
 		top: '-59px',
 		right: '14px',
 		zIndex: -1
+	},
+	headerMarginSuppress: {
+		marginTop: '148px',
+		[theme.breakpoints.down('lg')]: {
+			marginTop: '10%',
+		},
+		[theme.breakpoints.down('sm')]: {
+			marginTop: '20%',
+		},
+		[theme.breakpoints.down('md')]: {
+			marginTop: '25%',
+		},
+		[theme.breakpoints.down('xs')]: {
+			marginTop: '40%',
+		}
 	}
 })
 

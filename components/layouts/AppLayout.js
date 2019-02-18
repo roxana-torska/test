@@ -3,11 +3,10 @@ import { Grid } from '@material-ui/core';
 import { observer } from 'mobx-react';
 import AppHeader from '../header/AppHeader';
 import AppFooter from '../footer/AppFooter';
+import { withStyles } from '@material-ui/core/styles';
+import styles from "../../styles/common"
 
 
-const headerMarginSuppress = {
-	marginTop: '48%'
-}
 const splashScreen = {
 	width: '100vw',
 	height: '100vh',
@@ -19,7 +18,6 @@ const splashScreen = {
 	padding: '0px'
 }
 const splashLogo = {
-
 	width: '100px',
 	height: '100px',
 	backgroundImage: 'url(/static/imgs/logo.png)',
@@ -39,13 +37,12 @@ class AppLayout extends Component {
 		}, 500);
 	}
 	render() {
-		const { children } = this.props;
+		const { children, classes } = this.props;
 		const { hideSplash } = this.state;
-		console.log('hideSplash', hideSplash);
 		return hideSplash ?
 			<React.Fragment>
 				<AppHeader />
-				<div style={headerMarginSuppress} >
+				<div className={classes.headerMarginSuppress} >
 					{children}
 				</div>
 				<AppFooter />
@@ -54,4 +51,4 @@ class AppLayout extends Component {
 	}
 }
 
-export default observer(AppLayout);
+export default observer(withStyles(styles)(AppLayout));
