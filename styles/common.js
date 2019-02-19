@@ -35,6 +35,20 @@ const styles = theme => ({
 		fontFamily: "'Lato'",
 		fontSize: '1.5em'
 	},
+	inputUnderline: {
+		'&:after': {
+			borderBottomColor: '#757575',
+			borderBottomWidth:'1px'
+		}
+	},
+	inputLabel: {
+		'&$cssFocused': {
+		  color: '#757575',
+		},
+	},
+	inputLabelFocused: {
+
+	},
 	footerLatoTextNormal: {
 		color: '#9e9e9e',
 		fontSize: '.8em',

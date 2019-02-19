@@ -10,9 +10,8 @@ import styles from "../styles/common"
 import classnames from 'classnames';
 import Link from 'next/link'
 import SvgIcon from '@material-ui/core/SvgIcon';
-import FormControl from '@material-ui/core/FormControl'
-import InputLabel from '@material-ui/core/InputLabel'
-import Input from '@material-ui/core/Input';
+
+
 
 
 class Login extends PureComponent {
@@ -39,38 +38,24 @@ class Login extends PureComponent {
 					>
 						<Grid item xs={12}>
 							<Typography variant="h1" align="center" className={classes.pageTitleRed}>
-								LOGIN
+								WELCOME TO DISHIN
 							</Typography>
 						</Grid>
-						<Grid item xs={12} style={{ margin: '0px 26px' }}>
-							<TextField
-								id="email"
-								label="Email"
-								className={classes.inputField}
-								margin="normal"
-								InputLabelProps={{
-									classes:{ 
-										root: classes.inputLabel, 
-										focused: classes.inputLabelFocused
-									}
-								}}
-								InputProps={{
-									classes: { underline:classes.inputUnderline}}}
-								fullWidth
-							/>
+                        <Grid item xs={12} container
+							direction="row"
+							justify="center"
+							alignItems="center"
+							spacing={0} style={{ margin: '0px 26px  11px' }}>
+							<div className={classes.footerLatoTextNormal}>Where are you dining today?</div>
 						</Grid>
 						<Grid item xs={12} style={{ margin: '0px 26px' }}>
 							<TextField
-								id="password"
-								label="Password"
-								type="password"
+								id="restaurantname"
+								label="Restaurant name"
 								className={classes.inputField}
 								margin="normal"
-								InputProps={{
-									classes: { underline:classes.inputUnderline}}}								
 								fullWidth
 							/>
-
 						</Grid>
 						<Grid item xs={12} container
 							direction="row"
@@ -78,7 +63,7 @@ class Login extends PureComponent {
 							alignItems="center"
 							spacing={0} className={classes.btnContainer}>
 							<Button size="medium" className={classes.btnRaisedLightNormalRed} fullWidth>
-								Log In
+								Next
         					</Button>
 						</Grid>
 					</Grid>

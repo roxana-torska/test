@@ -22,6 +22,22 @@ app.prepare()
 			const actualPage = '/login'
 			app.render(req, res, actualPage)
 		});
+
+		server.get('/sign-up', (req, res) => {
+			const actualPage = '/signup'
+			app.render(req, res, actualPage)
+		});
+
+		server.get('/recover-password', (req, res) => {
+			const actualPage = '/recoverpassword'
+			app.render(req, res, actualPage)
+		});
+
+		server.get('/welcome-to-dishin', (req, res) => {
+			const actualPage = '/welcometodishin'
+			app.render(req, res, actualPage)
+		});
+		
 		server.get('/test-server/:title', (req, res) => {
 			const actualPage = '/test'
 			const queryParams = { title: req.params.title }

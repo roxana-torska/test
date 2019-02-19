@@ -10,9 +10,8 @@ import styles from "../styles/common"
 import classnames from 'classnames';
 import Link from 'next/link'
 import SvgIcon from '@material-ui/core/SvgIcon';
-import FormControl from '@material-ui/core/FormControl'
-import InputLabel from '@material-ui/core/InputLabel'
-import Input from '@material-ui/core/Input';
+
+
 
 
 class Login extends PureComponent {
@@ -39,7 +38,7 @@ class Login extends PureComponent {
 					>
 						<Grid item xs={12}>
 							<Typography variant="h1" align="center" className={classes.pageTitleRed}>
-								LOGIN
+								SIGN UP
 							</Typography>
 						</Grid>
 						<Grid item xs={12} style={{ margin: '0px 26px' }}>
@@ -48,26 +47,27 @@ class Login extends PureComponent {
 								label="Email"
 								className={classes.inputField}
 								margin="normal"
-								InputLabelProps={{
-									classes:{ 
-										root: classes.inputLabel, 
-										focused: classes.inputLabelFocused
-									}
-								}}
-								InputProps={{
-									classes: { underline:classes.inputUnderline}}}
 								fullWidth
 							/>
 						</Grid>
 						<Grid item xs={12} style={{ margin: '0px 26px' }}>
 							<TextField
 								id="password"
-								label="Password"
+								label="Set up a password"
 								type="password"
 								className={classes.inputField}
 								margin="normal"
-								InputProps={{
-									classes: { underline:classes.inputUnderline}}}								
+								fullWidth
+							/>
+
+						</Grid>
+                        <Grid item xs={12} style={{ margin: '0px 26px' }}>
+							<TextField
+								id="repassword"
+								label="Confirm Password"
+								type="password"
+								className={classes.inputField}
+								margin="normal"
 								fullWidth
 							/>
 
@@ -78,7 +78,7 @@ class Login extends PureComponent {
 							alignItems="center"
 							spacing={0} className={classes.btnContainer}>
 							<Button size="medium" className={classes.btnRaisedLightNormalRed} fullWidth>
-								Log In
+								Sign Up
         					</Button>
 						</Grid>
 					</Grid>
