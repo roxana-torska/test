@@ -1,11 +1,10 @@
-const getToken = function () {
-	return null;
-}
-const setToken = function (token) {
-	// setToken to localStorage
-}
+const getToken = function() {
+  return null;
+};
+const setToken = function(token) {
+  // setToken to localStorage
+};
 
-export {
-	getToken,
-	setToken
-}
+//export { getToken, setToken };
+
+module.exports = { getToken, setToken };
