@@ -1,9 +1,8 @@
 const userActions = {
   USER_LOGIN: 'USER_LOGIN',
-  USER_LOGIN_RECEIVED: 'USER_LOGIN_RECEIVED',
+  USER_RECEIVED: 'USER_RECEIVED',
   USER_LOGIN_ERROR: 'USER_LOGIN_ERROR',
   USER_SIGN_UP: 'USER_SIGN_UP',
-  USER_SIGN_UP_RECEIVED: 'USER_SIGN_UP_RECEIVED',
   USER_SIGN_UP_ERROR: 'USER_SIGN_UP_ERROR',
   USER_LOGOUT: 'USER_LOGOUT',
   USER_LOGOUT_RECEIVED: 'USER_LOGOUT_RECEIVED',
@@ -11,28 +10,28 @@ const userActions = {
   userLogin: userData => ({
     type: userActions.USER_LOGIN,
     loading: true,
-    username: userData.username,
+    email: userData.email,
     password: userData.password
   }),
-  receivedUserLogin: token => ({
-    type: userActions.USER_LOGIN_RECEIVED,
+  receivedUser: userData => ({
+    type: userActions.USER_RECEIVED,
     loading: true,
-    token: token
+    user: userData
   }),
   errorUserLogin: error => ({
     type: userActions.USER_LOGIN_ERROR,
     loading: false,
     error
   }),
-  userLogout: token => ({
+  userLogout: userData => ({
     type: userActions.USER_LOGOUT,
     loading: true,
-    token: token
+    user: userData
   }),
-  userLogoutReceived: token => ({
+  userLogoutReceived: userData => ({
     type: userActions.USER_LOGOUT_RECEIVED,
     loading: false,
-    token: token
+    user: userData
   }),
   errorUserLogout: error => ({
     type: userActions.USER_LOGOUT_ERROR,
@@ -43,11 +42,6 @@ const userActions = {
     type: userActions.USER_SIGN_UP,
     loading: true,
     ...userData
-  }),
-  receivedUserSignUp: token => ({
-    type: userActions.USER_SIGN_UP_RECEIVED,
-    loading: true,
-    token: token
   }),
   errorUserSignUp: error => ({
     type: userActions.USER_SIGN_UP_ERROR,

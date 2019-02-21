@@ -12,6 +12,8 @@ import Link from 'next/link';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import actions from '../redux/user/actions';
 import validator from '../utils/validator';
+import notify from '../utils/notifier';
+import Router from 'next/router';
 const { userSignUp } = actions;
 
 class SignUp extends PureComponent {
@@ -63,7 +65,7 @@ class SignUp extends PureComponent {
     }
   };
 
-  handleSubmit = () => {
+  handleSubmit = async () => {
     const { email, password, confirmPassword } = this.state;
     if (email && password && confirmPassword) {
       const { userSignUp } = this.props;
@@ -85,7 +87,7 @@ class SignUp extends PureComponent {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, user } = this.props;
     const {
       emailError,
       passWordError,
@@ -94,6 +96,11 @@ class SignUp extends PureComponent {
       passwordErrorMessage,
       confirmPasswordErrorMessage
     } = this.state;
+    if (!user.user && user.error) {
+      console.log('error', user.error);
+    } else if (user.user) {
+      Router.push('/');
+    }
     return (
       <AppLayout {...this.props}>
         <form className={classes.container} noValidate autoComplete='off'>

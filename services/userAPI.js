@@ -5,7 +5,7 @@ const API_URL = 'http://localhost:8282/api';
 export const userAPI = {
   login: async function(payload) {
     let params = { ...payload.params };
-    let response = await request(`${API_URL}/users/login`, {
+    let response = await request(`${API_URL}/users/sign-in`, {
       method: 'POST',
       body: {
         ...params

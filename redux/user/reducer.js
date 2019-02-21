@@ -1,16 +1,16 @@
-import { getToken } from '../../utils/common';
+import { getDecodedToken } from '../../utils/common';
 import actions from './actions';
 import { Map } from 'immutable';
 const initState = new Map({
-  token: null,
+  user: null,
   loading: false,
   error: null
 });
 
 const hydrateUser = function() {
-  const token = getToken();
-  if (token) {
-    return initState.set('token', token);
+  const userData = getDecodedToken();
+  if (userData) {
+    return initState.set('user', userData);
   } else {
     return initState;
   }
@@ -24,33 +24,30 @@ export function userReducer(state = hydrateUser(), action) {
     case actions.USER_LOGOUT:
     case actions.USER_SIGN_UP:
       return state.set('loading', loading).set('error', null);
-    case actions.USER_LOGIN_RECEIVED:
+    case actions.USER_RECEIVED:
       return state
-        .set('token', action.token || null)
+        .set('user', action.user || null)
         .set('loading', false)
         .set('error', null);
     case actions.USER_LOGOUT_RECEIVED:
       return state
-        .set('token', null)
+        .set('user', null)
         .set('loading', false)
-        .set('error', null);
-    case actions.USER_SIGN_UP_RECEIVED:
-      return state
-        .set('token', action.token || null)
-        .ser('loading', false)
         .set('error', null);
     case actions.USER_LOGIN_ERROR:
-    case action.USER_LOGOUT_ERROR:
+    case actions.USER_LOGOUT_ERROR:
       return state
         .set('loading', false)
-        .set('token', null)
+        .set('user', null)
         .set('error', error);
-    case action.USER_SIGN_UP_ERROR:
+    case actions.USER_SIGN_UP_ERROR:
+      console.log('sign up error');
       return state
         .set('loading', false)
-        .set('token', null)
+        .set('user', null)
         .set('error', error);
     default:
+      console.log('invalid action');
       return state;
   }
 }
