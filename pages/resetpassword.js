@@ -12,37 +12,40 @@ import Link from 'next/link';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import actions from '../redux/user/actions';
 import validator from '../utils/validator';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
+import notify from '../utils/notifier';
+import Router from 'next/router';
+const { userResetPassword, checkRecoveryToken } = actions;
 
-const { userRecoveryPassword } = actions;
-class RecoveryPassword extends PureComponent {
+class ResetPassword extends PureComponent {
   state = {
-    email: '',
-    emailError: false,
-    emailErrorMessage: '',
-    openDialog: false
+    password: '',
+    confirmPassword: '',
+    passWordError: false,
+    confirmPasswordError: false,
+    passwordErrorMessage: '',
+    confirmPasswordErrorMessage: ''
   };
-
-  static getInitialProps({ store, isServer }) {
-    // store.dispatch(increment(isServer))
-    console.log('Hello');
-    return { isServer };
-  }
 
   handleFieldChange = (name, value, validateValue) => {
     const fieldError = validator(value, validateValue);
     if (fieldError.error === true) {
-      if (validateValue.email) {
+      if (validateValue.password) {
         this.setState({
-          emailError: true,
-          emailErrorMessage: fieldError.errorMessage
+          passWordError: true,
+          passwordErrorMessage: fieldError.errorMessage
+        });
+      }
+      if (validateValue.confirmPassword) {
+        this.setState({
+          confirmPasswordError: true,
+          confirmPasswordErrorMessage: fieldError.errorMessage
         });
       }
     } else {
       this.setState({
-        emailError: false,
-        emailErrorMessage: ''
+        passWordError: false,
+        confirmPasswordError: false,
+        passwordErrorMessage: ''
       });
       const newState = {};
       newState[name] = value;
@@ -51,25 +54,38 @@ class RecoveryPassword extends PureComponent {
   };
 
   handleSubmit = async () => {
-    const { email, emailError, openDialog } = this.state;
-    if (email && !emailError) {
-      const { userRecoveryPassword } = this.props;
-      userRecoveryPassword(email);
-    } else {
-      this.setState({ emailError: true });
+    const { password, confirmPassword } = this.state;
+    if (password && confirmPassword) {
+      const { userResetPassword } = this.props;
+      const userData = {
+        password,
+        confirmPassword
+      };
+      userResetPassword(userData);
     }
   };
 
+  static async getInitialProps({ store, isServer, query }) {
+    //store.dispatch(increment(isServer))
+    await store.execSagaTasks(isServer, dispatch => {
+      dispatch(checkRecoveryToken(query.token));
+    });
+    console.log('******', store.getState().user);
+    return { isServer };
+  }
+
   render() {
+    const { classes, user } = this.props;
     const {
-      classes,
-      user: { status },
-      loading
-    } = this.props;
-    const { emailError, emailErrorMessage, openDialog } = this.state;
-    console.log('status', status);
-    if (loading) {
-      this.setState({ openDialog: true });
+      passWordError,
+      confirmPasswordError,
+      passwordErrorMessage,
+      confirmPasswordErrorMessage
+    } = this.state;
+    if (!user.user && user.error) {
+      console.log('error', user.error);
+    } else if (user.user) {
+      Router.push('/');
     }
     return (
       <AppLayout {...this.props}>
@@ -88,38 +104,51 @@ class RecoveryPassword extends PureComponent {
                 align='center'
                 className={classes.pageTitleRed}
               >
-                RECOVER PASSWORD
+                Reset Password
               </Typography>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              container
-              direction='row'
-              justify='center'
-              alignItems='center'
-              spacing={0}
-              style={{ margin: '0px 26px  11px' }}
-            >
-              <div className={classes.footerLatoTextNormal}>
-                Enter your e-mail to reset a password
-              </div>
             </Grid>
             <Grid item xs={12} style={{ margin: '0px 26px' }}>
               <TextField
-                id='email'
-                label='Email'
+                id='password'
+                label='Set up a password'
+                type='password'
                 className={classes.inputField}
                 margin='normal'
+                error={passWordError}
+                helperText={<span>{passwordErrorMessage}</span>}
                 fullWidth
-                error={emailError}
-                helperText={<span>{emailErrorMessage}</span>}
                 onChange={event =>
-                  this.handleFieldChange('email', event.target.value, {
-                    require: 'Please enter your email',
-                    email: true
+                  this.handleFieldChange('password', event.target.value, {
+                    require: true,
+                    password: true,
+                    equalTo: this.state.confirmPassword
                   })
                 }
+                required
+              />
+            </Grid>
+            <Grid item xs={12} style={{ margin: '0px 26px' }}>
+              <TextField
+                id='confirmPassword'
+                label='Confirm Password'
+                type='password'
+                className={classes.inputField}
+                margin='normal'
+                error={confirmPasswordError}
+                helperText={<span>{confirmPasswordErrorMessage}</span>}
+                fullWidth
+                onChange={event =>
+                  this.handleFieldChange(
+                    'confirmPassword',
+                    event.target.value,
+                    {
+                      require: true,
+                      confirmPassword: true,
+                      equalTo: this.state.password
+                    }
+                  )
+                }
+                required
               />
             </Grid>
             <Grid
@@ -138,7 +167,7 @@ class RecoveryPassword extends PureComponent {
                 fullWidth
                 onClick={this.handleSubmit}
               >
-                Reset
+                Sign Up
               </Button>
             </Grid>
           </Grid>
@@ -161,7 +190,7 @@ class RecoveryPassword extends PureComponent {
               style={{ margin: '0px 26px  11px' }}
             >
               <div className={classes.footerLatoTextNormal}>
-                Wanna try one more time?{' '}
+                Already in Dishin?{' '}
                 <Link href='#'>
                   <a
                     className={classnames(
@@ -223,38 +252,6 @@ class RecoveryPassword extends PureComponent {
                 </SvgIcon>
               </div>
             </Grid>
-            <Grid
-              item
-              xs={12}
-              container
-              direction='row'
-              justify='center'
-              alignItems='center'
-              spacing={0}
-              style={{ margin: '0px 26px 11px' }}
-            >
-              <div className={classes.footerLatoTextNormal}>
-                Forgot Password?{' '}
-                <Link href='#'>
-                  <a
-                    className={classnames(
-                      classes.footerLatoTextBold,
-                      classes.footerLink1
-                    )}
-                  >
-                    Recover Password
-                  </a>
-                </Link>
-              </div>
-              <Dialog open={openDialog}>
-                <DialogTitle id='recovery-password-dialog-title'>
-                  Check your e-mail
-                </DialogTitle>
-                <div className='recovery-password-text'>
-                  We send you a link to reset password
-                </div>
-              </Dialog>
-            </Grid>
           </Grid>
         </form>
       </AppLayout>
@@ -275,5 +272,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { userRecoveryPassword }
-)(withStyles(styles)(RecoveryPassword));
+  { userResetPassword, checkRecoveryToken }
+)(withStyles(styles)(ResetPassword));

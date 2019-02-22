@@ -23,5 +23,24 @@ export const userAPI = {
       }
     });
     return response.data;
+  },
+  recoveryPassword: async function(payload) {
+    let params = { ...payload.params };
+    let response = await request(`${API_URL}/users/forget-password`, {
+      method: 'POST',
+      body: {
+        ...params
+      }
+    });
+    return response.data;
+  },
+  checkRecoveryToken: async function(payload) {
+    let { token } = payload.params;
+    console.log('recovery token params', token);
+    let response = await request(
+      `${API_URL}/public/check-reset-token/${token}`
+    );
+    console.log('api response', response);
+    return response.data;
   }
 };

@@ -68,6 +68,12 @@ app
       app.render(req, res, actualPage, queryParams);
     });
 
+    server.get('/reset-password/:token', (req, res) => {
+      const actualPage = '/resetpassword';
+      const queryParams = { token: req.params.token };
+      app.render(req, res, actualPage, queryParams);
+    });
+
     server.get('*', (req, res) => {
       return handle(req, res);
     });

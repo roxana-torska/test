@@ -4,7 +4,8 @@ import { Map } from 'immutable';
 const initState = new Map({
   user: null,
   loading: false,
-  error: null
+  error: null,
+  isTokenValid: null
 });
 
 const hydrateUser = function() {
@@ -23,6 +24,8 @@ export function userReducer(state = hydrateUser(), action) {
     case actions.USER_LOGIN:
     case actions.USER_LOGOUT:
     case actions.USER_SIGN_UP:
+    case actions.USER_RECOVERY_PASSWORD:
+    case actions.CHECK_RECOVERY_TOKEN:
       return state.set('loading', loading).set('error', null);
     case actions.USER_RECEIVED:
       return state
@@ -34,6 +37,18 @@ export function userReducer(state = hydrateUser(), action) {
         .set('user', null)
         .set('loading', false)
         .set('error', null);
+    case actions.USER_RECOVERY_PASSWORD_RECEIVED:
+      console.log('action recovery received', action.status);
+      return state
+        .set('user', action.status)
+        .set('loading', false)
+        .set('error', null);
+    case actions.CHECK_RECOVERY_TOKEN_RECEIVED:
+      console.log('***token***', action.isTokenValid);
+      return state
+        .set('isTokenValid', action.isTokenValid)
+        .set('loading', false)
+        .set('error', null);
     case actions.USER_LOGIN_ERROR:
     case actions.USER_LOGOUT_ERROR:
       return state
@@ -41,13 +56,22 @@ export function userReducer(state = hydrateUser(), action) {
         .set('user', null)
         .set('error', error);
     case actions.USER_SIGN_UP_ERROR:
-      console.log('sign up error');
+      return state
+        .set('loading', false)
+        .set('user', null)
+        .set('error', error);
+    case actions.USER_RECOVERY_PASSWORD_ERROR:
+      return state
+        .set('loading', false)
+        .set('error', error)
+        .set('user', null);
+    case actions.CHECK_RECOVERY_TOKEN_ERROR:
+      console.log('****recovery error****', error);
       return state
         .set('loading', false)
         .set('user', null)
         .set('error', error);
     default:
-      console.log('invalid action');
       return state;
   }
 }

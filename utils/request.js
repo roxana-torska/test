@@ -23,9 +23,9 @@ function readHeaders(response) {
       this._list[key] = value;
     }
   };
-  for (var pair of response.headers.entries()) {
-    headers.set(pair[0], pair[1]);
-  }
+  // for (var pair of response.headers.entries()) {
+  //   headers.set(pair[0], pair[1]);
+  // }
   return headers;
 }
 

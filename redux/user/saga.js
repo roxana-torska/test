@@ -60,6 +60,49 @@ export function* logout() {
   });
 }
 
+export function* recoveryPassword() {
+  yield takeEvery(actions.USER_RECOVERY_PASSWORD, function*(payload) {
+    console.log('recovery password payload', payload);
+    let { email } = payload;
+    let response = yield call(userAPI.recoveryPassword, {
+      params: {
+        email
+      }
+    });
+    if (response.status.toUpperCase() === 'OK') {
+      yield put(
+        actions.userRecoveryPasswordReceived({ status: response.status })
+      );
+    } else {
+      yield put(actions.userRecoveryPasswordError(response.error));
+    }
+  });
+}
+
+export function* checkRecoveryToken() {
+  yield takeEvery(actions.CHECK_RECOVERY_TOKEN, function*(payload) {
+    console.log('recovery password payload', payload);
+    let { token } = payload;
+    let response = yield call(userAPI.checkRecoveryToken, {
+      params: {
+        token
+      }
+    });
+    console.log('recovery password response', response);
+    if (response.status.toUpperCase() === 'OK') {
+      yield put(actions.checkRecoveryTokenReceived({ ...response }));
+    } else {
+      yield put(actions.checkRecoveryTokenError(response.error));
+    }
+  });
+}
+
 export default function* rootSaga() {
-  yield all([fork(login), fork(logout), fork(signUp)]);
+  yield all([
+    fork(login),
+    fork(logout),
+    fork(signUp),
+    fork(recoveryPassword),
+    fork(checkRecoveryToken)
+  ]);
 }
