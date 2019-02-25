@@ -2,7 +2,7 @@ import request from '../utils/request';
 import { API_URL } from '../utils/config';
 
 export const userAPI = {
-  handleLogin: async function (payload) {
+  handleLogin: async function(payload) {
     let params = { ...payload.params };
     let response = await request(`/sign-in`, {
       method: 'POST',
@@ -12,7 +12,7 @@ export const userAPI = {
     });
     return response.data;
   },
-  login: async function (payload) {
+  login: async function(payload) {
     let params = { ...payload.params };
     let response = await request(`${API_URL}/users/sign-in`, {
       method: 'POST',
@@ -22,7 +22,7 @@ export const userAPI = {
     });
     return response.data;
   },
-  signUp: async function (payload) {
+  signUp: async function(payload) {
     let params = { ...payload.params };
     console.log('api params', params);
     let response = await request(`${API_URL}/users/sign-up`, {
@@ -33,7 +33,7 @@ export const userAPI = {
     });
     return response.data;
   },
-  recoveryPassword: async function (payload) {
+  recoveryPassword: async function(payload) {
     let params = { ...payload.params };
     let response = await request(`${API_URL}/users/forget-password`, {
       method: 'POST',
@@ -41,15 +41,6 @@ export const userAPI = {
         ...params
       }
     });
-    return response.data;
-  },
-  checkRecoveryToken: async function (payload) {
-    let { token } = payload.params;
-    console.log('recovery token params', token);
-    let response = await request(
-      `${API_URL}/public/check-reset-token/${token}`
-    );
-    console.log('api response', response);
     return response.data;
   }
 };

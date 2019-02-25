@@ -14,6 +14,8 @@ import actions from '../redux/user/actions';
 import validator from '../utils/validator';
 import notify from '../utils/notifier';
 import Router from 'next/router';
+import { appUrl } from '../utils/config';
+import { userApi } from '../services/userAPI';
 const { userResetPassword, checkRecoveryToken } = actions;
 
 class ResetPassword extends PureComponent {
@@ -56,37 +58,43 @@ class ResetPassword extends PureComponent {
   handleSubmit = async () => {
     const { password, confirmPassword } = this.state;
     if (password && confirmPassword) {
-      const { userResetPassword } = this.props;
-      const userData = {
-        password,
-        confirmPassword
-      };
-      userResetPassword(userData);
+      // const { userResetPassword } = this.props;
+      // const userData = {
+      //   password,
+      //   confirmPassword
+      // };
+      // userResetPassword(userData);
+      // userApi
+      //   .userResetPassword({
+      //     params: {
+      //       password,
+      //       confirmPassword
+      //     }
+      //   })
+      //   .then(response => {
+      //     if (response.status.toUpperCase() === 'OK') {
+      //       Router.push(`/auth/callback/${response.data.token}`);
+      //     } else {
+      //       notify(response.error);
+      //     }
+      //   });
     }
   };
 
   static async getInitialProps({ store, isServer, query }) {
-    //store.dispatch(increment(isServer))
-    // await store.execSagaTasks(isServer, dispatch => {
-    //   dispatch(checkRecoveryToken(query.token));
-    // });
-    // console.log('******', store.getState().user);
-    return { isServer };
+    const { token } = query;
+
+    return { token };
   }
 
   render() {
-    const { classes, user } = this.props;
+    const { classes, token } = this.props;
     const {
       passWordError,
       confirmPasswordError,
       passwordErrorMessage,
       confirmPasswordErrorMessage
     } = this.state;
-    if (!user.user && user.error) {
-      console.log('error', user.error);
-    } else if (user.user) {
-      Router.push('/');
-    }
     return (
       <AppLayout {...this.props}>
         <form className={classes.container} noValidate autoComplete='off'>
@@ -98,78 +106,84 @@ class ResetPassword extends PureComponent {
             spacing={0}
             style={{ margin: '0px 16px' }}
           >
-            <Grid item xs={12}>
-              <Typography
-                variant='h1'
-                align='center'
-                className={classes.pageTitleRed}
-              >
-                Reset Password
-              </Typography>
-            </Grid>
-            <Grid item xs={12} style={{ margin: '0px 26px' }}>
-              <TextField
-                id='password'
-                label='Set up a password'
-                type='password'
-                className={classes.inputField}
-                margin='normal'
-                error={passWordError}
-                helperText={<span>{passwordErrorMessage}</span>}
-                fullWidth
-                onChange={event =>
-                  this.handleFieldChange('password', event.target.value, {
-                    require: true,
-                    password: true,
-                    equalTo: this.state.confirmPassword
-                  })
-                }
-                required
-              />
-            </Grid>
-            <Grid item xs={12} style={{ margin: '0px 26px' }}>
-              <TextField
-                id='confirmPassword'
-                label='Confirm Password'
-                type='password'
-                className={classes.inputField}
-                margin='normal'
-                error={confirmPasswordError}
-                helperText={<span>{confirmPasswordErrorMessage}</span>}
-                fullWidth
-                onChange={event =>
-                  this.handleFieldChange(
-                    'confirmPassword',
-                    event.target.value,
-                    {
-                      require: true,
-                      confirmPassword: true,
-                      equalTo: this.state.password
+            {!token ? (
+              <h1>Invalid Token</h1>
+            ) : (
+              <React.Fragment>
+                <Grid item xs={12}>
+                  <Typography
+                    variant='h1'
+                    align='center'
+                    className={classes.pageTitleRed}
+                  >
+                    Reset Password
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} style={{ margin: '0px 26px' }}>
+                  <TextField
+                    id='password'
+                    label='Set up a password'
+                    type='password'
+                    className={classes.inputField}
+                    margin='normal'
+                    error={passWordError}
+                    helperText={<span>{passwordErrorMessage}</span>}
+                    fullWidth
+                    onChange={event =>
+                      this.handleFieldChange('password', event.target.value, {
+                        require: true,
+                        password: true,
+                        equalTo: this.state.confirmPassword
+                      })
                     }
-                  )
-                }
-                required
-              />
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              container
-              direction='row'
-              justify='center'
-              alignItems='center'
-              spacing={0}
-              className={classes.btnContainer}
-            >
-              <Button
-                size='medium'
-                className={classes.btnRaisedLightNormalRed}
-                fullWidth
-                onClick={this.handleSubmit}
-              >
-                Sign Up
-              </Button>
-            </Grid>
+                    required
+                  />
+                </Grid>
+                <Grid item xs={12} style={{ margin: '0px 26px' }}>
+                  <TextField
+                    id='confirmPassword'
+                    label='Confirm Password'
+                    type='password'
+                    className={classes.inputField}
+                    margin='normal'
+                    error={confirmPasswordError}
+                    helperText={<span>{confirmPasswordErrorMessage}</span>}
+                    fullWidth
+                    onChange={event =>
+                      this.handleFieldChange(
+                        'confirmPassword',
+                        event.target.value,
+                        {
+                          require: true,
+                          confirmPassword: true,
+                          equalTo: this.state.password
+                        }
+                      )
+                    }
+                    required
+                  />
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  container
+                  direction='row'
+                  justify='center'
+                  alignItems='center'
+                  spacing={0}
+                  className={classes.btnContainer}
+                >
+                  <Button
+                    size='medium'
+                    className={classes.btnRaisedLightNormalRed}
+                    fullWidth
+                    onClick={this.handleSubmit}
+                  >
+                    Sign Up
+                  </Button>
+                </Grid>
+              </React.Fragment>
+            )}
           </Grid>
           <Grid
             container
@@ -238,8 +252,8 @@ class ResetPassword extends PureComponent {
                   </SvgIcon>
                 </Link>
                 <span style={{ margin: '0px 20px' }} />
-                <Link href={`${appUrl}/auth/instagram`}>x
-                <SvgIcon className={classes.socialIcon} viewBox='0 0 40 40'>
+                <Link href={`${appUrl}/auth/instagram`}>
+                  <SvgIcon className={classes.socialIcon} viewBox='0 0 40 40'>
                     <path
                       fill='#E1306C'
                       d='M25.96 10.643H14.04a3.455 3.455 0 0 0-3.451 3.45v11.922a3.455 3.455 0 0 0 3.45 3.452h11.923a3.455 3.455 0 0 0 3.451-3.451V14.093a3.455 3.455 0 0 0-3.451-3.451zM20 26.252a6.204 6.204 0 0 1-6.197-6.197A6.204 6.204 0 0 1 20 13.858a6.204 6.204 0 0 1 6.197 6.197A6.205 6.205 0 0 1 20 26.252zm6.396-11.113a1.468 1.468 0 0 1-1.466-1.466c0-.808.657-1.466 1.466-1.466.809 0 1.466.658 1.466 1.466 0 .808-.657 1.466-1.466 1.466z'
@@ -287,18 +301,4 @@ class ResetPassword extends PureComponent {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    user: state.user.toJS()
-  };
-};
-
-// const mapDispatchToProps = dispatch => ({
-// 	increment: () => dispatch(increment()),
-// 	decrement: () => dispatch(decrement())
-// })
-
-export default connect(
-  mapStateToProps,
-  { userResetPassword, checkRecoveryToken }
-)(withStyles(styles)(ResetPassword));
+export default withStyles(styles)(ResetPassword);

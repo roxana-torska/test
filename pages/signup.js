@@ -65,23 +65,25 @@ class SignUp extends PureComponent {
     }
   };
 
-  handleSubmit = (evt) => {
+  handleSubmit = evt => {
     evt.preventDefault();
     const { email, password, confirmPassword } = this.state;
     if (email && password && confirmPassword) {
-      userAPI.signUp({
-        params: {
-          email,
-          password,
-          confirmPassword
-        }
-      }).then(response => {
-        if (response.status.toUpperCase() === 'OK') {
-          Router.push(`/auth/callback/${response.data.token}`);
-        } else {
-          notify(response.error);
-        }
-      });
+      userAPI
+        .signUp({
+          params: {
+            email,
+            password,
+            confirmPassword
+          }
+        })
+        .then(response => {
+          if (response.status.toUpperCase() === 'OK') {
+            Router.push(`/auth/callback/${response.data.token}`);
+          } else {
+            notify(response.error);
+          }
+        });
     } else {
       this.setState({ error: true });
     }

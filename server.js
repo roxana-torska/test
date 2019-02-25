@@ -10,8 +10,9 @@ const handle = app.getRequestHandler();
 
 const { getToken, setToken, getDecodedToken } = require('./utils/common');
 const SocialAuth = require('./utils/socialAuth');
-
-const isLoggedIn = function (req, res, next) {
+const { request } = require('./utils/request2');
+const { API_URL } = require('./utils/config');
+const isLoggedIn = function(req, res, next) {
   const loggedInToken = getToken(req);
   if (loggedInToken) {
     req.loggedInToken = loggedInToken;
@@ -22,6 +23,13 @@ const isLoggedIn = function (req, res, next) {
   }
 };
 
+const validateRecoveryToken = async function(payload) {
+  let { token } = payload;
+  console.log('recovery token params', token);
+  let response = await request(`${API_URL}/public/check-reset-token/${token}`);
+  console.log('api response', response);
+  return response.data;
+};
 
 app
   .prepare()
@@ -51,8 +59,6 @@ app
       res.json({ token: getToken(req) });
     });
 
-
-
     server.get('/', isLoggedIn, (req, res) => {
       const actualPage = '/index';
       app.render(req, res, actualPage);
@@ -73,11 +79,8 @@ app
       app.render(req, res, actualPage);
     });
 
-
     server.get('/social-login/:provider', (req, res) => {
       const provider = req.params.provider;
-
-
     });
 
     server.get('/recover-password', (req, res) => {
@@ -97,9 +100,22 @@ app
     });
 
     server.get('/reset-password/:token', (req, res) => {
+      console.log('reset-password', req.params);
       const actualPage = '/resetpassword';
       const queryParams = { token: req.params.token };
-      app.render(req, res, actualPage, queryParams);
+      validateRecoveryToken(queryParams)
+        .then(response => {
+          console.log('social response', response);
+          if (response.status == 'ok' && response.isTokenValid) {
+            app.render(req, res, actualPage, queryParams);
+          } else {
+            app.render(req, res, actualPage, { token: null });
+          }
+        })
+        .catch(err => {
+          console.log('reset err', err);
+          app.render(req, res, actualPage, { token: null });
+        });
     });
 
     server.get('*', (req, res) => {

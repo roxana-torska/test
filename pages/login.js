@@ -28,7 +28,6 @@ class Login extends PureComponent {
   };
 
   static getInitialProps({ store, isServer }) {
-
     return { isServer };
   }
 
@@ -60,22 +59,24 @@ class Login extends PureComponent {
     }
   };
 
-  handleSubmit = (evt) => {
+  handleSubmit = evt => {
     evt.preventDefault();
     const { email, password } = this.state;
     if (email && password) {
-      userAPI.login({
-        params: {
-          email,
-          password
-        }
-      }).then(response => {
-        if (response.status.toUpperCase() === 'OK') {
-          Router.push(`/auth/callback/${response.data.token}`);
-        } else {
-          notify(response.error);
-        }
-      });
+      userAPI
+        .login({
+          params: {
+            email,
+            password
+          }
+        })
+        .then(response => {
+          if (response.status.toUpperCase() === 'OK') {
+            Router.push(`/auth/callback/${response.data.token}`);
+          } else {
+            notify(response.error);
+          }
+        });
     } else {
       this.setState({ error: true });
     }

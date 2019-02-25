@@ -5,7 +5,11 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import AppLayout from '../components/layouts/AppLayout';
-import { Typography } from '@material-ui/core';
+import {
+  Typography,
+  DialogContent,
+  DialogContentText
+} from '@material-ui/core';
 import styles from '../styles/common';
 import classnames from 'classnames';
 import Link from 'next/link';
@@ -14,9 +18,17 @@ import actions from '../redux/user/actions';
 import validator from '../utils/validator';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import Slide from '@material-ui/core/Slide';
+import { userAPI } from '../services/userAPI';
+import notify from '../utils/notifier';
 import { appUrl } from '../utils/config';
 
 const { userRecoveryPassword } = actions;
+
+function Transition(props) {
+  return <Slide direction='down' {...props} />;
+}
 class RecoveryPassword extends PureComponent {
   state = {
     email: '',
@@ -52,26 +64,37 @@ class RecoveryPassword extends PureComponent {
   };
 
   handleSubmit = async () => {
-    const { email, emailError, openDialog } = this.state;
+    const { email, emailError } = this.state;
     if (email && !emailError) {
-      const { userRecoveryPassword } = this.props;
-      userRecoveryPassword(email);
+      userAPI
+        .recoveryPassword({
+          params: {
+            email
+          }
+        })
+        .then(response => {
+          if (response.status.toUpperCase() === 'OK') {
+            this.setState({ openDialog: true });
+            // Router.push(`/auth/callback/${response.data.status}`);
+          } else {
+            notify(response.error);
+          }
+        });
+      // const { userRecoveryPassword } = this.props;
+      // userRecoveryPassword(email);
     } else {
       this.setState({ emailError: true });
     }
   };
 
+  handleModelClose = () => {
+    console.log('model close');
+    this.setState({ openDialog: false });
+  };
+
   render() {
-    const {
-      classes,
-      user: { status },
-      loading
-    } = this.props;
+    const { classes } = this.props;
     const { emailError, emailErrorMessage, openDialog } = this.state;
-    console.log('status', status);
-    if (loading) {
-      this.setState({ openDialog: true });
-    }
     return (
       <AppLayout {...this.props}>
         <form className={classes.container} noValidate autoComplete='off'>
@@ -251,13 +274,32 @@ class RecoveryPassword extends PureComponent {
                   </a>
                 </Link>
               </div>
-              <Dialog open={openDialog}>
-                <DialogTitle id='recovery-password-dialog-title'>
+              <Dialog
+                open={openDialog}
+                keepMounted
+                //className={classes.recoverPasswordDialog}
+                classes={{
+                  root: classes.modelCenter,
+                  paper: classes.recoverPasswordDialog
+                }}
+                TransitionComponent={Transition}
+              >
+                <DialogTitle
+                  disableTypography
+                  className={classes.recoveryPasswordDialogTitle}
+                >
                   Check your e-mail
                 </DialogTitle>
-                <div className='recovery-password-text'>
-                  We send you a link to reset password
-                </div>
+                <DialogContent>
+                  <DialogContentText className={classes.recoveryPasswordText}>
+                    We send you a link to reset password
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions className={classes.modalFooter}>
+                  <Button onClick={this.handleModelClose} simple>
+                    Close
+                  </Button>
+                </DialogActions>
               </Dialog>
             </Grid>
           </Grid>

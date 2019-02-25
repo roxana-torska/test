@@ -125,6 +125,26 @@ const styles = theme => ({
     [theme.breakpoints.down('xs')]: {
       marginTop: '40%'
     }
+  },
+  recoverPasswordDialog: {
+    padding: '20px',
+    borderRadius: '0px'
+  },
+  recoveryPasswordDialogTitle: {
+    color: theme.palette.primary.main,
+    fontFamily: "'Lato'",
+    fontSize: '1.5em',
+    fontWeight: '600'
+  },
+  recoveryPasswordText: {
+    fontFamily: "'Lato'",
+    fontSize: '1em'
+  },
+  modalFooter: {
+    padding: '15px',
+    textAlign: 'right',
+    paddingTop: '0',
+    margin: '0'
   }
 });
 
