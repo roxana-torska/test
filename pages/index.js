@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Link from 'next/link'
 import Router from 'next/router';
+import { appUrl } from '../utils/config';
 export default class extends Component {
 	static getInitialProps({ req }) {
 		const { user } = req;
@@ -13,7 +14,7 @@ export default class extends Component {
 	render() {
 		return <div>
 			<p>Hello, {this.props.user.email} This is Dishin App</p>
-			<Link href={`${process.env.appUrl}/test-server/DrMac`}>
+			<Link href={`${appUrl}/test-server/DrMac`}>
 				<a>Click to DrMac (<small>It will load page from express server route</small>)</a>
 			</Link>
 			<br />

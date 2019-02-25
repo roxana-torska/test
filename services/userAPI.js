@@ -1,6 +1,5 @@
 import request from '../utils/request';
-
-const API_URL = 'http://localhost:8282/api';
+import { API_URL } from '../utils/config';
 
 export const userAPI = {
   handleLogin: async function (payload) {

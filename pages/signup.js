@@ -14,6 +14,7 @@ import validator from '../utils/validator';
 import notify from '../utils/notifier';
 import { userAPI } from '../services/userAPI';
 import Router from 'next/router';
+import { appUrl } from '../utils/config';
 
 class SignUp extends PureComponent {
   state = {
@@ -135,6 +136,9 @@ class SignUp extends PureComponent {
                     email: true
                   })
                 }
+                InputProps={{
+                  classes: { underline: classes.inputUnderline }
+                }}
                 fullWidth
               />
             </Grid>
@@ -155,6 +159,9 @@ class SignUp extends PureComponent {
                     equalTo: this.state.confirmPassword
                   })
                 }
+                InputProps={{
+                  classes: { underline: classes.inputUnderline }
+                }}
                 required
               />
             </Grid>
@@ -179,6 +186,9 @@ class SignUp extends PureComponent {
                     }
                   )
                 }
+                InputProps={{
+                  classes: { underline: classes.inputUnderline }
+                }}
                 required
               />
             </Grid>
@@ -222,7 +232,7 @@ class SignUp extends PureComponent {
             >
               <div className={classes.footerLatoTextNormal}>
                 Already in Dishin?{' '}
-                <Link href='/sign-in'>
+                <Link href={`${appUrl}/sign-in`}>
                   <a
                     className={classnames(
                       classes.footerLatoTextBold,
@@ -260,7 +270,7 @@ class SignUp extends PureComponent {
               style={{ margin: '0px 26px 3%' }}
             >
               <div style={{ margin: '23px 0px 35px' }}>
-                <Link href='/auth/facebook'>
+                <Link href={`${appUrl}/auth/facebook`}>
                   <a>
                     <SvgIcon className={classes.socialIcon} viewBox='0 0 40 40'>
                       <path
@@ -271,7 +281,7 @@ class SignUp extends PureComponent {
                   </a>
                 </Link>
                 <span style={{ margin: '0px 10px' }} />
-                <Link href='/auth/instagram'>
+                <Link href={`${appUrl}/auth/instagram`}>
                   <a>
                     <SvgIcon className={classes.socialIcon} viewBox='0 0 40 40'>
                       <path
@@ -303,7 +313,7 @@ class SignUp extends PureComponent {
             >
               <div className={classes.footerLatoTextNormal}>
                 Forgot Password?{' '}
-                <Link href='/recover-password'>
+                <Link href={`${appUrl}/recover-password`}>
                   <a
                     className={classnames(
                       classes.footerLatoTextBold,
