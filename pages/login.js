@@ -3,20 +3,18 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { connect } from 'react-redux';
+
 import AppLayout from '../components/layouts/AppLayout';
 import { Typography } from '@material-ui/core';
 import styles from '../styles/common';
 import classnames from 'classnames';
 import Link from 'next/link';
 import SvgIcon from '@material-ui/core/SvgIcon';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
 import actions from '../redux/user/actions';
 import validator from '../utils/validator';
 import Router from 'next/router';
-const { userLogin } = actions;
+import { userAPI } from '../services/userAPI';
+import notify from '../utils/notifier';
 
 class Login extends PureComponent {
   state = {
@@ -29,8 +27,7 @@ class Login extends PureComponent {
   };
 
   static getInitialProps({ store, isServer }) {
-    // store.dispatch(increment(isServer))
-    console.log('Hello');
+
     return { isServer };
   }
 
@@ -62,36 +59,39 @@ class Login extends PureComponent {
     }
   };
 
-  handleSubmit = async () => {
+  handleSubmit = (evt) => {
+    evt.preventDefault();
     const { email, password } = this.state;
     if (email && password) {
-      const { userLogin } = this.props;
-      const signInData = {
-        email,
-        password
-      };
-      userLogin(signInData);
+      userAPI.login({
+        params: {
+          email,
+          password
+        }
+      }).then(response => {
+        if (response.status.toUpperCase() === 'OK') {
+          Router.push(`/auth/callback/${response.data.token}`);
+        } else {
+          notify(response.error);
+        }
+      });
     } else {
       this.setState({ error: true });
     }
   };
 
   render() {
-    const { classes, user } = this.props;
+    const { classes } = this.props;
     const {
       emailError,
       passWordError,
       emailErrorMessage,
       passwordErrorMessage
     } = this.state;
-    if (!user.user && user.error) {
-      console.log('error', user.error);
-    } else if (user.user) {
-      Router.push('/');
-    }
+
     return (
       <AppLayout {...this.props}>
-        <form className={classes.container} noValidate autoComplete='off'>
+        <form className={classes.container} onSubmit={this.handleSubmit}>
           <Grid
             container
             direction='row'
@@ -197,15 +197,15 @@ class Login extends PureComponent {
               style={{ margin: '0px 26px  11px' }}
             >
               <div className={classes.footerLatoTextNormal}>
-                Already in Dishin?{' '}
-                <Link href='#'>
+                New User?{' '}
+                <Link href='/sign-up'>
                   <a
                     className={classnames(
                       classes.footerLatoTextBold,
                       classes.footerLink1
                     )}
                   >
-                    Log in
+                    Sign Up
                   </a>
                 </Link>{' '}
                 to the app
@@ -290,18 +290,4 @@ class Login extends PureComponent {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    user: state.user.toJS()
-  };
-};
-
-// const mapDispatchToProps = dispatch => ({
-// 	increment: () => dispatch(increment()),
-// 	decrement: () => dispatch(decrement())
-// })
-
-export default connect(
-  mapStateToProps,
-  { userLogin }
-)(withStyles(styles)(Login));
+export default withStyles(styles)(Login);

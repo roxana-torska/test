@@ -55,4 +55,4 @@ class DishinApp extends App {
   }
 }
 
-export default withRedux(initStore, { debug: true })(withReduxSaga(DishinApp)); // {async: true}
+export default withRedux(initStore, { debug: true })(DishinApp); // withReduxSaga(,{async: true})

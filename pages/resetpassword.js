@@ -67,10 +67,10 @@ class ResetPassword extends PureComponent {
 
   static async getInitialProps({ store, isServer, query }) {
     //store.dispatch(increment(isServer))
-    await store.execSagaTasks(isServer, dispatch => {
-      dispatch(checkRecoveryToken(query.token));
-    });
-    console.log('******', store.getState().user);
+    // await store.execSagaTasks(isServer, dispatch => {
+    //   dispatch(checkRecoveryToken(query.token));
+    // });
+    // console.log('******', store.getState().user);
     return { isServer };
   }
 

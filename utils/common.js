@@ -1,24 +1,22 @@
 const jwt_decode = require('jwt-decode');
-const Cookies = require('js-cookie');
-const getToken = function() {
-  let data = JSON.parse(Cookies.get('DishIn-token') || null); //JSON.parse(localStorage.getItem('DishIn-token') || null);
-  if (data && data.token) {
-    return data.token;
+
+const getToken = function (req) {
+  let token = req.cookies['DishIn-token'] || null;
+  console.log('token-=', token, '--------');
+  if (token) {
+    return token;
   }
   return null;
 };
-const setToken = function(token) {
-  return Cookies.set('DishIn-token', JSON.stringify(token) || null); //localStorage.setItem('DishIn-token', JSON.stringify(token) || null);
+const setToken = function (res, token) {
+  res.cookie('DishIn-token', token, { expires: new Date(Date.now() + 900000), httpOnly: true });
 };
 
-const getDecodedToken = function(token) {
-  token = token || getToken();
+const getDecodedToken = function (token) {
   if (token) {
     return jwt_decode(token);
   }
   return null;
 };
-
-//export { getToken, setToken };
 
 module.exports = { getToken, setToken, getDecodedToken };

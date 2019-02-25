@@ -10,7 +10,7 @@ const theme = createMuiTheme({
 	},
 	palette: {
 		background: {
-			default: '#FFFFF'
+			default: '#fff'
 		},
 		primary: {
 			// light: will be calculated from palette.primary.main,
