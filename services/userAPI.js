@@ -59,5 +59,16 @@ export const userAPI = {
       }
     );
     return response.data;
+  },
+  getRestaurants: async function(payload) {
+    console.log('payload', payload);
+    let {
+      name,
+      location: { lat, lng }
+    } = payload;
+    let response = await request(
+      `${API_URL}/restaurants/autocomplete?name=${name}&lat=${lat}&lng=${lng}`
+    );
+    return response.data;
   }
 };

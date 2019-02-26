@@ -37,18 +37,16 @@ const styles = theme => ({
   },
 
   inputUnderline: {
-    "&:hover:not($disabled):before,&:before": {
-      borderColor: "#757575 !important",
-      borderWidth: "1px !important"
+    '&:hover:not($disabled):before,&:before': {
+      borderColor: '#757575 !important',
+      borderWidth: '1px !important'
     },
     '&:after': {
       borderBottomColor: '#757575',
       borderBottomWidth: '1px'
     }
   },
-  cssFocused: {
-
-  },
+  cssFocused: {},
   inputLabel: {
     '&$cssFocused': {
       color: '#757575'
@@ -155,6 +153,9 @@ const styles = theme => ({
   },
   inputHelperText: {
     textAlign: 'right'
+  },
+  iconRoot: {
+    color: theme.palette.primary.main
   },
   disabled: {}
 });
