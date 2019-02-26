@@ -9,7 +9,6 @@ import styles from '../styles/common';
 import classnames from 'classnames';
 import Link from 'next/link';
 import SvgIcon from '@material-ui/core/SvgIcon';
-import actions from '../redux/user/actions';
 import validator from '../utils/validator';
 import Router from 'next/router';
 import { userAPI } from '../services/userAPI';
@@ -71,7 +70,7 @@ class Login extends PureComponent {
         })
         .then(response => {
           if (response.status.toUpperCase() === 'OK') {
-            Router.push(`/auth/callback/${response.data.token}`);
+            Router.push(`/auth/callback?token=${response.data.token}`);
           } else {
             notify(response.error);
           }

@@ -39,7 +39,6 @@ class RecoveryPassword extends PureComponent {
 
   static getInitialProps({ store, isServer }) {
     // store.dispatch(increment(isServer))
-    console.log('Hello');
     return { isServer };
   }
 
@@ -75,20 +74,16 @@ class RecoveryPassword extends PureComponent {
         .then(response => {
           if (response.status.toUpperCase() === 'OK') {
             this.setState({ openDialog: true });
-            // Router.push(`/auth/callback/${response.data.status}`);
           } else {
             notify(response.error);
           }
         });
-      // const { userRecoveryPassword } = this.props;
-      // userRecoveryPassword(email);
     } else {
       this.setState({ emailError: true });
     }
   };
 
   handleModelClose = () => {
-    console.log('model close');
     this.setState({ openDialog: false });
   };
 
@@ -296,9 +291,7 @@ class RecoveryPassword extends PureComponent {
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions className={classes.modalFooter}>
-                  <Button onClick={this.handleModelClose} simple>
-                    Close
-                  </Button>
+                  <Button onClick={this.handleModelClose}>Close</Button>
                 </DialogActions>
               </Dialog>
             </Grid>

@@ -24,7 +24,6 @@ export const userAPI = {
   },
   signUp: async function(payload) {
     let params = { ...payload.params };
-    console.log('api params', params);
     let response = await request(`${API_URL}/users/sign-up`, {
       method: 'POST',
       body: {
@@ -41,6 +40,24 @@ export const userAPI = {
         ...params
       }
     });
+    return response.data;
+  },
+  resetPassword: async function(payload) {
+    let params = { ...payload.params };
+    const { token } = params;
+    const tempParams = {
+      password: params.password,
+      confirmPassword: params.confirmPassword
+    };
+    let response = await request(
+      `${API_URL}/public/reset-password?token=${token}`,
+      {
+        method: 'POST',
+        body: {
+          ...tempParams
+        }
+      }
+    );
     return response.data;
   }
 };

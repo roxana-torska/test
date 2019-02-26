@@ -26,7 +26,9 @@ const isLoggedIn = function(req, res, next) {
 const validateRecoveryToken = async function(payload) {
   let { token } = payload;
   console.log('recovery token params', token);
-  let response = await request(`${API_URL}/public/check-reset-token/${token}`);
+  let response = await request(
+    `${API_URL}/public/check-reset-token?token=${token}`
+  );
   console.log('api response', response);
   return response.data;
 };
@@ -51,8 +53,8 @@ app
     });
 
     //local auth routes to keep client logged in
-    server.get('/auth/callback/:token', (req, res) => {
-      setToken(res, req.params.token || null);
+    server.get('/auth/callback', (req, res) => {
+      setToken(res, req.query.token || null);
       res.redirect('/');
     });
     server.get('/auth/token', (req, res) => {
@@ -99,10 +101,10 @@ app
       app.render(req, res, actualPage, queryParams);
     });
 
-    server.get('/reset-password/:token', (req, res) => {
-      console.log('reset-password', req.params);
+    server.get('/reset-password', (req, res) => {
+      console.log('reset-password', req.query);
       const actualPage = '/resetpassword';
-      const queryParams = { token: req.params.token };
+      const queryParams = { token: req.query.token };
       validateRecoveryToken(queryParams)
         .then(response => {
           console.log('social response', response);
