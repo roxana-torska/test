@@ -113,7 +113,7 @@ module.exports = server => {
     function(req, res) {
       // Successful authentication, redirect home.
       const token = req.user.data.token;
-      res.redirect(`/auth/callback/${token}`);
+      res.redirect(`/auth/callback?token=${token}`);
     }
   );
 
@@ -124,7 +124,7 @@ module.exports = server => {
     function(req, res) {
       // Successful authentication, redirect home.
       const token = req.user.data.token;
-      res.redirect(`/auth/callback/${token}`);
+      res.redirect(`/auth/callback?token=${token}`);
     }
   );
 

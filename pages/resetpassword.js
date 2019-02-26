@@ -15,8 +15,7 @@ import validator from '../utils/validator';
 import notify from '../utils/notifier';
 import Router from 'next/router';
 import { appUrl } from '../utils/config';
-import { userApi } from '../services/userAPI';
-const { userResetPassword, checkRecoveryToken } = actions;
+import { userAPI } from '../services/userAPI';
 
 class ResetPassword extends PureComponent {
   state = {
@@ -47,7 +46,8 @@ class ResetPassword extends PureComponent {
       this.setState({
         passWordError: false,
         confirmPasswordError: false,
-        passwordErrorMessage: ''
+        passwordErrorMessage: '',
+        confirmPasswordErrorMessage: ''
       });
       const newState = {};
       newState[name] = value;
@@ -55,29 +55,27 @@ class ResetPassword extends PureComponent {
     }
   };
 
-  handleSubmit = async () => {
+  handleSubmit = evt => {
+    evt.preventDefault();
     const { password, confirmPassword } = this.state;
     if (password && confirmPassword) {
-      // const { userResetPassword } = this.props;
-      // const userData = {
-      //   password,
-      //   confirmPassword
-      // };
-      // userResetPassword(userData);
-      // userApi
-      //   .userResetPassword({
-      //     params: {
-      //       password,
-      //       confirmPassword
-      //     }
-      //   })
-      //   .then(response => {
-      //     if (response.status.toUpperCase() === 'OK') {
-      //       Router.push(`/auth/callback/${response.data.token}`);
-      //     } else {
-      //       notify(response.error);
-      //     }
-      //   });
+      const { token } = this.props;
+      userAPI
+        .resetPassword({
+          params: {
+            password,
+            confirmPassword,
+            token
+          }
+        })
+        .then(response => {
+          if (response.status.toUpperCase() === 'OK') {
+            notify(response.info);
+            Router.push(`/sign-in`);
+          } else {
+            notify(response.error);
+          }
+        });
     }
   };
 

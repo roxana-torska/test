@@ -79,7 +79,7 @@ class SignUp extends PureComponent {
         })
         .then(response => {
           if (response.status.toUpperCase() === 'OK') {
-            Router.push(`/auth/callback/${response.data.token}`);
+            Router.push(`/auth/callback?token=${response.data.token}`);
           } else {
             notify(response.error);
           }
