@@ -35,18 +35,25 @@ const styles = theme => ({
     fontFamily: "'Lato'",
     fontSize: '1.5em'
   },
+
   inputUnderline: {
+    "&:hover:not($disabled):before,&:before": {
+      borderColor: "#757575 !important",
+      borderWidth: "1px !important"
+    },
     '&:after': {
       borderBottomColor: '#757575',
       borderBottomWidth: '1px'
     }
   },
-  inputLabel: {
-    // '&$cssFocused': {
-    //   color: '#757575',
-    // },
+  cssFocused: {
+
   },
-  inputLabelFocused: {},
+  inputLabel: {
+    '&$cssFocused': {
+      color: '#757575'
+    }
+  },
   footerLatoTextNormal: {
     color: '#9e9e9e',
     fontSize: '.8em',
@@ -145,7 +152,11 @@ const styles = theme => ({
     textAlign: 'right',
     paddingTop: '0',
     margin: '0'
-  }
+  },
+  inputHelperText: {
+    textAlign: 'right'
+  },
+  disabled: {}
 });
 
 export default styles;

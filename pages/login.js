@@ -1,9 +1,8 @@
 import React, { PureComponent } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
+import CustomInput from '../components/customInput/CustomInput';
 import Button from '@material-ui/core/Button';
-
 import AppLayout from '../components/layouts/AppLayout';
 import { Typography } from '@material-ui/core';
 import styles from '../styles/common';
@@ -112,20 +111,9 @@ class Login extends PureComponent {
               </Typography>
             </Grid>
             <Grid item xs={12} style={{ margin: '0px 26px' }}>
-              <TextField
+              <CustomInput
                 id='email'
                 label='Email'
-                className={classes.inputField}
-                margin='normal'
-                InputLabelProps={{
-                  classes: {
-                    root: classes.inputLabel,
-                    focused: classes.inputLabelFocused
-                  }
-                }}
-                InputProps={{
-                  classes: { underline: classes.inputUnderline }
-                }}
                 error={emailError}
                 helperText={<span>{emailErrorMessage}</span>}
                 onChange={event =>
@@ -138,19 +126,12 @@ class Login extends PureComponent {
               />
             </Grid>
             <Grid item xs={12} style={{ margin: '0px 26px' }}>
-              <TextField
+              <CustomInput
                 id='password'
                 label='Password'
                 type='password'
-                className={classes.inputField}
-                margin='normal'
-                InputProps={{
-                  classes: { underline: classes.inputUnderline }
-                }}
-                fullWidth
                 error={passWordError}
                 helperText={<span>{passwordErrorMessage}</span>}
-                fullWidth
                 onChange={event =>
                   this.handleFieldChange('password', event.target.value, {
                     require: true,
@@ -246,7 +227,7 @@ class Login extends PureComponent {
                     />
                   </SvgIcon>
                 </Link>
-                <span style={{ margin: '0px 20px' }} />
+                <span style={{ margin: '0px 10px' }} />
                 <Link href={`${appUrl}/auth/instagram`}>
                   <SvgIcon className={classes.socialIcon} viewBox='0 0 40 40'>
                     <path
