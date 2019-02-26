@@ -4,10 +4,11 @@ import styles from '../../styles/common';
 import { withStyles } from '@material-ui/core';
 class CustomInput extends PureComponent {
 	render() {
-		const { id, label, error, helperText, onChange, classes } = this.props;
+		const { id, label, error, helperText, onChange, classes, type } = this.props;
 		return <TextField
 			id={id}
 			label={label}
+			type={type}
 			className={classes.inputField}
 			margin='normal'
 			FormHelperTextProps={{

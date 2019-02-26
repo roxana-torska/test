@@ -134,7 +134,6 @@ class Login extends PureComponent {
                 onChange={event =>
                   this.handleFieldChange('password', event.target.value, {
                     require: true,
-                    password: true,
                     equalTo: ''
                   })
                 }
