@@ -66,8 +66,10 @@ export const userAPI = {
       name,
       location: { lat, lng }
     } = payload;
+    lat = lat || '';
+    lng = lng || '';
     let response = await request(
-      `${API_URL}/restaurants/autocomplete?name=${name}&lat=${lat}&lng=${lng}`
+      `${API_URL}/restaurants/autocomplete?name=${name}&lat=${lat }&lng=${lng}`
     );
     return response.data;
   }

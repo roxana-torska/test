@@ -157,6 +157,31 @@ const styles = theme => ({
   iconRoot: {
     color: theme.palette.primary.main
   },
+  listRoot: {
+    width: '100%',
+    backgroundColor: theme.palette.background.paper,
+    borderColor: '#757575 !important',
+    borderWidth: '1px !important',
+    boxShadow: '0 2px 2px 1px rgba(0, 0, 0, .2)',
+    zIndex: 999
+  },
+  listRootItem: {
+    '&:hover': {
+      backgroundColor: '#f5f5f5'
+    },
+    fontFamily: "'Lato'",
+    fontSize: '1em'
+  },
+  listItemTextPrimary: {
+    fontFamily: "'Lato'",
+    fontSize: '1em',
+    lineHeight: 3
+  },
+  listScroll: {
+    borderColor: '#757575 !important',
+    borderWidth: '1px !important',
+    boxShadow: '0 2px 2px 1px rgba(0, 0, 0, .2)'
+  },
   disabled: {}
 });
 

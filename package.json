@@ -33,6 +33,7 @@
     "passport-instagram": "^1.0.0",
     "qs": "^6.6.0",
     "react": "^16.8.0",
+    "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.8.0",
     "react-geocode": "^0.1.2",
     "react-jss": "^8.6.1",

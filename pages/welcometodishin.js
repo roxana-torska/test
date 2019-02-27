@@ -7,15 +7,15 @@ import { Typography } from '@material-ui/core';
 import styles from '../styles/common';
 import classnames from 'classnames';
 import Link from 'next/link';
-import Head from 'next/head';
 import CustomInput from '../components/customInput/CustomInput';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import notify from '../utils/notifier';
-import AsyncSelect from 'react-select/lib/Async';
+import CustomList from '../components/customList/customList';
 import { userAPI } from '../services/userAPI';
 import Geocode from 'react-geocode';
 import { appUrl } from '../utils/config';
 import RoomIcon from '@material-ui/icons/Room';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 class WelcomeToDishIn extends PureComponent {
   state = {
@@ -23,7 +23,12 @@ class WelcomeToDishIn extends PureComponent {
     currentLocation: {
       lat: null,
       lng: null
-    }
+    },
+    searchValue: '',
+    restaurants: null,
+    enableApi: true,
+    selectedIndex: -1,
+    restaurantName: ''
   };
   static getInitialProps({ store, isServer }) {
     // store.dispatch(increment(isServer))
@@ -32,14 +37,18 @@ class WelcomeToDishIn extends PureComponent {
   }
   componentDidMount() {
     if (navigator.geolocation) {
-      console.log('hellooooooo');
       navigator.geolocation.getCurrentPosition(
         position => {
           var pos = {
             lat: position.coords.latitude,
             lng: position.coords.longitude
           };
-          this.setState({ currentLocation: pos });
+          this.setState({
+            currentLocation: pos,
+            restaurants: null,
+            searchValue: '',
+            enableApi: true
+          });
           // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
           Geocode.setApiKey('AIzaSyChP5Ri3hwQG4BRFzmDxqGE_SHQnJwPkjc');
 
@@ -59,7 +68,8 @@ class WelcomeToDishIn extends PureComponent {
                 address = response.results[0].formatted_address;
               }
               this.setState({ address });
-              console.log(address, response);
+              const { searchValue } = this.state;
+              this.handleChange(searchValue);
             },
             error => {
               console.error(error);
@@ -71,32 +81,79 @@ class WelcomeToDishIn extends PureComponent {
         }
       );
     } else {
+      this.setState({ enableApi: false });
       // Browser doesn't support Geolocation
       console.log('no location access');
     }
   }
 
-  promiseOptions = (value, cb) => {
-    const { currentLocation } = this.state;
-    userAPI
-      .getRestaurants({ name: value, location: currentLocation })
-      .then(response => {
-        if (response.status === 'ok') {
-          cb(
-            response.data.map(el => {
-              return { label: el.name, value: el._id };
-            })
-          );
-        } else {
-          notify(response.error);
-          cb([]);
-        }
-      });
+  handleChange = value => {
+    const { currentLocation, enableApi } = this.state;
+    this.setState({ searchValue: value });
+    if (enableApi) {
+      userAPI
+        .getRestaurants({ name: value, location: currentLocation })
+        .then(response => {
+          if (response.status === 'ok') {
+            let restaurants = [];
+            response.data.map(rec => {
+              let restaurant = {
+                avatar: '',
+                primary: rec.name,
+                secondary: '',
+                id: rec._id
+              };
+              restaurants.push(restaurant);
+            });
+            this.setState({ restaurants });
+          } else {
+            this.setState({ restaurants: null });
+            notify(response.error);
+          }
+        });
+    }
+  };
+
+  handListItemClick = (evt, selectedIndex) => {
+    evt.preventDefault();
+    const found = this.state.restaurants[selectedIndex] || { primary: '' };
+    if (found.primary) {
+      this.setState({ selectedIndex, restaurantName: found.primary });
+    } else {
+      this.setState({ selectedIndex: '', restaurantName: '' });
+    }
+  };
+
+  renderThumb = ({ style, ...props }) => {
+    const thumbStyle = {
+      backgroundColor: 'rgba(240,242,245,.5)',
+      border: '1px solid rgba(0,0,0,.3)'
+    };
+    return <div style={{ ...style, ...thumbStyle }} {...props} />;
+  };
+
+  handleSubmit = evt => {
+    evt.preventDefault();
+    const { restaurantName } = this.state;
+    if (restaurantName) {
+      notify(`This will open ${restaurantName} menu page`);
+      this.setState({ restaurantName: '', searchValue: '' });
+    } else {
+      notify(`Please select a restaurant`);
+      this.setState({ restaurantName: '' });
+    }
   };
 
   render() {
     const { classes } = this.props;
-    const { address } = this.state;
+    const {
+      address,
+      restaurants,
+      selectedIndex,
+      restaurantName,
+      searchValue
+    } = this.state;
+    let textFieldValue = restaurantName || searchValue;
     return (
       <AppLayout {...this.props}>
         <form className={classes.container} noValidate autoComplete='off'>
@@ -139,14 +196,31 @@ class WelcomeToDishIn extends PureComponent {
               </div>
             </Grid>
             <Grid item xs={12} style={{ margin: '0px 26px' }}>
-              <AsyncSelect
-                cacheOptions
-                defaultOptions
-                loadOptions={this.promiseOptions}
-                // valueKey='_id'
-                // labelKey='name'
+              <CustomInput
+                id='restaurantName'
+                label='Restaurant Name'
+                onChange={event => this.handleChange(event.target.value)}
+                fullWidth
+                value={textFieldValue}
               />
             </Grid>
+            {restaurants ? (
+              <Grid item xs={12} style={{ margin: '0px 26px' }}>
+                <Scrollbars
+                  style={{ height: 200 }}
+                  renderThumbVertical={this.renderThumb}
+                  className={classes.listScroll}
+                >
+                  <CustomList
+                    listItemOnClick={this.handListItemClick}
+                    listData={restaurants}
+                    selectedIndex={selectedIndex}
+                  />
+                </Scrollbars>
+              </Grid>
+            ) : (
+              ''
+            )}
             <Grid
               item
               xs={12}
@@ -161,6 +235,7 @@ class WelcomeToDishIn extends PureComponent {
                 size='medium'
                 className={classes.btnRaisedLightNormalRed}
                 fullWidth
+                onClick={this.handleSubmit}
               >
                 Next
               </Button>
