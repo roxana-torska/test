@@ -16,11 +16,20 @@ import notify from '../utils/notifier';
 import { appUrl } from '../utils/config';
 
 class Login extends PureComponent {
+  validators = {
+    email: {
+      required: { message: 'Please use your email' },
+      email: true
+    },
+    password: {
+      required: { message: 'Password required' }
+    }
+  }
   state = {
     email: '',
     password: '',
     emailError: false,
-    passWordError: false,
+    passwordError: false,
     emailErrorMessage: '',
     passwordErrorMessage: ''
   };
@@ -29,38 +38,37 @@ class Login extends PureComponent {
     return { isServer };
   }
 
-  handleFieldChange = (name, value, validateValue) => {
-    const fieldError = validator(value, validateValue);
+  handleFieldChange = (name, value, notSetValue) => {
+    notSetValue = notSetValue || false;
+    const fieldError = validator(value, this.validators[name]);
+    let state = null;
     if (fieldError.error === true) {
-      if (validateValue.email) {
-        this.setState({
-          emailError: true,
-          emailErrorMessage: fieldError.errorMessage
-        });
-      }
-      if (validateValue.password) {
-        this.setState({
-          passWordError: true,
-          passwordErrorMessage: fieldError.errorMessage
-        });
-      }
-    } else {
-      this.setState({
-        emailError: false,
-        passWordError: false,
-        emailErrorMessage: '',
-        passwordErrorMessage: ''
-      });
-      const newState = {};
-      newState[name] = value;
-      this.setState(newState);
+      state = {};
+      state[`${name}Error`] = true;
+      state[`${name}ErrorMessage`] = fieldError.errorMessage;
+    } else if (notSetValue === false) {
+      state = {};
+      state[`${name}Error`] = false;
+      state[`${name}ErrorMessage`] = '';
+      state[name] = value;
     }
+    if (state) {
+      this.setState(state);
+    }
+    return fieldError.error;
   };
+
+  validateForm = () => {
+    const result = Object.keys(this.validators).map(field => {
+      return this.handleFieldChange(field, this.state[field], true);
+    });
+    return !result.includes(true);
+  }
 
   handleSubmit = evt => {
     evt.preventDefault();
-    const { email, password } = this.state;
-    if (email && password) {
+    if (this.validateForm()) {
+      const { email, password } = this.state;
       userAPI
         .login({
           params: {
@@ -84,7 +92,7 @@ class Login extends PureComponent {
     const { classes } = this.props;
     const {
       emailError,
-      passWordError,
+      passwordError,
       emailErrorMessage,
       passwordErrorMessage
     } = this.state;
@@ -116,10 +124,7 @@ class Login extends PureComponent {
                 error={emailError}
                 helperText={<span>{emailErrorMessage}</span>}
                 onChange={event =>
-                  this.handleFieldChange('email', event.target.value, {
-                    require: 'Please enter your email',
-                    email: true
-                  })
+                  this.handleFieldChange('email', event.target.value)
                 }
                 fullWidth
               />
@@ -129,14 +134,10 @@ class Login extends PureComponent {
                 id='password'
                 label='Password'
                 type='password'
-                error={passWordError}
+                error={passwordError}
                 helperText={<span>{passwordErrorMessage}</span>}
                 onChange={event =>
-                  this.handleFieldChange('password', event.target.value, {
-                    require: true,
-                    password: true,
-                    equalTo: ''
-                  })
+                  this.handleFieldChange('password', event.target.value)
                 }
               />
             </Grid>

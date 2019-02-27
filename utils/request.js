@@ -4,10 +4,7 @@ function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;
   }
-  notification.error({
-    message: `Request error${response.status}: ${response.url}`,
-    description: response.statusText
-  });
+
   const error = new Error(response.statusText);
   error.response = response;
   throw error;
@@ -16,10 +13,10 @@ function checkStatus(response) {
 function readHeaders(response) {
   let headers = {
     _list: {},
-    get: function(key) {
+    get: function (key) {
       return this._list[key] || null;
     },
-    set: function(key, value) {
+    set: function (key, value) {
       this._list[key] = value;
     }
   };

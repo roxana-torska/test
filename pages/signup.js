@@ -1,9 +1,8 @@
 import React, { PureComponent } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
+import CustomInput from '../components/customInput/CustomInput';
 import Button from '@material-ui/core/Button';
-import { connect } from 'react-redux';
 import AppLayout from '../components/layouts/AppLayout';
 import { Typography } from '@material-ui/core';
 import styles from '../styles/common';
@@ -17,60 +16,70 @@ import Router from 'next/router';
 import { appUrl } from '../utils/config';
 
 class SignUp extends PureComponent {
+  getFieldValue = (name) => {
+    return this.state[name] || '';
+  }
+  validators = {
+    email: {
+      required: { message: 'Please use your email' },
+      email: true
+    },
+    password: {
+      required: { message: 'Password required' },
+      minValue: { length: 8 },
+      equalsTo: { value: this.getFieldValue.bind(this, 'confirmPassword') }
+    },
+    confirmPassword: {
+      required: { message: 'Password required' },
+      minValue: { length: 8 },
+      equalsTo: { value: this.getFieldValue.bind(this, 'password') }
+    }
+  }
   state = {
     email: '',
     password: '',
     confirmPassword: '',
     emailError: false,
-    passWordError: false,
+    passwordError: false,
     confirmPasswordError: false,
     emailErrorMessage: '',
     passwordErrorMessage: '',
     confirmPasswordErrorMessage: ''
   };
 
-  handleFieldChange = (name, value, validateValue) => {
-    const fieldError = validator(value, validateValue);
+  handleFieldChange = (name, value, notSetValue) => {
+    notSetValue = notSetValue || false;
+    const fieldError = validator(value, this.validators[name]);
+    let state = null;
     if (fieldError.error === true) {
-      if (validateValue.email) {
-        this.setState({
-          emailError: true,
-          emailErrorMessage: fieldError.errorMessage
-        });
-      }
-      if (validateValue.password) {
-        this.setState({
-          passWordError: true,
-          passwordErrorMessage: fieldError.errorMessage
-        });
-      }
-      if (validateValue.confirmPassword) {
-        this.setState({
-          confirmPasswordError: true,
-          confirmPasswordErrorMessage: fieldError.errorMessage
-        });
-      }
-    } else {
-      this.setState({
-        emailError: false,
-        passWordError: false,
-        confirmPasswordError: false,
-        emailErrorMessage: '',
-        passwordErrorMessage: '',
-        confirmPasswordErrorMessage: ''
-      });
-      const newState = {};
-      newState[name] = value;
-      this.setState(newState);
+      state = {};
+      state[`${name}Error`] = true;
+      state[`${name}ErrorMessage`] = fieldError.errorMessage;
+    } else if (notSetValue === false) {
+      state = {};
+      state[`${name}Error`] = false;
+      state[`${name}ErrorMessage`] = '';
+      state[name] = value;
     }
+    if (state) {
+      this.setState(state);
+    }
+    return fieldError.error;
   };
+
+  validateForm = () => {
+    const result = Object.keys(this.validators).map(field => {
+      return this.handleFieldChange(field, this.state[field], true);
+    });
+    return !result.includes(true);
+  }
 
   handleSubmit = evt => {
     evt.preventDefault();
-    const { email, password, confirmPassword } = this.state;
-    if (email && password && confirmPassword) {
+    if (this.validateForm()) {
+      const { email, password, confirmPassword } = this.state;
       userAPI
-        .signUp({
+        .login({
           params: {
             email,
             password,
@@ -97,12 +106,13 @@ class SignUp extends PureComponent {
     const { classes } = this.props;
     const {
       emailError,
-      passWordError,
+      passwordError,
       confirmPasswordError,
       emailErrorMessage,
       passwordErrorMessage,
       confirmPasswordErrorMessage
     } = this.state;
+
     return (
       <AppLayout {...this.props}>
         <form className={classes.container} onSubmit={this.handleSubmit}>
@@ -124,74 +134,39 @@ class SignUp extends PureComponent {
               </Typography>
             </Grid>
             <Grid item xs={12} style={{ margin: '0px 26px' }}>
-              <TextField
+              <CustomInput
                 id='email'
                 label='Email'
-                className={classes.inputField}
-                margin='normal'
-                required
                 error={emailError}
                 helperText={<span>{emailErrorMessage}</span>}
                 onChange={event =>
-                  this.handleFieldChange('email', event.target.value, {
-                    require: 'Please enter your email',
-                    email: true
-                  })
+                  this.handleFieldChange('email', event.target.value)
                 }
-                InputProps={{
-                  classes: { underline: classes.inputUnderline }
-                }}
                 fullWidth
               />
             </Grid>
             <Grid item xs={12} style={{ margin: '0px 26px' }}>
-              <TextField
+              <CustomInput
                 id='password'
                 label='Set up a password'
                 type='password'
-                className={classes.inputField}
-                margin='normal'
-                error={passWordError}
+                error={passwordError}
                 helperText={<span>{passwordErrorMessage}</span>}
-                fullWidth
                 onChange={event =>
-                  this.handleFieldChange('password', event.target.value, {
-                    require: true,
-                    password: true,
-                    equalTo: this.state.confirmPassword
-                  })
+                  this.handleFieldChange('password', event.target.value)
                 }
-                InputProps={{
-                  classes: { underline: classes.inputUnderline }
-                }}
-                required
               />
             </Grid>
             <Grid item xs={12} style={{ margin: '0px 26px' }}>
-              <TextField
+              <CustomInput
                 id='confirmPassword'
                 label='Confirm Password'
                 type='password'
-                className={classes.inputField}
-                margin='normal'
                 error={confirmPasswordError}
                 helperText={<span>{confirmPasswordErrorMessage}</span>}
-                fullWidth
                 onChange={event =>
-                  this.handleFieldChange(
-                    'confirmPassword',
-                    event.target.value,
-                    {
-                      require: true,
-                      confirmPassword: true,
-                      equalTo: this.state.password
-                    }
-                  )
+                  this.handleFieldChange('confirmPassword', event.target.value)
                 }
-                InputProps={{
-                  classes: { underline: classes.inputUnderline }
-                }}
-                required
               />
             </Grid>
             <Grid

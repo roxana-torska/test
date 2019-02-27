@@ -31,7 +31,6 @@ class WelcomeToDishIn extends PureComponent {
     restaurantName: ''
   };
   static getInitialProps({ store, isServer }) {
-    // store.dispatch(increment(isServer))
     console.log('Hello');
     return { isServer };
   }
@@ -356,10 +355,5 @@ class WelcomeToDishIn extends PureComponent {
     );
   }
 }
-
-// const mapDispatchToProps = dispatch => ({
-// 	increment: () => dispatch(increment()),
-// 	decrement: () => dispatch(decrement())
-// })
 
 export default withStyles(styles)(WelcomeToDishIn);

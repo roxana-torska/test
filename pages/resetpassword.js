@@ -1,16 +1,14 @@
 import React, { PureComponent } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
+import CustomInput from '../components/customInput/CustomInput';
 import Button from '@material-ui/core/Button';
-import { connect } from 'react-redux';
 import AppLayout from '../components/layouts/AppLayout';
 import { Typography } from '@material-ui/core';
 import styles from '../styles/common';
 import classnames from 'classnames';
 import Link from 'next/link';
 import SvgIcon from '@material-ui/core/SvgIcon';
-import actions from '../redux/user/actions';
 import validator from '../utils/validator';
 import notify from '../utils/notifier';
 import Router from 'next/router';
@@ -18,47 +16,61 @@ import { appUrl } from '../utils/config';
 import { userAPI } from '../services/userAPI';
 
 class ResetPassword extends PureComponent {
+  getFieldValue = (name) => {
+    return this.state[name] || '';
+  }  
+  validators = {
+    password: {
+      required: { message: 'Password required' },
+      minValue: { length: 8 },
+      equalsTo: { value: this.getFieldValue.bind(this, 'confirmPassword') }
+    },
+    confirmPassword: {
+      required: { message: 'Confirm Password required' },
+      minValue: { length: 8 },
+      equalsTo: { value: this.getFieldValue.bind(this, 'password') }
+    }
+  } 
   state = {
     password: '',
     confirmPassword: '',
-    passWordError: false,
+    passwordError: false,
     confirmPasswordError: false,
     passwordErrorMessage: '',
     confirmPasswordErrorMessage: ''
   };
 
-  handleFieldChange = (name, value, validateValue) => {
-    const fieldError = validator(value, validateValue);
+  handleFieldChange = (name, value, notSetValue) => {
+    notSetValue = notSetValue || false;
+    const fieldError = validator(value, this.validators[name]);
+    let state = null;
     if (fieldError.error === true) {
-      if (validateValue.password) {
-        this.setState({
-          passWordError: true,
-          passwordErrorMessage: fieldError.errorMessage
-        });
-      }
-      if (validateValue.confirmPassword) {
-        this.setState({
-          confirmPasswordError: true,
-          confirmPasswordErrorMessage: fieldError.errorMessage
-        });
-      }
-    } else {
-      this.setState({
-        passWordError: false,
-        confirmPasswordError: false,
-        passwordErrorMessage: '',
-        confirmPasswordErrorMessage: ''
-      });
-      const newState = {};
-      newState[name] = value;
-      this.setState(newState);
+      state = {};
+      state[`${name}Error`] = true;
+      state[`${name}ErrorMessage`] = fieldError.errorMessage;
+    } else if (notSetValue === false) {
+      state = {};
+      state[`${name}Error`] = false;
+      state[`${name}ErrorMessage`] = '';
+      state[name] = value;
     }
+    if (state) {
+      this.setState(state);
+    }
+    return fieldError.error;
   };
+
+  validateForm = () => {
+    const result = Object.keys(this.validators).map(field => {
+      return this.handleFieldChange(field, this.state[field], true);
+    });
+    return !result.includes(true);
+  }
 
   handleSubmit = evt => {
     evt.preventDefault();
-    const { password, confirmPassword } = this.state;
-    if (password && confirmPassword) {
+    if (this.validateForm()) {
+      const { password, confirmPassword } = this.state;
       const { token } = this.props;
       userAPI
         .resetPassword({
@@ -70,29 +82,30 @@ class ResetPassword extends PureComponent {
         })
         .then(response => {
           if (response.status.toUpperCase() === 'OK') {
-            notify(response.info);
-            Router.push(`/sign-in`);
+            Router.push(`/auth/callback?token=${response.data.token}`);
           } else {
             notify(response.error);
           }
         });
+    } else {
+      this.setState({ error: true });
     }
   };
 
   static async getInitialProps({ store, isServer, query }) {
     const { token } = query;
-
     return { token };
   }
 
   render() {
     const { classes, token } = this.props;
     const {
-      passWordError,
+      passwordError,
       confirmPasswordError,
       passwordErrorMessage,
       confirmPasswordErrorMessage
     } = this.state;
+    
     return (
       <AppLayout {...this.props}>
         <form className={classes.container} noValidate autoComplete='off'>
@@ -107,81 +120,61 @@ class ResetPassword extends PureComponent {
             {!token ? (
               <h1>Invalid Token</h1>
             ) : (
-              <React.Fragment>
-                <Grid item xs={12}>
-                  <Typography
-                    variant='h1'
-                    align='center'
-                    className={classes.pageTitleRed}
-                  >
-                    Reset Password
+                <React.Fragment>
+                  <Grid item xs={12}>
+                    <Typography
+                      variant='h1'
+                      align='center'
+                      className={classes.pageTitleRed}
+                    >
+                      Reset Password
                   </Typography>
-                </Grid>
-                <Grid item xs={12} style={{ margin: '0px 26px' }}>
-                  <TextField
-                    id='password'
-                    label='Set up a password'
-                    type='password'
-                    className={classes.inputField}
-                    margin='normal'
-                    error={passWordError}
-                    helperText={<span>{passwordErrorMessage}</span>}
-                    fullWidth
-                    onChange={event =>
-                      this.handleFieldChange('password', event.target.value, {
-                        require: true,
-                        password: true,
-                        equalTo: this.state.confirmPassword
-                      })
-                    }
-                    required
-                  />
-                </Grid>
-                <Grid item xs={12} style={{ margin: '0px 26px' }}>
-                  <TextField
-                    id='confirmPassword'
-                    label='Confirm Password'
-                    type='password'
-                    className={classes.inputField}
-                    margin='normal'
-                    error={confirmPasswordError}
-                    helperText={<span>{confirmPasswordErrorMessage}</span>}
-                    fullWidth
-                    onChange={event =>
-                      this.handleFieldChange(
-                        'confirmPassword',
-                        event.target.value,
-                        {
-                          require: true,
-                          confirmPassword: true,
-                          equalTo: this.state.password
-                        }
-                      )
-                    }
-                    required
-                  />
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  container
-                  direction='row'
-                  justify='center'
-                  alignItems='center'
-                  spacing={0}
-                  className={classes.btnContainer}
-                >
-                  <Button
-                    size='medium'
-                    className={classes.btnRaisedLightNormalRed}
-                    fullWidth
-                    onClick={this.handleSubmit}
+                  </Grid>
+                  <Grid item xs={12} style={{ margin: '0px 26px' }}>
+                    <CustomInput
+                      id='password'
+                      label='Set up a password'
+                      type='password'
+                      error={passwordError}
+                      helperText={<span>{passwordErrorMessage}</span>}
+                      onChange={event =>
+                        this.handleFieldChange('password', event.target.value)
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12} style={{ margin: '0px 26px' }}>
+                    <CustomInput
+                       id='confirmPassword'
+                       label='Confirm Password'
+                       type='password'
+                       error={confirmPasswordError}
+                       helperText={<span>{confirmPasswordErrorMessage}</span>}
+                       onChange={event =>
+                         this.handleFieldChange('confirmPassword', event.target.value)
+                       }
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    container
+                    direction='row'
+                    justify='center'
+                    alignItems='center'
+                    spacing={0}
+                    className={classes.btnContainer}
                   >
-                    Sign Up
+                    <Button
+                      size='medium'
+                      className={classes.btnRaisedLightNormalRed}
+                      fullWidth
+                      onClick={this.handleSubmit}
+                    >
+                      Sign Up
                   </Button>
-                </Grid>
-              </React.Fragment>
-            )}
+                  </Grid>
+                </React.Fragment>
+              )}
           </Grid>
           <Grid
             container
@@ -249,7 +242,7 @@ class ResetPassword extends PureComponent {
                     />
                   </SvgIcon>
                 </Link>
-                <span style={{ margin: '0px 20px' }} />
+                <span style={{ margin: '0px 10px' }} />
                 <Link href={`${appUrl}/auth/instagram`}>
                   <SvgIcon className={classes.socialIcon} viewBox='0 0 40 40'>
                     <path
