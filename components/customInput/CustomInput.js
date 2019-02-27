@@ -11,12 +11,14 @@ class CustomInput extends PureComponent {
       helperText,
       onChange,
       classes,
-      value
+      value,
+      type
     } = this.props;
     return (
       <TextField
         id={id}
         label={label}
+        type={type}
         className={classes.inputField}
         margin='normal'
         value={value}
