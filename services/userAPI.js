@@ -32,7 +32,7 @@ export const userAPI = {
     });
     return response.data;
   },
-  recoveryPassword: async function(payload) {
+  recoverPassword: async function(payload) {
     let params = { ...payload.params };
     let response = await request(`${API_URL}/users/forget-password`, {
       method: 'POST',
@@ -69,7 +69,7 @@ export const userAPI = {
     lat = lat || '';
     lng = lng || '';
     let response = await request(
-      `${API_URL}/restaurants/autocomplete?name=${name}&lat=${lat }&lng=${lng}`
+      `${API_URL}/restaurants/autocomplete?name=${name}&lat=${lat}&lng=${lng}`
     );
     return response.data;
   }

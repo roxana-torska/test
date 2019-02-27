@@ -135,13 +135,13 @@ const styles = theme => ({
     padding: '20px',
     borderRadius: '0px'
   },
-  recoveryPasswordDialogTitle: {
+  recoverPasswordDialogTitle: {
     color: theme.palette.primary.main,
     fontFamily: "'Lato'",
     fontSize: '1.5em',
     fontWeight: '600'
   },
-  recoveryPasswordText: {
+  recoverPasswordText: {
     fontFamily: "'Lato'",
     fontSize: '1em'
   },
@@ -181,6 +181,12 @@ const styles = theme => ({
     borderColor: '#757575 !important',
     borderWidth: '1px !important',
     boxShadow: '0 2px 2px 1px rgba(0, 0, 0, .2)'
+  },
+  pageInfo: {
+    fontFamily: "'Lato'",
+    fontSize: '2em',
+    lineHeight: 3,
+    color: '#999'
   },
   disabled: {}
 });

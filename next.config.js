@@ -1,7 +1,6 @@
-
 module.exports = {
-	env: {
-		appUrl: 'http://localhost:3001'
-	},
-	useFileSystemPublicRoutes: false
-}
+  env: {
+    APP_URL: 'http://localhost:3001'
+  },
+  useFileSystemPublicRoutes: false
+};

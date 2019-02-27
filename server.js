@@ -11,7 +11,7 @@ const handle = app.getRequestHandler();
 const { getToken, setToken, getDecodedToken } = require('./utils/common');
 const SocialAuth = require('./utils/socialAuth');
 const { request } = require('./utils/request2');
-const { API_URL } = require('./utils/config');
+const { API_URL, APP_URL } = require('./utils/config');
 const isLoggedIn = function(req, res, next) {
   const loggedInToken = getToken(req);
   if (loggedInToken) {
@@ -30,6 +30,14 @@ const validateRecoveryToken = async function(payload) {
     `${API_URL}/public/check-reset-token?token=${token}`
   );
   console.log('api response', response);
+  return response.data;
+};
+
+const verifyUser = async function(payload) {
+  let { token } = payload;
+  console.log('token', payload);
+  let response = await request(`${API_URL}/public/verify-email?token=${token}`);
+  console.log('response', response);
   return response.data;
 };
 
@@ -120,13 +128,25 @@ app
         });
     });
 
+    server.get('/verify-email', (req, res) => {
+      const queryParams = { token: req.query.token };
+      const actualPage = '/verifyemail';
+      verifyUser(queryParams).then(response => {
+        const query = {
+          verifyStatus: response.verifyStatus
+        };
+        console.log('query***', query, response, response.verifyStatus);
+        app.render(req, res, actualPage, query);
+      });
+    });
+
     server.get('*', (req, res) => {
       return handle(req, res);
     });
 
     server.listen(3001, err => {
       if (err) throw err;
-      console.log('> Ready on http://localhost:3001');
+      console.log(`> Ready on ${APP_URL}`);
     });
   })
   .catch(ex => {

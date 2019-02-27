@@ -1,7 +1,7 @@
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook');
 const InstagramStrategy = require('passport-instagram').Strategy;
-const { appUrl, API_URL } = require('../utils/config');
+const { APP_URL, API_URL } = require('../utils/config');
 const { request } = require('../utils/request2');
 
 const socialSignIn = async function(payload) {
@@ -81,7 +81,7 @@ module.exports = server => {
       {
         clientID: '946170095773757', //'318699738713309', //"1165866970222123", // Use your Facebook App Id
         clientSecret: '3384b1a7fb37d55b36a9e2ee8f801ead', //'2f1afdebd940fced3346c5690550cae3', //"b5a47642cd15662884cd089a81973f97", // Use your Facebook App Secret
-        callbackURL: `${appUrl}/auth/facebook/callback`,
+        callbackURL: `${APP_URL}/auth/facebook/callback`,
         profileFields: ['id', 'email', 'name', 'displayName'] //This
       },
       verifyHandler
@@ -93,7 +93,7 @@ module.exports = server => {
       {
         clientID: '8a4c8d6fff434f68b73147f20f704105', //'066c10e2d2d248b5a48c84e4ad3e2262',
         clientSecret: '8d1bb885eb154590a39f728fc191aa2e', //'08e3b247f21e437d9cd1c1fe899f976e',
-        callbackURL: `${appUrl}/auth/instagram/callback`
+        callbackURL: `${APP_URL}/auth/instagram/callback`
       },
       verifyHandler
     )
