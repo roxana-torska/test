@@ -107,81 +107,81 @@ class ResetPassword extends PureComponent {
             {!token ? (
               <h1>Invalid Token</h1>
             ) : (
-              <React.Fragment>
-                <Grid item xs={12}>
-                  <Typography
-                    variant='h1'
-                    align='center'
-                    className={classes.pageTitleRed}
-                  >
-                    Reset Password
+                <React.Fragment>
+                  <Grid item xs={12}>
+                    <Typography
+                      variant='h1'
+                      align='center'
+                      className={classes.pageTitleRed}
+                    >
+                      Reset Password
                   </Typography>
-                </Grid>
-                <Grid item xs={12} style={{ margin: '0px 26px' }}>
-                  <TextField
-                    id='password'
-                    label='Set up a password'
-                    type='password'
-                    className={classes.inputField}
-                    margin='normal'
-                    error={passWordError}
-                    helperText={<span>{passwordErrorMessage}</span>}
-                    fullWidth
-                    onChange={event =>
-                      this.handleFieldChange('password', event.target.value, {
-                        require: true,
-                        password: true,
-                        equalTo: this.state.confirmPassword
-                      })
-                    }
-                    required
-                  />
-                </Grid>
-                <Grid item xs={12} style={{ margin: '0px 26px' }}>
-                  <TextField
-                    id='confirmPassword'
-                    label='Confirm Password'
-                    type='password'
-                    className={classes.inputField}
-                    margin='normal'
-                    error={confirmPasswordError}
-                    helperText={<span>{confirmPasswordErrorMessage}</span>}
-                    fullWidth
-                    onChange={event =>
-                      this.handleFieldChange(
-                        'confirmPassword',
-                        event.target.value,
-                        {
+                  </Grid>
+                  <Grid item xs={12} style={{ margin: '0px 26px' }}>
+                    <TextField
+                      id='password'
+                      label='Set up a password'
+                      type='password'
+                      className={classes.inputField}
+                      margin='normal'
+                      error={passWordError}
+                      helperText={<span>{passwordErrorMessage}</span>}
+                      fullWidth
+                      onChange={event =>
+                        this.handleFieldChange('password', event.target.value, {
                           require: true,
-                          confirmPassword: true,
-                          equalTo: this.state.password
-                        }
-                      )
-                    }
-                    required
-                  />
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  container
-                  direction='row'
-                  justify='center'
-                  alignItems='center'
-                  spacing={0}
-                  className={classes.btnContainer}
-                >
-                  <Button
-                    size='medium'
-                    className={classes.btnRaisedLightNormalRed}
-                    fullWidth
-                    onClick={this.handleSubmit}
+                          password: true,
+                          equalTo: this.state.confirmPassword
+                        })
+                      }
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12} style={{ margin: '0px 26px' }}>
+                    <TextField
+                      id='confirmPassword'
+                      label='Confirm Password'
+                      type='password'
+                      className={classes.inputField}
+                      margin='normal'
+                      error={confirmPasswordError}
+                      helperText={<span>{confirmPasswordErrorMessage}</span>}
+                      fullWidth
+                      onChange={event =>
+                        this.handleFieldChange(
+                          'confirmPassword',
+                          event.target.value,
+                          {
+                            require: true,
+                            confirmPassword: true,
+                            equalTo: this.state.password
+                          }
+                        )
+                      }
+                      required
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    container
+                    direction='row'
+                    justify='center'
+                    alignItems='center'
+                    spacing={0}
+                    className={classes.btnContainer}
                   >
-                    Sign Up
+                    <Button
+                      size='medium'
+                      className={classes.btnRaisedLightNormalRed}
+                      fullWidth
+                      onClick={this.handleSubmit}
+                    >
+                      Sign Up
                   </Button>
-                </Grid>
-              </React.Fragment>
-            )}
+                  </Grid>
+                </React.Fragment>
+              )}
           </Grid>
           <Grid
             container
@@ -249,7 +249,7 @@ class ResetPassword extends PureComponent {
                     />
                   </SvgIcon>
                 </Link>
-                <span style={{ margin: '0px 20px' }} />
+                <span style={{ margin: '0px 10px' }} />
                 <Link href={`${appUrl}/auth/instagram`}>
                   <SvgIcon className={classes.socialIcon} viewBox='0 0 40 40'>
                     <path

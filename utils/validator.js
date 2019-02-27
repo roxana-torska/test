@@ -1,102 +1,78 @@
-const validate = function(value, validator) {
-  let result = {
+import * as _ from "lodash"
+
+const validate = function (value, validator) {
+  let ruleResult = {
     error: false,
     errorMessage: ''
   };
-  if (validator.email) {
-    let emailError = emailValidate(value, validator);
-    if (emailError) {
-      result = {
-        error: true,
-        errorMessage: emailError
-      };
+
+  const keys = Object.keys(validator);
+  for (let index = 0; index < keys.length; index++) {
+    const rule = keys[index];
+    ruleResult = applyRule(rule, value, validator[rule]);
+    if (ruleResult.error) {
+      if (_.isObject(validator[rule]) && validator[rule].message) {
+        ruleResult.errorMessage = validator[rule].message;
+      }
+      return ruleResult;
     }
   }
-  if (validator.password) {
-    let passwordError = passwordValidate(value, validator);
-    if (passwordError) {
-      result = {
-        error: true,
-        errorMessage: passwordError
-      };
-    }
-  }
-  if (validator.confirmPassword) {
-    let passwordError = confirmPasswordValidate(value, validator);
-    if (passwordError) {
-      result = {
-        error: true,
-        errorMessage: passwordError
-      };
-    }
-  }
-  return result;
+  return ruleResult;
 };
 
-const emailValidate = function(value, validator) {
-  let emailError = null;
-  if (!value) {
-    if (typeof validator.require === 'string') {
-      emailError = validator.require;
-    } else {
-      emailError = 'Email is required';
-    }
-  } else {
-    let matchFormat = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!matchFormat.test(value)) {
-      if (typeof validate.email === 'string') {
-        emailError = validator.email;
-      } else {
-        emailError = 'invalid Email';
-      }
-    } else {
-      emailError = null;
-    }
+const applyRule = function (rule, value, options) {
+  switch (rule.toLowerCase()) {
+    case 'required':
+      return requiredValidate(value);
+    case 'email':
+      return emailValidate(value);
+    case 'equalsto':
+      return equalsToValidate(value, options.value);
+    case 'minvalue':
+      return minValueValidate(value, options.length);
+    case 'maxvalue':
+      return maxValueValidate(value, options.length);
+    default:
+      return { error: false };
   }
-  return emailError;
+}
+
+const requiredValidate = function (value) {
+  if (_.trim(value).length === 0) {
+    return { error: true, errorMessage: 'Required Field' };
+  }
+  return { error: false };
 };
 
-const passwordValidate = function(value, validator) {
-  let passwordError = null;
-  if (!value) {
-    if (typeof validator.require === 'string') {
-      passwordError = validator.require;
-    } else {
-      passwordError = 'Password is required';
-    }
-  } else {
-    if (value.length < 8) {
-      passwordError = 'Not less then 8 characters';
-    } else {
-      if (validator.equalTo != '' && value != validator.equalTo) {
-        passwordError = 'Password and confirm password must be same';
-      } else {
-        passwordError = null;
-      }
-    }
+const emailValidate = function (value) {
+  let matchFormat = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  if (_.trim(value).length && !matchFormat.test(value)) {
+    return { error: true, errorMessage: 'Invalid Email' };
   }
-  return passwordError;
+  return { error: false };
 };
 
-const confirmPasswordValidate = function(value, validator) {
-  let confirmPasswordError = null;
-  if (!value) {
-    if (typeof validator.require === 'string') {
-      confirmPasswordError = validator.require;
-    } else {
-      confirmPasswordError = 'Confirm Password is required';
-    }
-  } else {
-    if (value.length < 8) {
-      confirmPasswordError = 'Not less then 8 characters';
-    } else {
-      if (validator.equalTo != '' && value != validator.equalTo) {
-        confirmPasswordError = 'Password and confirm password must be same';
-      } else {
-        confirmPasswordError = null;
-      }
-    }
+const minValueValidate = function (value, length) {
+  if (_.trim(value).length < length) {
+    return { error: true, errorMessage: `Not less then ${length} characters` };
   }
-  return confirmPasswordError;
+  return { error: false };
 };
-module.exports = validate;
+const maxValueValidate = function (value, length) {
+  if (_.trim(value).length > length) {
+    return { error: true, errorMessage: `Not greater then ${length} characters` };
+  }
+  return { error: false };
+};
+
+const equalsToValidate = function (value, compareValue) {
+  if (_.isFunction(compareValue)) {
+    compareValue = compareValue();
+  }
+  if (_.trim(value).length && _.trim(compareValue).length && value !== compareValue) {
+    return { error: true, errorMessage: `Value not equal to compared value` };
+  }
+  return { error: false };
+}
+
+export default validate;
