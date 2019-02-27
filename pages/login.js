@@ -38,7 +38,6 @@ class Login extends PureComponent {
     return { isServer };
   }
 
-
   handleFieldChange = (name, value, notSetValue) => {
     notSetValue = notSetValue || false;
     const fieldError = validator(value, this.validators[name]);

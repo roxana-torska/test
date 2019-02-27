@@ -47,8 +47,6 @@ class SignUp extends PureComponent {
     confirmPasswordErrorMessage: ''
   };
 
-
-
   handleFieldChange = (name, value, notSetValue) => {
     notSetValue = notSetValue || false;
     const fieldError = validator(value, this.validators[name]);
@@ -99,8 +97,6 @@ class SignUp extends PureComponent {
       this.setState({ error: true });
     }
   };
-
-
 
   static getInitialProps({ store, isServer }) {
     return {};

@@ -26,7 +26,6 @@ class WelcomeToDishIn extends PureComponent {
     }
   };
   static getInitialProps({ store, isServer }) {
-    // store.dispatch(increment(isServer))
     console.log('Hello');
     return { isServer };
   }
@@ -143,8 +142,6 @@ class WelcomeToDishIn extends PureComponent {
                 cacheOptions
                 defaultOptions
                 loadOptions={this.promiseOptions}
-                // valueKey='_id'
-                // labelKey='name'
               />
             </Grid>
             <Grid
@@ -281,10 +278,5 @@ class WelcomeToDishIn extends PureComponent {
     );
   }
 }
-
-// const mapDispatchToProps = dispatch => ({
-// 	increment: () => dispatch(increment()),
-// 	decrement: () => dispatch(decrement())
-// })
 
 export default withStyles(styles)(WelcomeToDishIn);

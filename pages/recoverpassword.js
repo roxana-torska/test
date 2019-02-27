@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
+import CustomInput from '../components/customInput/CustomInput';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import AppLayout from '../components/layouts/AppLayout';
@@ -14,7 +14,6 @@ import styles from '../styles/common';
 import classnames from 'classnames';
 import Link from 'next/link';
 import SvgIcon from '@material-ui/core/SvgIcon';
-import actions from '../redux/user/actions';
 import validator from '../utils/validator';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
@@ -24,12 +23,17 @@ import { userAPI } from '../services/userAPI';
 import notify from '../utils/notifier';
 import { appUrl } from '../utils/config';
 
-const { userRecoveryPassword } = actions;
 
 function Transition(props) {
   return <Slide direction='down' {...props} />;
 }
-class RecoveryPassword extends PureComponent {
+class RecoverPassword extends PureComponent {
+  validators = {
+    email: {
+      required: { message: 'Please use your email' },
+      email: true
+    }
+  }
   state = {
     email: '',
     emailError: false,
@@ -38,61 +42,68 @@ class RecoveryPassword extends PureComponent {
   };
 
   static getInitialProps({ store, isServer }) {
-    // store.dispatch(increment(isServer))
     return { isServer };
   }
 
-  handleFieldChange = (name, value, validateValue) => {
-    const fieldError = validator(value, validateValue);
+  handleFieldChange = (name, value, notSetValue) => {
+    notSetValue = notSetValue || false;
+    const fieldError = validator(value, this.validators[name]);
+    let state = null;
     if (fieldError.error === true) {
-      if (validateValue.email) {
-        this.setState({
-          emailError: true,
-          emailErrorMessage: fieldError.errorMessage
-        });
-      }
-    } else {
-      this.setState({
-        emailError: false,
-        emailErrorMessage: ''
-      });
-      const newState = {};
-      newState[name] = value;
-      this.setState(newState);
+      state = {};
+      state[`${name}Error`] = true;
+      state[`${name}ErrorMessage`] = fieldError.errorMessage;
+    } else if (notSetValue === false) {
+      state = {};
+      state[`${name}Error`] = false;
+      state[`${name}ErrorMessage`] = '';
+      state[name] = value;
     }
+    if (state) {
+      this.setState(state);
+    }
+    return fieldError.error;
   };
 
-  handleSubmit = async () => {
-    const { email, emailError } = this.state;
-    if (email && !emailError) {
+  validateForm = () => {
+    const result = Object.keys(this.validators).map(field => {
+      return this.handleFieldChange(field, this.state[field], true);
+    });
+    return !result.includes(true);
+  }
+
+  handleSubmit = evt => {
+    evt.preventDefault();
+    if (this.validateForm()) {
+      const { email } = this.state;
       userAPI
-        .recoveryPassword({
+        .recoverPassword({
           params: {
             email
           }
         })
         .then(response => {
           if (response.status.toUpperCase() === 'OK') {
-            this.setState({ openDialog: true });
+            Router.push(`/auth/callback?token=${response.data.token}`);
           } else {
             notify(response.error);
           }
         });
     } else {
-      this.setState({ emailError: true });
+      this.setState({ error: true });
     }
   };
-
-  handleModelClose = () => {
-    this.setState({ openDialog: false });
-  };
-
+  
   render() {
     const { classes } = this.props;
-    const { emailError, emailErrorMessage, openDialog } = this.state;
+    const {
+      emailError,
+      emailErrorMessage
+    } = this.state;
+  
     return (
       <AppLayout {...this.props}>
-        <form className={classes.container} noValidate autoComplete='off'>
+        <form className={classes.container} onSubmit={this.handleSubmit}>
           <Grid
             container
             direction='row'
@@ -125,20 +136,15 @@ class RecoveryPassword extends PureComponent {
               </div>
             </Grid>
             <Grid item xs={12} style={{ margin: '0px 26px' }}>
-              <TextField
+                <CustomInput
                 id='email'
                 label='Email'
-                className={classes.inputField}
-                margin='normal'
-                fullWidth
                 error={emailError}
                 helperText={<span>{emailErrorMessage}</span>}
                 onChange={event =>
-                  this.handleFieldChange('email', event.target.value, {
-                    require: 'Please enter your email',
-                    email: true
-                  })
+                  this.handleFieldChange('email', event.target.value)
                 }
+                fullwidth
               />
             </Grid>
             <Grid
@@ -227,7 +233,7 @@ class RecoveryPassword extends PureComponent {
                     />
                   </SvgIcon>
                 </Link>
-                <span style={{ margin: '0px 20px' }} />
+                <span style={{ margin: '0px 10px' }} />
                 <Link href={`${appUrl}/auth/instagram`}>
                   <SvgIcon className={classes.socialIcon} viewBox='0 0 40 40'>
                     <path
@@ -272,7 +278,6 @@ class RecoveryPassword extends PureComponent {
               <Dialog
                 open={openDialog}
                 keepMounted
-                //className={classes.recoverPasswordDialog}
                 classes={{
                   root: classes.modelCenter,
                   paper: classes.recoverPasswordDialog
@@ -281,12 +286,12 @@ class RecoveryPassword extends PureComponent {
               >
                 <DialogTitle
                   disableTypography
-                  className={classes.recoveryPasswordDialogTitle}
+                  className={classes.recoverPasswordDialogTitle}
                 >
                   Check your e-mail
                 </DialogTitle>
                 <DialogContent>
-                  <DialogContentText className={classes.recoveryPasswordText}>
+                  <DialogContentText className={classes.recoverPasswordText}>
                     We send you a link to reset password
                   </DialogContentText>
                 </DialogContent>
@@ -302,18 +307,4 @@ class RecoveryPassword extends PureComponent {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    user: state.user.toJS()
-  };
-};
-
-// const mapDispatchToProps = dispatch => ({
-// 	increment: () => dispatch(increment()),
-// 	decrement: () => dispatch(decrement())
-// })
-
-export default connect(
-  mapStateToProps,
-  { userRecoveryPassword }
-)(withStyles(styles)(RecoveryPassword));
+export default withStyles(styles)(RecoverPassword);
