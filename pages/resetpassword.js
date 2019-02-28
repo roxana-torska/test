@@ -24,12 +24,18 @@ class ResetPassword extends PureComponent {
     password: {
       required: { message: 'Password required' },
       minValue: { length: 8 },
-      equalsTo: { value: this.getFieldValue.bind(this, 'confirmPassword') }
+      equalsTo: {
+        value: this.getFieldValue.bind(this, 'confirmPassword'),
+        message: `The confirm password doesn't match with the given password`
+      }
     },
     confirmPassword: {
       required: { message: 'Confirm Password required' },
       minValue: { length: 8 },
-      equalsTo: { value: this.getFieldValue.bind(this, 'password') }
+      equalsTo: {
+        value: this.getFieldValue.bind(this, 'password'),
+        message: `The confirm password doesn't match with the given password`
+      }
     }
   };
   state = {

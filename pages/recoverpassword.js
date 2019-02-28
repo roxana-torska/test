@@ -258,7 +258,7 @@ class RecoverPassword extends PureComponent {
                 </DialogTitle>
                 <DialogContent>
                   <DialogContentText className={classes.recoverPasswordText}>
-                    We send you a link to reset password
+                    We've send you a link to reset the new password.
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions className={classes.modalFooter}>
