@@ -1,7 +1,9 @@
 import React, { PureComponent } from 'react';
 import TextField from '@material-ui/core/TextField';
 import styles from '../../styles/common';
-import { withStyles } from '@material-ui/core';
+import { withStyles, InputAdornment } from '@material-ui/core';
+import RoomIcon from '@material-ui/icons/Room';
+import classnames from 'classnames';
 class CustomInput extends PureComponent {
   render() {
     const {
@@ -12,14 +14,16 @@ class CustomInput extends PureComponent {
       onChange,
       classes,
       value,
-      type
+      type,
+      InputProps,
+      locationAdornment
     } = this.props;
     return (
       <TextField
         id={id}
         label={label}
         type={type}
-        className={classes.inputField}
+        className={classnames(classes.inputFieldGrey, classes.marginNormal)}
         margin='normal'
         value={value}
         FormHelperTextProps={{
@@ -29,15 +33,23 @@ class CustomInput extends PureComponent {
         }}
         InputLabelProps={{
           classes: {
-            root: classes.inputLabel,
+            root: classnames(classes.inputLabel, classes.fontInherit),
             focused: classes.cssFocused
           }
         }}
         InputProps={{
-          classes: { underline: classes.inputUnderline }
+          classes: { underline: classes.inputUnderline },
+          endAdornment: locationAdornment ? (
+            <InputAdornment position='end'>
+              <RoomIcon style={{ color: '#c4c4c4' }} />
+            </InputAdornment>
+          ) : (
+            ''
+          ),
+          ...InputProps
         }}
         error={error}
-        helperText={<span>{helperText}</span>}
+        helperText={helperText ? <span>{helperText}</span> : ''}
         onChange={onChange}
         fullWidth
       />

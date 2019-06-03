@@ -23,7 +23,9 @@ import { userAPI } from '../services/userAPI';
 import notify from '../utils/notifier';
 import { APP_URL } from '../utils/config';
 import Router from 'next/router';
-import SocialLinks from '../components/common/SocialLinks';
+import { DishinMashroomIcon } from '../components/customIcon/customIcon';
+import FooterActions from '../components/common/FooterActions';
+import WindowResizeListener from 'react-window-size-listener';
 
 function Transition(props) {
   return <Slide direction='down' {...props} />;
@@ -39,7 +41,9 @@ class RecoverPassword extends PureComponent {
     email: '',
     emailError: false,
     emailErrorMessage: '',
-    openDialog: false
+    openDialog: false,
+    winHeight: '100vh',
+    winWidth: '100vw'
   };
 
   static getInitialProps({ store, isServer }) {
@@ -102,145 +106,167 @@ class RecoverPassword extends PureComponent {
 
   render() {
     const { classes } = this.props;
-    const { emailError, emailErrorMessage, openDialog } = this.state;
-
+    const {
+      emailError,
+      emailErrorMessage,
+      openDialog,
+      winHeight,
+      winWidth
+    } = this.state;
+    let adjustHeightGridOne = 10;
+    let adjustHeightGridThree = 8;
+    let adjustHeightGridFive = 3;
+    let adjustHeightGridSeven = 5;
+    let adjustHeightGridNine = 2;
+    let rootHeight = winHeight - 56;
+    let minVisibleHeight = 308;
+    if (winWidth <= 267) {
+      minVisibleHeight = 267;
+    }
+    if (rootHeight < minVisibleHeight) {
+      rootHeight = minVisibleHeight;
+    } else {
+      adjustHeightGridOne = ((rootHeight - minVisibleHeight) * 30) / 100;
+      adjustHeightGridThree = ((rootHeight - minVisibleHeight) * 25) / 100;
+      adjustHeightGridFive = ((rootHeight - minVisibleHeight) * 15) / 100;
+      adjustHeightGridSeven = ((rootHeight - minVisibleHeight) * 20) / 100;
+      adjustHeightGridNine = ((rootHeight - minVisibleHeight) * 10) / 100;
+    }
     return (
       <AppLayout {...this.props}>
+        <WindowResizeListener
+          onResize={windowSize => {
+            this.setState({ winHeight: windowSize.windowHeight });
+          }}
+        />
         <form className={classes.container} onSubmit={this.handleSubmit}>
           <Grid
             container
-            direction='row'
-            justify='center'
+            direction='column'
+            justify='space-between'
             alignItems='center'
             spacing={0}
-            style={{ margin: '0px 16px' }}
+            style={{
+              margin: '0px',
+              minHeight: `${rootHeight}px`
+            }}
           >
-            <Grid item xs={12}>
-              <Typography
-                variant='h1'
-                align='center'
-                className={classes.pageTitleRed}
+            <Grid
+              item
+              style={{
+                //backgroundColor: '#f0f0f0',
+                height: `${adjustHeightGridOne}px`,
+                width: '100%'
+              }}
+            />
+            <Grid item className={classes.adjustHeightGridTwo}>
+              <div
+                className={classes.dihsinBackground}
+                style={{ margin: '0 14px' }}
               >
-                RECOVER PASSWORD
-              </Typography>
+                <DishinMashroomIcon className={classes.topBgIconRight} />
+              </div>
+              <div style={{ margin: '0 16px' }}>
+                <Typography
+                  variant='h1'
+                  align='center'
+                  className={classes.pageTitleRed}
+                >
+                  RECOVER PASSWORD
+                </Typography>
+                <div
+                  className={classnames(
+                    classes.footerLatoTextNormal,
+                    classes.locationAddress
+                  )}
+                  style={{
+                    margin: '0 26px',
+                    textAlign: 'center',
+                    marginTop: '7px'
+                  }}
+                >
+                  Enter your e-mail to reset a password
+                </div>
+              </div>
             </Grid>
             <Grid
               item
-              xs={12}
-              container
-              direction='row'
-              justify='center'
-              alignItems='center'
-              spacing={0}
-              style={{ margin: '0px 26px  11px' }}
-            >
-              <div className={classes.footerLatoTextNormal}>
-                Enter your e-mail to reset a password
+              style={{
+                //backgroundColor: '#f0f0f0',
+                height: `${adjustHeightGridThree}px`,
+                width: '100%'
+              }}
+            />
+            <Grid item className={classes.adjustHeightGridFourRP}>
+              <div style={{ margin: '0 42px' }}>
+                <CustomInput
+                  id='email'
+                  label='Email'
+                  error={emailError}
+                  helperText={<span>{emailErrorMessage}</span>}
+                  onChange={event =>
+                    this.handleFieldChange('email', event.target.value)
+                  }
+                  fullwidth
+                />
               </div>
             </Grid>
-            <Grid item xs={12} style={{ margin: '0px 26px' }}>
-              <CustomInput
-                id='email'
-                label='Email'
-                error={emailError}
-                helperText={<span>{emailErrorMessage}</span>}
-                onChange={event =>
-                  this.handleFieldChange('email', event.target.value)
+            <Grid
+              item
+              style={{
+                // backgroundColor: '#f0f0f0',
+                height: `${adjustHeightGridFive}px`,
+                width: '100%'
+              }}
+            />
+            <Grid item className={classes.adjustHeightGridSix}>
+              <div style={{ margin: '0 82px' }}>
+                <Button
+                  size='medium'
+                  className={classes.btnRaisedLightNormalRed}
+                  fullWidth
+                  onClick={this.handleSubmit}
+                >
+                  Reset
+                </Button>
+              </div>
+            </Grid>
+            <Grid
+              item
+              style={{
+                //backgroundColor: '#f0f0f0',
+                height: `${adjustHeightGridSeven}px`,
+                width: '100%'
+              }}
+            />
+            <Grid item className={classes.adjustHeightGridEight}>
+              <FooterActions
+                linkAction={
+                  <div className={classes.footerLatoTextNormal}>
+                    Wanna try one more time?{' '}
+                    <a
+                      href={`${APP_URL}/sign-in`}
+                      className={classnames(
+                        classes.footerLatoTextBold,
+                        classes.footerLink1
+                      )}
+                    >
+                      Log in
+                    </a>{' '}
+                    to the app
+                  </div>
                 }
-                fullwidth
               />
             </Grid>
             <Grid
               item
-              xs={12}
-              container
-              direction='row'
-              justify='center'
-              alignItems='center'
-              spacing={0}
-              className={classes.btnContainer}
-            >
-              <Button
-                size='medium'
-                className={classes.btnRaisedLightNormalRed}
-                fullWidth
-                onClick={this.handleSubmit}
-              >
-                Reset
-              </Button>
-            </Grid>
-          </Grid>
-          <Grid
-            container
-            direction='row'
-            justify='center'
-            alignItems='center'
-            spacing={0}
-            style={{ margin: '0px 16px' }}
-          >
-            <Grid
-              item
-              xs={12}
-              container
-              direction='row'
-              justify='center'
-              alignItems='center'
-              spacing={0}
-              style={{ margin: '0px 26px  11px' }}
-            >
-              <div className={classes.footerLatoTextNormal}>
-                Wanna try one more time?{' '}
-                <Link href={`${APP_URL}/sign-in`}>
-                  <a
-                    className={classnames(
-                      classes.footerLatoTextBold,
-                      classes.footerLink1
-                    )}
-                  >
-                    Log in
-                  </a>
-                </Link>{' '}
-                to the app
-              </div>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              container
-              direction='row'
-              justify='center'
-              alignItems='center'
-              spacing={0}
-              style={{ margin: '0px 26px  11px' }}
-            >
-              <div className={classes.footerLatoTextNormal}>
-                Or Connect with
-              </div>
-            </Grid>
-            <SocialLinks />
-            <Grid
-              item
-              xs={12}
-              container
-              direction='row'
-              justify='center'
-              alignItems='center'
-              spacing={0}
-              style={{ margin: '0px 26px 11px' }}
-            >
-              <div className={classes.footerLatoTextNormal}>
-                Forgot Password?{' '}
-                <Link href={`${APP_URL}/recover-password`}>
-                  <a
-                    className={classnames(
-                      classes.footerLatoTextBold,
-                      classes.footerLink1
-                    )}
-                  >
-                    Recover Password
-                  </a>
-                </Link>
-              </div>
+              style={{
+                // backgroundColor: '#f0f0f0',
+                height: `${adjustHeightGridNine}px`,
+                width: '100%'
+              }}
+            />
+            <Grid item>
               <Dialog
                 open={openDialog}
                 keepMounted

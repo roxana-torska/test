@@ -5,7 +5,7 @@ const validate = function(value, validator) {
     error: false,
     errorMessage: ''
   };
-
+  let results = [];
   const keys = Object.keys(validator);
   for (let index = 0; index < keys.length; index++) {
     const rule = keys[index];
@@ -14,9 +14,11 @@ const validate = function(value, validator) {
       if (_.isObject(validator[rule]) && validator[rule].message) {
         ruleResult.errorMessage = validator[rule].message;
       }
-      return ruleResult;
     }
+    results.push(ruleResult);
   }
+  ruleResult = results.find(item => item.error || item.helper) || ruleResult;
+
   return ruleResult;
 };
 
@@ -27,11 +29,17 @@ const applyRule = function(rule, value, options) {
     case 'email':
       return emailValidate(value);
     case 'equalsto':
-      return equalsToValidate(value, options.value, open.message);
+      return equalsToValidate(value, options.value);
+    case 'minlength':
+      return minLengthValidate(value, options.length);
+    case 'maxlength':
+      return maxLengthValidate(value, options.length);
+    case 'validlength':
+      return validLengthValidate(value, options.length);
     case 'minvalue':
-      return minValueValidate(value, options.length);
+      return minValueValidate(value, options.value);
     case 'maxvalue':
-      return maxValueValidate(value, options.length);
+      return maxValueValidate(value, options.value);
     default:
       return { error: false };
   }
@@ -52,17 +60,33 @@ const emailValidate = function(value) {
   return { error: false };
 };
 
-const minValueValidate = function(value, length) {
-  if (_.trim(value).length < length) {
+const minLengthValidate = function(value, length) {
+  if (value.length < length) {
     return { error: true, errorMessage: `Not less then ${length} characters` };
   }
   return { error: false };
 };
-const maxValueValidate = function(value, length) {
-  if (_.trim(value).length > length) {
+const maxLengthValidate = function(value, length) {
+  if (value.length > length) {
     return {
       error: true,
       errorMessage: `Not greater then ${length} characters`
+    };
+  }
+  return { error: false };
+};
+
+const minValueValidate = function(value, comparedWith) {
+  if (value < comparedWith) {
+    return { error: true, errorMessage: `Not less then ${comparedWith}` };
+  }
+  return { error: false };
+};
+const maxValueValidate = function(value, comparedWith) {
+  if (value > comparedWith) {
+    return {
+      error: true,
+      errorMessage: `Not greater then ${comparedWith}`
     };
   }
   return { error: false };
@@ -77,11 +101,18 @@ const equalsToValidate = function(value, compareValue, errorMessage) {
     _.trim(compareValue).length &&
     value !== compareValue
   ) {
-    if (errorMessage) {
-      return { error: true, errorMessage };
-    } else {
-      return { error: true, errorMessage: `Value not equal to compared value` };
-    }
+    return { error: true, errorMessage: `Value not equal to compared value` };
+  }
+  return { error: false };
+};
+
+const validLengthValidate = function(value, length) {
+  if (_.trim(value).length < length) {
+    return {
+      error: false,
+      helper: true,
+      helperMessage: `${value.length}/${length}`
+    };
   }
   return { error: false };
 };

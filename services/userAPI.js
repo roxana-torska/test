@@ -1,5 +1,6 @@
 import request from '../utils/request';
 import { API_URL } from '../utils/config';
+import { getToken } from '../utils/config';
 
 export const userAPI = {
   handleLogin: async function(payload) {
@@ -10,7 +11,7 @@ export const userAPI = {
         ...params
       }
     });
-    return response.data;
+    return response;
   },
   login: async function(payload) {
     let params = { ...payload.params };
@@ -20,7 +21,7 @@ export const userAPI = {
         ...params
       }
     });
-    return response.data;
+    return response;
   },
   signUp: async function(payload) {
     let params = { ...payload.params };
@@ -30,7 +31,7 @@ export const userAPI = {
         ...params
       }
     });
-    return response.data;
+    return response;
   },
   recoverPassword: async function(payload) {
     let params = { ...payload.params };
@@ -40,7 +41,7 @@ export const userAPI = {
         ...params
       }
     });
-    return response.data;
+    return response;
   },
   resetPassword: async function(payload) {
     let params = { ...payload.params };
@@ -58,10 +59,9 @@ export const userAPI = {
         }
       }
     );
-    return response.data;
+    return response;
   },
   getRestaurants: async function(payload) {
-    console.log('payload', payload);
     let {
       name,
       location: { lat, lng }
@@ -71,6 +71,36 @@ export const userAPI = {
     let response = await request(
       `${API_URL}/restaurants/autocomplete?name=${name}&lat=${lat}&lng=${lng}`
     );
-    return response.data;
+    return response;
+  },
+  updateUser: async function(payload) {
+    let params = { ...payload.params };
+    const tempParams = {
+      fieldName: params.fieldName,
+      fieldValue: params.fieldValue
+    };
+    const token = params.token;
+    let response = await request(`${API_URL}/users/update/`, {
+      headers: { Authorization: `Bearer ${token}` },
+      method: 'POST',
+      body: {
+        ...tempParams
+      }
+    });
+    return response;
+  },
+  uploadProfileImage: async function(token, payload) {
+    let params = { ...payload.params };
+    let response = await request(`${API_URL}/users/upload-image/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'content-type': 'multipart/form-data'
+      },
+      method: 'POST',
+      body: {
+        ...params
+      }
+    });
+    return response;
   }
 };

@@ -7,32 +7,35 @@ import { Typography } from '@material-ui/core';
 import styles from '../styles/common';
 import classnames from 'classnames';
 import Link from 'next/link';
-import CustomInput from '../components/customInput/CustomInput';
-import SvgIcon from '@material-ui/core/SvgIcon';
+import AutoComplete from '../components/autoComplete';
 import notify from '../utils/notifier';
-import CustomList from '../components/customList/customList';
 import { userAPI } from '../services/userAPI';
 import Geocode from 'react-geocode';
-import { APP_URL } from '../utils/config';
+import { APP_URL, API_IMAGE_URL } from '../utils/config';
 import RoomIcon from '@material-ui/icons/Room';
 import { Scrollbars } from 'react-custom-scrollbars';
-import SocialLinks from '../components/common/SocialLinks';
+
+import actions from '../redux/global/actions';
+import { connect } from 'react-redux';
+import WindowResizeListener from 'react-window-size-listener';
+import slug from 'slug';
+import { stringify } from 'qs';
+import { setLocation } from '../utils/common';
+import FooterActions from '../components/common/FooterActions';
+import { DishinMashroomIcon } from '../components/customIcon/customIcon';
+const { setCurrentLocation } = actions;
 
 class WelcomeToDishIn extends PureComponent {
   state = {
-    address: '',
-    currentLocation: {
-      lat: null,
-      lng: null
-    },
     searchValue: '',
-    restaurants: null,
+    restaurants: [],
     enableApi: true,
     selectedIndex: -1,
-    restaurantName: ''
+    restaurantName: '',
+    winHeight: '100vh',
+    winWidth: '100vw'
   };
   static getInitialProps({ store, isServer }) {
-    console.log('Hello');
     return { isServer };
   }
   componentDidMount() {
@@ -43,15 +46,8 @@ class WelcomeToDishIn extends PureComponent {
             lat: position.coords.latitude,
             lng: position.coords.longitude
           };
-          this.setState({
-            currentLocation: pos,
-            restaurants: null,
-            searchValue: '',
-            enableApi: true
-          });
           // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
           Geocode.setApiKey('AIzaSyChP5Ri3hwQG4BRFzmDxqGE_SHQnJwPkjc');
-
           // Enable or disable logs. Its optional.
           Geocode.enableDebug();
 
@@ -67,52 +63,75 @@ class WelcomeToDishIn extends PureComponent {
               } else {
                 address = response.results[0].formatted_address;
               }
-              this.setState({ address });
-              const { searchValue } = this.state;
-              this.handleChange(searchValue);
+              this.updateLocation({ ...pos, address });
             },
             error => {
-              console.error(error);
+              this.updateLocation({ ...pos });
             }
           );
         },
         () => {
-          console.log('no location access');
+          this.updateLocation(null);
         }
       );
     } else {
-      this.setState({ enableApi: false });
       // Browser doesn't support Geolocation
-      console.log('no location access');
+      this.updateLocation(null);
     }
   }
 
-  handleChange = value => {
-    const { currentLocation, enableApi } = this.state;
-    this.setState({ searchValue: value });
-    if (enableApi) {
-      userAPI
-        .getRestaurants({ name: value, location: currentLocation })
-        .then(response => {
-          if (response.status === 'ok') {
-            let restaurants = [];
-            response.data.map(rec => {
-              let restaurant = {
-                avatar: '',
-                primary: rec.name,
-                secondary: '',
-                id: rec._id
-              };
-              restaurants.push(restaurant);
-            });
-            this.setState({ restaurants });
-          } else {
-            this.setState({ restaurants: null });
-            notify(response.error);
-          }
-        });
+  componentWillUpdate(nextProps, nextState) {
+    if (
+      JSON.stringify(nextProps.global.location) !=
+      JSON.stringify(this.props.global.location)
+    ) {
+      this.loadRestaurants({ ...nextProps.global.location });
+    }
+  }
+
+  updateLocation = location => {
+    const { setCurrentLocation } = this.props;
+    setLocation(location);
+    setCurrentLocation(location);
+    if (!location) {
+      this.loadRestaurants();
     }
   };
+
+  getRestaurantAvatar = rec => {
+    if (rec.images.length) {
+      return `${API_IMAGE_URL}/assets/images/restaurants/${rec.slug}/${
+        rec.images[0].path
+      }`;
+    } else {
+      return '';
+    }
+  };
+
+  loadRestaurants = location => {
+    location = location || {};
+    userAPI
+      .getRestaurants({ name: '', location: { ...location } })
+      .then(response => {
+        if (response.status === 'ok') {
+          let restaurants = response.data.map(rec => {
+            return {
+              avatar: this.getRestaurantAvatar(rec.restaurant_id),
+              label: rec.restaurant_id.name,
+              id: rec.restaurant_id._id
+            };
+          });
+          this.setState({ restaurants });
+        } else {
+          this.setState({ restaurants: null });
+          notify(response.error);
+        }
+      });
+  };
+
+  // handleChange = searchValue => {
+  //   this.setState({ searchValue }, this.searchRestaurants);
+  // };
 
   handListItemClick = (evt, selectedIndex) => {
     evt.preventDefault();
@@ -134,185 +153,242 @@ class WelcomeToDishIn extends PureComponent {
 
   handleSubmit = evt => {
     evt.preventDefault();
-    const { restaurantName } = this.state;
-    if (restaurantName) {
-      notify(`This will open ${restaurantName} menu page`);
-      this.setState({ restaurantName: '', searchValue: '' });
+    const {
+      global: { searchText }
+    } = this.props;
+    const selectedItem = this.autoComplete.selectedItem;
+    if (selectedItem && selectedItem.selectedItem) {
+      window.location.href = `${APP_URL}/restaurants/${slug(
+        selectedItem.selectedItem,
+        { lower: true }
+      )}`;
     } else {
-      notify(`Please select a restaurant`);
-      this.setState({ restaurantName: '' });
+      if (searchText) {
+        let queryParmas = {
+          searchText
+        };
+        window.location.href = `${APP_URL}/restaurants?${stringify(
+          queryParmas,
+          { encodeValuesOnly: true }
+        )}`;
+      } else {
+        notify(`Please select a restaurant`);
+      }
     }
+  };
+  autoCompleteRef = ref => {
+    this.autoComplete = ref;
   };
 
   render() {
-    const { classes } = this.props;
     const {
-      address,
-      restaurants,
-      selectedIndex,
-      restaurantName,
-      searchValue
-    } = this.state;
-    let textFieldValue = restaurantName || searchValue;
+      classes,
+      global: { location }
+    } = this.props;
+    const { restaurants, winHeight, winWidth } = this.state;
+    // const restaurants = [];
+    let adjustHeightGridOne = 10;
+    let adjustHeightGridThree = 8;
+    let adjustHeightGridFive = 3;
+    let adjustHeightGridSeven = 5;
+    let adjustHeightGridNine = 2;
+    let rootHeight = winHeight - 56;
+    let minVisibleHeight = restaurants.length ? 420 : 420 - 142;
+    if (winWidth <= 320) {
+      minVisibleHeight = restaurants.length ? 320 : 320 - 88;
+    }
+    if (rootHeight < minVisibleHeight) {
+      rootHeight = minVisibleHeight;
+    } else {
+      adjustHeightGridOne = ((rootHeight - minVisibleHeight) * 30) / 100;
+      adjustHeightGridThree = ((rootHeight - minVisibleHeight) * 25) / 100;
+      adjustHeightGridFive = ((rootHeight - minVisibleHeight) * 15) / 100;
+      adjustHeightGridSeven = ((rootHeight - minVisibleHeight) * 20) / 100;
+      adjustHeightGridNine = ((rootHeight - minVisibleHeight) * 10) / 100;
+    }
+
     return (
       <AppLayout {...this.props}>
+        <WindowResizeListener
+          onResize={windowSize => {
+            this.setState({
+              winHeight: windowSize.windowHeight,
+              winWidth: windowSize.windowWidth
+            });
+          }}
+        />
         <form className={classes.container} noValidate autoComplete='off'>
           <Grid
             container
-            direction='row'
-            justify='center'
+            direction='column'
+            justify='space-between'
             alignItems='center'
             spacing={0}
-            style={{ margin: '0px 16px' }}
+            style={{
+              margin: '0px',
+              minHeight: `${rootHeight}px`
+            }}
           >
-            <Grid item xs={12}>
-              <Typography
-                variant='h1'
-                align='center'
-                className={classes.pageTitleRed}
+            <Grid
+              item
+              style={{
+                //backgroundColor: '#f0f0f0',
+                height: `${adjustHeightGridOne}px`,
+                width: '100%'
+              }}
+            />
+            <Grid
+              item
+              style={
+                {
+                  //backgroundColor: '#666',
+                  // height: '60px',
+                  // width: '100%'
+                }
+              }
+              className={classes.adjustHeightGridTwo}
+            >
+              <div
+                className={classes.dihsinBackground}
+                style={{ margin: '0 14px' }}
               >
-                WELCOME TO DISHIN
-              </Typography>
+                <DishinMashroomIcon className={classes.topBgIconRight} />
+              </div>
+              <div style={{ margin: '0 16px' }}>
+                <Typography
+                  variant='h1'
+                  align='center'
+                  className={classes.pageTitleRed}
+                >
+                  WELCOME TO DISHIN
+                </Typography>
+                <div
+                  className={classnames(
+                    classes.footerLatoTextNormal,
+                    classes.locationAddress
+                  )}
+                  style={{
+                    margin: '0 26px',
+                    textAlign: 'center',
+                    marginTop: '7px'
+                  }}
+                >
+                  {location.address ? (
+                    <React.Fragment>
+                      <RoomIcon className={classes.iconRoot} />
+                      {location.address}
+                    </React.Fragment>
+                  ) : (
+                    'where are you dining today?'
+                  )}
+                </div>
+              </div>
             </Grid>
             <Grid
               item
-              xs={12}
-              container
-              direction='row'
-              justify='center'
-              alignItems='center'
-              spacing={0}
-              style={{ margin: '0px 26px  11px' }}
+              style={{
+                //backgroundColor: '#f0f0f0',
+                height: `${adjustHeightGridThree}px`,
+                width: '100%'
+              }}
+            />
+            <Grid
+              item
+              // style={{
+              //   //backgroundColor: '#ddd',
+              //   height: restaurants.length ? '177px' : '35px',
+              //   width: '100%'
+              // }}
+              className={
+                restaurants.length
+                  ? classes.adjustHeightGridFour
+                  : classes.adjustHeightGridFourNoGeo
+              }
             >
-              <div className={classes.footerLatoTextNormal}>
-                {address ? (
-                  <React.Fragment>
-                    <RoomIcon className={classes.iconRoot} />
-                    {address}
-                  </React.Fragment>
-                ) : (
-                  'Where are you dining today?'
-                )}
+              <div style={{ margin: '0 42px' }}>
+                <AutoComplete
+                  innerRef={this.autoCompleteRef}
+                  id='restaurantName'
+                  name='restaurantName'
+                  placeholder='Restaurant Name'
+                  data={restaurants}
+                  isOpen={restaurants.length ? true : false}
+                />
               </div>
             </Grid>
-            <Grid item xs={12} style={{ margin: '0px 26px' }}>
-              <CustomInput
-                id='restaurantName'
-                label='Restaurant Name'
-                onChange={event => this.handleChange(event.target.value)}
-                fullWidth
-                value={textFieldValue}
+            <Grid
+              item
+              style={{
+                // backgroundColor: '#f0f0f0',
+                height: `${adjustHeightGridFive}px`,
+                width: '100%'
+              }}
+            />
+            <Grid
+              item
+              // style={{
+              //   //backgroundColor: '#dadada',
+              //   height: '36px',
+              //   width: '100%',
+              //   textAlign: 'center'
+              // }}
+              className={classes.adjustHeightGridSix}
+            >
+              <div style={{ margin: '0 82px' }}>
+                <Button
+                  size='medium'
+                  className={classes.btnRaisedLightNormalRed}
+                  fullWidth
+                  onClick={this.handleSubmit}
+                >
+                  Next
+                </Button>
+              </div>
+            </Grid>
+            <Grid
+              item
+              style={{
+                //backgroundColor: '#f0f0f0',
+                height: `${adjustHeightGridSeven}px`,
+                width: '100%'
+              }}
+            />
+            <Grid
+              item
+              // style={{
+              //   //backgroundColor: '#fafafa',
+              //   height: '145px',
+              //   width: '100%',
+              //   textAlign: 'center'
+              // }}
+              className={classes.adjustHeightGridEight}
+            >
+              <FooterActions
+                linkAction={
+                  <div className={classes.footerLatoTextNormal}>
+                    Already in Dishin?{' '}
+                    <a
+                      href={`${APP_URL}/sign-in`}
+                      className={classnames(
+                        classes.footerLatoTextBold,
+                        classes.footerLink1
+                      )}
+                    >
+                      Log in
+                    </a>{' '}
+                    to the app
+                  </div>
+                }
               />
             </Grid>
-            {restaurants ? (
-              <Grid item xs={12} style={{ margin: '0px 26px' }}>
-                <Scrollbars
-                  style={{ height: 200 }}
-                  renderThumbVertical={this.renderThumb}
-                  className={classes.listScroll}
-                >
-                  <CustomList
-                    listItemOnClick={this.handListItemClick}
-                    listData={restaurants}
-                    selectedIndex={selectedIndex}
-                  />
-                </Scrollbars>
-              </Grid>
-            ) : (
-              ''
-            )}
             <Grid
               item
-              xs={12}
-              container
-              direction='row'
-              justify='center'
-              alignItems='center'
-              spacing={0}
-              className={classes.btnContainer}
-            >
-              <Button
-                size='medium'
-                className={classes.btnRaisedLightNormalRed}
-                fullWidth
-                onClick={this.handleSubmit}
-              >
-                Next
-              </Button>
-            </Grid>
-          </Grid>
-          <Grid
-            container
-            direction='row'
-            justify='center'
-            alignItems='center'
-            spacing={0}
-            style={{ margin: '0px 16px' }}
-          >
-            <Grid
-              item
-              xs={12}
-              container
-              direction='row'
-              justify='center'
-              alignItems='center'
-              spacing={0}
-              style={{ margin: '0px 26px  11px' }}
-            >
-              <div className={classes.footerLatoTextNormal}>
-                New User?{' '}
-                <Link href={`${APP_URL}/sign-up`}>
-                  <a
-                    className={classnames(
-                      classes.footerLatoTextBold,
-                      classes.footerLink1
-                    )}
-                  >
-                    Sign Up
-                  </a>
-                </Link>{' '}
-                to the app
-              </div>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              container
-              direction='row'
-              justify='center'
-              alignItems='center'
-              spacing={0}
-              style={{ margin: '0px 26px  11px' }}
-            >
-              <div className={classes.footerLatoTextNormal}>
-                Or Connect with
-              </div>
-            </Grid>
-            <SocialLinks />
-            <Grid
-              item
-              xs={12}
-              container
-              direction='row'
-              justify='center'
-              alignItems='center'
-              spacing={0}
-              style={{ margin: '0px 26px 11px' }}
-            >
-              <div className={classes.footerLatoTextNormal}>
-                Forgot Password?{' '}
-                <Link href={`${APP_URL}/recover-password`}>
-                  <a
-                    className={classnames(
-                      classes.footerLatoTextBold,
-                      classes.footerLink1
-                    )}
-                  >
-                    Recover Password
-                  </a>
-                </Link>
-              </div>
-            </Grid>
+              style={{
+                // backgroundColor: '#f0f0f0',
+                height: `${adjustHeightGridNine}px`,
+                width: '100%'
+              }}
+            />
           </Grid>
         </form>
       </AppLayout>
@@ -320,4 +396,11 @@ class WelcomeToDishIn extends PureComponent {
   }
 }
 
-export default withStyles(styles)(WelcomeToDishIn);
+export default connect(
+  state => ({
+    global: state.global.toJSON()
+  }),
+  {
+    setCurrentLocation
+  }
+)(withStyles(styles)(WelcomeToDishIn));

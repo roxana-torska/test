@@ -1,57 +1,61 @@
-import { SheetsRegistry } from 'react-jss'
+import { SheetsRegistry } from 'react-jss';
 import {
-	createMuiTheme,
-	createGenerateClassName
-} from '@material-ui/core/styles'
+  createMuiTheme,
+  createGenerateClassName
+} from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
-	typography: {
-		useNextVariants: true
-	},
-	palette: {
-		background: {
-			default: '#fff'
-		},
-		primary: {
-			// light: will be calculated from palette.primary.main,
-			main: '#f44336',
-			// dark: will be calculated from palette.primary.main,
-			// contrastText: will be calculated to contrast with palette.primary.main
-		},
-		secondary: {
-			light: '#0066ff',
-			main: '#f44336',
-			// dark: will be calculated from palette.secondary.main,
-			contrastText: '#ffcc00',
-		},
-		// error: will use the default color
-		action: {
-			hover: '#f44336'
-		}
-	},
-})
+  typography: {
+    useNextVariants: true,
+    fontFamily: '"Lato", "Roboto", "Helvetica", "Arial", sans-serif'
+  },
+  button: {
+    fontFamily: '"Lato", "Roboto", "Helvetica", "Arial", sans-serif'
+  },
+  palette: {
+    background: {
+      default: '#fff'
+    },
+    primary: {
+      // light: will be calculated from palette.primary.main,
+      main: '#f44336'
+      // dark: will be calculated from palette.primary.main,
+      // contrastText: will be calculated to contrast with palette.primary.main
+    },
+    secondary: {
+      light: '#fff',
+      main: '#fff',
+      dark: '#f4f4f4',
+      contrastText: '#fff'
+    },
+    // error: will use the default color
+    action: {
+      hover: '#f44336'
+    }
+  }
+});
 
 const createPageContext = () => {
-	return {
-		theme,
-		sheetsManager: new Map(),
-		sheetsRegistry: new SheetsRegistry(),
-		generateClassName: createGenerateClassName()
-	}
-}
+  return {
+    theme,
+    sheetsManager: new Map(),
+    sheetsRegistry: new SheetsRegistry(),
+    generateClassName: createGenerateClassName()
+  };
+};
 
-let pageContext
+let pageContext;
 
 const getPageContext = () => {
-	if (!process.browser) {
-		return createPageContext()
-	}
+  if (!process.browser) {
+    return createPageContext();
+  }
 
-	if (!pageContext) {
-		pageContext = createPageContext()
-	}
+  if (!pageContext) {
+    pageContext = createPageContext();
+  }
 
-	return pageContext
-}
+  return pageContext;
+};
 
-export default getPageContext
+export default getPageContext;

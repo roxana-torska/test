@@ -1,2 +1,3 @@
-import { userReducer as user } from "./user/reducer";
-export { user };
+import { userReducer as user } from './user/reducer';
+import { globalReducer as global } from './global/reducer';
+export { user, global };

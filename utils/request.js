@@ -1,16 +1,19 @@
 import fetch from 'isomorphic-fetch';
 
-function checkStatus(response) {
+const checkStatus = async (response) => {
   if (response.status >= 200 && response.status < 300) {
-    return response;
+    let responseJson = await response.json();
+    let headers = fetchHeaders(response);
+    //api return response with status and data node
+    return { ...responseJson, headers: headers };
+  } else {
+    const errorJson = await response.json();
+    let error = new Error(errorJson.message);
+    error.erroJson = errorJson;
+    throw error;
   }
-
-  const error = new Error(response.statusText);
-  error.response = response;
-  throw error;
 }
-
-function readHeaders(response) {
+const fetchHeaders = (response) => {
   let headers = {
     _list: {},
     get: function (key) {
@@ -20,10 +23,23 @@ function readHeaders(response) {
       this._list[key] = value;
     }
   };
-  // for (var pair of response.headers.entries()) {
-  //   headers.set(pair[0], pair[1]);
-  // }
+  if (typeof (response.headers.entries) === 'function') {
+    for (var pair of response.headers.entries()) {
+      headers.set(pair[0], pair[1]);
+    }
+  } else {
+    const respHeaders = JSON.parse(JSON.stringify(response.headers));
+    Object.keys(respHeaders._headers).map(item => {
+      headers.set(item, respHeaders._headers[item]);
+    });
+  }
+
   return headers;
+}
+
+const customError = (e) => {
+  let errorJson = e.errorJson || { message: e.toString() };
+  return { error: errorJson, status: "ERROR" };
 }
 
 /**
@@ -49,22 +65,14 @@ export default function request(url, options) {
     };
     newOptions.body = JSON.stringify(newOptions.body);
   }
-
   return fetch(url, newOptions)
     .then(checkStatus)
-    .then(async response => {
-      let responseJson = await response.json();
-      let headers = readHeaders(response);
+    .then(response => {
       return {
-        data: responseJson || null,
-        headers: headers,
-        status: responseJson.status ? responseJson.status : 'ok'
+        ...response
       };
     })
-    .catch(error => {
-      if (error.response) {
-        return error;
-      }
-      return error;
+    .catch(err => {
+      return customError(err);
     });
 }

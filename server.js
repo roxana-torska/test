@@ -8,37 +8,86 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-const { getToken, setToken, getDecodedToken } = require('./utils/common');
+const {
+  getToken,
+  setToken,
+  getDecodedToken,
+  setLocation,
+  getLocation,
+  decodeToken
+} = require('./utils/common');
 const SocialAuth = require('./utils/socialAuth');
 const { request } = require('./utils/request2');
 const { API_URL, APP_URL } = require('./utils/config');
-const isLoggedIn = function(req, res, next) {
+const { stringify } = require('qs');
+
+const hydrateLoggedIn = function(req, res, next) {
   const loggedInToken = getToken(req);
   if (loggedInToken) {
     req.loggedInToken = loggedInToken;
     req.user = getDecodedToken(loggedInToken);
-    next();
   } else {
-    res.redirect('/sign-in');
+    req.loggedInToken = null;
+    req.user = null;
   }
+  next();
 };
 
 const validateRecoveryToken = async function(payload) {
   let { token } = payload;
-  console.log('recovery token params', token);
   let response = await request(
     `${API_URL}/public/check-reset-token?token=${token}`
   );
-  console.log('api response', response);
-  return response.data;
+  return response;
 };
 
 const verifyUser = async function(payload) {
   let { token } = payload;
-  console.log('token', payload);
   let response = await request(`${API_URL}/public/verify-email?token=${token}`);
-  console.log('response', response);
-  return response.data;
+  console.log('response*****', response);
+  return response;
+};
+
+const getRestaurants = async function(payload, token) {
+  const queryParams = stringify(payload, { encodeValuesOnly: true });
+  let tempToken = null;
+  console.log('QueryParams', queryParams);
+  const url = `${API_URL}/restaurants/search?${queryParams}`;
+  if (token) {
+    tempToken = `Bearer ${token}`;
+  } else {
+    tempToken = `Bearer `;
+  }
+  let response = await request(url, {
+    headers: { Authorization: tempToken }
+  });
+  if (response.status.toLowerCase() === 'ok') {
+    return response.data;
+  } else {
+    return [];
+  }
+};
+
+const getReviews = async function(res, payload) {
+  const url = `${API_URL}/reviews`;
+  const token = payload.token;
+  let response = await request(url, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  if (response.status.toLowerCase() === 'ok') {
+    return response.data;
+  } else {
+  }
+};
+
+const getSystemRewards = async function() {
+  const url = `${API_URL}/systemRewards`;
+  let response = await request(url);
+  if (response.status.toLowerCase() === 'ok') {
+    return response.data;
+  } else {
+    return [];
+  }
 };
 
 app
@@ -63,20 +112,28 @@ app
     //local auth routes to keep client logged in
     server.get('/auth/callback', (req, res) => {
       setToken(res, req.query.token || null);
-      res.redirect('/');
+      let redirectUrl = req.query.redirect || '/';
+      res.redirect(redirectUrl);
     });
     server.get('/auth/token', (req, res) => {
       res.json({ token: getToken(req) });
     });
 
-    server.get('/', isLoggedIn, (req, res) => {
-      const actualPage = '/index';
-      app.render(req, res, actualPage);
+    server.get('/', hydrateLoggedIn, (req, res) => {
+      // const actualPage = '/index';
+      // app.render(req, res, actualPage);
+      let isLoggedIn = req.loggedInToken ? true : false;
+      if (isLoggedIn) {
+        res.redirect('/restaurants');
+      } else {
+        res.redirect('/welcome-to-dishin');
+      }
     });
 
     server.get('/sign-in', (req, res) => {
+      let redirectUrl = req.query.redirect || '';
       const actualPage = '/login';
-      app.render(req, res, actualPage);
+      app.render(req, res, actualPage, { redirect: redirectUrl });
     });
 
     server.get('/sign-out', (req, res) => {
@@ -103,19 +160,11 @@ app
       app.render(req, res, actualPage);
     });
 
-    server.get('/test-server/:title', isLoggedIn, (req, res) => {
-      const actualPage = '/test';
-      const queryParams = { title: req.params.title };
-      app.render(req, res, actualPage, queryParams);
-    });
-
     server.get('/reset-password', (req, res) => {
-      console.log('reset-password', req.query);
       const actualPage = '/resetpassword';
       const queryParams = { token: req.query.token };
       validateRecoveryToken(queryParams)
         .then(response => {
-          console.log('social response', response);
           if (response.status == 'ok' && response.isTokenValid) {
             app.render(req, res, actualPage, queryParams);
           } else {
@@ -123,7 +172,6 @@ app
           }
         })
         .catch(err => {
-          console.log('reset err', err);
           app.render(req, res, actualPage, { token: null });
         });
     });
@@ -131,13 +179,80 @@ app
     server.get('/verify-email', (req, res) => {
       const queryParams = { token: req.query.token };
       const actualPage = '/verifyemail';
-      verifyUser(queryParams).then(response => {
-        const query = {
-          verifyStatus: response.verifyStatus
-        };
-        console.log('query***', query, response, response.verifyStatus);
+      verifyUser(queryParams)
+        .then(response => {
+          if (response.status.toLowerCase() === 'ok') {
+            app.render(req, res, actualPage, {
+              verifyStatus: response.verifyStatus
+            });
+          } else {
+            app.render(req, res, actualPage, { verifyStatus: null });
+          }
+        })
+        .catch(err => {
+          app.render(req, res, actualPage, { verifyStatus: null });
+        });
+    });
+
+    server.get('/restaurants', hydrateLoggedIn, (req, res) => {
+      let query = req.query || {};
+      let isLoggedIn = req.loggedInToken ? true : false;
+      let userData = req.user || {};
+      getRestaurants(query, req.loggedInToken).then(response => {
+        // console.log('response', response);
+        query.restaurants = response.restaurants || [];
+        query.dishes = response.dishes || [];
+        query.similarRestaurants = response.similarRestaurants || [];
+        query.isLoggedIn = isLoggedIn;
+        query.user = req.user;
+        query.loggedInToken = req.loggedInToken;
+        query.systemTags = response.systemTags;
+        const actualPage = '/restaurants-search';
         app.render(req, res, actualPage, query);
       });
+    });
+
+    server.get('/my-reviews', hydrateLoggedIn, (req, res) => {
+      const actualPage = '/my-reviews';
+      // let user_id = null;
+      // if (req.user) {
+      //   user_id = req.user.user_id;
+      // } else {
+      //   res.redirect('/sign-in');
+      // }
+      getReviews(res, { token: req.loggedInToken }).then(response => {
+        const query = {
+          myreviews: response,
+          user: req.user,
+          isLoggedIn: req.loggedInToken ? true : false,
+          loggedInToken: req.loggedInToken
+        };
+        app.render(req, res, actualPage, query);
+      });
+    });
+
+    server.get('/rewards', hydrateLoggedIn, (req, res) => {
+      const actualPage = '/rewards';
+      getSystemRewards().then(response => {
+        const query = {
+          rewards: response,
+          user: req.user,
+          isLoggedIn: req.loggedInToken ? true : false,
+          loggedInToken: req.loggedInToken
+        };
+        app.render(req, res, actualPage, query);
+      });
+    });
+
+    server.get('/user-update/callback', (req, res) => {
+      let token = req.query.token || null;
+
+      setToken(res, token);
+      let user = getDecodedToken(token);
+
+      res.json({ user, token });
+      // let redirectUrl = req.query.redirect || '/';
+      // res.redirect(redirectUrl);
     });
 
     server.get('*', (req, res) => {
