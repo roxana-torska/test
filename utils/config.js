@@ -3,7 +3,7 @@ const configs = function() {
   switch (process.env.NODE_ENV) {
     case 'development':
       return {
-        APP_URL: 'https://demo.local',
+        APP_URL: 'http://localhost:3001',
         API_URL: 'http://localhost:8282/api',
         API_IMAGE_URL: 'http://localhost:8282'
       };
