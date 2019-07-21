@@ -239,7 +239,7 @@ class Login extends PureComponent {
                   <div className={classes.footerLatoTextNormal}>
                     Not a user yet?{' '}
                     <a
-                      href={`${APP_URL}/sign-up`}
+                      href={`/sign-up`}
                       className={classnames(
                         classes.footerLatoTextBold,
                         classes.footerLink1

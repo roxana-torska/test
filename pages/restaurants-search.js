@@ -211,10 +211,10 @@ class Restaurants extends React.Component {
 
   handleListItemClick = (evt, index, value) => {
     if (value.type === 'restaurant') {
-      window.location.href = `${APP_URL}/restaurants/${value.slug}`;
+      window.location.href = `/restaurants/${value.slug}`;
     }
     if (value.type === 'dish') {
-      window.location.href = `${APP_URL}/dish-details/${value.slug}`;
+      window.location.href = `/dish-details/${value.slug}`;
     }
   };
 

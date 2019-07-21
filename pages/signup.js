@@ -292,7 +292,7 @@ class SignUp extends PureComponent {
                   <div className={classes.footerLatoTextNormal}>
                     Already in Dishin?{' '}
                     <a
-                      href={`${APP_URL}/sign-in`}
+                      href={`/sign-in`}
                       className={classnames(
                         classes.footerLatoTextBold,
                         classes.footerLink1

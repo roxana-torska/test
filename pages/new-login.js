@@ -174,7 +174,7 @@ class Login extends PureComponent {
               <div className={classes.footerLatoTextNormal}>
                 New User?{" "}
                 <a
-                  href={`${APP_URL}/sign-up`}
+                  href={`/sign-up`}
                   className={classnames(
                     classes.footerLatoTextBold,
                     classes.footerLink1
@@ -195,7 +195,7 @@ class Login extends PureComponent {
               <div className={classes.footerLatoTextNormal}>
                 Forgot Password?{" "}
                 <a
-                  href={`${APP_URL}/recover-password`}
+                  href={`/recover-password`}
                   className={classnames(
                     classes.footerLatoTextBold,
                     classes.footerLink1

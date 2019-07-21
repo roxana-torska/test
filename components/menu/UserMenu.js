@@ -7,7 +7,7 @@ import Menu from '@material-ui/core/Menu';
 
 class UserMenu extends Component {
   handleSignOut = () => {
-    window.location.href = `${APP_URL}/sign-out`;
+    window.location.href = `/sign-out`;
   };
 
   render() {

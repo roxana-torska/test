@@ -22,7 +22,7 @@ class FooterActions extends React.Component {
         <div className={classes.footerLatoTextNormal}>
           Forgot Password?{' '}
           <a
-            href={`${APP_URL}/recover-password`}
+            href={`/recover-password`}
             className={classnames(
               classes.footerLatoTextBold,
               classes.footerLink1

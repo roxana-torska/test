@@ -18,7 +18,7 @@ export default class extends Component {
     return (
       <div>
         <p>Hello, {this.props.user.email} This is Dishin App</p>
-        <Link href={`${APP_URL}/test-server/DrMac`}>
+        <Link href={`/test-server/DrMac`}>
           <a>
             Click to DrMac (
             <small>It will load page from express server route</small>)

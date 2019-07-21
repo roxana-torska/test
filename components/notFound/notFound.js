@@ -73,7 +73,7 @@ class NotFound extends Component {
 
   handleNewSearch = () => {
     newSearchColor = '#ececec';
-    window.location.href = `${APP_URL}/restaurants`;
+    window.location.href = `/restaurants`;
   };
 
   handleContribute = () => {
@@ -82,7 +82,7 @@ class NotFound extends Component {
       global: { isLoggedIn }
     } = this.props;
     if (!isLoggedIn) {
-      window.location.href = `${APP_URL}/sign-in?redirect=${escape(
+      window.location.href = `/sign-in?redirect=${escape(
         window.location.href
       )}`;
     }
@@ -132,7 +132,7 @@ class NotFound extends Component {
         .then(response => {
           if (response.status.toLowerCase() === 'ok') {
             notify('Thanks for your valuable contribution');
-            window.location.href = `${APP_URL}/restaurants`;
+            window.location.href = `/restaurants`;
           }
         });
     } else {

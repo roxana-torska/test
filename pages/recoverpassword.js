@@ -101,7 +101,7 @@ class RecoverPassword extends PureComponent {
 
   handleModelClose = () => {
     this.setState({ openDialog: false });
-    Router.push(`${APP_URL}/sign-in`);
+    Router.push(`/sign-in`);
   };
 
   render() {
@@ -245,7 +245,7 @@ class RecoverPassword extends PureComponent {
                   <div className={classes.footerLatoTextNormal}>
                     Wanna try one more time?{' '}
                     <a
-                      href={`${APP_URL}/sign-in`}
+                      href={`/sign-in`}
                       className={classnames(
                         classes.footerLatoTextBold,
                         classes.footerLink1

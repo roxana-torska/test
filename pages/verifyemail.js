@@ -25,7 +25,7 @@ class VerifyEmail extends PureComponent {
   }
 
   handleSubmit = () => {
-    Router.push(`${APP_URL}`);
+    Router.push('/');
   };
 
   render() {
@@ -134,7 +134,7 @@ class VerifyEmail extends PureComponent {
                   <div className={classes.footerLatoTextNormal}>
                     Already in Dishin?{' '}
                     <a
-                      href={`${APP_URL}/sign-in`}
+                      href={`/sign-in`}
                       className={classnames(
                         classes.footerLatoTextBold,
                         classes.footerLink1

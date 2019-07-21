@@ -158,7 +158,7 @@ class WelcomeToDishIn extends PureComponent {
     } = this.props;
     const selectedItem = this.autoComplete.selectedItem;
     if (selectedItem && selectedItem.selectedItem) {
-      window.location.href = `${APP_URL}/restaurants/${slug(
+      window.location.href = `/restaurants/${slug(
         selectedItem.selectedItem,
         { lower: true }
       )}`;
@@ -167,7 +167,7 @@ class WelcomeToDishIn extends PureComponent {
         let queryParmas = {
           searchText
         };
-        window.location.href = `${APP_URL}/restaurants?${stringify(
+        window.location.href = `/restaurants?${stringify(
           queryParmas,
           { encodeValuesOnly: true }
         )}`;
@@ -368,7 +368,7 @@ class WelcomeToDishIn extends PureComponent {
                   <div className={classes.footerLatoTextNormal}>
                     Already in Dishin?{' '}
                     <a
-                      href={`${APP_URL}/sign-in`}
+                      href={`/sign-in`}
                       className={classnames(
                         classes.footerLatoTextBold,
                         classes.footerLink1

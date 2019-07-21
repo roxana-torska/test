@@ -92,7 +92,7 @@ class CaptureImage extends Component {
           if (type === 'User') {
             notify(response.msg);
             request(
-              `${APP_URL}/user-update/callback?token=${response.data.token}`
+              `/user-update/callback?token=${response.data.token}`
             )
               .then(response => {
                 if (response.user) {

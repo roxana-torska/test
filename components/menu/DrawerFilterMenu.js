@@ -94,7 +94,7 @@ class DrawerFilterMenu extends Component {
     } else if (selectedFilterTab === 1) {
       updateSort('', '');
     } else {
-      window.location.href = `${APP_URL}/restaurants`;
+      window.location.href = `/restaurants`;
     }
   };
 
@@ -124,7 +124,7 @@ class DrawerFilterMenu extends Component {
       lat
     });
 
-    window.location.href = `${APP_URL}/restaurants?${stringify(response, {
+    window.location.href = `/restaurants?${stringify(response, {
       encodeValuesOnly: true
     })}`;
   };

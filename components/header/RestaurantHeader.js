@@ -80,7 +80,7 @@ class RestaurantHeader extends Component {
       global: { isLoggedIn }
     } = this.props;
     if (!isLoggedIn) {
-      window.location.href = `${APP_URL}/sign-in?redirect=${escape(
+      window.location.href = `/sign-in?redirect=${escape(
         window.location.href
       )}`;
       return;
@@ -125,7 +125,7 @@ class RestaurantHeader extends Component {
       direction,
       searchText
     });
-    window.location.href = `${APP_URL}/restaurants?${stringify(response, {
+    window.location.href = `/restaurants?${stringify(response, {
       encodeValuesOnly: true
     })}`;
   };

@@ -150,7 +150,7 @@ class UserDrawer extends Component {
           if (response.status.toLowerCase() === 'ok') {
             notify(response.msg);
             request(
-              `${APP_URL}/user-update/callback?token=${response.data.token}`
+              `/user-update/callback?token=${response.data.token}`
             )
               .then(response => {
                 if (response.user) {
@@ -170,7 +170,7 @@ class UserDrawer extends Component {
                   });
                   if (name === 'email' || name === 'password') {
                     setTimeout(() => {
-                      window.location.href = `${APP_URL}/sign-out`;
+                      window.location.href = `/sign-out`;
                     }, 3000);
                   }
                 }
@@ -178,7 +178,7 @@ class UserDrawer extends Component {
               .catch(err => {
                 notify(err);
                 setTimeout(() => {
-                  window.location.href = `${APP_URL}/sign-out`;
+                  window.location.href = `/sign-out`;
                 }, 3000);
               });
           } else {
@@ -234,7 +234,7 @@ class UserDrawer extends Component {
         if (response.status.toLowerCase() === 'ok') {
           notify(response.msg);
           request(
-            `${APP_URL}/user-update/callback?token=${response.data.token}`
+            `/user-update/callback?token=${response.data.token}`
           )
             .then(response => {
               if (response.user) {
@@ -316,7 +316,7 @@ class UserDrawer extends Component {
     globalAPI.saveImage(token, { params }).then(response => {
       if (response.status.toLowerCase() === 'ok' && response.data) {
         notify(response.msg);
-        request(`${APP_URL}/user-update/callback?token=${response.data.token}`)
+        request(`/user-update/callback?token=${response.data.token}`)
           .then(response => {
             if (response.user) {
               updateUserAndToken({

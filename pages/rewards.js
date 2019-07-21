@@ -76,7 +76,7 @@ class Rewards extends PureComponent {
           if (response.status.toLowerCase() === 'ok') {
             notify(response.msg);
             setTimeout(() => {
-              window.location.href = `${APP_URL}/redeem`;
+              window.location.href = `/redeem`;
             }, 2000);
           } else {
             notify(response.msg);

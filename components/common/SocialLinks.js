@@ -11,7 +11,7 @@ class SocialLinks extends PureComponent {
     const { classes } = this.props;
     return (
       <React.Fragment>
-        <Link href={`${APP_URL}/auth/facebook`}>
+        <Link href={`/auth/facebook`}>
           <a>
             <SvgIcon className={classes.socialIcon} viewBox='0 0 40 40'>
               <path
@@ -22,7 +22,7 @@ class SocialLinks extends PureComponent {
           </a>
         </Link>
         <span style={{ margin: '0px 15px' }} />
-        <Link href={`${APP_URL}/auth/instagram`}>
+        <Link href={`/auth/instagram`}>
           <a>
             <SvgIcon className={classes.socialIcon} viewBox='0 0 40 40'>
               <path
@@ -41,7 +41,7 @@ class SocialLinks extends PureComponent {
           </a>
         </Link>
         <span style={{ margin: '0px 15px' }} />
-        <Link href={`${APP_URL}/auth/google`}>
+        <Link href={`/auth/google`}>
           <a>
             <SvgIcon className={classes.socialIcon} viewBox='0 0 1024 1024'>
               <path
