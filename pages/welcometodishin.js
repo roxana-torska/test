@@ -300,7 +300,7 @@ class WelcomeToDishIn extends PureComponent {
               //   width: '100%'
               // }}
               className={
-                restaurants.length
+                restaurants
                   ? classes.adjustHeightGridFour
                   : classes.adjustHeightGridFourNoGeo
               }
