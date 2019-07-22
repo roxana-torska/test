@@ -193,9 +193,9 @@ class WelcomeToDishIn extends PureComponent {
     let adjustHeightGridSeven = 5;
     let adjustHeightGridNine = 2;
     let rootHeight = winHeight - 56;
-    let minVisibleHeight = restaurants.length ? 420 : 420 - 142;
+    let minVisibleHeight = restaurants ? 420 : 420 - 142;
     if (winWidth <= 320) {
-      minVisibleHeight = restaurants.length ? 320 : 320 - 88;
+      minVisibleHeight = restaurants ? 320 : 320 - 88;
     }
     if (rootHeight < minVisibleHeight) {
       rootHeight = minVisibleHeight;
