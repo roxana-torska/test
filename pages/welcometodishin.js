@@ -312,7 +312,7 @@ class WelcomeToDishIn extends PureComponent {
                   name='restaurantName'
                   placeholder='Restaurant Name'
                   data={restaurants}
-                  isOpen={restaurants.length ? true : false}
+                  isOpen={restaurants ? true : false}
                 />
               </div>
             </Grid>
