@@ -36,14 +36,14 @@ const hydrateLoggedIn = function(req, res, next) {
 const validateRecoveryToken = async function(payload) {
   let { token } = payload;
   let response = await request(
-    `/public/check-reset-token?token=${token}`
+    `${API_URL}/public/check-reset-token?token=${token}`
   );
   return response;
 };
 
 const verifyUser = async function(payload) {
   let { token } = payload;
-  let response = await request(`/public/verify-email?token=${token}`);
+  let response = await request(`${API_URL}/public/verify-email?token=${token}`);
   console.log('response*****', response);
   return response;
 };
@@ -52,7 +52,7 @@ const getRestaurants = async function(payload, token) {
   const queryParams = stringify(payload, { encodeValuesOnly: true });
   let tempToken = null;
   console.log('QueryParams', queryParams);
-  const url = `/restaurants/search?${queryParams}`;
+  const url = `${API_URL}/restaurants/search?${queryParams}`;
   if (token) {
     tempToken = `Bearer ${token}`;
   } else {
@@ -69,7 +69,7 @@ const getRestaurants = async function(payload, token) {
 };
 
 const getReviews = async function(res, payload) {
-  const url = `/reviews`;
+  const url = `${API_URL}/reviews`;
   const token = payload.token;
   let response = await request(url, {
     headers: { Authorization: `Bearer ${token}` }
@@ -81,7 +81,7 @@ const getReviews = async function(res, payload) {
 };
 
 const getSystemRewards = async function() {
-  const url = `/systemRewards`;
+  const url = `${API_URL}/systemRewards`;
   let response = await request(url);
   if (response.status.toLowerCase() === 'ok') {
     return response.data;
