@@ -15,7 +15,7 @@ export const userAPI = {
   },
   login: async function(payload) {
     let params = { ...payload.params };
-    let response = await request(`${payload.headers.referer}/users/sign-in`, {
+    let response = await request(`${API_URL}/users/sign-in`, {
       method: 'POST',
       body: {
         ...params
@@ -25,7 +25,7 @@ export const userAPI = {
   },
   signUp: async function(payload) {
     let params = { ...payload.params };
-    let response = await request(`${payload.headers.referer}/users/sign-up`, {
+    let response = await request(`${API_URL}/users/sign-up`, {
       method: 'POST',
       body: {
         ...params
@@ -35,7 +35,7 @@ export const userAPI = {
   },
   recoverPassword: async function(payload) {
     let params = { ...payload.params };
-    let response = await request(`${payload.headers.referer}/users/forget-password`, {
+    let response = await request(`${API_URL}/users/forget-password`, {
       method: 'POST',
       body: {
         ...params
@@ -51,7 +51,7 @@ export const userAPI = {
       confirmPassword: params.confirmPassword
     };
     let response = await request(
-      `${payload.headers.referer}/public/reset-password?token=${token}`,
+      `${API_URL}/public/reset-password?token=${token}`,
       {
         method: 'POST',
         body: {
@@ -69,7 +69,7 @@ export const userAPI = {
     lat = lat || '';
     lng = lng || '';
     let response = await request(
-      `${payload.headers.referer}/restaurants/autocomplete?name=${name}&lat=${lat}&lng=${lng}`
+      `${API_URL}/restaurants/autocomplete?name=${name}&lat=${lat}&lng=${lng}`
     );
     return response;
   },
@@ -80,7 +80,7 @@ export const userAPI = {
       fieldValue: params.fieldValue
     };
     const token = params.token;
-    let response = await request(`${payload.headers.referer}/users/update/`, {
+    let response = await request(`${API_URL}/users/update/`, {
       headers: { Authorization: `Bearer ${token}` },
       method: 'POST',
       body: {
@@ -91,7 +91,7 @@ export const userAPI = {
   },
   uploadProfileImage: async function(token, payload) {
     let params = { ...payload.params };
-    let response = await request(`${payload.headers.referer}/users/upload-image/`, {
+    let response = await request(`${API_URL}/users/upload-image/`, {
       headers: {
         Authorization: `Bearer ${token}`,
         'content-type': 'multipart/form-data'
