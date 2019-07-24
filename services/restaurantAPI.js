@@ -7,7 +7,7 @@ import { func } from 'prop-types';
 export const restaurantAPI = {
 	getRestaurants: async function (payload) {
 		const queryParams = stringify(payload, { encodeValuesOnly: true });
-		let response = await request(`${API_URL}/restaurants/?${queryParams}`);
+		let response = await request(`/restaurants/?${queryParams}`);
 		if (response.status.toLowerCase() === 'ok') {
 			return response.data;
 		} else {
@@ -17,7 +17,7 @@ export const restaurantAPI = {
 	searchRestaurants: async function (payload) {
 		const queryParams = stringify(payload, { encodeValuesOnly: true });
 		let response = await request(
-			`${API_URL}/restaurants/search/?${queryParams}`
+			`/restaurants/search/?${queryParams}`
 		);
 		if (response.status.toLowerCase() === 'ok') {
 			return response.data;

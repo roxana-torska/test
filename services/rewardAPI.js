@@ -5,7 +5,7 @@ import { stringify } from 'qs';
 export const rewardAPI = {
   getRewards: async function(payload) {
     let token = payload.token;
-    let response = await request(`${API_URL}/systemRewards/`, {
+    let response = await request(`/systemRewards/`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     if (response.status.toLowerCase() === 'ok') {
@@ -19,7 +19,7 @@ export const rewardAPI = {
     const params = {
       rewardId: payload.rewardId
     };
-    let response = await request(`${API_URL}/rewards/redeem`, {
+    let response = await request(`/rewards/redeem`, {
       headers: { Authorization: `Bearer ${token}` },
       method: 'POST',
       body: {

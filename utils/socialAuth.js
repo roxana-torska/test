@@ -7,7 +7,7 @@ const { request } = require('../utils/request2');
 
 const socialSignIn = async function(payload) {
   let params = { ...payload };
-  let response = await request(`${API_URL}/users/social-sign-in`, {
+  let response = await request(`/users/social-sign-in`, {
     method: 'POST',
     body: {
       ...params
