@@ -4,7 +4,7 @@ const configs = function() {
     case 'development':
       return {
         APP_URL: 'http://ec2-35-156-241-115.eu-central-1.compute.amazonaws.com:3001',
-        API_URL: 'http://ec2-35-156-241-115.eu-central-1.compute.amazonaws.com:8282',
+        API_URL: 'http://ec2-35-156-241-115.eu-central-1.compute.amazonaws.com:8282/api',
         API_IMAGE_URL: 'http://ec2-35-156-241-115.eu-central-1.compute.amazonaws.com:8282'
       };
 
