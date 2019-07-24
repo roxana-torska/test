@@ -5,7 +5,7 @@ import { async } from 'rxjs/internal/scheduler/async';
 
 export const globalAPI = {
   getPriceRange: async function() {
-    let response = await request(`/public/price-range`, {});
+    let response = await request(`${API_URL}/public/price-range`, {});
     if (response.status.toLowerCase() === 'ok') {
       return response.data;
     } else {
@@ -14,7 +14,7 @@ export const globalAPI = {
   },
   getDistance: async function(payload) {
     let response = await request(
-      `/public/distance-to-me?${stringify(payload)}`,
+      `${API_URL}/public/distance-to-me?${stringify(payload)}`,
       {}
     );
     if (response.status.toLowerCase() === 'ok') {
@@ -31,7 +31,7 @@ export const globalAPI = {
       city: payload.city,
       dishScore: payload.dishScore
     };
-    let response = await request(`/public/contribute`, {
+    let response = await request(`${API_URL}/public/contribute`, {
       method: 'POST',
       body: {
         ...params
@@ -40,7 +40,7 @@ export const globalAPI = {
     return response;
   },
   getSearchBy: async function(payload) {
-    let response = await request(`/public/search-by`);
+    let response = await request(`${API_URL}/public/search-by`);
     if (response.status.toLowerCase() === 'ok') {
       return response.data;
     } else {
@@ -49,7 +49,7 @@ export const globalAPI = {
   },
   addReservationRequest: async function(payload) {
     let params = { ...payload.params };
-    let response = await request(`/public/reservation-request`, {
+    let response = await request(`${API_URL}/public/reservation-request`, {
       method: 'POST',
       body: {
         ...params
@@ -59,7 +59,7 @@ export const globalAPI = {
   },
   saveImage: async function(token, payload) {
     let params = { ...payload.params };
-    let response = await request(`/public/save-capture-image`, {
+    let response = await request(`${API_URL}/public/save-capture-image`, {
       headers: { Authorization: `Bearer ${token}` },
       method: 'POST',
       body: {
