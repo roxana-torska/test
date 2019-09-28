@@ -5,21 +5,25 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const { APP_URL, API_URL } = require('../utils/config');
 const { request } = require('../utils/request2');
 
-const socialSignIn = async function(payload) {
+const socialSignIn = async function (payload) {
   let params = { ...payload };
-  let response = await request(`/users/social-sign-in`, {
+
+  let response = await request(API_URL+`/users/social-sign-in`, {
     method: 'POST',
     body: {
       ...params
     }
   });
+  
   return response;
 };
 
 module.exports = server => {
   const verifyHandler = (accessToken, refreshToken, profile, done) => {
+    console.log("outside profile======>",profile);
     let signUpWith = '';
     if (profile.provider === 'instagram') {
+      console.log("profile=====>",profile);
       signUpWith = 'Instagram';
       const nameArr = profile.displayName.split(' ');
       profile.first_name = nameArr[0];
@@ -76,11 +80,11 @@ module.exports = server => {
       });
   };
 
-  passport.serializeUser(function(user, done) {
+  passport.serializeUser(function (user, done) {
     done(null, user);
   });
 
-  passport.deserializeUser(function(user, done) {
+  passport.deserializeUser(function (user, done) {
     done(null, user);
   });
 
@@ -130,7 +134,7 @@ module.exports = server => {
   server.get(
     '/auth/facebook/callback',
     passport.authenticate('facebook', { failureRedirect: '/sign-in' }),
-    function(req, res) {
+    function (req, res) {
       // Successful authentication, redirect home.
       const token = req.user.data.token;
       res.redirect(`/auth/callback?token=${token}`);
@@ -141,7 +145,8 @@ module.exports = server => {
   server.get(
     '/auth/instagram/callback',
     passport.authenticate('instagram', { failureRedirect: '/sign-in' }),
-    function(req, res) {
+    function (req, res) {
+      console.log("request=====>",req)
       // Successful authentication, redirect home.
       const token = req.user.data.token;
       res.redirect(`/auth/callback?token=${token}`);
@@ -150,12 +155,20 @@ module.exports = server => {
 
   server.get(
     '/auth/google',
-    passport.authenticate('google', { scope: ['profile', 'email'] })
+    passport.authenticate('google', {
+      scope: ['profile','email']
+    })
   );
   server.get(
     '/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: '/sign-in' }),
-    function(req, res) {
+    passport.authenticate('google',{
+      scope:['https://googleapis.com/auth/userinfo.profile','https://www.googleapis.com/auth/userinfo.email','https://googleapis.com/auth/gmail.readonly'],
+      accessType:'offline',
+      prompt:'consent',
+      successRedirect:'/restaurants',
+      failureRedirect:'/sign-in'
+    }),
+    function (req, res) {
       const token = req.user.data.token;
       res.redirect(`/auth/callback?token=${token}`);
     }
