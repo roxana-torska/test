@@ -20,7 +20,7 @@ const socialSignIn = async function (payload) {
 
 module.exports = server => {
   const verifyHandler = (accessToken, refreshToken, profile, done) => {
-    console.log("outside profile======>",profile);
+    console.log("outside",profile)
     let signUpWith = '';
     if (profile.provider === 'instagram') {
       console.log("profile=====>",profile);
@@ -91,8 +91,8 @@ module.exports = server => {
   passport.use(
     new FacebookStrategy(
       {
-        clientID: '946170095773757', //'318699738713309', //"1165866970222123", // Use your Facebook App Id
-        clientSecret: '3384b1a7fb37d55b36a9e2ee8f801ead', //'2f1afdebd940fced3346c5690550cae3', //"b5a47642cd15662884cd089a81973f97", // Use your Facebook App Secret
+        clientID: '1801834103451410', //'318699738713309', //"1165866970222123", // Use your Facebook App Id
+        clientSecret: '77263ee892e02918732bfd11f1f77f0a', //'2f1afdebd940fced3346c5690550cae3', //"b5a47642cd15662884cd089a81973f97", // Use your Facebook App Secret
         callbackURL: `${APP_URL}/auth/facebook/callback`,
         profileFields: ['id', 'email', 'name', 'displayName', 'picture'] //This
       },
@@ -103,8 +103,8 @@ module.exports = server => {
   passport.use(
     new InstagramStrategy(
       {
-        clientID: '8a4c8d6fff434f68b73147f20f704105', //'066c10e2d2d248b5a48c84e4ad3e2262',
-        clientSecret: '8d1bb885eb154590a39f728fc191aa2e', //'08e3b247f21e437d9cd1c1fe899f976e',
+        clientID: 'f8a94180cd744a1398d3b6e214ee9752', //'066c10e2d2d248b5a48c84e4ad3e2262',
+        clientSecret: '81a5d5eaa7aa46d49ad611ccaa7c64ff', //'08e3b247f21e437d9cd1c1fe899f976e',
         callbackURL: `${APP_URL}/auth/instagram/callback`
       },
       verifyHandler
@@ -146,7 +146,6 @@ module.exports = server => {
     '/auth/instagram/callback',
     passport.authenticate('instagram', { failureRedirect: '/sign-in' }),
     function (req, res) {
-      console.log("request=====>",req)
       // Successful authentication, redirect home.
       const token = req.user.data.token;
       res.redirect(`/auth/callback?token=${token}`);
@@ -165,7 +164,7 @@ module.exports = server => {
       scope:['https://googleapis.com/auth/userinfo.profile','https://www.googleapis.com/auth/userinfo.email','https://googleapis.com/auth/gmail.readonly'],
       accessType:'offline',
       prompt:'consent',
-      successRedirect:'/restaurants',
+      successRedirect:'/restaurants/',
       failureRedirect:'/sign-in'
     }),
     function (req, res) {
