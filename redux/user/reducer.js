@@ -8,9 +8,10 @@ const initState = new Map({
   isTokenValid: null
 });
 
-const hydrateUser = function() {
+const hydrateUser = function () {
   const userData = getDecodedToken();
   if (userData) {
+    console.log("inside user reducer:==========>", userData);
     return initState.set('user', userData);
   } else {
     return initState;
@@ -18,7 +19,7 @@ const hydrateUser = function() {
 };
 
 export function userReducer(state = hydrateUser(), action) {
-  console.log('reducer action', action);
+  console.log('reducer action======>', action.user);
   let { loading, error } = action;
   switch (action.type) {
     case actions.USER_LOGIN:

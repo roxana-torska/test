@@ -4,6 +4,7 @@ import { stringify } from 'qs';
 
 export const tagAPI = {
   getTags: async function(payload) {
+    console.log("payload====>",payload);
     let response = await request(
       `/tags/with-counts?${stringify(payload)}`,
       {}

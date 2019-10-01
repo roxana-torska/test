@@ -92,6 +92,7 @@ class UserDrawer extends Component {
       userState = { userName: user.userName, email: user.email };
     }
     this.setState(userState);
+    console.log("inside the user drawer");
   }
   handleFieldEdit = value => {
     this.setState({
@@ -251,6 +252,7 @@ class UserDrawer extends Component {
             });
         } else {
           notify(response.msg);
+          console.log(response);
           this.handleChangeOverlay(false);
         }
       })
@@ -281,7 +283,7 @@ class UserDrawer extends Component {
     evt.preventDefault();
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: false })
-      .then(function(stream) {
+      .then(function (stream) {
         localStream = stream;
         video.srcObject = stream;
         video.play();
@@ -358,6 +360,7 @@ class UserDrawer extends Component {
   };
 
   render() {
+
     const {
       openDrawer,
       classes,
@@ -365,6 +368,7 @@ class UserDrawer extends Component {
       global: { user }
     } = this.props;
 
+    console.log("global user======>", this.props.global);
     const {
       type,
       email,
@@ -386,13 +390,14 @@ class UserDrawer extends Component {
       noCamera
     } = this.state;
     let avatar = '/static/imgs/image-not-found-dark.png';
+    console.log("user data=====>",user);
     if (user && user.userAvatar) {
       let checkSocialImage = user.userAvatar ? user.userAvatar.split(':') : [];
-
+      console.log("social image",checkSocialImage);
       if (checkSocialImage[0] !== 'https') {
         avatar = `${API_IMAGE_URL}/assets/images/users/${user.user_id}/${
           user.userAvatar
-        }`;
+          }`;
       } else {
         avatar = user.userAvatar;
       }
@@ -512,15 +517,15 @@ class UserDrawer extends Component {
                             onClick={evt => this.handleFieldEdit('userName')}
                           />
                         ) : (
-                          <div>
-                            <DoneIcon
-                              onClick={evt =>
-                                this.handleSubmit(evt, 'userName', userName)
-                              }
-                            />
-                            <ClearIcon onClick={this.handleClear} />
-                          </div>
-                        )}
+                            <div>
+                              <DoneIcon
+                                onClick={evt =>
+                                  this.handleSubmit(evt, 'userName', userName)
+                                }
+                              />
+                              <ClearIcon onClick={this.handleClear} />
+                            </div>
+                          )}
                       </InputAdornment>
                     )
                   }}
@@ -532,10 +537,10 @@ class UserDrawer extends Component {
                   id='connectedWithFacebook'
                   label={`Connected with ${
                     user.signUpFrom === 'Self' ? 'Email' : user.signUpFrom
-                  }`}
+                    }`}
                   placeholder={`Connected with ${
                     user.signUpFrom === 'Self' ? 'Email' : user.signUpFrom
-                  }`}
+                    }`}
                   margin='normal'
                   InputProps={{
                     readOnly: true,
@@ -575,15 +580,15 @@ class UserDrawer extends Component {
                             onClick={evt => this.handleFieldEdit('email')}
                           />
                         ) : (
-                          <div>
-                            <DoneIcon
-                              onClick={evt =>
-                                this.handleSubmit(evt, 'email', email)
-                              }
-                            />
-                            <ClearIcon onClick={this.handleClear} />
-                          </div>
-                        )}
+                            <div>
+                              <DoneIcon
+                                onClick={evt =>
+                                  this.handleSubmit(evt, 'email', email)
+                                }
+                              />
+                              <ClearIcon onClick={this.handleClear} />
+                            </div>
+                          )}
                       </InputAdornment>
                     )
                   }}
@@ -612,15 +617,15 @@ class UserDrawer extends Component {
                             onClick={evt => this.handleFieldEdit('password')}
                           />
                         ) : (
-                          <div>
-                            <DoneIcon
-                              onClick={evt =>
-                                this.handleSubmit(evt, 'password', password)
-                              }
-                            />
-                            <ClearIcon onClick={this.handleClear} />
-                          </div>
-                        )}
+                            <div>
+                              <DoneIcon
+                                onClick={evt =>
+                                  this.handleSubmit(evt, 'password', password)
+                                }
+                              />
+                              <ClearIcon onClick={this.handleClear} />
+                            </div>
+                          )}
                       </InputAdornment>
                     )
                   }}
@@ -642,7 +647,7 @@ class UserDrawer extends Component {
                   >
                     {`Connected with ${
                       user.signUpFrom === 'Self' ? 'Email' : user.signUpFrom
-                    }`}{' '}
+                      }`}{' '}
                   </Grid>
                   <Grid item xs={1} style={{ textAlign: 'right' }}>
                     <ClearIcon onClick={this.handleSocialDialogClose} />

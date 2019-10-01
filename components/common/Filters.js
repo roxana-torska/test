@@ -293,7 +293,9 @@ class Filters extends React.Component {
       classes,
       global: { selectedFilterAccordion, filters }
     } = this.props;
-
+    console.log("tags=====>", tags)
+    console.log("search by data =====>", searchByData);
+    console.log("priceRange", priceRange);
     return (
       <React.Fragment>
         <ExpansionPanel
@@ -320,8 +322,8 @@ class Filters extends React.Component {
                 selected={Array.from(filters.tags)}
               />
             ) : (
-              ''
-            )}
+                ''
+              )}
           </ExpansionPanelDetails>
         </ExpansionPanel>
         <ExpansionPanel
@@ -348,8 +350,8 @@ class Filters extends React.Component {
                 selected={filters.price + ''}
               />
             ) : (
-              ''
-            )}
+                ''
+              )}
           </ExpansionPanelDetails>
         </ExpansionPanel>
         <ExpansionPanel
@@ -376,8 +378,8 @@ class Filters extends React.Component {
                 selected={this.getSelectedDistance(filters.distanceToMe)}
               />
             ) : (
-              'No restaurants and dishes found in your region'
-            )}
+                'No restaurants and dishes found in your region'
+              )}
           </ExpansionPanelDetails>
         </ExpansionPanel>
         <ExpansionPanel
@@ -404,8 +406,8 @@ class Filters extends React.Component {
                 selected={filters.searchBy + ''}
               />
             ) : (
-              ''
-            )}
+                ''
+              )}
           </ExpansionPanelDetails>
         </ExpansionPanel>
       </React.Fragment>

@@ -14,20 +14,21 @@ const socialSignIn = async function (payload) {
       ...params
     }
   });
-  
+
   return response;
 };
 
 module.exports = server => {
   const verifyHandler = (accessToken, refreshToken, profile, done) => {
-    console.log("outside",profile)
+    
     let signUpWith = '';
     if (profile.provider === 'instagram') {
-      console.log("profile=====>",profile);
+      
       signUpWith = 'Instagram';
       const nameArr = profile.displayName.split(' ');
       profile.first_name = nameArr[0];
       profile.last_name = nameArr[1];
+      profile.imageUrl =profile._json.data.profile_picture;
       profile.emails = new Array(1).fill({
         value: profile.username + '@' + 'gmail.com'
       });
@@ -43,7 +44,7 @@ module.exports = server => {
     if (profile.provider === 'google') {
       signUpWith = 'Google';
       profile.first_name = profile.name.givenName;
-      profile.lastName = profile.name.familyName;
+      profile.last_name = profile.name.familyName;
       profile.email = profile.email;
       profile.imageUrl = profile.photos[0].value;
     }
@@ -66,10 +67,11 @@ module.exports = server => {
       data.email = profile.emails[0].value;
     }
     //fetch api //social-login
-
+    
     socialSignIn(data)
       .then(response => {
         if (response.status == 'ok') {
+         
           return done(null, response);
         } else {
           return done(null, false, { message: response.error });
@@ -81,10 +83,12 @@ module.exports = server => {
   };
 
   passport.serializeUser(function (user, done) {
+   
     done(null, user);
   });
 
   passport.deserializeUser(function (user, done) {
+   
     done(null, user);
   });
 
@@ -147,6 +151,7 @@ module.exports = server => {
     passport.authenticate('instagram', { failureRedirect: '/sign-in' }),
     function (req, res) {
       // Successful authentication, redirect home.
+      console.log("token=======>",req.user);
       const token = req.user.data.token;
       res.redirect(`/auth/callback?token=${token}`);
     }
@@ -164,11 +169,12 @@ module.exports = server => {
       scope:['https://googleapis.com/auth/userinfo.profile','https://www.googleapis.com/auth/userinfo.email','https://googleapis.com/auth/gmail.readonly'],
       accessType:'offline',
       prompt:'consent',
-      successRedirect:'/restaurants/',
+      // successRedirect:'/restaurants/',
       failureRedirect:'/sign-in'
     }),
     function (req, res) {
       const token = req.user.data.token;
+     
       res.redirect(`/auth/callback?token=${token}`);
     }
   );
