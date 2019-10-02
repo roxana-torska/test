@@ -43,7 +43,8 @@ class RestaurantLayout extends Component {
       toggleMenu,
       changeOverlay,
       menuData,
-      onMenuChange
+      onMenuChange,
+      restaurantsName
     } = this.props;
     const { hideSplash } = this.state;
     return hideSplash ? (
@@ -54,6 +55,7 @@ class RestaurantLayout extends Component {
           changeOverlay={changeOverlay}
           menuData={menuData}
           onMenuChange={onMenuChange}
+          restaurantsName={restaurantsName}
         />
         <div className={classes.headerMarginSuppress}>{children}</div>
         <Notifier />

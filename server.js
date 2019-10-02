@@ -255,6 +255,10 @@ app
       // res.redirect(redirectUrl);
     });
 
+    
+    server.get('/restaurants/:name', (req, res) => {
+      return app.render(req, res, '/showmenu', { restaurantsName: req.params.name })
+    })
     server.get('*', (req, res) => {
       return handle(req, res);
     });

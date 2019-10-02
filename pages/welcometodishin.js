@@ -99,6 +99,7 @@ class WelcomeToDishIn extends PureComponent {
   };
 
   getRestaurantAvatar = rec => {
+   
     if (rec.images.length) {
       return `${API_IMAGE_URL}/assets/images/restaurants/${rec.slug}/${
         rec.images[0].path
@@ -164,6 +165,7 @@ class WelcomeToDishIn extends PureComponent {
       )}`;
     } else {
       if (searchText) {
+      
         let queryParmas = {
           searchText
         };
@@ -315,6 +317,7 @@ class WelcomeToDishIn extends PureComponent {
                   isOpen={restaurants ? true : false}
                 />
               </div>
+            
             </Grid>
             <Grid
               item

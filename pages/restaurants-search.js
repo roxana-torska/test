@@ -139,6 +139,7 @@ class Restaurants extends React.Component {
   }
   componentDidMount() {
     const { updateStoreWithQuery, queryParams } = this.props;
+   
     if (typeof document !== 'undefined') {
       window.addEventListener('scroll', this.handleOnScroll);
     }
@@ -211,6 +212,7 @@ class Restaurants extends React.Component {
 
   handleListItemClick = (evt, index, value) => {
     if (value.type === 'restaurant') {
+    
       window.location.href = `/restaurants/${value.slug}`;
     }
     if (value.type === 'dish') {
@@ -255,9 +257,10 @@ class Restaurants extends React.Component {
       global: { name, isLoggedIn, lastRatedDish, hideFabIcon },
       similarRestaurants
     } = this.props;
+    
     const { winHeight, overlay, openDialog, hideMainMenu } = this.state;
     let rootHeight = winHeight - 100;
-
+   
     return (
       <RestaurantLayout
         selectedPageTab={0}
