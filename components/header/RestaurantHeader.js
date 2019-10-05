@@ -271,9 +271,9 @@ class RestaurantHeader extends Component {
 			classes,
 			selectedPageTab,
 			global: { searchText, userRewards, hideMainMenu, isLoggedIn },
-			
+			menuData		
 		} = this.props;
-		const menuData = [{id:"1424563426625",name:"menue 1"},{id:"1424563426623",name:"menue 2"},{id:"14245634266264",name:"menue 3"}]
+	
 		const {
 			userDrawer,
 			overlay,

@@ -51,7 +51,6 @@ const verifyUser = async function(payload) {
 const getRestaurants = async function(payload, token) {
   const queryParams = stringify(payload, { encodeValuesOnly: true });
   let tempToken = null;
-  console.log('QueryParams', queryParams);
   const url = `${API_URL}/restaurants/search?${queryParams}`;
   if (token) {
     tempToken = `Bearer ${token}`;

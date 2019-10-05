@@ -42,7 +42,6 @@ class MyReviews extends PureComponent {
 
   componentDidMount() {
     const { updateStoreWithQuery, queryParams } = this.props;
-    console.log("query params=====>",queryParams);
     if (typeof document !== 'undefined') {
       window.addEventListener('scroll', this.handleOnScroll);
     }
