@@ -17,7 +17,6 @@ import WindowResizeListener from 'react-window-size-listener';
 import Slide from '@material-ui/core/Slide';
 import * as _ from 'lodash';
 import { getLocation } from '../utils/common';
-import RestaurantsMiddleware from '../redux/restaurants/RestaurantsMiddleware';
 const {
     toggleFilterMenu,
     updateStoreWithQuery,
