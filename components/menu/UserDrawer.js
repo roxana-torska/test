@@ -390,10 +390,9 @@ class UserDrawer extends Component {
       noCamera
     } = this.state;
     let avatar = '/static/imgs/image-not-found-dark.png';
-    console.log("user data=====>",user);
+    
     if (user && user.userAvatar) {
       let checkSocialImage = user.userAvatar ? user.userAvatar.split(':') : [];
-      console.log("social image",checkSocialImage);
       if (checkSocialImage[0] !== 'https') {
         avatar = `${API_IMAGE_URL}/assets/images/users/${user.user_id}/${
           user.userAvatar

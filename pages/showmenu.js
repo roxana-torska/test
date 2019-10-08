@@ -17,6 +17,7 @@ import WindowResizeListener from 'react-window-size-listener';
 import Slide from '@material-ui/core/Slide';
 import * as _ from 'lodash';
 import { getLocation } from '../utils/common';
+
 const {
     toggleFilterMenu,
     updateStoreWithQuery,
@@ -97,7 +98,7 @@ class showmenu extends React.Component {
 
     handleOnScroll = evt => {
         this.handleShowMenu();
-        
+
     };
 
     handleReviewSubmit = () => {
@@ -110,7 +111,7 @@ class showmenu extends React.Component {
     };
 
     render() {
-      
+
         const {
             classes,
             restaurantsName,
@@ -139,11 +140,11 @@ class showmenu extends React.Component {
                 >
 
                     <Grid item xs={12}>
-                        <SponsoredRestaurantsList
+                        {/* <SponsoredRestaurantsList
                             listItemOnClick={this.handleListItemClick}
                             listData={sponsoredRestaurants}
                             listItemClass={classes.restaurantsListItem}
-                        />
+                        /> */}
                     </Grid>
 
 
@@ -155,7 +156,8 @@ class showmenu extends React.Component {
 
 export default connect(
     state => ({
-        global: state.global.toJSON()
+        global: state.global.toJSON(),
+        newState: state,
     }),
     {
         toggleFilterMenu,

@@ -198,7 +198,7 @@ app
       let isLoggedIn = req.loggedInToken ? true : false;
       let userData = req.user || {};
       getRestaurants(query, req.loggedInToken).then(response => {
-        // console.log('response', response);
+       
         query.restaurants = response.restaurants || [];
         query.dishes = response.dishes || [];
         query.similarRestaurants = response.similarRestaurants || [];
@@ -207,6 +207,7 @@ app
         query.loggedInToken = req.loggedInToken;
         query.systemTags = response.systemTags;
         const actualPage = '/restaurants-search';
+        console.log("query response ====>",query);
         app.render(req, res, actualPage, query);
       });
     });
