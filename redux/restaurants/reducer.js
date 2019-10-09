@@ -1,19 +1,21 @@
 import restaurantsAction from "./actions";
 function RestaurantsReducer(state = {
     restaurants: null,
+    dishes:null,
 }, action) {
-    console.log("reducer==data===>", action.data)
-    console.log("reducer inside restaurants ====>", action.type)
-
     switch (action.type) {
 
         case restaurantsAction.SET_RESTAURANTS:
-            console.log("reducer inside restaurants ====>", action.type)
-
             return {
                 ...state,
-                restaurants: action.data
+                restaurants: action.data.data
             }
+        case restaurantsAction.SET_DISHES:
+            return {
+                ...state,
+                dishes:action.data.data,
+            }
+        
         default: return state
 
     }

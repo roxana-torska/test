@@ -1,7 +1,7 @@
 import actions from './actions';
-import { Map } from 'immutable';
 import { getLocation } from '../../utils/common';
-const initState = new Map({
+
+export function globalReducer(state = {
   drawerOpen: false,
   selectedFilterAccordion: '',
   selectedTagsItems: [],
@@ -39,87 +39,144 @@ const initState = new Map({
   lastRatedDish: '',
   defaultRefferal: null,
   hideFabIcon: false
-});
-const hydrateUser = function() {
-  // const location = getLocation();
-  return initState.set('drawerOpen', false);
-};
-
-export function globalReducer(state = hydrateUser(), action) {
+}, action) {
   switch (action.type) {
     case actions.TOGGLE_FILTER_MENU:
-      return state.set('drawerOpen', action.drawerOpen || false);
+      return {
+        ...state,
+        drawerOpen: action.drawerOpen,
+      }
     case actions.TOGGLE_FILTER_ACCORDION:
-      return state.set(
-        'selectedFilterAccordion',
-        action.selectedFilterAccordion || ''
-      );
+      return {
+        ...state,
+        selectedFilterAccordion: action.selectedFilterAccordion
+      }
     case actions.UPDATE_STORE_WITH_QUERY: {
-      let filters = state.get('filters');
+      let filters = state.filters;
       filters = { ...filters, ...action.queryParams.filters };
-      return state
-        .set('filters', filters)
-        .set('selectedPageTab', action.queryParams.selectedPageTab)
-        .set('sort', action.queryParams.sort || 'rate')
-        .set('direction', action.queryParams.direction || 'dsc')
-        .set('searchText', action.queryParams.searchText)
-        .set('isLoggedIn', action.queryParams.isLoggedIn)
-        .set('user', action.queryParams.user)
-        .set('location', { ...action.queryParams.location })
-        .set('token', action.queryParams.loggedInToken)
-        .set('systemTags', action.queryParams.systemTags);
+      const {
+        selectedPageTab,
+        sort,
+        direction,
+        searchText,
+        isLoggedIn,
+        user,
+        location,
+        loggedInToken,
+        systemTags
+      } = action.queryParams;
+      return {
+        ...state,
+        filters,
+        selectedPageTab,
+        sort: sort ? sort : "rate",
+        direction: direction ? direction : "dsc",
+        searchText,
+        isLoggedIn,
+        user,
+        location: { ...location },
+        token: loggedInToken,
+        systemTags,
+
+
+      }
+
+
     }
     case actions.UPDATE_SELECTED_FILTER_ITEM: {
-      let filters = { ...state.get('filters') };
+      let filters = { ...state.filters };
       filters[action.filter] = action.filterValue.filterValue;
-      return state.set('filters', { ...filters });
+      return {
+        ...state,
+        filters: { ...filters }
+      }
     }
     case actions.SELECT_FILTER_TAB:
-      return state.set('selectedFilterTab', action.selectedFilterTab);
+      return {
+        ...state,
+        selectedFilterTab: action.selectedFilterTab,
+      }
     case actions.Selected_Tags_Index: {
-      return state.set('selectedTagsItems', action.selectedTagsItems || []);
+      return {
+        ...state,
+        selectedTagsItems: action.selectedTagsItems ? action.selectedTagsItems : [],
+      }
+
     }
     case actions.Selected_Price_Range:
-      return state.set(
-        'selectedPriceRangeItem',
-        action.selectedPriceRangeItem || ''
-      );
+      return {
+        ...state,
+        selectedPriceRangeItem: action.selectedPriceRangeItem ? action.selectedPriceRangeItem : ""
+      }
     case actions.UPDATE_SORT:
-      return state
-        .set('sort', action.sortValue)
-        .set('direction', action.sortDirection);
+      return {
+        ...state,
+        sort: action.sortValue,
+        direction: action.sortDirection,
+      }
     case actions.SET_CURRENT_LOCATION:
       if (action.location) {
-        return state.set('location', { ...action.location });
+        return {
+          ...state,
+          location: { ...action.location }
+        }
+
       } else {
-        return state.set('location', { lng: '', lat: '', address: '' });
+        return {
+          ...state,
+          location: { lng: "", lat: "", address: "" }
+        }
       }
     case actions.SET_SEARCH_VALUE:
-      return state.set('searchText', action.value);
+      return {
+        ...state,
+        searchText: action.value,
+      }
+
     case actions.UPDATE_USER_REWARDS:
-      return state.set('userRewards', action.userRewards);
+      return {
+        ...state,
+        userRewards: action.userRewards
+      }
     case actions.CLEAR_FILTERS:
-      let filters = state.get('filters');
+      let filters = state.filters;
       filters[action.filter] = action.filterValue;
-      return state.set('filters', { ...filters });
+      return {
+        ...state,
+        filters: { ...filters }
+      }
     case actions.SHOW_HIDE_MENU:
-      return state
-        .set('hideMainMenu', action.hideMenu)
-        .set('scrollValue', action.scrollValue);
+      return {
+        ...state,
+        hideMainMenu: action.hideMenu,
+        scrollValue: action.scrollValue,
+      }
+
     case actions.UPDATE_USER_AND_TOKEN:
-      return state
-        .set('user', action.data.user)
-        .set('token', action.data.token);
+      return {
+        ...state,
+        user: action.data.user,
+        token: action.data.token,
+      }
+
     case actions.UPDATE_REVIEW_DATA:
-      return state.set('reviewsData', { ...action.tagsData.tempReviews });
+      return {
+        ...state,
+        reviewsData: { ...action.tagsData.tempReviews }
+      }
     case actions.UPDATE_USER_REVIEW:
-      let userReviews = state.get('userReviews');
+      let userReviews = state.userReviews;
       userReviews[action.review.typeId] = action.review;
-      return state
-        .set('userReviews', { ...userReviews })
-        .set('lastRatedDish', action.review.typeId);
+      return {
+        ...state,
+        userReviews: { ...userReviews },
+        lastRatedDish: action.review.typeId,
+      }
     case actions.HIDE_FILTER_FAB_ICON:
-      return state.set('hideFabIcon', action.value);
+      return {
+        ...state,
+        hideFabIcon: action.value,
+      }
     default:
       return state;
   }

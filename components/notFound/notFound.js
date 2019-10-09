@@ -306,7 +306,7 @@ class NotFound extends Component {
 
 export default connect(
   state => ({
-    global: state.global.toJSON()
+    global: state.global
   }),
   {
     updateSort,

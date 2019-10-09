@@ -193,7 +193,7 @@ class DishCard extends PureComponent {
 }
 export default connect(
   state => ({
-    global: state.global.toJSON()
+    global: state.global
   }),
   {}
 )(withStyles(styles)(DishCard));

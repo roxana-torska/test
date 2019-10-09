@@ -29,10 +29,10 @@ function Transition(props) {
     return <Slide direction='down' {...props} />;
 }
 class showmenu extends React.Component {
-    static async getInitialProps ({ query: { restaurantsName } }) {
-        
+    static async getInitialProps({ query: { restaurantsName } }) {
+
         return { restaurantsName: restaurantsName }
-      }
+    }
     renderThumb = ({ style, ...props }) => {
         const thumbStyle = {
             backgroundColor: 'rgba(240,242,245,.5)',
@@ -76,7 +76,7 @@ class showmenu extends React.Component {
 
     handleListItemClick = (evt, index, value) => {
         if (value.type === 'restaurant') {
-            
+
             window.location.href = `/restaurants/${value.slug}`;
         }
         if (value.type === 'dish') {
@@ -109,14 +109,16 @@ class showmenu extends React.Component {
         this.setState({ openDialog: false });
         //window.location.reload(true);
     };
-
+    componentDidMount = () => {
+        console.log("new state ====>", this.props.newState.RestaurantsReducer);
+    }
     render() {
 
         const {
             classes,
             restaurantsName,
-          } = this.props;
-      
+        } = this.props;
+
         return (
             <RestaurantLayout
                 selectedPageTab={0}
@@ -156,7 +158,7 @@ class showmenu extends React.Component {
 
 export default connect(
     state => ({
-        global: state.global.toJSON(),
+        global: state.global,
         newState: state,
     }),
     {

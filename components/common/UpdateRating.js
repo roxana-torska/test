@@ -167,7 +167,7 @@ class UpdateRating extends Component {
 
 export default connect(
   state => ({
-    global: state.global.toJSON()
+    global: state.global
   }),
   {}
 )(withStyles(styles)(UpdateRating));

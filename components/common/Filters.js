@@ -417,7 +417,7 @@ class Filters extends React.Component {
 
 export default connect(
   state => ({
-    global: state.global.toJSON()
+    global: state.global
   }),
   {
     toggleFilterAccordion,

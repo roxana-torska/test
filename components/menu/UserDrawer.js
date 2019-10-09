@@ -720,7 +720,7 @@ class UserDrawer extends Component {
 }
 export default connect(
   state => ({
-    global: state.global.toJSON()
+    global: state.global
   }),
   { updateUserAndToken }
 )(withStyles(styles)(UserDrawer));

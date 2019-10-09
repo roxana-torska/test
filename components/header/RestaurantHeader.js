@@ -554,7 +554,7 @@ RestaurantHeader.propTypes = {
 
 export default connect(
 	state => ({
-		global: state.global.toJSON()
+		global: state.global
 	}),
 	{
 		setSearchValue,

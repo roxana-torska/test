@@ -18,7 +18,7 @@ import Slide from '@material-ui/core/Slide';
 import * as _ from 'lodash';
 import { getLocation } from '../utils/common';
 import restaurantsAction from '../redux/restaurants/actions'
-const { setRestaurants } = restaurantsAction;
+const { setRestaurants, setDishes } = restaurantsAction;
 
 const {
   toggleFilterMenu,
@@ -142,7 +142,7 @@ class Restaurants extends React.Component {
     }
   }
   componentDidMount() {
-    const { updateStoreWithQuery, queryParams, setRestaurants } = this.props;
+    const { updateStoreWithQuery, queryParams, setRestaurants, setDishes } = this.props;
 
     if (typeof document !== 'undefined') {
       window.addEventListener('scroll', this.handleOnScroll);
@@ -159,20 +159,22 @@ class Restaurants extends React.Component {
       queryParams.filters = queryParams.filters || {};
       queryParams.filters.location = { ...localLocation };
     }
-    setRestaurants({
-      data: this.props.sponsoredRestaurants,
-    })
+
     updateStoreWithQuery({
       ...queryParams,
       selectedPageTab: 0,
       location: { ...localLocation }
     });
 
+    setRestaurants({
+      data: this.props.sponsoredRestaurants,
+    })
+    setDishes({
+      data: this.props.dishes
+    })
 
   }
-  componentWillReceiveProps = (nextProps) => {
 
-  }
   componentWillUnmount() {
 
     if (typeof document !== 'undefined') {
@@ -223,7 +225,7 @@ class Restaurants extends React.Component {
   };
 
   handleListItemClick = (evt, index, value) => {
-    console.log("test value ====>", value);
+    
     if (value.type === 'restaurant') {
       window.location.href = `/restaurants/${value.slug}`;
     }
@@ -267,10 +269,10 @@ class Restaurants extends React.Component {
       sponsoredRestaurants,
       dishes,
       global: { name, isLoggedIn, lastRatedDish, hideFabIcon },
-      similarRestaurants
+      similarRestaurants,
+      restaurantss
     } = this.props;
-    console.log("restaurants=====>", restaurants);
-    console.log("dishes=====>", dishes);
+    
 
     const { winHeight, overlay, openDialog, hideMainMenu } = this.state;
     let rootHeight = winHeight - 100;
@@ -382,7 +384,7 @@ class Restaurants extends React.Component {
 
 export default connect(
   state => ({
-    global: state.global.toJSON(),
+    global: state.global,
     restaurantss: state.RestaurantsReducer.restaurants,
   }),
   {
@@ -391,5 +393,6 @@ export default connect(
     selectFilterTab,
     showHideMenu,
     setRestaurants,
+    setDishes,
   }
 )(withStyles(styles)(Restaurants));

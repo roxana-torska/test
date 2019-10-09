@@ -353,7 +353,7 @@ class WelcomeToDishIn extends PureComponent {
 
 export default connect(
   state => ({
-    global: state.global.toJSON()
+    global: state.global
   }),
   {
     setCurrentLocation

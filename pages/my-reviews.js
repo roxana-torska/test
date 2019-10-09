@@ -137,7 +137,7 @@ class MyReviews extends PureComponent {
 
 export default connect(
   state => ({
-    global: state.global.toJSON()
+    global: state.global
   }),
   {
     updateStoreWithQuery,
