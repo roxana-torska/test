@@ -54,7 +54,7 @@ class RestaurantLayout extends Component {
           toggleMenu={toggleMenu}
           changeOverlay={changeOverlay}
           menuData={menuData}
-          onMenuChange={onMenuChange}
+          // onMenuChange={onMenuChange}
           restaurantsName={restaurantsName}
         />
         <div className={classes.headerMarginSuppress}>{children}</div>

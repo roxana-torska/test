@@ -138,7 +138,7 @@ class RestaurantHeader extends Component {
 		this.setState({ userMenu: false, userDrawer: true, overlay: true });
 	};
 	selectMenu = selected => {
-		const { menuData, onMenuChange } = this.props;
+		const { menuData, } = this.props;
 		let menu = menuData.find(item => item.name === selected);
 		let menuCategories = [];
 		let selectedMenuCategory = '';
@@ -151,7 +151,7 @@ class RestaurantHeader extends Component {
 			menuCategories,
 			selectedMenuCategory
 		});
-		onMenuChange(selected, selectedMenuCategory);
+		// onMenuChange(selected, selectedMenuCategory);
 	};
 	handleMenuChange = evt => {
 		let selectedMenu = evt.target.value;
@@ -162,7 +162,7 @@ class RestaurantHeader extends Component {
 		const { selectedMenu } = this.state;
 		const selectedMenuCategory = evt.target.value;
 		this.setState({ selectedMenuCategory });
-		onMenuChange(selectedMenu, selectedMenuCategory);
+		// onMenuChange(selectedMenu, selectedMenuCategory);
 	};
 
 	goToBack = () => {

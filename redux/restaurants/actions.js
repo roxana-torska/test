@@ -4,7 +4,9 @@ const restaurantsAction = {
     // set dishes to store
     SET_DISHES:"SET_DISHES",
 
-
+    GET_MENUS:"GET_MENUS",
+    GET_MENUS_SUCCESSFUL :"GET_MENUS_SUCCESSFUL", 
+    GET_MENUS_FAIL :"GET_MENUS_FAIL",
     setRestaurants: data => {
         return {
             type: restaurantsAction.SET_RESTAURANTS,
@@ -16,6 +18,29 @@ const restaurantsAction = {
         return {
             type:restaurantsAction.SET_DISHES,
             data
+        }
+    },
+
+    getMenus :data=>{
+        return {
+            type:restaurantsAction.GET_MENUS,
+            data,
+            isLoading:true,
+        }
+    },
+    getMenusSuccessful :data=>{
+        return {
+            type: restaurantsAction.GET_MENUS_SUCCESSFUL,
+            data,
+            success:true,
+
+        }
+    },
+    getMenusFail :data =>{
+        return {
+            type:restaurantsAction.GET_MENUS_FAIL,
+            data,
+            success :false
         }
     }
 }

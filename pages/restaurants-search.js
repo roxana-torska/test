@@ -227,7 +227,7 @@ class Restaurants extends React.Component {
   handleListItemClick = (evt, index, value) => {
     
     if (value.type === 'restaurant') {
-      window.location.href = `/restaurants/${value.slug}`;
+      window.location.href = `/restaurants/${value.id}`;
     }
     if (value.type === 'dish') {
       window.location.href = `/dish-details/${value.slug}`;
@@ -272,7 +272,7 @@ class Restaurants extends React.Component {
       similarRestaurants,
       restaurantss
     } = this.props;
-    
+
 
     const { winHeight, overlay, openDialog, hideMainMenu } = this.state;
     let rootHeight = winHeight - 100;

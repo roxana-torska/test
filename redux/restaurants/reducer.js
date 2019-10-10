@@ -1,7 +1,7 @@
 import restaurantsAction from "./actions";
 function RestaurantsReducer(state = {
     restaurants: null,
-    dishes:null,
+    dishes: null,
 }, action) {
     switch (action.type) {
 
@@ -13,9 +13,33 @@ function RestaurantsReducer(state = {
         case restaurantsAction.SET_DISHES:
             return {
                 ...state,
-                dishes:action.data.data,
+                dishes: action.data.data,
             }
-        
+
+        case restaurantsAction.GET_MENUS:
+            return {
+                ...state,
+                isLoading: action.isLoading,
+
+            }
+
+
+        case restaurantsAction.GET_MENUS_SUCCESSFUL:
+            return {
+                ...state,
+                menus: action.data,
+                isLoading: false,
+
+            }
+
+        case restaurantsAction.GET_MENUS_FAIL:
+            return {
+                ...state,
+                menus: action.data,
+                isLoading: false,
+
+            }
+
         default: return state
 
     }

@@ -29,9 +29,14 @@ function Transition(props) {
     return <Slide direction='down' {...props} />;
 }
 class showmenu extends React.Component {
-    static async getInitialProps({ query: { restaurantsName } }) {
+    static async getInitialProps({ query: { id, menuData } }) {
 
-        return { restaurantsName: restaurantsName }
+        return { id, menuData }
+    }
+    state = {
+        restaurant: null,
+        menuData: null,
+        restaurantDishes: null,
     }
     renderThumb = ({ style, ...props }) => {
         const thumbStyle = {
@@ -110,21 +115,36 @@ class showmenu extends React.Component {
         //window.location.reload(true);
     };
     componentDidMount = () => {
-        console.log("new state ====>", this.props.newState.RestaurantsReducer);
+        const { id, restaurants, dishes } = this.props;
+        console.log("restaurants ====>", restaurants);
+        let res = restaurants.filter(rec => rec.id == id);
+        let restaurantDishes = dishes.filter(record => record.restaurant_id[0] == res[0]._id);
+        console.log("restaurants dishes ====>", restaurantDishes);
+        if (res.length) {
+            this.setState({
+                restaurant: res[0],
+                restaurantDishes,
+            })
+        }
     }
     render() {
 
         const {
             classes,
-            restaurantsName,
+            id,
+            menuData,
+            dishes
         } = this.props;
-
+        const { restaurant, restaurantDishes } = this.state;
+        console.log("restaurantDishes=====>", restaurantDishes);
+        console.log("menu data inside showmenu component", menuData);
         return (
             <RestaurantLayout
                 selectedPageTab={0}
                 toggleMenu={this.handleToggleMenu}
                 changeOverlay={this.handleOverlay}
-                restaurantsName={restaurantsName}
+                restaurantsName={restaurant ? restaurant.primary : id}
+                menuData={menuData}
             >
                 <WindowResizeListener
                     onResize={windowSize => {
@@ -142,11 +162,14 @@ class showmenu extends React.Component {
                 >
 
                     <Grid item xs={12}>
-                        {/* <SponsoredRestaurantsList
+                        <DishesList
                             listItemOnClick={this.handleListItemClick}
-                            listData={sponsoredRestaurants}
+                            listData={dishes}
                             listItemClass={classes.restaurantsListItem}
-                        /> */}
+                            changeOverlay={this.handleOverlay}
+                            // isLoggedIn={isLoggedIn}
+                            onReviewSubmit={this.handleReviewSubmit}
+                        />
                     </Grid>
 
 
@@ -159,7 +182,8 @@ class showmenu extends React.Component {
 export default connect(
     state => ({
         global: state.global,
-        newState: state,
+        restaurants: state.RestaurantsReducer.restaurants,
+        dishes: state.RestaurantsReducer.dishes,
     }),
     {
         toggleFilterMenu,
