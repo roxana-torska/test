@@ -8,6 +8,7 @@ import { API_IMAGE_URL } from '../../utils/config';
 import UpdateRating from '../common/UpdateRating';
 import StarRate from '@material-ui/icons/StarRate';
 import { connect } from 'react-redux';
+import RatingInFabIcon from './RatingInFabIcon';
 
 class DishCard extends PureComponent {
   state = {
@@ -41,15 +42,15 @@ class DishCard extends PureComponent {
       global: { userReviews, user },
       showUserReview
     } = this.props;
-
+    console.log("data====> inside dish====> ", data);
     const { showReview } = this.state;
     let dishAvatar = '';
     let userDishRating = 0;
     let dishAvgRating = data.avgRatings;
     if (data.images.length) {
-      dishAvatar = `${API_IMAGE_URL}/assets/images/dishes/${data.slug}/${
+      dishAvatar = `${API_IMAGE_URL}/assets/images/dishes/${data.images[0].name}/${
         data.images[0].path
-      }`;
+        }`;
     }
 
     if (
@@ -110,7 +111,7 @@ class DishCard extends PureComponent {
                   style={{ textAlign: 'right', position: 'relative' }}
                   zeroMinWidth
                 >
-
+                  {/* 
                   <svg xmlns="http://www.w3.org/2000/svg"
                     width="24"
                     height="24"
@@ -120,7 +121,8 @@ class DishCard extends PureComponent {
                   </svg>
                   <span style={{ fontSize: "20px", marginTop: "5px", marginLeft: "2px" }}>
                     Share
-                  </span>
+                  </span> */}
+                  <RatingInFabIcon />
 
                 </Grid>
               </Grid>

@@ -118,7 +118,8 @@ class showmenu extends React.Component {
         const { id, restaurants, dishes } = this.props;
         console.log("restaurants ====>", restaurants);
         let res = restaurants.filter(rec => rec.id == id);
-        let restaurantDishes = dishes.filter(record => record.restaurant_id[0] == res[0]._id);
+        console.log("restaurant data ======>", res[0].id);
+        let restaurantDishes = dishes.filter(record => record.restaurant_id[0]._id == res[0].id);
         console.log("restaurants dishes ====>", restaurantDishes);
         if (res.length) {
             this.setState({
@@ -164,7 +165,7 @@ class showmenu extends React.Component {
                     <Grid item xs={12}>
                         <DishesList
                             listItemOnClick={this.handleListItemClick}
-                            listData={dishes}
+                            listData={restaurantDishes}
                             listItemClass={classes.restaurantsListItem}
                             changeOverlay={this.handleOverlay}
                             // isLoggedIn={isLoggedIn}

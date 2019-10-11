@@ -1251,6 +1251,15 @@ const styles = theme => {
     advanceRating: {
       backgroundColor: '#eeeeee'
     },
+    // add buttun
+    increament: {
+      border: "1px solid red",
+      width: '25px',
+      color: "black",
+      height: '25px',
+      backgroundColor: "#ffffff"
+    },
+
     advanceRatingAva: {
       width: '25px',
       height: '25px'
