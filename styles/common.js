@@ -12,6 +12,9 @@ const styles = theme => {
       display: 'flex',
       flexWrap: 'wrap'
     },
+    backdrop:{
+      position:"absolute",
+    },
     pageTitleRed: {
       fontFamily: "'BebasNeue', 'sans-serif'",
       fontSize: getRemFontSizeByPx(30),
@@ -1030,6 +1033,9 @@ const styles = theme => {
       //   fontSize: '.7rem'
       // }
     },
+
+
+
     tagIconSize: {
       fontSize: '15px',
 

@@ -9,10 +9,12 @@ import UpdateRating from '../common/UpdateRating';
 import StarRate from '@material-ui/icons/StarRate';
 import { connect } from 'react-redux';
 import RatingInFabIcon from './RatingInFabIcon';
+import Modal from './Modal';
 
 class DishCard extends PureComponent {
   state = {
-    showReview: false
+    showReview: false,
+    open: false,
   };
 
   showReviewDialog = evt => {
@@ -122,8 +124,7 @@ class DishCard extends PureComponent {
                   <span style={{ fontSize: "20px", marginTop: "5px", marginLeft: "2px" }}>
                     Share
                   </span> */}
-                  <RatingInFabIcon />
-
+                  <RatingInFabIcon handleClickOpen={this.handleClickOpen} />
                 </Grid>
               </Grid>
             }

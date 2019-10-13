@@ -1,98 +1,123 @@
 import React, { PureComponent } from 'react';
-import { withStyles, Icon, Tooltip } from '@material-ui/core';
+import { withStyles, Icon, Tooltip, Popover, Button } from '@material-ui/core';
 import styles from '../../styles/common';
 import Typography from '@material-ui/core/Typography';
-import { AddCircleOutlineRounded, RemoveCircleOutlineRounded } from "@material-ui/icons/";
+import { AddCircleOutlineRounded, RemoveCircleOutlineRounded, Add, Remove, CheckCircleOutlineRounded } from "@material-ui/icons/";
 import { Grid } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
-
-// import Dialog from '@material-ui/core/Dialog';
-// import DialogActions from '@material-ui/core/DialogActions';
-// import DialogContent from '@material-ui/core/DialogContent';
-// import DialogContentText from '@material-ui/core/DialogContentText';
-// import DialogTitle from '@material-ui/core/DialogTitle';
-// import Button from '@material-ui/core/Button';
+import Modal from './Modal';
+import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 class RatingInFabIcon extends PureComponent {
   state = {
     dish: 0,
-    open: false,
-
+    anchorEl: null,
   }
 
-  handleClickOpen = () => {
+
+  handleClickOpen = (event) => {
     this.setState({
-      open: true,
+      anchorEl: event.currentTarget,
     })
   };
 
   handleClose = () => {
     this.setState({
-      open: false,
+      anchorEl: null,
     })
   };
-  onIncreament = () => {
-    this.setState({
-      dish: this.state.dish + 1
-    })
-  }
   render() {
-    const { classes, type, } = this.props;
+    const { classes, type } = this.props;
     return (
       <React.Fragment>
-        <Tooltip title="Add Review " interactive>
-          <Grid container direction='row'>
-            <Grid item xs={4}>
-              {' '}
+        <PopupState variant="popover" popupId="demo-popup-popover">
+          {popupState => (
+            <div>
 
-              <RemoveCircleOutlineRounded />
+              <Grid container direction='row' {...bindTrigger(popupState)} >
+                <Grid item xs={4}>
+                  <RemoveCircleOutlineRounded />
+                </Grid>
+                <Grid item xs={4}>
+                  <Avatar
+                    className={classes.advanceRating}
+                    classes={{ root: classes.advanceRatingAva }}
+                    style={{ float: "right" }}
+                  >
+                    <Typography className={classes.colorPrimary}>
+                      {this.state.dish || 0}
+                    </Typography>
+                  </Avatar>
+                </Grid>
+                <Grid item xs={4}>
+                  <AddCircleOutlineRounded />
+                </Grid>
 
-            </Grid>
-            <Grid item xs={4}>
 
+              </Grid>
+              <Popover
 
-              <Typography
-                className={classes.colorPrimary}
-                style={{
-                  height: "25px",
-                  width: "25px",
-                  marginLeft: "40%",
-                  borderRadius: "50%",
-                  border: "1px solid grey",
+                {...bindPopover(popupState)}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'center',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'center',
+                }}
+              >
+
+                <Grid container direction='row' style={{ width: "300px", margin: "30px" }}>
+                  <Grid item xs={2}>
+                    <Remove style={{ float: "right" }} />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Avatar
+                      className={classes.advanceRating}
+                      classes={{ root: classes.advanceRatingAva }}
+                      style={{ float: "right" }}
+                    >
+                      <Typography className={classes.colorPrimary} >
+                        {this.state.dish || 0}
+                      </Typography>
+                    </Avatar>
+                  </Grid>
+                  <Grid item xs={6}  >
+                    <Add style={{ float: "right" }} />
+                  </Grid>
+                </Grid>
+                <Grid container direction='row' style={{
+                  justifyContent: "center"
                 }}>
-                {this.state.dish}
-              </Typography>
+                  <Grid
 
+                    justify="center"
+                    alignItems="center">
+                    <Typography
+                      style={{
+                        fontSize: "24px",
+                        borderBottom: "2px solid black"
+                      }}
+                    >
+                      Make a review
+                 </Typography>
+                  </Grid>
+                </Grid>
 
-            </Grid>
-            <Grid item xs={4}>
-              <AddCircleOutlineRounded onClick={this.handleClickOpen} />
-            </Grid>
-            {/* <Dialog
-            open={this.state.open}
-            onClose={this.handleClose}
-            aria-labelledby="draggable-dialog-title"
-          >
-            <DialogTitle id="draggable-dialog-title">
-              Subscribe
-        </DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                To subscribe to this website, please enter your email address here. We will send updates
-                occasionally.
-          </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={this.handleClose} color="primary">
-                Cancel
-          </Button>
-              <Button onClick={this.handleClose} color="primary">
-                Subscribe
-          </Button>
-            </DialogActions>
-          </Dialog> */}
-          </Grid>
-        </Tooltip>
+                <Grid container direction="row">
+                  <Grid xs={2} style={{
+                    float: "right"
+                  }}>
+                    <CheckCircleOutlineRounded />
+                  </Grid>
 
+                </Grid>
+
+              </Popover>
+            </div>
+          )}
+
+        </PopupState>
       </React.Fragment >
     );
   }
