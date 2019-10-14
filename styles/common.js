@@ -12,6 +12,9 @@ const styles = theme => {
       display: 'flex',
       flexWrap: 'wrap'
     },
+    popover:{
+      padding:"10px 50px 40px 50px",
+    },
     backdrop:{
       position:"absolute",
     },
@@ -143,6 +146,12 @@ const styles = theme => {
       lineHeight: '0px',
       height: '0px'
     },
+    styledHeader: {
+     
+      '& h2': {
+        color: 'red',
+      }
+  },
     footerBgIconLeft: {
       position: 'absolute',
       left: '0px',

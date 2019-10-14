@@ -1,53 +1,43 @@
-import React, { Component } from 'react';
+import React from 'react';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 
-import { withStyles, Popover, Typography, Grid } from '@material-ui/core';
-import styles from '../../styles/common';
-import { AddCircleOutlineRounded, RemoveCircleOutlineRounded } from '@material-ui/icons';
-
-class Modal extends Component {
-
-
-    render() {
-        const { classes, type, handleClose, anchorEl,bindPopover } = this.props;
-        console.log("AnchorEl =====>", anchorEl)
-        const elWidth = anchorEl ? anchorEl.offsetWidth : 0;
-        console.log("element width:===>", elWidth);
-        const open = Boolean(anchorEl);
-        const id = open ? 'simple-popover' : undefined;
-        return (
-            
-            <Popover
-              
-                {...bindPopover}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'center',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center',
-                  }}
-
+export default function Modal(props) {
+    const { classes } = props
+    console.log("class=====>", classes.styledHeader);
+    return (
+        <div>
+            <Dialog
+                open={props.open}
+                onClose={props.handleCancel}
+                aria-labelledby="draggable-dialog-title"
             >
-                <div style={{ width: `${elWidth}px`, height: "200px",  }}>
-                    <Grid container direction='row' >
-                        <Grid item xs="4">
-                            <RemoveCircleOutlineRounded />
-                        </Grid>
-                        <Grid item xs={4}></Grid>
-                        <Grid item xs={4}>
-                            <AddCircleOutlineRounded />
-                        </Grid>
-                    </Grid>
-
-                </div>
-
-            </Popover>
-          
-        )
-    }
+                <DialogTitle
+                    id="draggable-dialog-title"
+                    className={classes.styledHeader}>
+                    <span style={{ color: 'red' }}>
+                        Thank You
+                    </span>
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Reviewing and sharing dishes grant you presents!
+          </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={props.handleCancel} color="black">
+                        Review
+          </Button>
+                    <Button onClick={props.handleCancel} color="primary">
+                        Share
+          </Button>
+                </DialogActions>
+            </Dialog>
+        </div>
+    );
 }
-
-
-export default withStyles(styles)(Modal)
