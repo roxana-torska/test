@@ -4,10 +4,11 @@ import ListItem from '@material-ui/core/ListItem';
 import styles from '../../styles/common';
 import { withStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { reviewAPI } from '../../services/reviewAPI';
+
 import { APP_URL, API_IMAGE_URL } from '../../utils/config';
 import actions from '../../redux/global/actions';
 import DishCard from '../common/DishCard';
+import { reviewAPI } from '../../services/reviewAPI';
 
 const { updateUserReview } = actions;
 class DishesList extends PureComponent {
@@ -30,12 +31,37 @@ class DishesList extends PureComponent {
     changeOverlay(true);
   };
 
-  handleReviewSubmit = (event, rating, dishId) => {
-    console.log('review submit');
+  handleReviewSubmit = async (type, ratings, dishId) => {
+    console.log("token =======>", this.props.global.token);
+    let payload = {
+      ratings,
+      dishId,
+      type,
+      token: this.props.global.token,
+      description: "good",
+
+    }
+    console.log("payload====>", payload);
+    let resrult = await reviewAPI.addAndUpdateReview(payload)
+    if (
+      resrult
+    ) {
+      reviewAPI.getReviews({ token: this.props.global.token }).then(response => {
+        const query = {
+          myreviews: response,
+          // user: req.user,
+          // isLoggedIn: req.loggedInToken ? true : false,
+          // loggedInToken: req.loggedInToken
+        };
+        console.log("latest ")
+        this.props.updateUserReview(response);
+      });
+    }
   };
 
   getItemLists = (el, listItemOnClick, key) => {
     const { classes, selectedIndex } = this.props;
+
 
     return (
       <ListItem
@@ -46,7 +72,7 @@ class DishesList extends PureComponent {
         selected={selectedIndex === key}
         alignItems='flex-start'
         className={classes.listItem}
-        // onClick={evt => listItemOnClick(evt, key, el)}
+      // onClick={evt => listItemOnClick(evt, key, el)}
       >
         <DishCard
           data={el}
@@ -58,6 +84,7 @@ class DishesList extends PureComponent {
   };
   render() {
     const { listData, listItemOnClick, classes } = this.props;
+
     return listData.length ? (
       <List className={classes.listRoot}>
         {listData.map((dish, index) => {
@@ -65,7 +92,7 @@ class DishesList extends PureComponent {
           if (dish.images.length) {
             dishAvatar = `${API_IMAGE_URL}/assets/images/dishes/${dish.slug}/${
               dish.images[0].path
-            }`;
+              }`;
           }
           const item = {
             avatar: dishAvatar,
@@ -88,12 +115,12 @@ class DishesList extends PureComponent {
         })}
       </List>
     ) : (
-      <List className={classes.listRoot}>
-        <ListItem>
-          <div>Not found!</div>
-        </ListItem>
-      </List>
-    );
+        <List className={classes.listRoot}>
+          <ListItem>
+            <div>Not found!</div>
+          </ListItem>
+        </List>
+      );
   }
 }
 

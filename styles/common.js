@@ -1,5 +1,5 @@
 const rootFontSize = 14;
-const getRemFontSizeByPx = function(px) {
+const getRemFontSizeByPx = function (px) {
   let remValue = px / rootFontSize;
   return remValue.toFixed(3) + 'rem';
 };
@@ -8,15 +8,21 @@ const styles = theme => {
     root: {
       flexGrow: 1
     },
+    card: {
+      display: 'flex'
+    },
+    cover: {
+      width: 151,
+    },
     container: {
       display: 'flex',
       flexWrap: 'wrap'
     },
-    popover:{
-      padding:"10px 50px 40px 50px",
+    popover: {
+      padding: "10px 50px 40px 50px",
     },
-    backdrop:{
-      position:"absolute",
+    backdrop: {
+      position: "absolute",
     },
     pageTitleRed: {
       fontFamily: "'BebasNeue', 'sans-serif'",
@@ -147,11 +153,11 @@ const styles = theme => {
       height: '0px'
     },
     styledHeader: {
-     
+
       '& h2': {
         color: 'red',
       }
-  },
+    },
     footerBgIconLeft: {
       position: 'absolute',
       left: '0px',

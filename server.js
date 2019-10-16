@@ -22,6 +22,7 @@ const { API_URL, APP_URL } = require('./utils/config');
 const { stringify } = require('qs');
 
 const hydrateLoggedIn = function (req, res, next) {
+  
   const loggedInToken = getToken(req);
   if (loggedInToken) {
     req.loggedInToken = loggedInToken;
@@ -223,6 +224,7 @@ app
     });
 
     server.get('/my-reviews', hydrateLoggedIn, (req, res) => {
+      console.log("my review ======>", req.loggedInToken);
       const actualPage = '/my-reviews';
       // let user_id = null;
       // if (req.user) {

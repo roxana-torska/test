@@ -165,11 +165,12 @@ export function globalReducer(state = {
         reviewsData: { ...action.tagsData.tempReviews }
       }
     case actions.UPDATE_USER_REVIEW:
+      console.log("dish id at reducer ===>", action.review);
       let userReviews = state.userReviews;
-      userReviews[action.review.typeId] = action.review;
+      userReviews = action.review;
       return {
         ...state,
-        userReviews: { ...userReviews },
+        userReviews: [...userReviews],
         lastRatedDish: action.review.typeId,
       }
     case actions.HIDE_FILTER_FAB_ICON:

@@ -10,6 +10,7 @@ import StarRate from '@material-ui/icons/StarRate';
 import { connect } from 'react-redux';
 import RatingInFabIcon from './RatingInFabIcon';
 import Modal from './Modal';
+import ReviewCard from '../review/ReviewCard';
 
 class DishCard extends PureComponent {
   state = {
@@ -32,7 +33,7 @@ class DishCard extends PureComponent {
 
   handleOnSubmit = (event, commonRating, dishId) => {
     const { onSubmit } = this.props;
-    this.setState({ showReview: true });
+    // this.setState({ showReview: true });
     onSubmit(event, commonRating, dishId);
   };
 
@@ -44,11 +45,11 @@ class DishCard extends PureComponent {
       global: { userReviews, user },
       showUserReview
     } = this.props;
-    console.log("data====> inside dish====> ", data);
+    console.log("data latest=====>", data);
     const { showReview } = this.state;
     let dishAvatar = '';
     let userDishRating = 0;
-    let dishAvgRating = data.avgRatings;
+    // let dishAvgRating = data.avgRatings;
     if (data.images.length) {
       dishAvatar = `${API_IMAGE_URL}/assets/images/dishes/${data.images[0].name}/${
         data.images[0].path
@@ -61,7 +62,7 @@ class DishCard extends PureComponent {
       userReviews[data.id].userId === user.user_id
     ) {
       userDishRating = userReviews[data.id].ratings;
-      dishAvgRating = userReviews[data.id].dish.avgRatings;
+      // dishAvgRating = userReviews[data.id].dish.avgRatings;
     } else if (data.reviews) {
       userDishRating = data.reviews.ratings;
     } else {
@@ -85,7 +86,7 @@ class DishCard extends PureComponent {
                     style={{ textAlign: 'right' }}
                   >
                     <StarRate className={classes.reviewFooterItemIcon} />
-                    {dishAvgRating}
+                    {0}
                   </div>
                 </Grid>
               </Grid>
@@ -124,13 +125,19 @@ class DishCard extends PureComponent {
                   <span style={{ fontSize: "20px", marginTop: "5px", marginLeft: "2px" }}>
                     Share
                   </span> */}
-                  <RatingInFabIcon handleClickOpen={this.handleClickOpen} />
+                  <RatingInFabIcon
+                    handleClickOpen={this.handleClickOpen}
+                    handleOnSubmit={this.props.onSubmit}
+                    data={{ "type": data.type, "dishId": data.id }}
+                  />
+
+                  {/* <ReviewCard url={dishAvatar || '/static/imgs/image-not-found-dark.png'} /> */}
                 </Grid>
               </Grid>
             }
           />
         </Grid>
-        {showReview ? (
+        {/* {showReview ? (
           <Grid item xs={12} style={{ marginTop: '20px' }}>
             <ListCardItem
               title={
@@ -142,13 +149,13 @@ class DishCard extends PureComponent {
                     </div>
                   </Grid>
                   <Grid item xs={3}>
-                    {/* <div
+                    <div
                       className={classes.listCardDishRating}
                       style={{ textAlign: 'right' }}
                     >
                       <StarRate className={classes.reviewFooterItemIcon} />
                       {dishAvgRating}
-                    </div> */}
+                    </div>
                   </Grid>
                 </Grid>
               }
@@ -189,7 +196,7 @@ class DishCard extends PureComponent {
               }
             />
           </Grid>
-        ) : null}
+        ) : null} */}
       </Grid>
     );
   }

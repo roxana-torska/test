@@ -3,9 +3,9 @@ import { API_URL } from '../utils/config';
 import { stringify } from 'qs';
 
 export const rewardAPI = {
-  getRewards: async function(payload) {
+  getRewards: async function (payload) {
     let token = payload.token;
-    let response = await request(`/systemRewards/`, {
+    let response = await request(`${API_URL}/systemRewards/`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     if (response.status.toLowerCase() === 'ok') {
@@ -14,7 +14,7 @@ export const rewardAPI = {
       return [];
     }
   },
-  reedmedReward: async function(payload) {
+  reedmedReward: async function (payload) {
     const token = payload.token;
     const params = {
       rewardId: payload.rewardId

@@ -35,6 +35,11 @@ class RatingInFabIcon extends PureComponent {
   }
 
   openModal = () => {
+    console.log("openModal");
+    const { dish } = this.state;
+    const { dishId, type } = this.props.data;
+    this.props.handleOnSubmit(type, dish, dishId);
+
     this.setState({
       openModal: true,
       openPop: false,
@@ -141,7 +146,10 @@ class RatingInFabIcon extends PureComponent {
                  </Typography>
                 </Grid>
               </Grid>
-              <SaveRating openModal={this.openModal} handleClose={this.handleClose} />
+              <SaveRating
+                openModal={this.openModal}
+                handleClose={this.handleClose}
+                handleOnSubmit={this.props.handleOnSubmit} />
 
             </div>
           </Popover>

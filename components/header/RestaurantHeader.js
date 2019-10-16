@@ -60,6 +60,7 @@ class RestaurantHeader extends Component {
 					updateUserRewards(response);
 				}
 			});
+			
 		}
 	}
 
