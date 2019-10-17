@@ -60,7 +60,7 @@ class RestaurantHeader extends Component {
 					updateUserRewards(response);
 				}
 			});
-			
+
 		}
 	}
 
@@ -231,14 +231,14 @@ class RestaurantHeader extends Component {
 	showRestaurantsName = () => {
 		const { restaurantsName } = this.props;
 		if (restaurantsName) {
-			return <Typography style={{color:"white", fontSize:"24px"}}>{restaurantsName}</Typography>
+			return <Typography style={{ color: "white", fontSize: "24px" }}>{restaurantsName}</Typography>
 		}
 		return <img
 			src='/static/imgs/logo.png'
 			style={{ width: '23px', height: '15px' }}
 		/>
 	}
-	searchComponent = (hideRegularBar ) => {
+	searchComponent = (hideRegularBar) => {
 		const { classes,
 			global: { searchText },
 		} = this.props;
@@ -267,14 +267,130 @@ class RestaurantHeader extends Component {
 		/>
 
 	}
+	getHeaderTabs = () => {
+		const { isDishDetails, classes, menuData, selectedPageTab } = this.props;
+		const { selectedMenu, selectedMenuCategory, menuCategories } = this.state;
+		let rewardCount = null
+		if (!isDishDetails) {
+			return (
+				menuData && menuData.length ? (
+					<Grid
+						container
+						direction='row'
+						justify='center'
+						alignItems='center'
+						spacing={0}
+						wrap='nowrap'
+						className={classes.restaurantMenu}
+						style={{
+							paddingLeft: '16px',
+							paddingRight: '16px'
+						}}
+					>
+						<Grid item xs={1} />
+						<Grid item xs={5}>
+							<FormControl className={classes.restaurantMenuItem}>
+								<Select
+									value={selectedMenu || menuData[0].name}
+									onChange={this.handleMenuChange}
+									disableUnderline
+									classes={{
+										root: classnames(
+											classes.restaurantMenuSelect,
+											classes.marginNormal
+										),
+										selectMenu: classes.restaurantMenuSelected,
+										icon: classes.restaurantMenuLabel
+									}}
+								>
+									{menuData.map(menu =>
+										menu ? (
+											<MenuItem key={`${menu._id}_menu`} value={menu.name}>
+												{menu.name}
+											</MenuItem>
+										) : null
+									)}
+								</Select>
+							</FormControl>
+						</Grid>
+
+						<Grid item xs={5} style={{ textAlign: 'right' }}>
+							<FormControl className={classes.restaurantMenuItem}>
+								<Select
+									value={
+										selectedMenuCategory ||
+										(menuCategories.length ? menuCategories[0].name : '')
+									}
+									onChange={this.handleMenuCategoryChange}
+									disableUnderline
+									classes={{
+										root: classnames(
+											classes.restaurantMenuSelect,
+											classes.marginNormal
+										),
+										selectMenu: classes.restaurantMenuSelected,
+										icon: classes.restaurantMenuLabel
+									}}
+								>
+									{menuCategories.map(menuCat =>
+										menuCat ? (
+											<MenuItem
+												key={`${menuCat._id}_menu_cat`}
+												value={menuCat.name}
+											>
+												{menuCat.name}
+											</MenuItem>
+										) : null
+									)}
+								</Select>
+							</FormControl>
+						</Grid>
+						<Grid item xs={1} />
+					</Grid>
+				) : (
+						<Tabs
+							indicatorColor='primary'
+							textColor='primary'
+							variant='fullWidth'
+							value={selectedPageTab}
+							onChange={this.handleTabChange}
+							classes={{ root: classes.topSearchTabsRoot }}
+						>
+							<Tab
+								label='Results'
+								classes={{ root: classes.topSearchTabRoot }}
+							/>
+							<Tab
+								label='Reviews'
+								classes={{ root: classes.topSearchTabRoot }}
+							/>
+							<Tab
+								label={
+									<div>
+										<Badge
+											color='primary'
+											badgeContent={rewardCount}
+											classes={{ badge: classes.rewardCount }}
+										>
+											Rewards
+							  </Badge>
+									</div>
+								}
+								classes={{ root: classes.topSearchTabRoot }}
+							/>
+						</Tabs>
+					)
+			)
+		}
+	}
 	render() {
 		const {
 			classes,
 			selectedPageTab,
 			global: { searchText, userRewards, hideMainMenu, isLoggedIn },
-			menuData		
+			menuData
 		} = this.props;
-	
+
 		const {
 			userDrawer,
 			overlay,
@@ -333,7 +449,7 @@ class RestaurantHeader extends Component {
 									alignItems='center'
 									spacing={0}
 								>
-									
+
 									<Grid
 										item
 										xs={menuData && menuData.length ? 10 : 10}
@@ -435,114 +551,9 @@ class RestaurantHeader extends Component {
 							!hideMainMenu ? classes.hideMainNavbar : {}
 						)}
 					>
-						{menuData && menuData.length ? (
-							<Grid
-								container
-								direction='row'
-								justify='center'
-								alignItems='center'
-								spacing={0}
-								wrap='nowrap'
-								className={classes.restaurantMenu}
-								style={{
-									paddingLeft: '16px',
-									paddingRight: '16px'
-								}}
-							>
-								<Grid item xs={1} />
-								<Grid item xs={5}>
-									<FormControl className={classes.restaurantMenuItem}>
-										<Select
-											value={selectedMenu || menuData[0].name}
-											onChange={this.handleMenuChange}
-											disableUnderline
-											classes={{
-												root: classnames(
-													classes.restaurantMenuSelect,
-													classes.marginNormal
-												),
-												selectMenu: classes.restaurantMenuSelected,
-												icon: classes.restaurantMenuLabel
-											}}
-										>
-											{menuData.map(menu =>
-												menu ? (
-													<MenuItem key={`${menu._id}_menu`} value={menu.name}>
-														{menu.name}
-													</MenuItem>
-												) : null
-											)}
-										</Select>
-									</FormControl>
-								</Grid>
 
-								<Grid item xs={5} style={{ textAlign: 'right' }}>
-									<FormControl className={classes.restaurantMenuItem}>
-										<Select
-											value={
-												selectedMenuCategory ||
-												(menuCategories.length ? menuCategories[0].name : '')
-											}
-											onChange={this.handleMenuCategoryChange}
-											disableUnderline
-											classes={{
-												root: classnames(
-													classes.restaurantMenuSelect,
-													classes.marginNormal
-												),
-												selectMenu: classes.restaurantMenuSelected,
-												icon: classes.restaurantMenuLabel
-											}}
-										>
-											{menuCategories.map(menuCat =>
-												menuCat ? (
-													<MenuItem
-														key={`${menuCat._id}_menu_cat`}
-														value={menuCat.name}
-													>
-														{menuCat.name}
-													</MenuItem>
-												) : null
-											)}
-										</Select>
-									</FormControl>
-								</Grid>
-								<Grid item xs={1} />
-							</Grid>
-						) : (
-								<Tabs
-									indicatorColor='primary'
-									textColor='primary'
-									variant='fullWidth'
-									value={selectedPageTab}
-									onChange={this.handleTabChange}
-									classes={{ root: classes.topSearchTabsRoot }}
-								>
-									<Tab
-										label='Results'
-										classes={{ root: classes.topSearchTabRoot }}
-									/>
-									<Tab
-										label='Reviews'
-										classes={{ root: classes.topSearchTabRoot }}
-									/>
-									<Tab
-										label={
-											<div>
-												<Badge
-													color='primary'
-													badgeContent={rewardCount}
-													classes={{ badge: classes.rewardCount }}
-												>
-													Rewards
-                      				</Badge>
-											</div>
-										}
-										classes={{ root: classes.topSearchTabRoot }}
-									/>
-								</Tabs>
-							)}
 					</Grid>
+					{this.getHeaderTabs()}
 				</AppBar>
 			</div>
 		);

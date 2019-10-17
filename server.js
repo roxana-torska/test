@@ -22,7 +22,7 @@ const { API_URL, APP_URL } = require('./utils/config');
 const { stringify } = require('qs');
 
 const hydrateLoggedIn = function (req, res, next) {
-  
+
   const loggedInToken = getToken(req);
   if (loggedInToken) {
     req.loggedInToken = loggedInToken;
@@ -276,6 +276,15 @@ app
       }).catch(err => {
         console.log("error menu respinse", err);
       })
+
+    })
+
+    server.get("/dish-details/:id", (req, res) => {
+
+      app.render(req, res, '/dish-details', { id: req.params.id });
+
+
+
 
     })
     server.get('*', (req, res) => {

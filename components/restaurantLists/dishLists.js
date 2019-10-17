@@ -41,7 +41,7 @@ class DishesList extends PureComponent {
       description: "good",
 
     }
-    console.log("payload====>", payload);
+    
     let resrult = await reviewAPI.addAndUpdateReview(payload)
     if (
       resrult
@@ -58,7 +58,7 @@ class DishesList extends PureComponent {
       });
     }
   };
-
+  
   getItemLists = (el, listItemOnClick, key) => {
     const { classes, selectedIndex } = this.props;
 

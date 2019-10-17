@@ -36,7 +36,9 @@ class DishCard extends PureComponent {
     // this.setState({ showReview: true });
     onSubmit(event, commonRating, dishId);
   };
-
+  showDishDetails = (evt) => {
+    window.location.href = `/dish-details/${this.props.data.id}`
+  }
   render() {
     const {
       data,
@@ -69,7 +71,7 @@ class DishCard extends PureComponent {
       userDishRating = 0;
     }
     return (
-      <Grid container direction='row'>
+      <Grid container direction='row' onClick={this.showDishDetails}>
         <Grid item xs={12}>
           <ListCardItem
             title={
