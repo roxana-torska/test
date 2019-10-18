@@ -1,0 +1,100 @@
+
+import React from 'react';
+import Modal from '@material-ui/core/Modal';
+import { Grid, Typography } from '@material-ui/core';
+import { Remove, Add, Cancel, Check, CloseSharp } from '@material-ui/icons';
+
+
+export default function RateCard(props) {
+    return (
+        <div>
+
+            <Modal
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                open={props.open}
+                onClose={props.handleClose}
+            >
+                <div style={{
+                    position: 'absolute',
+                    position: "absolute",
+                    float: "right",
+                    top: "350px",
+                    right: "-10px",
+                    width: 150,
+                    backgroundColor: "white",
+                    border: '2px solid #000',
+
+
+                }}>
+                    <Grid container direction="column">
+                        <Grid container direction="row">
+                            <Grid container xs={4}>
+                                <div style={{
+                                    border: "1px solid #DADADA",
+                                    color: "#DADADA",
+                                }}>
+                                    <Remove />
+                                </div>
+                            </Grid>
+                            <Grid container justify="center" xs={4} >
+                                <Typography
+                                    style={{
+                                        fontFamily: "Bebas Neue",
+                                        fontSize: "21px",
+                                        lineHeight: "25px",
+                                        color: "#E53935"
+                                    }}
+                                >
+                                    8
+                                </Typography>
+
+                            </Grid>
+                            <Grid container justify="center" xs={4}>
+                                <div style={{
+                                    border: "1px solid #DADADA",
+
+                                }}>
+                                    <Add />
+                                </div>
+                            </Grid>
+
+                        </Grid>
+                        <Grid container justify="center" direction="row">
+                            <span style={{
+                                padding: "10px"
+                            }}>
+                                Add a review
+                            </span>
+                        </Grid>
+                        <Grid container direction="row">
+                            <Grid container xs={4}>
+                                <div style={{
+                                    border: " 1px solid #DADADA",
+                                    color: "#DADADA",
+                                }}>
+                                    <CloseSharp />
+                                </div>
+                            </Grid>
+                            <Grid xs={4} >
+
+                            </Grid>
+                            <Grid container justify="center" xs={4}>
+                                <div style={{
+                                    border: "1px solid #DADADA",
+
+
+                                }}>
+                                    <Check />
+                                </div>
+                            </Grid>
+                        </Grid>
+
+
+                    </Grid>
+
+                </div>
+            </Modal>
+        </div >
+    );
+}
