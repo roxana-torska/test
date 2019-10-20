@@ -44,7 +44,8 @@ class RestaurantLayout extends Component {
       changeOverlay,
       menuData,
       onMenuChange,
-      restaurantsName
+      restaurantsName,
+      isDishDetails
     } = this.props;
     const { hideSplash } = this.state;
     return hideSplash ? (
@@ -54,6 +55,7 @@ class RestaurantLayout extends Component {
           toggleMenu={toggleMenu}
           changeOverlay={changeOverlay}
           menuData={menuData}
+          isDishDetails={isDishDetails}
           // onMenuChange={onMenuChange}
           restaurantsName={restaurantsName}
         />
@@ -62,10 +64,10 @@ class RestaurantLayout extends Component {
         {/* <RestaurantFooter /> */}
       </React.Fragment>
     ) : (
-      <div style={splashScreen}>
-        <div style={splashLogo} />
-      </div>
-    );
+        <div style={splashScreen}>
+          <div style={splashLogo} />
+        </div>
+      );
   }
 }
 

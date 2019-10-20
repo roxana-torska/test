@@ -17,15 +17,12 @@ export default function RateCard(props) {
             >
                 <div style={{
                     position: 'absolute',
-                    position: "absolute",
                     float: "right",
-                    top: "350px",
+                    top: "390px",
                     right: "-10px",
                     width: 150,
                     backgroundColor: "white",
                     border: '2px solid #000',
-
-
                 }}>
                     <Grid container direction="column">
                         <Grid container direction="row">
@@ -62,9 +59,12 @@ export default function RateCard(props) {
                         </Grid>
                         <Grid container justify="center" direction="row">
                             <span style={{
-                                padding: "10px"
+                                paddingTop: "10px",
+                                marginBottom: "10px",
+                                borderBottom: "1px solid #757575",
+                                color: "#757575",
                             }}>
-                                Add a review
+                                make a review
                             </span>
                         </Grid>
                         <Grid container direction="row">

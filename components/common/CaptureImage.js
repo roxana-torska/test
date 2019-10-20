@@ -75,7 +75,7 @@ class CaptureImage extends Component {
           imageData: imageArr[1],
           imagePath: `/public/assets/images/reviews/${dishData.slug}/${
             user.user_id
-          }`
+            }`
         };
       }
       if (type === 'User') {
@@ -140,8 +140,9 @@ class CaptureImage extends Component {
 
   render() {
     const { classes } = this.props;
+    console.log("classess==", classes);
     const { displayVideo } = this.state;
-
+    console.log("state", displayVideo);
     return (
       <Grid container direction='row'>
         <Grid item xs={12} style={{ display: displayVideo }}>
