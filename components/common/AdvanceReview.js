@@ -78,7 +78,7 @@ class AdvanceReview extends Component {
 
                                 </div>
                             </Grid>
-                            <Grid container justify="center" xs={5}>
+                            <Grid container item justify="center" xs={5}>
                                 <Grid>
                                     <Typography
                                         style={{
@@ -93,11 +93,11 @@ class AdvanceReview extends Component {
                                 </Grid>
 
                                 <Grid container direction="row">
-                                    <Grid xs={2}>
+                                    <Grid item xs={2}>
                                         <Remove />
                                     </Grid>
 
-                                    <Grid xs={8}>
+                                    <Grid item xs={8}>
                                         <Typography
                                             style={{
                                                 display: "inline",
@@ -110,7 +110,7 @@ class AdvanceReview extends Component {
                                             4.5
                                     </Typography>
                                     </Grid>
-                                    <Grid xs={2}>
+                                    <Grid item xs={2}>
                                         <Add />
                                     </Grid>
                                 </Grid>

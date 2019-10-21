@@ -92,6 +92,8 @@ class RatingInFabIcon extends PureComponent {
           </Grid>
 
 
+
+
           <Popover
 
             open={this.state.openPop}
@@ -156,6 +158,7 @@ class RatingInFabIcon extends PureComponent {
           {this.state.openModal && <Modal
             open={this.state.openModal}
             handleCancel={this.handleCancel}
+            showDetails={this.props.showDetails}
             classes={this.props.classes}
 
           />

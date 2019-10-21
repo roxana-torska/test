@@ -70,8 +70,9 @@ class DishCard extends PureComponent {
     } else {
       userDishRating = 0;
     }
+    // onClick={this.showDishDetails}
     return (
-      <Grid container direction='row' onClick={this.showDishDetails}>
+      <Grid container direction='row'>
         <Grid item xs={12}>
           <ListCardItem
             title={
@@ -105,17 +106,18 @@ class DishCard extends PureComponent {
                 className={classes.reviewFooterItem}
                 style={{ marginTop: '0px' }}
               >
-                <Grid item xs={6} className={classes.listCardFooterPrice}>
+                <Grid item xs={4} className={classes.listCardFooterPrice}>
                   <div className={classes.listCardDishPrice}>
                     ${data.price.toFixed(2)}
                   </div>
                 </Grid>
                 <Grid
                   item
-                  xs={6}
+                  xs={8}
                   style={{ textAlign: 'right', position: 'relative' }}
                   zeroMinWidth
                 >
+
                   {/* 
                   <svg xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -131,7 +133,9 @@ class DishCard extends PureComponent {
                     handleClickOpen={this.handleClickOpen}
                     handleOnSubmit={this.props.onSubmit}
                     data={{ "type": data.type, "dishId": data.id }}
+                    showDetails={this.showDishDetails}
                   />
+
 
                   {/* <ReviewCard url={dishAvatar || '/static/imgs/image-not-found-dark.png'} /> */}
                 </Grid>

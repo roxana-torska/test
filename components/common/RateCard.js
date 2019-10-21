@@ -26,7 +26,7 @@ export default function RateCard(props) {
                 }}>
                     <Grid container direction="column">
                         <Grid container direction="row">
-                            <Grid container xs={4}>
+                            <Grid container >
                                 <div style={{
                                     border: "1px solid #DADADA",
                                     color: "#DADADA",
@@ -34,7 +34,7 @@ export default function RateCard(props) {
                                     <Remove />
                                 </div>
                             </Grid>
-                            <Grid container justify="center" xs={4} >
+                            <Grid container justify="center" >
                                 <Typography
                                     style={{
                                         fontFamily: "Bebas Neue",
@@ -47,7 +47,7 @@ export default function RateCard(props) {
                                 </Typography>
 
                             </Grid>
-                            <Grid container justify="center" xs={4}>
+                            <Grid container justify="center">
                                 <div style={{
                                     border: "1px solid #DADADA",
 
@@ -79,7 +79,7 @@ export default function RateCard(props) {
                             <Grid xs={4} >
 
                             </Grid>
-                            <Grid container justify="center" xs={4}>
+                            <Grid container justify="center">
                                 <div style={{
                                     border: "1px solid #DADADA",
 

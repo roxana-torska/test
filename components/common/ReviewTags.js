@@ -6,7 +6,7 @@ export default function ReviewTags(props) {
         <div style={{
             marginTop: "10px",
         }}>
-            {tags.map(rec => <React.Fragment><div style={{
+            {tags.map((rec, index) => <React.Fragment key={index}><div style={{
                 display: "inline",
                 backgroundColor: "#F9867E",
                 height: "24px",
@@ -14,10 +14,10 @@ export default function ReviewTags(props) {
                 color: "white",
                 borderRadius: "15px",
                 padding: "5px",
-            }}>
-                {rec.name} <span style={{ marginLeft: "5px" }}>X</span>
+            }} key={index}>
+                {rec.name} <span key={index} style={{ marginLeft: "5px" }}>X</span>
             </div>
-            
+
             </React.Fragment>
             )}
             {!showInput && < div

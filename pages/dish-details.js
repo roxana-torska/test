@@ -73,7 +73,7 @@ class DishDetails extends Component {
 	};
 	componentDidMount = () => {
 		this.setState({
-			top: ((window.screen.height / 2) - 129)-10,
+			top: ((window.screen.height / 2) - 129) - 10,
 			left: ((window.screen.width / 2) - 185) + 40,
 		})
 	}
@@ -109,7 +109,7 @@ class DishDetails extends Component {
 					</Grid>
 					<Grid item>
 						<Grid container direction="row">
-							<Grid conatiner direction="column" >
+							<Grid container direction="column" >
 								<Grid item>
 									<Typography
 										style={{
@@ -232,7 +232,7 @@ class DishDetails extends Component {
 									Calories:
 						</Typography>
 							</Grid>
-							<Grid container justify="center" xs={2}>
+							<Grid container item justify="center" xs={2}>
 								<Typography
 									style={{
 										marginTop: "15px",
@@ -244,7 +244,7 @@ class DishDetails extends Component {
 						</Grid>
 
 						<Grid container direction="row">
-							<Grid xs={2}>
+							<Grid item xs={2}>
 								<Typography
 									style={{
 										height: "16px",
@@ -261,13 +261,13 @@ class DishDetails extends Component {
 									Tags:
 						</Typography>
 							</Grid>
-							<Grid spacing={1}>
-								<Typography
+							<Grid >
+								<div
 									style={{
 										marginTop: "10px",
 									}}
-								>{selectedDish[0].tags.map(rec => <span >{this.getTag(rec)}</span>)}
-								</Typography>
+								>{selectedDish[0].tags.map((rec, index) => <span key={index} >{this.getTag(rec)}</span>)}
+								</div>
 							</Grid>
 						</Grid>
 						<Grid container direction="row">
@@ -313,7 +313,7 @@ class DishDetails extends Component {
 								padding: "20px 10% 0px 10%",
 							}}>
 								<Grid container direction="row">
-									<Grid xs={1}>
+									<Grid item xs={1}>
 										<span
 											style={{
 												color: "white",
@@ -322,7 +322,7 @@ class DishDetails extends Component {
 										><CloseSharp />
 										</span>
 									</Grid>
-									<Grid xs={3}>
+									<Grid item xs={3}>
 										<span
 
 											style={{
@@ -333,15 +333,15 @@ class DishDetails extends Component {
 											Cancel
 									</span>
 									</Grid>
-									<Grid xs={2}>
+									<Grid item xs={2}>
 
 									</Grid>
-									<Grid xs={1} >
+									<Grid item xs={1} >
 										<span onClick={this.handleSaveReview} style={{
 											color: "white"
 										}}><Add /> </span>
 									</Grid>
-									<Grid xs={4} >
+									<Grid item xs={4} >
 										<span style={{
 											color: "white"
 										}}>

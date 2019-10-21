@@ -8,7 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 
 export default function Modal(props) {
-    const { classes } = props
+    const { classes, showDetails } = props
     console.log("class=====>", classes.styledHeader);
     return (
         <div>
@@ -30,7 +30,7 @@ export default function Modal(props) {
           </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={props.handleCancel} color="black">
+                    <Button onClick={showDetails} color="black">
                         Review
           </Button>
                     <Button onClick={props.handleCancel} color="primary">
