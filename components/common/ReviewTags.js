@@ -1,7 +1,16 @@
 import React from 'react'
-import { Camera, PhotoCameraSharp, PhotoCameraTwoTone, PhotoCamera, Add, Remove, Close, AddCircleOutlineOutlined, AddCircleRounded, CancelRounded, CheckCircleOutlineRounded } from "@material-ui/icons";
+import { AddCircleRounded, CancelRounded, CheckCircleOutlineRounded } from "@material-ui/icons";
 export default function ReviewTags(props) {
-    const { showInput, showInputField, tags } = props
+    const {
+        showInput,
+        showInputField,
+        tags,
+        handleDelete,
+        closeInput,
+        value,
+        handleChange,
+        handleSubmit
+    } = props
     return (
         <div style={{
             marginTop: "10px",
@@ -9,13 +18,20 @@ export default function ReviewTags(props) {
             {tags.map((rec, index) => <React.Fragment key={index}><div style={{
                 display: "inline",
                 backgroundColor: "#F9867E",
+                verticalAlign: "top",
                 height: "24px",
                 fontSize: "13px",
                 color: "white",
                 borderRadius: "15px",
-                padding: "5px",
+                padding: "3px 10px 5px 10px",
             }} key={index}>
-                {rec.name} <span key={index} style={{ marginLeft: "5px" }}>X</span>
+                {rec} <span
+                    onClick={() => handleDelete(index)}
+                    key={index}
+                    style={{
+                        marginLeft: "5px",
+                        cursor: "pointer"
+                    }}>X</span>
             </div>
 
             </React.Fragment>
@@ -39,22 +55,26 @@ export default function ReviewTags(props) {
                     <AddCircleRounded />
                 </span>
             </div>}
-            {showInput && <React.Fragment><input type="text"
-                style={{
-                    border: "1px solid #F9867E",
-                    height: "24px",
-                    fontSize: "13px",
-                    width: "57px",
-                    borderRadius: "15px",
-                    padding: "5px",
-                }}
-            /> <div style={{
-                display: "inline",
-                marginTop: "20px",
-                verticalAlign: "top",
-            }}>
-                    <CheckCircleOutlineRounded />
-                    <CancelRounded />
+            {showInput && <React.Fragment>
+
+                <input type="text"
+                    value={value}
+                    onChange={handleChange}
+                    style={{
+                        border: "1px solid #F9867E",
+                        height: "24px",
+                        fontSize: "13px",
+                        width: "57px",
+                        borderRadius: "15px",
+                        padding: "5px",
+                    }}
+                /> <div style={{
+                    display: "inline",
+                    marginTop: "20px",
+                    verticalAlign: "top",
+                }}>
+                    <CheckCircleOutlineRounded onClick={handleSubmit} />
+                    <CancelRounded onClick={closeInput} />
                 </div>
             </React.Fragment>}
         </div>

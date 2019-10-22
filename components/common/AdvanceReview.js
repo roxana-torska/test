@@ -1,43 +1,102 @@
 import React, { Component } from "react";
-import CaptureImage from "./CaptureImage";
-import { Modal, Grid, Typography } from "@material-ui/core";
-import { Camera, PhotoCameraSharp, PhotoCameraTwoTone, PhotoCamera, Add, Remove, Close, AddCircleOutlineOutlined, AddCircleRounded, CancelRounded, CheckCircleOutlineRounded } from "@material-ui/icons";
 
-import ReactTags from 'react-tag-autocomplete'
+import { Modal, Grid, Typography } from "@material-ui/core";
+import { PhotoCamera, Add, Remove } from "@material-ui/icons";
 import ReviewTags from "./ReviewTags";
 
 class AdvanceReview extends Component {
     state = {
-        tags: [
-            { id: 1, name: "Apples" },
-            { id: 2, name: "Pears" }
-        ],
-        showInput: false,
+        likeTags: ["apples", "banana"],
+        dislikeTags: ["hello", "hello2"],
+        showLikeInput: false,
+        likeItem: "",
+        disLikeItem: "",
+        showDisLikeInput: false,
         top: "",
         left: "",
     }
-    handleDelete = (i) => {
-        const tags = this.state.tags.slice(0)
-        tags.splice(i, 1)
-        this.setState({ tags })
-    }
-
-    handleAddition = (tag) => {
-        const tags = [].concat(this.state.tags, tag)
-        this.setState({ tags })
-    }
-    showInputField = () => {
+    addLikeItem = () => {
+        let { likeTags, likeItem } = this.state;
         this.setState({
-            showInput: true,
+            likeTags: [...likeTags, likeItem],
+            likeItem: "",
         })
     }
+    addDisLikeItem = () => {
+        let { dislikeTags, disLikeItem } = this.state;
+        this.setState({
+            dislikeTags: [...dislikeTags, disLikeItem],
+            disLikeItem: ""
+        })
+    }
+
+    handleLikeDelete = (i) => {
+        console.log("index", i);
+        const { likeTags } = this.state;
+        const tags = likeTags.splice(i, 1);
+        console.log("tags", tags);
+        this.setState({
+            likeTags,
+        })
+    }
+    handleDisLikeDelete = (i) => {
+        const { dislikeTags } = this.state;
+        const tags = dislikeTags.splice(i, 1);
+        console.log("tags", dislikeTags);
+        this.setState({
+            dislikeTags,
+        })
+    }
+
+    closeLikeInput = () => {
+        this.setState({
+            showLikeInput: false
+        })
+    }
+
+    closeDisLikeInput = () => {
+        this.setState({
+            showDisLikeInput: false
+        })
+    }
+
+    handleLikeChange = (evt) => {
+        this.setState({
+            likeItem: evt.target.value,
+        })
+
+    }
+    handleDisLikeChange = (evt) => {
+        this.setState({
+            disLikeItem: evt.target.value,
+        })
+
+    }
+
+    // handleLikeAdd = ()=>{
+    //     this.setState({
+    //         likeTags:[...this.state,
+    //         ]
+    //     })
+    // }
+    showLikeInputField = () => {
+        this.setState({
+            showLikeInput: true,
+        })
+    }
+    showDisLikeInputField = () => {
+        this.setState({
+            showDisLikeInput: true,
+        })
+    }
+
 
 
     render() {
         const { open, handleClose, dishImage, top, left } = this.props;
         console.log(top);
         console.log(left);
-        const { tags } = this.state;
+        const { likeTags, showDisLikeInput, showLikeInput, dislikeTags, likeItem, disLikeItem } = this.state;
         return (
             <Modal
                 style={{
@@ -70,9 +129,10 @@ class AdvanceReview extends Component {
                                     height="105px" />
 
                                 <div style={{
-                                    position: "absolute",
-                                    top: `${top}px`,
-                                    left: `${left}px`,
+                                    padding: "2em",
+                                    marginLeft: "60px",
+                                    marginTop: "-60px",
+                                    transform: "translate(-50%, -50%)",
                                     color: "white"
                                 }}><PhotoCamera />
 
@@ -133,9 +193,15 @@ class AdvanceReview extends Component {
                                 Like
                                 </Typography>
                             <ReviewTags
-                                showInput={this.state.showInput}
-                                showInputField={this.showInputField}
-                                tags={this.state.tags} />
+                                showInput={showLikeInput}
+                                showInputField={this.showLikeInputField}
+                                handleDelete={this.handleLikeDelete}
+                                tags={likeTags}
+                                closeInput={this.closeLikeInput}
+                                handleChange={this.handleLikeChange}
+                                value={likeItem}
+                                handleSubmit={this.addLikeItem}
+                            />
                         </Grid>
                         <Grid>
                             <Typography style={{
@@ -147,9 +213,16 @@ class AdvanceReview extends Component {
                                 Dislike
                                 </Typography>
                             <ReviewTags
-                                showInput={this.state.showInput}
-                                showInputField={this.showInputField}
-                                tags={this.state.tags} />
+                                showInput={showDisLikeInput}
+                                showInputField={this.showDisLikeInputField}
+                                tags={dislikeTags}
+                                handleDelete={this.handleDisLikeDelete}
+                                closeInput={this.closeDisLikeInput}
+                                handleChange={this.handleDisLikeChange}
+                                value={disLikeItem}
+                                handleSubmit={this.addDisLikeItem}
+
+                            />
                         </Grid>
 
                     </Grid>
