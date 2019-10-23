@@ -383,6 +383,40 @@ class RestaurantHeader extends Component {
 			)
 		}
 	}
+	handleArrowIcon = (menuData) => {
+		const { isDishDetails, classes } = this.props;
+		if (!isDishDetails) {
+			if (menuData) {
+				return menuData.length ? (
+					<IconButton
+						color='inherit'
+						aria-label='User Drawer'
+						onClick={this.goToBack}
+					>
+						<ArrowBack
+							color='primary'
+							className={classes.userDrawerCloseButton}
+						/>
+					</IconButton>
+				) : (
+						<SearchIcon
+							color='primary'
+							onClick={this.handleShowSearchBar}
+							className={classes.userDrawerCloseButton}
+							style={{ width: '18px', height: '18px' }}
+						/>
+					)
+			}
+		}
+		return <IconButton
+			color='inherit'
+			aria-label='User Drawer'
+			onClick={this.goToBack}
+		><ArrowBack
+				color='primary'
+				className={classes.userDrawerCloseButton}
+			/></IconButton>
+	}
 	render() {
 		const {
 			classes,
@@ -449,10 +483,15 @@ class RestaurantHeader extends Component {
 									alignItems='center'
 									spacing={0}
 								>
-
 									<Grid
 										item
-										xs={menuData && menuData.length ? 10 : 10}
+										xs={1}
+									>
+										{this.handleArrowIcon(menuData)}
+									</Grid>
+									<Grid
+										item
+										xs={9}
 										style={{
 											textAlign: 'left',
 											paddingRight: '16px',
@@ -462,25 +501,13 @@ class RestaurantHeader extends Component {
 										{this.searchComponent(hideRegularBar)}
 									</Grid>
 									<Grid item xs={1} style={{ textAlign: 'left' }}>
-										{menuData && menuData.length ? (
-											<IconButton
-												color='inherit'
-												aria-label='User Drawer'
-												onClick={this.goToBack}
-											>
-												<ArrowBack
-													color='primary'
-													className={classes.userDrawerCloseButton}
-												/>
-											</IconButton>
-										) : (
-												<SearchIcon
-													color='primary'
-													onClick={this.handleShowSearchBar}
-													className={classes.userDrawerCloseButton}
-													style={{ width: '18px', height: '18px' }}
-												/>
-											)}
+										<SearchIcon
+											color='primary'
+											onClick={this.handleShowSearchBar}
+											className={classes.userDrawerCloseButton}
+											style={{ width: '18px', height: '18px' }}
+										/>
+
 									</Grid>
 									<Grid
 										item

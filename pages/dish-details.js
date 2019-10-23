@@ -32,9 +32,9 @@ const tagIcons = {
 	halal: halalIcon
 };
 class DishDetails extends Component {
-	static async getInitialProps({ query: { id } }) {
+	static async getInitialProps({ query: { id, name } }) {
 
-		return { id }
+		return { id, name }
 	}
 	state = {
 		showModal: false,
@@ -79,14 +79,15 @@ class DishDetails extends Component {
 	}
 	render() {
 		const { showModal, isDishDetails } = this.state;
-		const { classes } = this.props;
+		const { classes, name } = this.props;
 		const selectedDish = this.props.dishes != null && this.getSelectedDish();
+
 		return <React.Fragment>
 			<RestaurantLayout
 				selectedPageTab={0}
 				toggleMenu={this.handleToggleMenu}
 				changeOverlay={this.handleOverlay}
-				// restaurantsName={restaurant ? restaurant.primary : id}
+				restaurantsName={name ? name : ""}
 				isDishDetails={isDishDetails}
 			>
 				<WindowResizeListener
@@ -94,7 +95,7 @@ class DishDetails extends Component {
 						this.setState({ winHeight: windowSize.windowHeight });
 					}}
 				/>
-				{selectedDish && <Grid container
+				{selectedDish.length > 0 && <Grid container
 					direction="column"
 				>
 					<Grid item>
@@ -169,7 +170,7 @@ class DishDetails extends Component {
 
 
 									}}>
-										4.5
+										{selectedDish[0].avgRatings.toFixed(1)}
 									</Typography>
 
 									<span
@@ -189,6 +190,7 @@ class DishDetails extends Component {
 										open={showModal}
 										top={this.state.top}
 										left={this.state.left}
+										selected={selectedDish[0]}
 										dishImage={`${API_IMAGE_URL}/assets/images/dishes/${selectedDish[0].images[0].name}/${selectedDish[0].images[0].path}`}
 									/>
 								</Grid>
@@ -210,11 +212,8 @@ class DishDetails extends Component {
 									marginTop: "20px",
 								}}
 							>
-								Worlds best fudgiest brownies is my best brownie recipe!
-								perfect crisp crackly top, super fudgy centre,
-								chewy or gooey in all the right places,
-								studded with melted chunks of chocolate!
-			</Typography>
+								{selectedDish[0].description}
+							</Typography>
 						</Grid>
 						<Grid container direction="row" >
 							<Grid item xs={2}>
@@ -300,7 +299,7 @@ class DishDetails extends Component {
 										lineHeight: "24px",
 									}}
 								>
-									{selectedDish[0].price}
+									{selectedDish[0].price} $
 								</Typography>
 							</Grid>
 						</Grid>

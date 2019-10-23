@@ -209,7 +209,7 @@ app
       let isLoggedIn = req.loggedInToken ? true : false;
       let userData = req.user || {};
       getRestaurants(query, req.loggedInToken).then(response => {
-
+        console.log("response dishes====>", response.dishes);
         query.restaurants = response.restaurants || [];
         query.dishes = response.dishes || [];
         query.similarRestaurants = response.similarRestaurants || [];
@@ -218,7 +218,6 @@ app
         query.loggedInToken = req.loggedInToken;
         query.systemTags = response.systemTags;
         const actualPage = '/restaurants-search';
-        console.log("query response ====>", query);
         app.render(req, res, actualPage, query);
       });
     });
@@ -279,9 +278,9 @@ app
 
     })
 
-    server.get("/dish-details/:id", (req, res) => {
-
-      app.render(req, res, '/dish-details', { id: req.params.id });
+    server.get("/dish-details/:id/:name", (req, res) => {
+      console.log(req.params);
+      app.render(req, res, '/dish-details', { id: req.params.id, name: req.params.name });
 
 
 

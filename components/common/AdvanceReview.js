@@ -93,10 +93,21 @@ class AdvanceReview extends Component {
 
 
     render() {
-        const { open, handleClose, dishImage, top, left } = this.props;
+        const { open,
+            handleClose,
+            dishImage,
+            top,
+            left,
+            selected
+        } = this.props;
         console.log(top);
         console.log(left);
-        const { likeTags, showDisLikeInput, showLikeInput, dislikeTags, likeItem, disLikeItem } = this.state;
+        const { likeTags,
+            showDisLikeInput,
+            showLikeInput,
+            dislikeTags,
+            likeItem,
+            disLikeItem } = this.state;
         return (
             <Modal
                 style={{
@@ -148,8 +159,8 @@ class AdvanceReview extends Component {
                                             marginLeft: "20px",
                                         }}
                                     >
-                                        HAMBURGER
-                                </Typography>
+                                        {selected.name.toUpperCase()}
+                                    </Typography>
                                 </Grid>
 
                                 <Grid container direction="row">
@@ -167,15 +178,26 @@ class AdvanceReview extends Component {
                                                 paddingLeft: "10px",
                                             }}
                                         >
-                                            4.5
-                                    </Typography>
+                                            {selected.avgRatings.toFixed(1)}
+                                        </Typography>
                                     </Grid>
                                     <Grid item xs={2}>
                                         <Add />
                                     </Grid>
                                 </Grid>
                                 <Grid>
-                                    <Typography>
+                                    <Typography
+
+                                        style={{
+                                            fontFamily: "Lato",
+                                            fontSize: "14px",
+                                            lineHeight: "17px",
+                                            textDecoration: "underline",
+                                            color: "#909090",
+                                            pointer: "cursor",
+
+                                        }}
+                                    >
                                         Advanced review
                                 </Typography>
                                 </Grid>

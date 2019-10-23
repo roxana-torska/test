@@ -37,7 +37,9 @@ class DishCard extends PureComponent {
     onSubmit(event, commonRating, dishId);
   };
   showDishDetails = (evt) => {
-    window.location.href = `/dish-details/${this.props.data.id}`
+    console.log("value======>", this.props)
+    window.location.href = `/dish-details/${this.props.data.id}/${this.props.restaurantsName}`;
+    // window.location.href = `/dish-details/${this.props.data.id}`
   }
   render() {
     const {
@@ -47,11 +49,11 @@ class DishCard extends PureComponent {
       global: { userReviews, user },
       showUserReview
     } = this.props;
-    console.log("data latest=====>", data);
+
     const { showReview } = this.state;
     let dishAvatar = '';
     let userDishRating = 0;
-    // let dishAvgRating = data.avgRatings;
+    let dishAvgRating = data.avgRatings;
     if (data.images.length) {
       dishAvatar = `${API_IMAGE_URL}/assets/images/dishes/${data.images[0].name}/${
         data.images[0].path
@@ -64,7 +66,7 @@ class DishCard extends PureComponent {
       userReviews[data.id].userId === user.user_id
     ) {
       userDishRating = userReviews[data.id].ratings;
-      // dishAvgRating = userReviews[data.id].dish.avgRatings;
+      dishAvgRating = userReviews[data.id].dish.avgRatings;
     } else if (data.reviews) {
       userDishRating = data.reviews.ratings;
     } else {
@@ -89,7 +91,7 @@ class DishCard extends PureComponent {
                     style={{ textAlign: 'right' }}
                   >
                     <StarRate className={classes.reviewFooterItemIcon} />
-                    {0}
+                    {data.avgRatings.toFixed(2)}
                   </div>
                 </Grid>
               </Grid>
@@ -118,24 +120,13 @@ class DishCard extends PureComponent {
                   zeroMinWidth
                 >
 
-                  {/* 
-                  <svg xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24">
-                    <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z" />
 
-                  </svg>
-                  <span style={{ fontSize: "20px", marginTop: "5px", marginLeft: "2px" }}>
-                    Share
-                  </span> */}
                   <RatingInFabIcon
                     handleClickOpen={this.handleClickOpen}
                     handleOnSubmit={this.props.onSubmit}
                     data={{ "type": data.type, "dishId": data.id }}
                     showDetails={this.showDishDetails}
                   />
-
 
                   {/* <ReviewCard url={dishAvatar || '/static/imgs/image-not-found-dark.png'} /> */}
                 </Grid>

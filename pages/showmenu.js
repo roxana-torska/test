@@ -80,12 +80,14 @@ class showmenu extends React.Component {
     };
 
     handleListItemClick = (evt, index, value) => {
+        console.log("valueeeeeeeeeeeeeeeeeeeeeeeee=>", value)
         if (value.type === 'restaurant') {
 
             window.location.href = `/restaurants/${value.slug}`;
         }
         if (value.type === 'dish') {
-            window.location.href = `/dish-details/${value.slug}`;
+            // window.location.href = `/dish-details?id=${value.slug}&name=${value.primary}`;
+            // window.location.href = `/dish-details/${value.slug}`;
         }
     };
 
@@ -134,7 +136,7 @@ class showmenu extends React.Component {
             classes,
             id,
             menuData,
-            dishes
+
         } = this.props;
         const { restaurant, restaurantDishes } = this.state;
         console.log("restaurantDishes=====>", restaurantDishes);
@@ -168,6 +170,7 @@ class showmenu extends React.Component {
                             listData={restaurantDishes}
                             listItemClass={classes.restaurantsListItem}
                             changeOverlay={this.handleOverlay}
+                            restaurantsName={restaurant ? restaurant.primary : id}
                             // isLoggedIn={isLoggedIn}
                             onReviewSubmit={this.handleReviewSubmit}
                         />

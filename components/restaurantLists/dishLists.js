@@ -41,7 +41,7 @@ class DishesList extends PureComponent {
       description: "good",
 
     }
-    
+
     let resrult = await reviewAPI.addAndUpdateReview(payload)
     if (
       resrult
@@ -58,9 +58,9 @@ class DishesList extends PureComponent {
       });
     }
   };
-  
+
   getItemLists = (el, listItemOnClick, key) => {
-    const { classes, selectedIndex } = this.props;
+    const { classes, selectedIndex, restaurantsName } = this.props;
 
 
     return (
@@ -78,6 +78,7 @@ class DishesList extends PureComponent {
           data={el}
           onSubmit={this.handleReviewSubmit}
           onCancel={this.handleReviewClose}
+          restaurantsName={restaurantsName}
         />
       </ListItem>
     );

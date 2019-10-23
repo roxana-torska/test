@@ -5,7 +5,6 @@ import Typography from '@material-ui/core/Typography';
 import { AddCircleOutlineRounded, RemoveCircleOutlineRounded, Add, Remove, CheckCircleOutlineRounded } from "@material-ui/icons/";
 import { Grid } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
-import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 import SaveRating from './SaveRating';
 import Modal from './Modal'
 class RatingInFabIcon extends PureComponent {
@@ -35,7 +34,6 @@ class RatingInFabIcon extends PureComponent {
   }
 
   openModal = () => {
-    console.log("openModal");
     const { dish } = this.state;
     const { dishId, type } = this.props.data;
     this.props.handleOnSubmit(type, dish, dishId);
@@ -63,7 +61,7 @@ class RatingInFabIcon extends PureComponent {
     })
   }
   render() {
-    const { classes, type } = this.props;
+    const { classes } = this.props;
     return (
       <React.Fragment>
 

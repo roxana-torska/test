@@ -19,7 +19,7 @@ const styles = theme => {
       flexWrap: 'wrap'
     },
     popover: {
-      padding: "10px 50px 40px 50px",
+      padding: "3px 9px 3px 4px",
     },
     backdrop: {
       position: "absolute",
