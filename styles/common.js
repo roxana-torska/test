@@ -24,6 +24,9 @@ const styles = theme => {
     backdrop: {
       position: "absolute",
     },
+    TagIcon:{
+      fontSize:'17px'
+    },
     pageTitleRed: {
       fontFamily: "'BebasNeue', 'sans-serif'",
       fontSize: getRemFontSizeByPx(30),

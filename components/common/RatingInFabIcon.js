@@ -61,7 +61,8 @@ class RatingInFabIcon extends PureComponent {
     })
   }
   render() {
-    const { classes } = this.props;
+    const { classes, reviewRating } = this.props;
+    console.log("review rating===>", reviewRating);
     return (
       <React.Fragment>
 
@@ -78,7 +79,7 @@ class RatingInFabIcon extends PureComponent {
                 style={{ float: "right" }}
               >
                 <Typography className={classes.colorPrimary}>
-                  {this.state.dish || 0}
+                  {reviewRating || 0}
                 </Typography>
               </Avatar>
             </Grid>

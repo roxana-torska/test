@@ -4,6 +4,8 @@ const restaurantsAction = {
     // set dishes to store
     SET_DISHES:"SET_DISHES",
 
+    SET_DISH_RATING:"SET_DISH_RATING",
+
     GET_MENUS:"GET_MENUS",
     GET_MENUS_SUCCESSFUL :"GET_MENUS_SUCCESSFUL", 
     GET_MENUS_FAIL :"GET_MENUS_FAIL",
@@ -41,6 +43,13 @@ const restaurantsAction = {
             type:restaurantsAction.GET_MENUS_FAIL,
             data,
             success :false
+        }
+    },
+
+    setDishRating:data=>{
+        return {
+            type:restaurantsAction.SET_DISH_RATING,
+            data,
         }
     }
 }

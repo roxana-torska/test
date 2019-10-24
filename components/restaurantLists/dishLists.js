@@ -32,7 +32,6 @@ class DishesList extends PureComponent {
   };
 
   handleReviewSubmit = async (type, ratings, dishId) => {
-    console.log("token =======>", this.props.global.token);
     let payload = {
       ratings,
       dishId,
@@ -49,17 +48,15 @@ class DishesList extends PureComponent {
       reviewAPI.getReviews({ token: this.props.global.token }).then(response => {
         const query = {
           myreviews: response,
-          // user: req.user,
-          // isLoggedIn: req.loggedInToken ? true : false,
-          // loggedInToken: req.loggedInToken
         };
-        console.log("latest ")
+        console.log("latest ", response);
         this.props.updateUserReview(response);
       });
     }
   };
 
   getItemLists = (el, listItemOnClick, key) => {
+    console.log("element===>", el);
     const { classes, selectedIndex, restaurantsName } = this.props;
 
 
@@ -85,10 +82,11 @@ class DishesList extends PureComponent {
   };
   render() {
     const { listData, listItemOnClick, classes } = this.props;
-
+    console.log("liest data===>", listData);
     return listData.length ? (
       <List className={classes.listRoot}>
         {listData.map((dish, index) => {
+          console.log("dishes=====>", dish);
           let dishAvatar = '';
           if (dish.images.length) {
             dishAvatar = `${API_IMAGE_URL}/assets/images/dishes/${dish.slug}/${

@@ -49,7 +49,7 @@ class DishCard extends PureComponent {
       global: { userReviews, user },
       showUserReview
     } = this.props;
-
+    console.log("data====>", data);
     const { showReview } = this.state;
     let dishAvatar = '';
     let userDishRating = 0;
@@ -119,10 +119,9 @@ class DishCard extends PureComponent {
                   style={{ textAlign: 'right', position: 'relative' }}
                   zeroMinWidth
                 >
-
-
                   <RatingInFabIcon
                     handleClickOpen={this.handleClickOpen}
+                    reviewRating={data.reviews && data.reviews.ratings || 0}
                     handleOnSubmit={this.props.onSubmit}
                     data={{ "type": data.type, "dishId": data.id }}
                     showDetails={this.showDishDetails}

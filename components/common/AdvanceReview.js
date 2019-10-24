@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 
 import { Modal, Grid, Typography } from "@material-ui/core";
-import { PhotoCamera, Add, Remove } from "@material-ui/icons";
+import { PhotoCamera, Add, Remove, Cancel, Close } from "@material-ui/icons";
 import ReviewTags from "./ReviewTags";
+import AddvanceReviewFields from "./AdvanceReviewFields";
 
 class AdvanceReview extends Component {
     state = {
@@ -14,6 +15,17 @@ class AdvanceReview extends Component {
         showDisLikeInput: false,
         top: "",
         left: "",
+        showAdvance: false,
+    }
+    showAdvance = () => {
+        this.setState({
+            showAdvance: true
+        })
+    }
+    hideAdvance = ()=>{
+        this.setState({
+            showAdvance: false,
+        })
     }
     addLikeItem = () => {
         let { likeTags, likeItem } = this.state;
@@ -98,7 +110,8 @@ class AdvanceReview extends Component {
             dishImage,
             top,
             left,
-            selected
+            selected,
+            getTags
         } = this.props;
         console.log(top);
         console.log(left);
@@ -107,7 +120,8 @@ class AdvanceReview extends Component {
             showLikeInput,
             dislikeTags,
             likeItem,
-            disLikeItem } = this.state;
+            disLikeItem,
+            showAdvance } = this.state;
         return (
             <Modal
                 style={{
@@ -117,15 +131,17 @@ class AdvanceReview extends Component {
                     justifyContent: 'center',
 
                 }}
-                aria-labelledby="simple-modal-title"
-                aria-describedby="simple-modal-description"
+                // aria-labelledby="simple-modal-title"
+                // aria-describedby="simple-modal-description"
                 open={open}
                 onClose={handleClose}
             >
                 <div style={{
                     width: 370,
-                    height: 258,
+                    minHeight: 258,
+                    maxHeight: "85vh",
                     backgroundColor: "white",
+                    overflow: "hidden",
                     border: '2px solid #000',
                     padding: "10px"
                 }}>
@@ -149,19 +165,20 @@ class AdvanceReview extends Component {
 
                                 </div>
                             </Grid>
-                            <Grid container item justify="center" xs={5}>
+                            <Grid container item xs={5}>
                                 <Grid>
                                     <Typography
                                         style={{
                                             fontSize: "20px",
                                             fontFamily: "Bebas Neue",
                                             color: "#938E8E",
-                                            marginLeft: "20px",
+                                            // marginLeft: "20px",
                                         }}
                                     >
                                         {selected.name.toUpperCase()}
                                     </Typography>
                                 </Grid>
+
 
                                 <Grid container direction="row">
                                     <Grid item xs={2}>
@@ -185,25 +202,53 @@ class AdvanceReview extends Component {
                                         <Add />
                                     </Grid>
                                 </Grid>
-                                <Grid>
+                                {!showAdvance ? <Grid>
                                     <Typography
-
+                                        onClick={this.showAdvance}
                                         style={{
                                             fontFamily: "Lato",
                                             fontSize: "14px",
                                             lineHeight: "17px",
                                             textDecoration: "underline",
                                             color: "#909090",
-                                            pointer: "cursor",
-
+                                            cursor: "pointer",
                                         }}
                                     >
                                         Advanced review
                                 </Typography>
-                                </Grid>
+                                </Grid> : <Grid>
+                                        <Typography style={{
+                                            display: "inline",
+                                            verticalAlign: "top",
+                                            color: "red",
+                                            fontSize: "13px",
+                                            lineHeight: "16px",
+                                        }}>
+                                            {selected.price}$
+                                        </Typography>
+                                        <Typography style={{
+                                            display: "inline",
+                                            verticalAlign: "top",
+                                        }}>
+                                            {selected.tags.map(
+                                                (rec, index) => <span key={index} >
+                                                    {getTags(rec)}
+                                                </span>
+                                            )}
+                                        </Typography>
+
+
+                                    </Grid>
+                                }
 
                             </Grid>
+                            <Grid item xs={2} >
 
+                                <Close style={{
+                                    cursor: "pointer",
+                                    float: "right"
+                                }} />
+                            </Grid>
                         </Grid>
                         <Grid>
                             <Typography style={{
@@ -246,7 +291,9 @@ class AdvanceReview extends Component {
 
                             />
                         </Grid>
-
+                        <Grid>
+                            {showAdvance && <AddvanceReviewFields hideAdvance={this.hideAdvance}/>}
+                        </Grid>
                     </Grid>
 
                 </div>

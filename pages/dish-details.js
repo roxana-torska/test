@@ -55,7 +55,7 @@ class DishDetails extends Component {
 	}
 	getTag = (item) => {
 		let TagIcon = tagIcons[item.name.replace(' ', '').toLowerCase()];
-		return <TagIcon />
+		return <TagIcon className={this.props.classes.TagIcon} />
 
 	}
 	handleSaveReview = () => {
@@ -72,10 +72,7 @@ class DishDetails extends Component {
 		toggleFilterMenu({ drawerOpen: toggleMenu });
 	};
 	componentDidMount = () => {
-		this.setState({
-			top: ((window.screen.height / 2) - 129) - 10,
-			left: ((window.screen.width / 2) - 185) + 40,
-		})
+
 	}
 	render() {
 		const { showModal, isDishDetails } = this.state;
@@ -191,6 +188,7 @@ class DishDetails extends Component {
 										top={this.state.top}
 										left={this.state.left}
 										selected={selectedDish[0]}
+										getTags={this.getTag}
 										dishImage={`${API_IMAGE_URL}/assets/images/dishes/${selectedDish[0].images[0].name}/${selectedDish[0].images[0].path}`}
 									/>
 								</Grid>
