@@ -7,11 +7,13 @@ import AdvanceReviewRow from './AdvancReviewRow';
 
 class AddvanceReviewFields extends Component {
     render() {
-        const reviewData = [
-            { data: "Value For money", rate: "4.5" },
-            { data: "Look and feel", rate: "4.5" },
-            { data: "Taste", rate: "4.5" },
-        ]
+        const { reviewData, handleDecreament, handleIncreament } = this.props;
+        // const reviewData = [
+        //     { data: "Value For money", rate: "4.5" },
+        //     { data: "Look and feel", rate: "4.5" },
+        //     { data: "Taste", rate: "4.5",name },
+        // ]
+
         return (
             <React.Fragment>
                 <Divider style={{
@@ -19,26 +21,52 @@ class AddvanceReviewFields extends Component {
                 }} />
                 <Grid container direction="column" >
                     {reviewData.map(rec => {
-                        return <AdvanceReviewRow data={rec.data} rate={rec.rate} />
+                        return <AdvanceReviewRow
+                            data={rec.data}
+                            rate={rec.rate}
+                            name={rec.name}
+                            handleDecreament={handleDecreament}
+                            handleIncreament={handleIncreament}
+                        />
                     })}
-                    <Grid item>
-                        <textarea rows="3" cols="45" placeholder="spill your guts"
+                    <Grid >
+                        <textarea style={{
+                            width: "100%",
+                            height: "30px"
+                        }} placeholder="spill your guts"
                         />
 
                     </Grid>
-                    <Grid>
-                        <Typography
-                            onClick={this.props.hideAdvance}
-                            style={{
-                                textDecoration: "underline",
-                                fontSize: "14px",
-                                lineHeight: "17px",
-                                color: "#D1D3D4",
-                                cursor: "pointer"
-                            }}
-                        >
-                            simple review
+                    <Grid container direction="row">
+                        <Grid item xs={6}>
+                            <Typography
+                                onClick={this.props.hideAdvance}
+                                style={{
+                                    textDecoration: "underline",
+                                    fontSize: "14px",
+                                    lineHeight: "17px",
+                                    color: "#D1D3D4",
+                                    cursor: "pointer"
+                                }}
+                            >
+                                simple review
                         </Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Typography
+                                onClick={this.props.handleReviewSubmit}
+                                style={{
+                                    textDecoration: "underline",
+                                    float: "right",
+                                    fontSize: "14px",
+                                    lineHeight: "17px",
+                                    // color: "#D1D3D4",
+                                    cursor: "pointer"
+                                }}
+                            >
+                                Submit review
+                        </Typography>
+                        </Grid>
                     </Grid>
 
                 </Grid>

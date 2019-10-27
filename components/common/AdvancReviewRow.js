@@ -2,7 +2,7 @@ import React from 'react'
 import { Remove, Add } from '@material-ui/icons';
 import { Typography, Grid } from '@material-ui/core';
 export default function AdvanceReviewRow(props) {
-    const { data, rate } = props;
+    const { data, rate, handleDecreament, handleIncreament, name } = props;
 
     return <Grid container direction="row" style={{
         marginBottom: "10px"
@@ -25,7 +25,7 @@ export default function AdvanceReviewRow(props) {
             <div style={{
                 float: "right"
             }}>
-                <Remove />
+                <Remove onClick={() => handleDecreament(name, rate)} />
                 <Typography
 
                     style={{
@@ -39,7 +39,7 @@ export default function AdvanceReviewRow(props) {
                 >
                     {rate}
                 </Typography>
-                <Add />
+                <Add onClick={() => handleIncreament(name, rate)} />
             </div>
         </Grid>
     </Grid>

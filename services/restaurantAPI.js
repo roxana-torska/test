@@ -25,15 +25,25 @@ export const restaurantAPI = {
 			return [];
 		}
 	},
-	getMenus: async (payload)=>{
+	getMenus: async (payload) => {
 		let response = await request(
 			`/restaurants/getMenus`
 		);
-		if(response.status.toLowerCase()==="ok"){
+		if (response.status.toLowerCase() === "ok") {
 			return response.data
-		}else{
+		} else {
 			return []
 		}
+	},
+	getDishes: async (payload) => {
+		let token = payload.token;
+		let url = `${API_URL}/dishes/get-dishes`
+
+		let response = await request(url, {
+			headers: { Authorization: `Bearer ${token}` },
+			method: 'GET',
+		});
+		return response;
 	}
-	
+
 };

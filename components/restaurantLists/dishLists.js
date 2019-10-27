@@ -9,7 +9,9 @@ import { APP_URL, API_IMAGE_URL } from '../../utils/config';
 import actions from '../../redux/global/actions';
 import DishCard from '../common/DishCard';
 import { reviewAPI } from '../../services/reviewAPI';
-
+import { restaurantAPI } from '../../services/restaurantAPI';
+import restaurantsAction from '../../redux/restaurants/actions'
+const { setDishes } = restaurantsAction;
 const { updateUserReview } = actions;
 class DishesList extends PureComponent {
   state = {
@@ -33,18 +35,26 @@ class DishesList extends PureComponent {
 
   handleReviewSubmit = async (type, ratings, dishId) => {
     let payload = {
-      ratings,
-      dishId,
-      type,
+      data: {
+        ratings,
+        dishId,
+        type,
+      },
       token: this.props.global.token,
-      description: "good",
-
     }
 
     let resrult = await reviewAPI.addAndUpdateReview(payload)
     if (
       resrult
     ) {
+      restaurantAPI.getDishes({ token: this.props.global.token }).then((res) => {
+        // let resp = Object.values(res.JSON());
+        console.log(res.data);
+        // alert(res.data);
+        this.props.setDishes({
+          data: res.data
+        })
+      })
       reviewAPI.getReviews({ token: this.props.global.token }).then(response => {
         const query = {
           myreviews: response,
@@ -52,6 +62,7 @@ class DishesList extends PureComponent {
         console.log("latest ", response);
         this.props.updateUserReview(response);
       });
+
     }
   };
 
@@ -128,6 +139,7 @@ export default connect(
     global: state.global
   }),
   {
-    updateUserReview
+    updateUserReview,
+    setDishes,
   }
 )(withStyles(styles)(DishesList));

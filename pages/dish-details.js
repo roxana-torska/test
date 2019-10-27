@@ -6,7 +6,7 @@ import { APP_URL, API_IMAGE_URL } from '../utils/config';
 import RestaurantHeader from '../components/header/RestaurantHeader'
 import RateCard from '../components/common/RateCard';
 import WindowResizeListener from "react-window-size-listener";
-import { Card, CardHeader, Avatar, IconButton, CardMedia, Grid, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { StarRate, Add, Remove, CloseSharp } from '@material-ui/icons';
 import {
 	veganIcon,
@@ -20,6 +20,7 @@ import {
 } from '../components/customIcon/customIcon';
 import RestaurantLayout from '../components/layouts/RestaurantLayout';
 import AdvanceReview from '../components/common/AdvanceReview';
+import { reviewAPI } from '../services/reviewAPI';
 
 const tagIcons = {
 	vegan: veganIcon,
@@ -33,16 +34,160 @@ const tagIcons = {
 };
 class DishDetails extends Component {
 	static async getInitialProps({ query: { id, name } }) {
-
 		return { id, name }
 	}
 	state = {
 		showModal: false,
 		isDishDetails: true,
-		top: 0,
-		left: 0,
+		likeTags: ["apples", "banana"],
+		dislikeTags: ["hello", "hello2"],
+		showLikeInput: false,
+		likeItem: "",
+		disLikeItem: "",
+		showDisLikeInput: false,
+		showAdvance: false,
+		valueForMoney: 0,
+		lookAndFeel: 0,
+		taste: 0,
 
 	}
+	//increment of review data
+	handleIncreament = (name, value) => {
+		if (value < 10) {
+			return this.setState({
+				[name]: parseFloat(value) + 1,
+			})
+		}
+
+	}
+	//submit detailed review 
+	handleReviewSubmit = async () => {
+		const {
+			likeTags,
+			dislikeTags,
+			valueForMoney,
+
+			lookAndFeel,
+			taste,
+		} = this.state;
+		let payload = {
+			data: {
+				valueForMoney,
+				lookAndFeel,
+				taste,
+				likeTags,
+				dislikeTags,
+				dishId: this.props.id,
+
+			},
+			token: this.props.global.token,
+		}
+
+		let result = await reviewAPI.addAndUpdateReview(payload);
+		console.log("result====>", result);
+	};
+	// decreament of review data
+	handleDecreament = (name, value) => {
+		if (value > 0) {
+			return this.setState({
+				[name]: value - 1,
+			})
+		}
+
+	}
+
+	//show advance review screen 
+	showAdvance = () => {
+		this.setState({
+			showAdvance: true
+		})
+	}
+	//hide advance review screen 
+	hideAdvance = () => {
+		this.setState({
+			showAdvance: false,
+		})
+	}
+	//add Like item
+	addLikeItem = () => {
+		let { likeTags, likeItem } = this.state;
+		this.setState({
+			likeTags: [...likeTags, likeItem],
+			likeItem: "",
+		})
+	}
+	//add dislike item 
+	addDisLikeItem = () => {
+		let { dislikeTags, disLikeItem } = this.state;
+		this.setState({
+			dislikeTags: [...dislikeTags, disLikeItem],
+			disLikeItem: ""
+		})
+	}
+	//handle like tag delete 
+	handleLikeDelete = (i) => {
+		console.log("index", i);
+		const { likeTags } = this.state;
+		const tags = likeTags.splice(i, 1);
+		console.log("tags", tags);
+		this.setState({
+			likeTags,
+		})
+	}
+	//handle dislike tag delete
+	handleDisLikeDelete = (i) => {
+		const { dislikeTags } = this.state;
+		const tags = dislikeTags.splice(i, 1);
+		console.log("tags", dislikeTags);
+		this.setState({
+			dislikeTags,
+		})
+	}
+	//closeLikeIput
+	closeLikeInput = () => {
+		this.setState({
+			showLikeInput: false
+		})
+	}
+	//close Dislike input
+	closeDisLikeInput = () => {
+		this.setState({
+			showDisLikeInput: false
+		})
+	}
+	//handle like input change
+	handleLikeChange = (evt) => {
+		this.setState({
+			likeItem: evt.target.value,
+		})
+
+	}
+	handleDisLikeChange = (evt) => {
+		this.setState({
+			disLikeItem: evt.target.value,
+		})
+
+	}
+
+	// handleLikeAdd = ()=>{
+	//     this.setState({
+	//         likeTags:[...this.state,
+	//         ]
+	//     })
+	// }
+	showLikeInputField = () => {
+		this.setState({
+			showLikeInput: true,
+		})
+	}
+	showDisLikeInputField = () => {
+		this.setState({
+			showDisLikeInput: true,
+		})
+	}
+
+
+
 	handleClose = () => {
 		this.setState({
 			showModal: false,
@@ -56,7 +201,6 @@ class DishDetails extends Component {
 	getTag = (item) => {
 		let TagIcon = tagIcons[item.name.replace(' ', '').toLowerCase()];
 		return <TagIcon className={this.props.classes.TagIcon} />
-
 	}
 	handleSaveReview = () => {
 		this.setState({
@@ -71,14 +215,30 @@ class DishDetails extends Component {
 		const { toggleFilterMenu } = this.props;
 		toggleFilterMenu({ drawerOpen: toggleMenu });
 	};
-	componentDidMount = () => {
 
-	}
 	render() {
-		const { showModal, isDishDetails } = this.state;
+		const { showModal,
+			isDishDetails,
+			likeTags,
+			dislikeTags,
+			showLikeInput,
+			likeItem,
+			disLikeItem,
+			showDisLikeInput,
+			showAdvance,
+			valueForMoney,
+			lookAndFeel,
+			taste,
+
+		} = this.state;
+		let reviewData = [
+			{ data: "Value For money", rate: `${valueForMoney}`, name: "valueForMoney" },
+			{ data: "Look and feel", rate: `${lookAndFeel}`, name: "lookAndFeel" },
+			{ data: "Taste", rate: `${taste}`, name: "taste" },
+		]
 		const { classes, name } = this.props;
 		const selectedDish = this.props.dishes != null && this.getSelectedDish();
-
+		console.log("selected dish ====>", selectedDish);
 		return <React.Fragment>
 			<RestaurantLayout
 				selectedPageTab={0}
@@ -165,7 +325,6 @@ class DishDetails extends Component {
 										width: "50px",
 										height: "45px"
 
-
 									}}>
 										{selectedDish[0].avgRatings.toFixed(1)}
 									</Typography>
@@ -185,10 +344,32 @@ class DishDetails extends Component {
 									<AdvanceReview
 										handleClose={this.handleClose}
 										open={showModal}
-										top={this.state.top}
-										left={this.state.left}
 										selected={selectedDish[0]}
 										getTags={this.getTag}
+										showDisLikeInputField={this.showDisLikeInputField}
+										showLikeInputField={this.showLikeInputField}
+										handleDisLikeChange={this.handleDisLikeChange}
+										handleLikeChange={this.handleLikeChange}
+										closeDisLikeInput={this.closeDisLikeInput}
+										closeLikeInput={this.closeLikeInput}
+										handleDisLikeDelete={this.handleDisLikeDelete}
+										handleLikeDelete={this.handleLikeDelete}
+										addDisLikeItem={this.addDisLikeItem}
+										addLikeItem={this.addLikeItem}
+										hideAdvance={this.hideAdvance}
+										showAdvance={this.showAdvance}
+										handleIncreament={this.handleIncreament}
+										handleDecreament={this.handleDecreament}
+
+										likeTags={likeTags}
+										dislikeTags={dislikeTags}
+										showLikeInput={showLikeInput}
+										likeItem={likeItem}
+										disLikeItem={disLikeItem}
+										showDisLikeInput={showDisLikeInput}
+										showAdvanceVar={showAdvance}
+										reviewData={reviewData}
+										handleReviewSubmit={this.handleReviewSubmit}
 										dishImage={`${API_IMAGE_URL}/assets/images/dishes/${selectedDish[0].images[0].name}/${selectedDish[0].images[0].path}`}
 									/>
 								</Grid>

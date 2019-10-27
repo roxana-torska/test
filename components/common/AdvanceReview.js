@@ -1,127 +1,52 @@
 import React, { Component } from "react";
 
 import { Modal, Grid, Typography } from "@material-ui/core";
-import { PhotoCamera, Add, Remove, Cancel, Close } from "@material-ui/icons";
+import { PhotoCamera, Add, Remove, Close } from "@material-ui/icons";
 import ReviewTags from "./ReviewTags";
 import AddvanceReviewFields from "./AdvanceReviewFields";
 
 class AdvanceReview extends Component {
-    state = {
-        likeTags: ["apples", "banana"],
-        dislikeTags: ["hello", "hello2"],
-        showLikeInput: false,
-        likeItem: "",
-        disLikeItem: "",
-        showDisLikeInput: false,
-        top: "",
-        left: "",
-        showAdvance: false,
-    }
-    showAdvance = () => {
-        this.setState({
-            showAdvance: true
-        })
-    }
-    hideAdvance = ()=>{
-        this.setState({
-            showAdvance: false,
-        })
-    }
-    addLikeItem = () => {
-        let { likeTags, likeItem } = this.state;
-        this.setState({
-            likeTags: [...likeTags, likeItem],
-            likeItem: "",
-        })
-    }
-    addDisLikeItem = () => {
-        let { dislikeTags, disLikeItem } = this.state;
-        this.setState({
-            dislikeTags: [...dislikeTags, disLikeItem],
-            disLikeItem: ""
-        })
-    }
-
-    handleLikeDelete = (i) => {
-        console.log("index", i);
-        const { likeTags } = this.state;
-        const tags = likeTags.splice(i, 1);
-        console.log("tags", tags);
-        this.setState({
-            likeTags,
-        })
-    }
-    handleDisLikeDelete = (i) => {
-        const { dislikeTags } = this.state;
-        const tags = dislikeTags.splice(i, 1);
-        console.log("tags", dislikeTags);
-        this.setState({
-            dislikeTags,
-        })
-    }
-
-    closeLikeInput = () => {
-        this.setState({
-            showLikeInput: false
-        })
-    }
-
-    closeDisLikeInput = () => {
-        this.setState({
-            showDisLikeInput: false
-        })
-    }
-
-    handleLikeChange = (evt) => {
-        this.setState({
-            likeItem: evt.target.value,
-        })
-
-    }
-    handleDisLikeChange = (evt) => {
-        this.setState({
-            disLikeItem: evt.target.value,
-        })
-
-    }
-
-    // handleLikeAdd = ()=>{
-    //     this.setState({
-    //         likeTags:[...this.state,
-    //         ]
-    //     })
-    // }
-    showLikeInputField = () => {
-        this.setState({
-            showLikeInput: true,
-        })
-    }
-    showDisLikeInputField = () => {
-        this.setState({
-            showDisLikeInput: true,
-        })
-    }
-
-
 
     render() {
         const { open,
             handleClose,
             dishImage,
-            top,
-            left,
             selected,
-            getTags
-        } = this.props;
-        console.log(top);
-        console.log(left);
-        const { likeTags,
-            showDisLikeInput,
-            showLikeInput,
+            getTags,
+            showDisLikeInputField,
+            showLikeInputField,
+            handleDisLikeChange,
+            handleLikeChange,
+            closeDisLikeInput,
+            closeLikeInput,
+            handleDisLikeDelete,
+            handleLikeDelete,
+            addDisLikeItem,
+            addLikeItem,
+            hideAdvance,
+            showAdvance,
+            likeTags,
             dislikeTags,
+            showLikeInput,
             likeItem,
             disLikeItem,
-            showAdvance } = this.state;
+            showDisLikeInput,
+            showAdvanceVar,
+            handleIncreament,
+            handleDecreament,
+            reviewData
+            ,
+            handleReviewSubmit
+        } = this.props;
+
+
+        // const { likeTags,
+        //     showDisLikeInput,
+        //     showLikeInput,
+        //     dislikeTags,
+        //     likeItem,
+        //     disLikeItem,
+        //     showAdvance } = this.state;
         return (
             <Modal
                 style={{
@@ -202,9 +127,9 @@ class AdvanceReview extends Component {
                                         <Add />
                                     </Grid>
                                 </Grid>
-                                {!showAdvance ? <Grid>
+                                {!showAdvanceVar ? <Grid>
                                     <Typography
-                                        onClick={this.showAdvance}
+                                        onClick={showAdvance}
                                         style={{
                                             fontFamily: "Lato",
                                             fontSize: "14px",
@@ -261,13 +186,13 @@ class AdvanceReview extends Component {
                                 </Typography>
                             <ReviewTags
                                 showInput={showLikeInput}
-                                showInputField={this.showLikeInputField}
-                                handleDelete={this.handleLikeDelete}
+                                showInputField={showLikeInputField}
+                                handleDelete={handleLikeDelete}
                                 tags={likeTags}
-                                closeInput={this.closeLikeInput}
-                                handleChange={this.handleLikeChange}
+                                closeInput={closeLikeInput}
+                                handleChange={handleLikeChange}
                                 value={likeItem}
-                                handleSubmit={this.addLikeItem}
+                                handleSubmit={addLikeItem}
                             />
                         </Grid>
                         <Grid>
@@ -281,18 +206,26 @@ class AdvanceReview extends Component {
                                 </Typography>
                             <ReviewTags
                                 showInput={showDisLikeInput}
-                                showInputField={this.showDisLikeInputField}
+                                showInputField={showDisLikeInputField}
                                 tags={dislikeTags}
-                                handleDelete={this.handleDisLikeDelete}
-                                closeInput={this.closeDisLikeInput}
-                                handleChange={this.handleDisLikeChange}
+                                handleDelete={handleDisLikeDelete}
+                                closeInput={closeDisLikeInput}
+                                handleChange={handleDisLikeChange}
                                 value={disLikeItem}
-                                handleSubmit={this.addDisLikeItem}
+                                handleSubmit={addDisLikeItem}
+                                
 
                             />
                         </Grid>
                         <Grid>
-                            {showAdvance && <AddvanceReviewFields hideAdvance={this.hideAdvance}/>}
+                            {showAdvanceVar && <AddvanceReviewFields
+                                handleIncreament={handleIncreament}
+                                handleDecreament={handleDecreament}
+                                reviewData={reviewData}
+                                hideAdvance={hideAdvance} 
+                                handleReviewSubmit={handleReviewSubmit}
+                                
+                                />}
                         </Grid>
                     </Grid>
 
