@@ -24,8 +24,8 @@ const styles = theme => {
     backdrop: {
       position: "absolute",
     },
-    TagIcon:{
-      fontSize:'17px'
+    TagIcon: {
+      fontSize: '17px'
     },
     pageTitleRed: {
       fontFamily: "'BebasNeue', 'sans-serif'",
@@ -179,7 +179,7 @@ const styles = theme => {
       position: 'absolute',
       right: '0px',
       top: '0px',
-      backgroundImage: 'url(/static/imgs/frame-right.png)',
+      // backgroundImage: 'url(/static/imgs/frame-right.png)',
       backgroundPosition: 'left',
       backgroundRepeat: 'no-repeat',
       zIndex: -1,
@@ -189,6 +189,20 @@ const styles = theme => {
       //   top: '-176px'
       // }
     },
+    
+    footerBgIconCenter: {
+      marginLeft: "50%",
+      transform: "translate(-50%, -50%)",
+      marginTop: "10px",
+      backgroundRepeat: 'no-repeat',
+      zIndex: -1,
+      width: '70px',
+      height: '85px'
+      // ['@media (max-width:320px)']: {
+      //   top: '-176px'
+      // }
+    },
+
     socialIcon: {
       width: '40px',
       height: '40px',
@@ -213,7 +227,7 @@ const styles = theme => {
       width: '110px',
       height: '110px',
       top: '-22px',
-      right: '0px',
+      right: '50px',
       zIndex: -1,
       // [theme.breakpoints.up('sm')]: {
       //   width: '129px',

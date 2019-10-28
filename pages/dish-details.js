@@ -66,25 +66,29 @@ class DishDetails extends Component {
 			likeTags,
 			dislikeTags,
 			valueForMoney,
-
 			lookAndFeel,
 			taste,
 		} = this.state;
 		let payload = {
 			data: {
-				valueForMoney,
-				lookAndFeel,
-				taste,
-				likeTags,
-				dislikeTags,
+				valueForMoneyRatings:valueForMoney,
+				lookAndFeelRatings:lookAndFeel,
+				tasteRatings:taste,
+				likes:likeTags,
+				dislikes:dislikeTags,
 				dishId: this.props.id,
+				typeId:this.props.id,
+				typeObject: "Dish"
 
 			},
 			token: this.props.global.token,
 		}
-
+		console.log("payload data=====>", payload);
 		let result = await reviewAPI.addAndUpdateReview(payload);
 		console.log("result====>", result);
+		if(result){
+			window.location.href="/social-medialist"
+		}
 	};
 	// decreament of review data
 	handleDecreament = (name, value) => {

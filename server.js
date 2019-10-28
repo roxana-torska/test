@@ -281,9 +281,11 @@ app
     server.get("/dish-details/:id/:name", (req, res) => {
       console.log(req.params);
       app.render(req, res, '/dish-details', { id: req.params.id, name: req.params.name });
+    })
 
 
-
+    server.get("/social-medialist", (req, res) => {
+      app.render(req, res, "/social-medialist");
 
     })
     server.get('*', (req, res) => {
