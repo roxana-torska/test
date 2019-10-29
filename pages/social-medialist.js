@@ -94,6 +94,20 @@ class SocialMediaList extends PureComponent {
             this.setState({ error: true });
         }
     };
+    fbs_click() {
+        u = location.href;
+        t = document.title;
+        window.open('http://www.facebook.com/sharer.php?u=' + encodeURIComponent(u) + '&t=' + encodeURIComponent(t),
+            'sharer',
+            'toolbar=0,status=0,width=626,height=436');
+
+        return false;
+    }
+    getUrl = (yourMessage) => {
+        let message = yourMessage.split(' ').join('%20');
+        return message
+    }
+
 
     render() {
         const { classes } = this.props;
@@ -103,9 +117,6 @@ class SocialMediaList extends PureComponent {
         } = this.state;
         let adjustHeightGridOne = 10;
         let adjustHeightGridThree = 8;
-        let adjustHeightGridFive = 3;
-        let adjustHeightGridSeven = 5;
-        let adjustHeightGridNine = 2;
         let rootHeight = winHeight - 56;
         let minVisibleHeight = 361;
         if (winWidth <= 312) {
@@ -116,9 +127,7 @@ class SocialMediaList extends PureComponent {
         } else {
             adjustHeightGridOne = ((rootHeight - minVisibleHeight) * 30) / 100;
             adjustHeightGridThree = ((rootHeight - minVisibleHeight) * 15) / 100;
-            adjustHeightGridFive = ((rootHeight - minVisibleHeight) * 20) / 100;
-            adjustHeightGridSeven = ((rootHeight - minVisibleHeight) * 25) / 100;
-            adjustHeightGridNine = ((rootHeight - minVisibleHeight) * 10) / 100;
+
         }
         return (
             <AppLayout {...this.props}>
@@ -193,53 +202,47 @@ class SocialMediaList extends PureComponent {
                                     {
                                         name: "Facebook",
                                         url: "www.facebook.com/username",
-                                        href:`http://www.facebook.com/share.php?u=http://www.dishin.com`
+                                        href: 'http://www.facebook.com/share.php?u=www.dishin.pk'
                                     }
                                     ,
-                                    { name: "Whatsapp", url: "+92 306 2770 734" },
+                                    {
+                                        name: "Whatsapp",
+                                        url: "+92 306 2770 734",
+                                        href: "https://wa.me/?text=http://localhost:3001/"
+                                    },
 
                                 ].map(rec => <ShareWith name={rec.name} url={rec.url} href={rec.href} />)}
                             </Grid>
                         </Grid>
                         <Grid
                             item
-                            style={{
-                                //  backgroundColor: '#555',
-                                height: `${adjustHeightGridFive}px`,
-                                width: '100%'
-                            }}
                         />
-                        <Grid item className={classes.adjustHeightGridSix}>
+                        <Grid item style={{
+                            backgroundColor: "red"
+                        }} >
                             <div style={{ margin: '0 82px' }}>
                                 <Button
                                     size='medium'
-                                    className={classes.btnRaisedLightNormalRed}
-                                    fullWidth
                                     onClick={this.handleSubmit}
+                                    style={{
+                                        width: "100%",
+                                        color: "white"
+                                    }}
                                 >
                                     Next
-                </Button>
+                                </Button>
                             </div>
                         </Grid>
                         <Grid
                             item
-                            style={{
-                                //backgroundColor: '#a4a4a4',
-                                height: `${adjustHeightGridSeven}px`,
-                                width: '100%'
-                            }}
                         />
-                        <Grid item className={classes.adjustHeightGridEight}>
-                            <div className={classes.footerBgIconCenter} >
-                                <Salad />
-                            </div>
-
+                        <Grid item >
+                            <Salad />
                         </Grid>
                         <Grid
                             item
                             style={{
-                                // backgroundColor: '#e9e9e9',
-                                height: `${adjustHeightGridNine}px`,
+
                                 width: '100%'
                             }}
                         />

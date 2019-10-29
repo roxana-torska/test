@@ -6,7 +6,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-
+function Share() {
+    window.location.href = "/social-medialist"
+}
 export default function Modal(props) {
     const { classes, showDetails } = props
     console.log("class=====>", classes.styledHeader);
@@ -33,7 +35,7 @@ export default function Modal(props) {
                     <Button onClick={showDetails} color="black">
                         Review
           </Button>
-                    <Button onClick={props.handleCancel} color="primary">
+                    <Button onClick={Share} color="primary">
                         Share
           </Button>
                 </DialogActions>

@@ -3,7 +3,7 @@ import { Grid, Typography } from '@material-ui/core';
 import FacebookIcon from '../customIcon/FacebookIcon';
 
 import { Add } from '@material-ui/icons';
-import { css, cx } from 'emotion'
+
 import WhatsAppIcon from '../customIcon/WhatsAppIcon';
 
 const renderIcon = (props) => {
@@ -23,7 +23,7 @@ export default function ShareWith(props) {
 
             <div style={{
                 width: "100%",
-                margin: "5%",
+                margin: "5px  5% 0px 5%",
             }}>
                 <Grid container direction="row">
                     <Grid item xs={2} container justify="center" style={{
@@ -53,7 +53,7 @@ export default function ShareWith(props) {
                                     fontSize: "14px",
                                     marginTop: "5px",
                                 }}
-                            ><a rel="nofollow" href={props.href} onclick="return fbs_click()" target="_blank">
+                            ><a rel="nofollow" href={props.href} target="_blank">
                                     {props.url}
                                 </a>
                             </Typography>
