@@ -286,8 +286,12 @@ app
 
     server.get("/social-medialist", (req, res) => {
       app.render(req, res, "/social-medialist");
-
     })
+
+    server.get("/thankyou", (req, res) => {
+      app.render(req, res, "/thankyou");
+    })
+
     server.get('*', (req, res) => {
       return handle(req, res);
     });

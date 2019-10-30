@@ -164,7 +164,7 @@ const styles = theme => {
     footerBgIconLeft: {
       position: 'absolute',
       left: '0px',
-      top: '41px',
+      top: '80%',
       backgroundImage: 'url(/static/imgs/frame-left.png)',
       backgroundPosition: 'right',
       backgroundRepeat: 'no-repeat',
@@ -178,8 +178,8 @@ const styles = theme => {
     footerBgIconRight: {
       position: 'absolute',
       right: '0px',
-      top: '0px',
-      // backgroundImage: 'url(/static/imgs/frame-right.png)',
+      top: '75%',
+      backgroundImage: 'url(/static/imgs/frame-right.png)',
       backgroundPosition: 'left',
       backgroundRepeat: 'no-repeat',
       zIndex: -1,
@@ -189,7 +189,7 @@ const styles = theme => {
       //   top: '-176px'
       // }
     },
-    
+
     footerBgIconCenter: {
       marginLeft: "50%",
       transform: "translate(-50%, -50%)",
