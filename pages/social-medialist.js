@@ -8,7 +8,6 @@ import styles from '../styles/common';
 import validator from '../utils/validator';
 import { userAPI } from '../services/userAPI';
 import notify from '../utils/notifier';
-
 import WindowResizeListener from 'react-window-size-listener';
 
 import Salad from '../components/customIcon/Salad';

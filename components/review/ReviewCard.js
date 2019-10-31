@@ -1,37 +1,128 @@
 import React, { Component } from 'react';
 import { Card, CardMedia, withStyles, CardContent, Typography, Avatar, Grid } from '@material-ui/core';
 import styles from '../../styles/common';
-import { Add } from '@material-ui/icons';
+import { css, cx } from 'emotion'
+import Review from './Review';
 
 class ReviewCard extends Component {
 
     render() {
-        const { classes, url } = this.props;
-        console.log("review card ===>", url)
+        const { classes } = this.props;
         return (
-            <Card className={classes.card}>
-                <CardMedia
-                    className={classes.cover}
-                    image={url}
-                    title="Review to the dish"
-                />
-                <CardContent className={classes.content}>
-                    <Grid container direction="row">
-                        <Add />
-                        <Avatar >
-                            <Typography>
-                                8
-                            </Typography>
-                        </Avatar>
-                    </Grid>
+            <Grid container direction="column">
+                <Grid>
+                    <div>
+                        <Typography
+                            className={
+                                css`
+                                    font-family: Bebas Neue;
+                                    font-size: 27px;
+                                    line-height: 32px;
+                                    color: #FF5959;
+                                    margin: 59px 0px 0px 15px
+                                `
+                            }
 
-                    <Typography variant="subtitle1" color="textSecondary">
-                        Mac Miller
-                    </Typography>
-                </CardContent>
+                        >
+                            Latest Reviews
+                        </Typography>
+                    </div>
+                    <div>
+                        <Typography className={
+                            css`
+                            display:inline-block;
+                            margin: 53px 0px 0px 15px;
+                            font-family: Lato;
+                            font-style: normal;
+                            font-weight: normal;
+                            font-size: 13px;
+                            line-height: 16px;
+                            color: #7D8287;
+                            `
+                        }>
+                            Value for money
+                        </Typography>
+                        <Typography className={
+
+                            css`
+                                height:14px;
+                                width:205px;
+                                margin: 57px 0px 0px 47px;
+                                display:inline-block;
+                                vertical-align:top;
+                                background: #FFCDD2;
+                            `
+                        }>
+
+                        </Typography>
+                    </div>
+
+                    <div>
+                        <Typography className={
+                            css`
+                            display:inline-block;
+                            margin: 4px 0px 0px 15px;
+                            font-family: Lato;
+                            font-style: normal;
+                            font-weight: normal;
+                            font-size: 13px;
+                            line-height: 16px;
+                            color: #7D8287;
+                            `
+                        }>
+                            Taste
+                        </Typography>
+                        <Typography className={
+
+                            css`
+                                width: 132px;
+                                height: 12px;
+                                margin: 7px 0px 0px 108px;
+                                display:inline-block;
+                                vertical-align:top;
+                                background: #E57373;
+                            `
+                        }>
+
+                        </Typography>
+                    </div>
+                    <div>
+                        <Typography className={
+                            css`
+                            display:inline-block;
+                            margin: 4px 0px 0px 15px;
+                            font-family: Lato;
+                            font-style: normal;
+                            font-weight: normal;
+                            font-size: 13px;
+                            line-height: 16px;
+                            color: #7D8287;
+                            `
+                        }>
+                            Look and feel
+                        </Typography>
+                        <Typography className={
+
+                            css`
+                                margin: 4px 0px 0px 63px;
+                                display:inline-block;
+                                vertical-align:top; 
+                                width: 101px;
+                                height: 12px;
+                                background: #D32F2F;
+                            `
+                        }>
+
+                        </Typography>
+                    </div>
+                </Grid>
+                <Grid container direction="row" spacing={2}>
+                    {[1, 2, 3, 2, 1].map(rec => <Review classes={classes} />)}
+                </Grid>
+
+            </Grid>
 
 
-            </Card>
         )
     }
 }

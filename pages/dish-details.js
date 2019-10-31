@@ -21,6 +21,7 @@ import {
 import RestaurantLayout from '../components/layouts/RestaurantLayout';
 import AdvanceReview from '../components/common/AdvanceReview';
 import { reviewAPI } from '../services/reviewAPI';
+import ReviewCard from '../components/review/ReviewCard';
 
 const tagIcons = {
 	vegan: veganIcon,
@@ -71,13 +72,13 @@ class DishDetails extends Component {
 		} = this.state;
 		let payload = {
 			data: {
-				valueForMoneyRatings:valueForMoney,
-				lookAndFeelRatings:lookAndFeel,
-				tasteRatings:taste,
-				likes:likeTags,
-				dislikes:dislikeTags,
+				valueForMoneyRatings: valueForMoney,
+				lookAndFeelRatings: lookAndFeel,
+				tasteRatings: taste,
+				likes: likeTags,
+				dislikes: dislikeTags,
 				dishId: this.props.id,
-				typeId:this.props.id,
+				typeId: this.props.id,
 				typeObject: "Dish"
 
 			},
@@ -86,8 +87,8 @@ class DishDetails extends Component {
 		console.log("payload data=====>", payload);
 		let result = await reviewAPI.addAndUpdateReview(payload);
 		console.log("result====>", result);
-		if(result){
-			window.location.href="/social-medialist"
+		if (result) {
+			window.location.href = "/social-medialist"
 		}
 	};
 	// decreament of review data
@@ -533,6 +534,10 @@ class DishDetails extends Component {
 								</Grid>
 							</div>
 						</Grid>
+					</Grid>
+					<Grid>
+						<ReviewCard />
+
 					</Grid>
 
 				</Grid>

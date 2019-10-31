@@ -50,6 +50,20 @@ const styles = theme => {
     pageSpacing: {
       padding: '16px'
     },
+    reviewCard: {
+
+      width: "90%",
+      margin: "40px 0px 0px 15px",
+      background: "#FFFEFE",
+      boxShadow: "0px -2px 4px rgba(0, 0, 0, 0.1), 0px 4px 4px rgba(0, 0, 0, 0.25)",
+      borderRadius: "3px",
+      ['@media (max-width:400px)']: {
+        width: "350",
+        margin: "40px 5px 0px 5px",
+      }
+
+    },
+
     pageTitle: {
       fontFamily: "'BebasNeue', 'sans-serif'",
       fontSize: '1.5em',
