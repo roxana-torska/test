@@ -27,6 +27,13 @@ export const reviewAPI = {
       return response.data;
     } else {
     }
+  },
+  getLatestReview: async function () {
+    const url = `${API_URL}/review/get-reviews`;
+    let response = await request(url, {
+    });
+    return response.data;
   }
+
 }
 

@@ -50,7 +50,14 @@ class DishDetails extends Component {
 		valueForMoney: 0,
 		lookAndFeel: 0,
 		taste: 0,
+		data: []
 
+	}
+
+	componentDidMount = () => {
+		reviewAPI.getLatestReview().then(res => this.setState({
+			data: res
+		}))
 	}
 	//increment of review data
 	handleIncreament = (name, value) => {
@@ -536,7 +543,7 @@ class DishDetails extends Component {
 						</Grid>
 					</Grid>
 					<Grid>
-						<ReviewCard />
+						{this.state.data.length > 0 && <ReviewCard data={this.state.data} />}
 
 					</Grid>
 

@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import { Card, CardMedia, withStyles, CardContent, Typography, Avatar, Grid } from '@material-ui/core';
+import { withStyles, Typography, Avatar, Grid } from '@material-ui/core';
 import styles from '../../styles/common';
 import { css, cx } from 'emotion'
 import Review from './Review';
+import { reviewAPI } from "../../services/reviewAPI";
 
 class ReviewCard extends Component {
 
     render() {
-        const { classes } = this.props;
+        const { classes, data } = this.props;
+      
         return (
             <Grid container direction="column">
                 <Grid>
@@ -117,7 +119,7 @@ class ReviewCard extends Component {
                     </div>
                 </Grid>
                 <Grid container direction="row" spacing={2}>
-                    {[1, 2, 3, 2, 1].map(rec => <Review classes={classes} />)}
+                    {data.length > 0 && data.map(rec => <Review classes={classes} />)}
                 </Grid>
 
             </Grid>

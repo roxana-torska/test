@@ -1,3 +1,4 @@
+
 const rootFontSize = 14;
 const getRemFontSizeByPx = function (px) {
   let remValue = px / rootFontSize;
@@ -6,7 +7,8 @@ const getRemFontSizeByPx = function (px) {
 const styles = theme => {
   return {
     root: {
-      flexGrow: 1
+      flexGrow: 1,
+      scrollX: 'none',
     },
     card: {
       display: 'flex'
@@ -51,16 +53,33 @@ const styles = theme => {
       padding: '16px'
     },
     reviewCard: {
-
       width: "90%",
       margin: "40px 0px 0px 15px",
       background: "#FFFEFE",
       boxShadow: "0px -2px 4px rgba(0, 0, 0, 0.1), 0px 4px 4px rgba(0, 0, 0, 0.25)",
       borderRadius: "3px",
-      ['@media (max-width:400px)']: {
-        width: "350",
-        margin: "40px 5px 0px 5px",
-      }
+      ['@media (max-width: 320px)']: {
+        width: "300px",
+        margin: "40px 10px 0px 10px",
+      },
+      ['@media screen and (min-width: 321px) and (max-width:360px)']: {
+        width: "340px",
+        margin: "40px 10px 0px 10px",
+      },
+      ['@media screen and (min-width: 361px) and (max-width: 380px) ']: {
+        width: "355px",
+        margin: "40px 10px 0px 10px",
+      },
+      ['@media screen and (min-width: 381px) and (max-width: 400px) ']: {
+        width: "380px",
+        margin: "40px 10px 0px 10px",
+      },
+      ['@media screen and (min-width: 401px) and (max-width: 420px) ']: {
+        width: "391px",
+        margin: "40px 10px 0px 10px",
+        
+      },
+     
 
     },
 
