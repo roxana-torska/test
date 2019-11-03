@@ -16,7 +16,10 @@ import SentimentDissatisfiedSharpIcon from '@material-ui/icons/SentimentDissatis
 import SentimentSatisfiedSharpIcon from '@material-ui/icons/SentimentSatisfiedSharp';
 import dishIcon from '../customIcon/dishIcon';
 import DishIcon from '../customIcon/dishIcon';
+import ReviewLastRow from './ReviewLastRow';
 export default function Review(props) {
+    console.log("data====>", props.data)
+    const { data, index, total } = props
     return (
         <Grid item lg={4} md={6} xs={12} sm={12}>
             <div className={props.classes.reviewCard}>
@@ -26,16 +29,14 @@ export default function Review(props) {
                 `}>
                         <CardHeader
                             avatar={
-                                <Avatar aria-label="recipe" className={css`backgroundColor: red`}>
-                                    R
-          </Avatar>
+                                <Avatar alt={data.user.first_name} src={data.image[0].path} />
                             }
                             action={
                                 <IconButton >
-                                    5/10
+                                    {1 + index}/ {total}
                                 </IconButton>
                             }
-                            title="Shrimp and Chorizo Paella"
+                            title={data.user.first_name}
                             subheader="September 14, 2016"
                         />
                     </div>
@@ -54,8 +55,8 @@ export default function Review(props) {
                             justify="space-around"
 
                         >
-                            <Grid item>
-                                <SentimentSatisfiedSharpIcon color="primary" /> {["juicy,", "fragrant,", "crispy"].map(rec => {
+                            {data.likes && <Grid item>
+                                <SentimentSatisfiedSharpIcon color="primary" /> {data.likes.map(rec => {
                                     return <Typography
 
                                         className={css`
@@ -73,11 +74,11 @@ export default function Review(props) {
                                         {rec}
                                     </Typography>
                                 })}
-                            </Grid>
-                            <Grid>
+                            </Grid>}
+                            {data.dislikes && <Grid>
                                 <SentimentDissatisfiedSharpIcon color="primary" />
 
-                                <Typography
+                                {data.dislikes.map(rec => <Typography
                                     className={css`
                                                 font-family: Lato;
                                                 display:inline-block;
@@ -93,74 +94,14 @@ export default function Review(props) {
 
 
                                 >
-                                    smells like my socks
+                                    {rec}
 
-                                </Typography>
-                            </Grid>
+                                </Typography>)}
+                            </Grid>}
                             <Grid container direction="row">
-                                <Grid xs={2}>
-
-                                </Grid>
-                                <Grid xs={3}>
-
-                                    <div className={
-                                        css`
-                                            margin-top:20px
-                                        
-                                        `
-                                    }>
-                                        <Grid container
-                                            direction="column"
-                                            justify="center"
-                                            alignItems="center">
-                                            <Grid item>
-                                                <DishIcon />
-                                            </Grid>
-                                            <Grid item>
-                                                <Typography
-                                                    className={
-
-                                                        css`
-                                                font-family: Montserrat;
-                                                font-style: normal;
-                                                font-weight: normal;
-                                                font-size: 14px;
-                                                line-height: 20px;
-                                                width: 26px;
-                                                color: #F44336;
-                                                padding-bottom: 6px;
-                                                display: flex;
-                                                border-bottom: 4px solid #7D8287;
-                                                justify-content: center;
-                                                align-items: center;
-                                                `
-                                                    }
-
-                                                >
-                                                    8
-                                        </Typography>
-                                            </Grid>
-                                            <Grid>
-                                                <Typography
-                                                    className={
-                                                        css`
-                                                        font-family: Lato;
-                                                        font-style: normal;
-                                                        font-weight: normal;
-                                                        font-size: 13px;
-                                                        line-height: 16px;
-                                                        margin-top:10px;
-                                                        color: #4B4B4B;
-                                                        `
-                                                    }
-
-                                                >
-                                                    Value for money
-                                                </Typography>
-                                            </Grid>
-                                        </Grid>
-                                    </div>
-                                </Grid>
+                                {data.valueForMoneyRatings && <ReviewLastRow value={data.valueForMoneyRatings} name="Value for money"/>}
+                                {data.tasteRatings && <ReviewLastRow value={data.tasteRatings} name="Taste"/>}
+                                {data.lookAndFeelRatings && <ReviewLastRow value={data.lookAndFeelRatings} name="Look and feel" />}
                             </Grid>
                         </Grid>
 

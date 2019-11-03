@@ -9,7 +9,7 @@ class ReviewCard extends Component {
 
     render() {
         const { classes, data } = this.props;
-      
+
         return (
             <Grid container direction="column">
                 <Grid>
@@ -119,7 +119,7 @@ class ReviewCard extends Component {
                     </div>
                 </Grid>
                 <Grid container direction="row" spacing={2}>
-                    {data.length > 0 && data.map(rec => <Review classes={classes} />)}
+                    {data.length > 0 && data.map((rec, index) => <Review classes={classes} total={data.length} data={rec} index={index} />)}
                 </Grid>
 
             </Grid>
