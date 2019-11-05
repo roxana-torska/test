@@ -291,6 +291,9 @@ app
     server.get("/thankyou", (req, res) => {
       app.render(req, res, "/thankyou");
     })
+    server.get('/restaurant-details', (req, res) => {
+      app.render(req, res, "/restaurant-details");
+    })
 
     server.get('*', (req, res) => {
       return handle(req, res);

@@ -44,6 +44,21 @@ export const restaurantAPI = {
 			method: 'GET',
 		});
 		return response;
+	},
+	getCurrentRestaurant: async (payload) => {
+		console.log("payload Id", payload)
+		let params = { "res_id": payload }
+		let response = await request(`${API_URL}/restaurants/get-restaurants-details`, {
+			method: 'POST',
+			body: {
+				"res_id": payload
+			}
+		}
+		);
+		if (response.data) {
+			console.log("response====>", response.data);
+		}
+		return response;
 	}
 
 };

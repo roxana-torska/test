@@ -18,7 +18,8 @@ import Slide from '@material-ui/core/Slide';
 import * as _ from 'lodash';
 import { getLocation } from '../utils/common';
 import restaurantsAction from '../redux/restaurants/actions'
-const { setRestaurants, setDishes } = restaurantsAction;
+import { restaurantAPI } from '../services/restaurantAPI';
+const { setRestaurants, setDishes, setCurrentResuarant } = restaurantsAction;
 
 const {
   toggleFilterMenu,
@@ -225,13 +226,21 @@ class Restaurants extends React.Component {
   };
 
   handleListItemClick = (evt, index, value) => {
-    
+    console.log("value======>", value);
     if (value.type === 'restaurant') {
-      window.location.href = `/restaurants/${value.id}`;
+      let data = restaurantAPI.getCurrentRestaurant(value.id).then(response => {
+        console.log("data====>", response.data);
+        this.props.setCurrentResuarant({ data: response.data })
+
+
+
+      });
+
+      // window.location.href = `/restaurants/${value.id}`;
     }
-    if (value.type === 'dish') {
-      window.location.href = `/dish-details/${value.slug}`;
-    }
+    // if (value.type === 'dish') {
+    //   window.location.href = `/dish-details/${value.slug}`;
+    // }
   };
 
   handleShowMenu = () => {
@@ -394,5 +403,6 @@ export default connect(
     showHideMenu,
     setRestaurants,
     setDishes,
+    setCurrentResuarant
   }
 )(withStyles(styles)(Restaurants));

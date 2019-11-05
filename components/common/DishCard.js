@@ -37,7 +37,7 @@ class DishCard extends PureComponent {
     onSubmit(event, commonRating, dishId);
   };
   showDishDetails = (evt) => {
-    console.log("value======>", this.props)
+    
     window.location.href = `/dish-details/${this.props.data.id}/${this.props.restaurantsName}`;
     // window.location.href = `/dish-details/${this.props.data.id}`
   }

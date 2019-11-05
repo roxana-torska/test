@@ -4,7 +4,11 @@ function RestaurantsReducer(state = {
     dishes: null,
 }, action) {
     switch (action.type) {
-
+        case restaurantsAction.SET_CURRENT_RESTAURANT:
+            return {
+                ...state,
+                currentRestaurent: action.data.data
+            }
         case restaurantsAction.SET_RESTAURANTS:
             return {
                 ...state,
