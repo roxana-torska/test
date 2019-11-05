@@ -36,17 +36,10 @@ class AdvanceReview extends Component {
             handleDecreament,
             reviewData
             ,
-            handleReviewSubmit
+            handleReviewSubmit,
+            classes
         } = this.props;
 
-
-        // const { likeTags,
-        //     showDisLikeInput,
-        //     showLikeInput,
-        //     dislikeTags,
-        //     likeItem,
-        //     disLikeItem,
-        //     showAdvance } = this.state;
         return (
             <Modal
                 style={{
@@ -61,15 +54,9 @@ class AdvanceReview extends Component {
                 open={open}
                 onClose={handleClose}
             >
-                <div style={{
-                    width: 370,
-                    minHeight: 258,
-                    maxHeight: "85vh",
-                    backgroundColor: "white",
-                    overflow: "hidden",
-                    border: '2px solid #000',
-                    padding: "10px"
-                }}>
+                <div
+                    className={classes.reviewCardSize}
+                >
                     <Grid container direction="column">
 
                         <Grid container direction="row">
@@ -168,8 +155,7 @@ class AdvanceReview extends Component {
 
                             </Grid>
                             <Grid item xs={2} >
-
-                                <Close style={{
+                                <Close onClick={handleClose} style={{
                                     cursor: "pointer",
                                     float: "right"
                                 }} />
@@ -213,7 +199,7 @@ class AdvanceReview extends Component {
                                 handleChange={handleDisLikeChange}
                                 value={disLikeItem}
                                 handleSubmit={addDisLikeItem}
-                                
+
 
                             />
                         </Grid>
@@ -222,10 +208,10 @@ class AdvanceReview extends Component {
                                 handleIncreament={handleIncreament}
                                 handleDecreament={handleDecreament}
                                 reviewData={reviewData}
-                                hideAdvance={hideAdvance} 
+                                hideAdvance={hideAdvance}
                                 handleReviewSubmit={handleReviewSubmit}
-                                
-                                />}
+
+                            />}
                         </Grid>
                     </Grid>
 

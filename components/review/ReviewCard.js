@@ -44,16 +44,7 @@ class ReviewCard extends Component {
                         }>
                             Value for money
                         </Typography>
-                        <Typography className={
-
-                            css`
-                                height:14px;
-                                width:205px;
-                                margin: 57px 0px 0px 47px;
-                                display:inline-block;
-                                vertical-align:top;
-                                background: #FFCDD2;
-                            `
+                        <Typography className={classes.valueMoneyDiv
                         }>
 
                         </Typography>

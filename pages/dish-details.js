@@ -3,8 +3,6 @@ import { withStyles } from '@material-ui/core/styles';
 import styles from '../styles/common';
 import { connect } from 'react-redux'
 import { APP_URL, API_IMAGE_URL } from '../utils/config';
-import RestaurantHeader from '../components/header/RestaurantHeader'
-import RateCard from '../components/common/RateCard';
 import WindowResizeListener from "react-window-size-listener";
 import { Grid, Typography } from '@material-ui/core';
 import { StarRate, Add, Remove, CloseSharp } from '@material-ui/icons';
@@ -241,6 +239,7 @@ class DishDetails extends Component {
 			valueForMoney,
 			lookAndFeel,
 			taste,
+			
 
 		} = this.state;
 		let reviewData = [
@@ -251,6 +250,9 @@ class DishDetails extends Component {
 		const { classes, name } = this.props;
 		const selectedDish = this.props.dishes != null && this.getSelectedDish();
 		console.log("selected dish ====>", selectedDish);
+		
+
+
 		return <React.Fragment>
 			<RestaurantLayout
 				selectedPageTab={0}
@@ -291,7 +293,7 @@ class DishDetails extends Component {
 
 										}}
 									>
-										{selectedDish[0].name}
+										{selectedDish[0].name || "no name"}
 									</Typography>
 								</Grid>
 								<Grid item>
@@ -338,7 +340,7 @@ class DishDetails extends Component {
 										height: "45px"
 
 									}}>
-										{selectedDish[0].avgRatings.toFixed(1)}
+										{selectedDish[0].avgRatings!=null && selectedDish[0].avgRatings.toFixed(1)}
 									</Typography>
 
 									<span
@@ -382,7 +384,9 @@ class DishDetails extends Component {
 										showAdvanceVar={showAdvance}
 										reviewData={reviewData}
 										handleReviewSubmit={this.handleReviewSubmit}
+
 										dishImage={`${API_IMAGE_URL}/assets/images/dishes/${selectedDish[0].images[0].name}/${selectedDish[0].images[0].path}`}
+										classes={classes}
 									/>
 								</Grid>
 							</Grid>
@@ -503,16 +507,16 @@ class DishDetails extends Component {
 								padding: "20px 10% 0px 10%",
 							}}>
 								<Grid container direction="row">
-									<Grid item xs={1}>
+
+									<Grid item xs={4}>
 										<span
 											style={{
 												color: "white",
 												display: "inline",
+												verticalAlign: "top"
 											}}
 										><CloseSharp />
 										</span>
-									</Grid>
-									<Grid item xs={3}>
 										<span
 
 											style={{
@@ -523,17 +527,18 @@ class DishDetails extends Component {
 											Cancel
 									</span>
 									</Grid>
-									<Grid item xs={2}>
+									<Grid item xs={2} sm={2} md={4} lg={4}>
 
 									</Grid>
-									<Grid item xs={1} >
+
+									<Grid item xs={6} md={4} lg={2} sm={6}>
 										<span onClick={this.handleSaveReview} style={{
-											color: "white"
+											color: "white",
+											verticalAlign: "top"
 										}}><Add /> </span>
-									</Grid>
-									<Grid item xs={4} >
 										<span style={{
-											color: "white"
+											color: "white",
+											verticalAlign: "top"
 										}}>
 											Save a Review
 								</span>

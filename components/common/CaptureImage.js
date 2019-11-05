@@ -140,7 +140,7 @@ class CaptureImage extends Component {
 
   render() {
     const { classes } = this.props;
-    console.log("classess==", classes);
+
     const { displayVideo } = this.state;
     console.log("state", displayVideo);
     return (

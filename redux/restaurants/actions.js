@@ -10,6 +10,21 @@ const restaurantsAction = {
     GET_MENUS_SUCCESSFUL: "GET_MENUS_SUCCESSFUL",
     GET_MENUS_FAIL: "GET_MENUS_FAIL",
 
+
+
+    SET_CURRENT_RESTAURANT: "SET_CURRENT_RESTAURANT",
+
+
+
+    setCurrentResuarant: data => {
+        return {
+            type: restaurantsAction.SET_CURRENT_RESTAURANT,
+            data
+        }
+    },
+
+
+
     setRestaurants: data => {
         return {
             type: restaurantsAction.SET_RESTAURANTS,

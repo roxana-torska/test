@@ -1,19 +1,15 @@
 import React, { Component } from 'react';
-import { Divider, Grid, Typography } from '@material-ui/core';
+import { Divider, Grid, Typography, TextField } from '@material-ui/core';
 
 import AdvanceReviewRow from './AdvancReviewRow';
+import { css } from 'emotion';
 
 
 
 class AddvanceReviewFields extends Component {
     render() {
         const { reviewData, handleDecreament, handleIncreament } = this.props;
-        // const reviewData = [
-        //     { data: "Value For money", rate: "4.5" },
-        //     { data: "Look and feel", rate: "4.5" },
-        //     { data: "Taste", rate: "4.5",name },
-        // ]
-
+     
         return (
             <React.Fragment>
                 <Divider style={{
@@ -30,12 +26,26 @@ class AddvanceReviewFields extends Component {
                         />
                     })}
                     <Grid >
-                        <textarea style={{
-                            width: "100%",
-                            height: "30px"
-                        }} placeholder="spill your guts"
+                        {/* <TextField
+                            placeholder="spill your guts"
+                            multiline={true}
+                            rows={2}
+                            rowsMax={4}
+                            width="100%"
+                        /> */}
+                        <TextField
+                            id="outlined-textarea"
+                            // label="Multiline Placeholder"
+                            placeholder="spill your guts"
+                            multiline
+                            rows={2}
+                            rowsMax={4}
+                            className={css`
+                                width:100%;
+                            `}
+                            margin="normal"
+                            variant="outlined"
                         />
-
                     </Grid>
                     <Grid container direction="row">
                         <Grid item xs={6}>

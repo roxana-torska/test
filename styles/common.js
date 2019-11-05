@@ -49,6 +49,34 @@ const styles = theme => {
       //   fontSize: '1.4rem'
       // }
     },
+    // review Card Size management 
+    reviewCardSize: {
+      width: 370,
+      minHeight: 258,
+      maxHeight: "85vh",
+      backgroundColor: "white",
+      overflow: "hidden",
+      border: '2px solid #000',
+      padding: "10px",
+      ['@media screen and (min-height:550px) and (max-height:600px)']: {
+        maxHeight: "95vh",
+      }
+
+
+    },
+    valueMoneyDiv: {
+      height: "14px",
+      width: "205px",
+      margin: "57px 0px 0px 47px",
+      display: "inline-block",
+      verticalAlign: "top",
+      background: "#FFCDD2",
+      ['@media (max-width:340px)']: {
+        width: "165px",
+
+      }
+
+    },
     pageSpacing: {
       padding: '16px'
     },
@@ -77,9 +105,9 @@ const styles = theme => {
       ['@media screen and (min-width: 401px) and (max-width: 420px) ']: {
         width: "391px",
         margin: "40px 10px 0px 10px",
-        
+
       },
-     
+
 
     },
 
