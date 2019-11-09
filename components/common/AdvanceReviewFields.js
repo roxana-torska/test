@@ -26,16 +26,9 @@ class AddvanceReviewFields extends Component {
                         />
                     })}
                     <Grid >
-                        {/* <TextField
-                            placeholder="spill your guts"
-                            multiline={true}
-                            rows={2}
-                            rowsMax={4}
-                            width="100%"
-                        /> */}
+                       
                         <TextField
                             id="outlined-textarea"
-                            // label="Multiline Placeholder"
                             placeholder="spill your guts"
                             multiline
                             rows={2}
