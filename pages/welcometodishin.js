@@ -99,11 +99,11 @@ class WelcomeToDishIn extends PureComponent {
   };
 
   getRestaurantAvatar = rec => {
-   
+
     if (rec.images.length) {
       return `${API_IMAGE_URL}/assets/images/restaurants/${rec.slug}/${
         rec.images[0].path
-      }`;
+        }`;
     } else {
       return '';
     }
@@ -157,22 +157,24 @@ class WelcomeToDishIn extends PureComponent {
     const {
       global: { searchText }
     } = this.props;
+    console.log("autoComplete", this.autoComplete);
     const selectedItem = this.autoComplete.selectedItem;
     if (selectedItem && selectedItem.selectedItem) {
-      window.location.href = `/restaurants/${slug(
-        selectedItem.selectedItem,
-        { lower: true }
-      )}`;
+      console.log("item", selectedItem.selectedItem);
+      // window.location.href = `/restaurants/${slug(
+      //   selectedItem.selectedItem,
+      //   { lower: true }
+      // )}`;
     } else {
       if (searchText) {
-      
+
         let queryParmas = {
           searchText
         };
-        window.location.href = `/restaurants?${stringify(
-          queryParmas,
-          { encodeValuesOnly: true }
-        )}`;
+        // window.location.href = `/restaurants?${stringify(
+        //   queryParmas,
+        //   { encodeValuesOnly: true }
+        // )}`;
       } else {
         notify(`Please select a restaurant`);
       }
@@ -281,8 +283,8 @@ class WelcomeToDishIn extends PureComponent {
                       {location.address}
                     </React.Fragment>
                   ) : (
-                    'where are you dining today?'
-                  )}
+                      'where are you dining today?'
+                    )}
                 </div>
               </div>
             </Grid>
@@ -317,7 +319,7 @@ class WelcomeToDishIn extends PureComponent {
                   isOpen={restaurants ? true : false}
                 />
               </div>
-            
+
             </Grid>
             <Grid
               item

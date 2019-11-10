@@ -38,7 +38,7 @@ function renderSuggestion({
 }) {
   const isHighlighted = highlightedIndex === index;
   const isSelected = (selectedItem || '').indexOf(suggestion.label) > -1;
-console.log("suggetions======>",suggestion);
+  console.log("suggetions======>", suggestion);
   return (
     <MenuItem
       {...itemProps}
@@ -116,16 +116,16 @@ class AutoComplete extends React.Component {
     return inputLength === 0
       ? data
       : data.filter(suggestion => {
-          const keep =
-            count < 5 &&
-            suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;
+        const keep =
+          count < 5 &&
+          suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;
 
-          if (keep) {
-            count += 1;
-          }
+        if (keep) {
+          count += 1;
+        }
 
-          return keep;
-        });
+        return keep;
+      });
   };
 
   render() {
@@ -146,38 +146,38 @@ class AutoComplete extends React.Component {
           isOpen,
           selectedItem
         }) => (
-          <div className={classes.autoCompleteContainer}>
-            {renderInput({
-              id: name,
-              label: '',
-              InputProps: getInputProps({
-                placeholder: placeholder
-              })
-            })}
-            <div {...getMenuProps()} className={classes.autoCompleteListCT}>
-              {isOpen ? (
-                <Paper
-                  className={classnames(
-                    classes.autoCompletePaper,
-                    'autoCompleteScroll'
-                  )}
-                  square
-                >
-                  {this.getSuggestions(inputValue).map((suggestion, index) =>
-                    renderSuggestion({
-                      suggestion,
-                      index,
-                      itemProps: getItemProps({ item: suggestion.label }),
-                      highlightedIndex,
-                      selectedItem,
-                      classes
-                    })
-                  )}
-                </Paper>
-              ) : null}
+            <div className={classes.autoCompleteContainer}>
+              {renderInput({
+                id: name,
+                label: '',
+                InputProps: getInputProps({
+                  placeholder: placeholder
+                })
+              })}
+              <div {...getMenuProps()} className={classes.autoCompleteListCT}>
+                {isOpen ? (
+                  <Paper
+                    className={classnames(
+                      classes.autoCompletePaper,
+                      'autoCompleteScroll'
+                    )}
+                    square
+                  >
+                    {this.getSuggestions(inputValue).map((suggestion, index) =>
+                      renderSuggestion({
+                        suggestion,
+                        index,
+                        itemProps: getItemProps({ item: suggestion.label }),
+                        highlightedIndex,
+                        selectedItem,
+                        classes
+                      })
+                    )}
+                  </Paper>
+                ) : null}
+              </div>
             </div>
-          </div>
-        )}
+          )}
       </Downshift>
     );
   }

@@ -293,6 +293,10 @@ app
     })
     server.get('/restaurant-details', (req, res) => {
       app.render(req, res, "/restaurant-details");
+    });
+
+    server.get('/home', (req, res) => {
+      app.render(req, res, '/home');
     })
 
     server.get('*', (req, res) => {

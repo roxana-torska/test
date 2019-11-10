@@ -118,6 +118,7 @@ class showmenu extends React.Component {
     };
     componentDidMount = () => {
         const { id, restaurants, dishes } = this.props;
+        console.log("idd====>", id);
         console.log("restaurants ====>", restaurants);
         let res = restaurants.filter(rec => rec.id == id);
         console.log("restaurant data ======>", res[0].id);

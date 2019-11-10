@@ -268,10 +268,10 @@ class RestaurantHeader extends Component {
 
 	}
 	getHeaderTabs = () => {
-		const { isDishDetails, classes, menuData, selectedPageTab } = this.props;
+		const { isDishDetails, classes, menuData, selectedPageTab, isHomePage } = this.props;
 		const { selectedMenu, selectedMenuCategory, menuCategories } = this.state;
 		let rewardCount = null
-		if (!isDishDetails) {
+		if (!isDishDetails && !isHomePage) {
 			return (
 				menuData && menuData.length ? (
 					<Grid
@@ -407,6 +407,13 @@ class RestaurantHeader extends Component {
 						/>
 					)
 			}
+			return <SearchIcon
+				color='primary'
+				onClick={this.handleShowSearchBar}
+				className={classes.userDrawerCloseButton}
+				style={{ width: '18px', height: '18px' }}
+			/>
+
 		}
 		return <IconButton
 			color='inherit'
@@ -501,12 +508,13 @@ class RestaurantHeader extends Component {
 										{this.searchComponent(hideRegularBar)}
 									</Grid>
 									<Grid item xs={1} style={{ textAlign: 'left' }}>
-										<SearchIcon
+										{!this.props.isHomePage && <SearchIcon
 											color='primary'
 											onClick={this.handleShowSearchBar}
 											className={classes.userDrawerCloseButton}
 											style={{ width: '18px', height: '18px' }}
 										/>
+										}
 
 									</Grid>
 									<Grid
