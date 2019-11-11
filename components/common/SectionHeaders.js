@@ -3,7 +3,7 @@ import { Grid, Typography } from '@material-ui/core'
 import { css } from 'emotion'
 
 
-export default function SectionHeaders() {
+export default function SectionHeaders(props) {
     return (
         <Grid item container direction="row">
             <Grid item xs={8} sm={8} md={8} lg={10}>
@@ -11,17 +11,20 @@ export default function SectionHeaders() {
                     className={
                         css`
                     font-family: Bebas Neue;
-                    font-size: 24px;
+                    font-size: 17px;
                     line-height: 29px;
                     display: flex;
                     align-items: center;
-
+                  
                     color: #4A4A4A;
+                    @media screen and (min-width: 600px) {
+                        font-siz:24px;
+                } ;
                 `
                     }
                 >
-                    BEST AROUND YOU
-        </Typography>
+                    {props.text && props.text.toUpperCase()}
+                </Typography>
             </Grid>
 
             <Grid item xs={4} sm={4} md={4} lg={2} >
@@ -42,10 +45,11 @@ export default function SectionHeaders() {
                         line-height: 28px;
                         margin-left:22%;
                         color:#FFFFFF;
+                       
                     `
 
                     }>
-                        All(56)
+                        All({props.value})
                 </Typography>
 
                 </div>

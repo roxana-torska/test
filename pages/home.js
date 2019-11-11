@@ -16,6 +16,8 @@ import { reviewAPI } from '../services/reviewAPI';
 import ReviewCard from '../components/review/ReviewCard';
 import { css } from 'emotion';
 import SectionHeaders from '../components/common/SectionHeaders';
+import NewDishCard from '../components/common/NewDishCard';
+import RestaurantsCard from '../components/common/RestaurantsCard';
 class Home extends Component {
     state = {
         isHomePage: true,
@@ -60,50 +62,53 @@ class Home extends Component {
                     <Grid container direction="column">
                         {/* best around you container */}
                         <Grid item container direction="column">
-                            {<SectionHeaders />}
-                            <Grid item container direction="row">
-                                <Grid item xs={4} sm={4} md={4}>
+                            {<SectionHeaders text="best around you" value="45" />}
+                            <Grid container direction="row">
+                                <div className={
+                                    css`
+                                    display:flex;
+                                    flex-direction:row;
+                                    overflow-x: scroll;
+                                    width:100%;
+                                    margin-bottom:20px;
+                                    padding-bottom:20px;
+                                    // height:200px;
 
-
-                                    <div className={
-                                        css`
-                                    background: #FFFFFF;
-                                    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.24), 0px 0px 2px rgba(0, 0, 0, 0.12);
-                                    border-radius: 2px;
-                                    width:80%;
-                                    margin-top:10px;
                                     `
-                                    }>
-                                        <img src="/static/imgs/burger.jpg"
 
-                                            width="100%" />
-                                        <Typography
-                                            className={
-                                                css`
-                                            font-family: Lato;
-                                            font-style: normal;
-                                            font-weight: bold;
-                                            font-size: 18px;
-                                            line-height: 16px;
-                                            /* identical to box height, or 89% */
+                                }>
 
-                                            display: flex;
-                                            align-items: flex-end;
 
-                                            color: #4A4A4A;
-                                            `
-                                            }
+                                    {[1, 2, 4, 3, 4, "d", 3, 4, 3, 2, 3, 4, 3, 2, 3, 4, 3, 2, 3, 4, 3, 2].map(rec => <NewDishCard />)}
 
-                                        >
-                                            Burgers
-
-                                        </Typography>
-
-                                    </div>
-                                </Grid>
-
+                                </div>
                             </Grid>
+                            {<SectionHeaders text="Resturants around you" value="45" />}
+                            {[1, 2, 3].map(rec => <RestaurantsCard />)}
+                            {<SectionHeaders text="Lastest reviews" value="10" />}
+                            <Grid container direction="row">
+                                <div className={
+                                    css`
+                                    display:flex;
+                                    flex-direction:row;
+                                    overflow-x: scroll;
+                                    width:100%;
+                                    margin-bottom:20px;
+                                    padding-bottom:20px;
+                                    // height:200px;
+
+                                    `
+
+                                }>
+
+
+                                    {[1, 2, 4, 3, 4, "d", 2, 3, 4, 3, 2].map(rec => <NewDishCard />)}
+
+                                </div>
+                            </Grid>
+
                         </Grid>
+
 
 
                     </Grid>
