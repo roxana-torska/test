@@ -42,7 +42,7 @@ export default function Review(props) {
                     </div>
                     <img
 
-                        src="https://mcdonalds.com.pk/wp-content/uploads/Spicy-McCrispy-600x600.png"
+                        src="/static/imgs/burger.jpg"
                         width="375px"
                     />
                     <CardContent>

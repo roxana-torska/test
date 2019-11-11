@@ -7,31 +7,32 @@ import { css } from "emotion";
 
 export default function RestaurantsCard() {
     return (
-        <Grid item container direction="row">
-            <Grid xs={12} sm={12} md={6} lg={6}>
-                <div className={
-                    css`
+
+        <Grid xs={12} sm={12} md={5} lg={5}>
+            <div className={
+                css`
                     background: #FFFFFF;
                     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.24), 0px 0px 2px rgba(0, 0, 0, 0.12);
                     border-radius: 2px;
                     margin-top:10px;
                     padding-bottom:10px;
                     margin-bottom:20px;
+                    margin-right:10px;
                     `
-                }>
-                    <Grid container direction="row">
-                        <Grid item
-                            conatier
-                            direction="column"
-                            xs={8}
-                            sm={8}
-                            md={8}
-                            lg={10}
-                        >
-                            <Grid item>
-                                <Typography
-                                    className={
-                                        css`
+            }>
+                <Grid container direction="row">
+                    <Grid item
+                        container
+                        direction="column"
+                        xs={8}
+                        sm={8}
+                        md={8}
+                        lg={10}
+                    >
+                        <Grid item>
+                            <Typography
+                                className={
+                                    css`
                                                             font-family: Bebas Neue;
                                                             font-size: 20px;
                                                             line-height: 24px;
@@ -40,15 +41,15 @@ export default function RestaurantsCard() {
                                                             margin: 10px 0px 0px 10px;
                                                             color: #4A4A4A;
                                                          `
-                                    }
+                                }
 
-                                >
-                                    MEESA
+                            >
+                                MEESA
 
                              </Typography>
-                            </Grid>
-                            <Grid item>
-                                <Typography className={css`
+                        </Grid>
+                        <Grid item>
+                            <Typography className={css`
                                                      font-family: Lato;
                                                      font-style: normal;
                                                      font-weight: normal;
@@ -61,23 +62,23 @@ export default function RestaurantsCard() {
                                                      
                                                      color: #838383;
                                                      `}>
-                                    lorem Street 16, Tel-Aviv
-                                    Kfar Shmarijahu, 18
+                                lorem Street 16, Tel-Aviv
+                                Kfar Shmarijahu, 18
                                                      </Typography>
 
-                            </Grid>
-
                         </Grid>
-                        <Grid item
-                            conatier
-                            direction="column"
-                            xs={4}
-                            sm={4}
-                            md={4}
-                            lg={2}
-                        >
-                            <Grid item>
-                                <Typography className={css`
+
+                    </Grid>
+                    <Grid item
+                        container
+                        direction="column"
+                        xs={4}
+                        sm={4}
+                        md={4}
+                        lg={2}
+                    >
+                        <Grid item>
+                            <Typography className={css`
                                                      font-family: Lato;
                                                      font-style: normal;
                                                      font-weight: normal;
@@ -92,11 +93,11 @@ export default function RestaurantsCard() {
                                                      padding-right:10px;
                                                      color: #999999;
                                                      `}>
-                                    {true ? "closed :(" : ""}
-                                </Typography>
-                            </Grid>
-                            <Grid item>
-                                <Typography className={css`
+                                {true ? "closed :(" : ""}
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography className={css`
                                                      font-family: Lato;
                                                      font-style: normal;
                                                      font-weight: normal;
@@ -111,18 +112,17 @@ export default function RestaurantsCard() {
                                                      
                                                      color: #E53935;
                                                      `}>
-                                    13 Review
-                                                     </Typography>
-
-                            </Grid>
+                                13 Review
+                            </Typography>
 
                         </Grid>
 
                     </Grid>
 
-                </div>
-            </Grid>
+                </Grid>
 
+            </div>
         </Grid>
+
     )
 }

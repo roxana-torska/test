@@ -1,8 +1,6 @@
 import request from '../utils/request';
 import { API_URL } from '../utils/config';
 import { stringify } from 'qs';
-import { async } from 'rxjs/internal/scheduler/async';
-
 
 export const restaurantAPI = {
 	getRestaurants: async function (payload) {
@@ -13,6 +11,14 @@ export const restaurantAPI = {
 		} else {
 			return [];
 		}
+	},
+	getDishesWithTags: async (payload) => {
+		let response = await request(`${API_URL}/dishes/get-dishes-tags`, {
+			method: 'GET'
+		});
+		console.log("response dish tag====>", response);
+		return response
+
 	},
 	searchRestaurants: async function (payload) {
 		const queryParams = stringify(payload, { encodeValuesOnly: true });
@@ -59,6 +65,7 @@ export const restaurantAPI = {
 			console.log("response====>", response.data);
 		}
 		return response;
-	}
+	},
+
 
 };

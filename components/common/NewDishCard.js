@@ -1,9 +1,11 @@
 import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { css } from 'emotion'
+import { StarRate } from '@material-ui/icons'
 
 
-export default function NewDishCard() {
+export default function NewDishCard(props) {
+    const { classes, name, des, review } = props
     return (
 
         <div className={
@@ -19,7 +21,7 @@ export default function NewDishCard() {
             <img src="/static/imgs/burger.jpg"
 
                 width="100%" />
-            <Typography
+            <pre
                 className={
                     css`
                     font-family: Lato;
@@ -30,6 +32,7 @@ export default function NewDishCard() {
                     line-height: 16px;
                     /* identical to box height, or 89% */
                     display: flex;
+                    word-wrap:normal;
                     align-items: flex-end;
                     color: #4A4A4A;
                     margin-right:50px;
@@ -40,9 +43,9 @@ export default function NewDishCard() {
                 }
 
             >
-                Burgers
+                {name.toUpperCase()}
 
-                </Typography>
+            </pre>
             <Typography
                 className={
                     css`
@@ -56,13 +59,28 @@ export default function NewDishCard() {
                         line-height: 20px;
                         /* or 167% */
                         color: #E53935;
+
                 `
                 }
 
             >
-                57 dishes
+                {des}
 
             </Typography>
+            {review && <div className={css`
+                margin-right:5px;
+                float:right;
+            `}><StarRate color='primary' className={classes.reviewFooterItemIcon} />
+                <Typography className={
+                    css`
+                    display:inline-block;
+                    color:red;
+                `
+                }>
+                    {review}
+                </Typography>
+
+            </div>}
 
         </div>
 

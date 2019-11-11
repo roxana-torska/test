@@ -28,7 +28,7 @@ export default function SectionHeaders(props) {
             </Grid>
 
             <Grid item xs={4} sm={4} md={4} lg={2} >
-                <div className={css`
+                {props.value && <div className={css`
             width:50%;
             background: #F44336;
             box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.24), 0px 0px 2px rgba(0, 0, 0, 0.12);
@@ -52,7 +52,7 @@ export default function SectionHeaders(props) {
                         All({props.value})
                 </Typography>
 
-                </div>
+                </div>}
             </Grid>
         </Grid>
     )
