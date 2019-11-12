@@ -15,6 +15,8 @@ class Home extends Component {
     state = {
         isHomePage: true,
         data: [],
+        dishesWithTag: []
+
     }
     handleOverlay = value => {
         this.setState({ overlay: !value });
@@ -24,20 +26,21 @@ class Home extends Component {
         toggleFilterMenu({ drawerOpen: toggleMenu });
     };
     componentDidMount = () => {
-        reviewAPI.getLatestReview().then(res => this.setState({
-            data: res
-        }))
-        restaurantAPI.getDishesWithTags().then(res => {
-            console.log(res);
-        })
+        Promise.all([reviewAPI.getLatestReview(), restaurantAPI.getDishesWithTags()]).then(
+            res => this.setState({
+                data: res
+            }))
+
     }
     render() {
 
         const { currentRestaurent, classes } = this.props;
         let avatar = '/static/imgs/image-not-found-dark.png';
-
         console.log("curent restaurents", currentRestaurent && currentRestaurent[0]);
-        const { isHomePage } = this.state;
+
+        const { isHomePage, dishesWithTag } = this.state;
+        console.log("data===>", this.state.data);
+        console.log("dishes ====>", dishesWithTag);
         return <React.Fragment>
             <RestaurantLayout
                 selectedPageTab={0}
@@ -58,8 +61,8 @@ class Home extends Component {
                     <Grid container direction="column">
                         {/* best around you container */}
                         <Grid item container direction="column">
-                            {<SectionHeaders text="best around you" value="45" />}
-                            <Grid container direction="row">
+                            {this.state.data.length > 0 && <SectionHeaders text="best around you" value={this.state.data[1].length} />}
+                            {this.state.data.length > 0 && <Grid container direction="row">
                                 <div className={
                                     css`
                                     display:flex;
@@ -75,12 +78,12 @@ class Home extends Component {
                                 }>
 
 
-                                    {[1, 2, 4, 3, 4, "d", 3, 4, 3, 2, 3, 4, 3, 2, 3, 4, 3, 2, 3, 4, 3, 2].map(rec => <NewDishCard classes={classes}
+                                    {this.state.data[1].map(rec => <NewDishCard classes={classes}
 
-                                        name="BURGERS" des="13 dishes" />)}
+                                        name={rec.tag} des={rec.dishes.length + " dishes"} />)}
 
                                 </div>
-                            </Grid>
+                            </Grid>}
                             {<SectionHeaders text="Resturants around you" value="45" />}
                             <Grid item container direction="row"> {[1, 2, 3].map(rec => <RestaurantsCard />)}</Grid>
                             {<SectionHeaders text="Lastest reviews" value="10" />}

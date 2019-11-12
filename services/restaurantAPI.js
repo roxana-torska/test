@@ -17,7 +17,7 @@ export const restaurantAPI = {
 			method: 'GET'
 		});
 		console.log("response dish tag====>", response);
-		return response
+		return response.data
 
 	},
 	searchRestaurants: async function (payload) {

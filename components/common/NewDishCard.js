@@ -20,7 +20,7 @@ export default function NewDishCard(props) {
         }>
             <img src="/static/imgs/burger.jpg"
 
-                width="100%" />
+                width="200px" />
             <pre
                 className={
                     css`
