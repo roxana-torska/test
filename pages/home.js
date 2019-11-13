@@ -80,7 +80,7 @@ class Home extends Component {
 
                                     {this.state.data[1].map(rec => <NewDishCard classes={classes}
 
-                                        name={rec.tag} des={rec.dishes.length + " dishes"} />)}
+                                        name={rec.tag} des={rec.dishes.length + " dishes" }  url={rec.dishes[0].tag.url} />)}
 
                                 </div>
                             </Grid>}

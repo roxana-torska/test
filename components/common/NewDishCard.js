@@ -2,6 +2,7 @@ import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { css } from 'emotion'
 import { StarRate } from '@material-ui/icons'
+const { API_IMAGE_URL } = require('../../utils/config');
 
 
 export default function NewDishCard(props) {
@@ -18,9 +19,15 @@ export default function NewDishCard(props) {
             margin-left:10px;
             `
         }>
-            <img src="/static/imgs/burger.jpg"
+            <img src={API_IMAGE_URL + "/assets/images/tags/" + props.url}
 
-                width="200px" />
+                className={
+                    css`
+                        min-width:200px;
+                        max-width:300px;
+                        height:200px;
+                    `
+                } />
             <pre
                 className={
                     css`
