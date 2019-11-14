@@ -4,6 +4,16 @@ function RestaurantsReducer(state = {
     dishes: null,
 }, action) {
     switch (action.type) {
+        case restaurantsAction.SET_DISHES_TAGS:
+            return {
+                ...state,
+                dishesWithTags: action.data.data
+            }
+        case restaurantsAction.SET_LATEST_REVIEWS:
+            return {
+                ...state,
+                latestReviews: action.data.data
+            }
         case restaurantsAction.SET_CURRENT_RESTAURANT:
             return {
                 ...state,

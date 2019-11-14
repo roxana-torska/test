@@ -232,15 +232,12 @@ class Restaurants extends React.Component {
         console.log("data====>", response.data);
         this.props.setCurrentResuarant({ data: response.data })
 
-
-
       });
-
-      // window.location.href = `/restaurants/${value.id}`;
+      window.location.href = `/restaurants/${value.id}`;
     }
-    // if (value.type === 'dish') {
-    //   window.location.href = `/dish-details/${value.slug}`;
-    // }
+    if (value.type === 'dish') {
+      window.location.href = `/dish-details/${value.slug}`;
+    }
   };
 
   handleShowMenu = () => {

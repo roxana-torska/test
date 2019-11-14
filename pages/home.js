@@ -11,6 +11,7 @@ import SectionHeaders from '../components/common/SectionHeaders';
 import NewDishCard from '../components/common/NewDishCard';
 import RestaurantsCard from '../components/common/RestaurantsCard';
 import { restaurantAPI } from '../services/restaurantAPI';
+const { API_IMAGE_URL } = require('../utils/config');
 class Home extends Component {
     state = {
         isHomePage: true,
@@ -80,14 +81,15 @@ class Home extends Component {
 
                                     {this.state.data[1].map(rec => <NewDishCard classes={classes}
 
-                                        name={rec.tag} des={rec.dishes.length + " dishes" }  url={rec.dishes[0].tag.url} />)}
+                                        name={rec.tag} des={rec.dishes.length + " dishes"}
+                                        url={API_IMAGE_URL + "/assets/images/tags/" + rec.dishes[0].tag.url} />)}
 
                                 </div>
                             </Grid>}
                             {<SectionHeaders text="Resturants around you" value="45" />}
                             <Grid item container direction="row"> {[1, 2, 3].map(rec => <RestaurantsCard />)}</Grid>
-                            {<SectionHeaders text="Lastest reviews" value="10" />}
-                            <Grid container direction="row">
+                            {this.state.data.length && <SectionHeaders text="Lastest reviews" value={this.state.data[0].length} />}
+                            {this.state.data.length && <Grid container direction="row">
                                 <div className={
                                     css`
                                     display:flex;
@@ -103,15 +105,16 @@ class Home extends Component {
                                 }>
 
 
-                                    {[1, 2, 4, 3, 4, "d", 2, 3, 4, 3, 2].map(rec => <NewDishCard
+                                    {this.state.data[0].map(rec => <NewDishCard
 
-                                        name="DISH FULL NAME"
-                                        des="Meesa"
-                                        review="2.5"
+                                        name={rec.product.name}
+                                        des={rec.product.restaurant.name}
+                                        review={rec.ratings}
+                                        url={API_IMAGE_URL + "/assets/images/dishes/" + rec.product.pimage.name + "/" + rec.product.pimage.path}
                                         classes={classes} />)}
 
                                 </div>
-                            </Grid>
+                            </Grid>}
                             {<SectionHeaders text="top 10" />}
                             <Grid container direction="row">
                                 <div className={

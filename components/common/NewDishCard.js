@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { css } from 'emotion'
 import { StarRate } from '@material-ui/icons'
-const { API_IMAGE_URL } = require('../../utils/config');
+
 
 
 export default function NewDishCard(props) {
@@ -19,13 +19,16 @@ export default function NewDishCard(props) {
             margin-left:10px;
             `
         }>
-            <img src={API_IMAGE_URL + "/assets/images/tags/" + props.url}
+            <img src={props.url}
 
                 className={
                     css`
-                        min-width:200px;
-                        max-width:300px;
+                        width:200px;
+                       
                         height:200px;
+                        @media screen and (min-width: 600px) {
+                            width:300px;
+                          } 
                     `
                 } />
             <pre
@@ -82,6 +85,7 @@ export default function NewDishCard(props) {
                     css`
                     display:inline-block;
                     color:red;
+                    margin-top:50px
                 `
                 }>
                     {review}

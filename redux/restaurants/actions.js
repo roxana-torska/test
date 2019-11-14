@@ -3,8 +3,10 @@ const restaurantsAction = {
     SET_RESTAURANTS: "SET_RESTAURANTS",
     // set dishes to store
     SET_DISHES: "SET_DISHES",
-
+    SET_DISHES_TAGS: "SET_DISHES_TAGS",
     SET_DISH_RATING: "SET_DISH_RATING",
+
+    SET_LATEST_REVIEWS:"SET_LATEST_REVIEWS",
 
     GET_MENUS: "GET_MENUS",
     GET_MENUS_SUCCESSFUL: "GET_MENUS_SUCCESSFUL",
@@ -12,10 +14,21 @@ const restaurantsAction = {
 
 
 
+
     SET_CURRENT_RESTAURANT: "SET_CURRENT_RESTAURANT",
 
-
-
+    setLatestReviews: data => {
+        return {
+            type: restaurantsAction.SET-SET_LATEST_REVIEWS,
+            data
+        }
+    },
+    setDishesWithTags: data => {
+        return {
+            type: restaurantsAction.SET_DISHES_TAGS,
+            data
+        }
+    },
     setCurrentResuarant: data => {
         return {
             type: restaurantsAction.SET_CURRENT_RESTAURANT,
