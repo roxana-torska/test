@@ -3,11 +3,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import RestaurantLayout from '../components/layouts/RestaurantLayout';
 import styles from '../styles/common';
-import { APP_URL, API_IMAGE_URL } from '../utils/config';
-
-import { Scrollbars } from 'react-custom-scrollbars';
-import RestaurantList from '../components/restaurantLists/RestaurantList';
-import SpeedDials from '../components/menu/FloatingActionMenu';
 import actions from '../redux/global/actions';
 import { connect } from 'react-redux';
 import SponsoredRestaurantsList from '../components/restaurantLists/sponsoredRestaurantsLists';
@@ -16,7 +11,6 @@ import NotFound from '../components/notFound/notFound';
 import WindowResizeListener from 'react-window-size-listener';
 import Slide from '@material-ui/core/Slide';
 import * as _ from 'lodash';
-import { getLocation } from '../utils/common';
 
 const {
     toggleFilterMenu,

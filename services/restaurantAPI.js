@@ -66,6 +66,15 @@ export const restaurantAPI = {
 		}
 		return response;
 	},
-
+	getRestaurentsWithNumberOfReview: async (payload) => {
+		let response = await request(`${API_URL}/restaurants/get-restaurents`, {
+			method: 'GET',
+		}
+		);
+		if (response.data) {
+			console.log("response====>", response.data);
+		}
+		return response.data;
+	}
 
 };

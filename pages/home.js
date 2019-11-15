@@ -10,14 +10,17 @@ import { css } from 'emotion';
 import SectionHeaders from '../components/common/SectionHeaders';
 import NewDishCard from '../components/common/NewDishCard';
 import RestaurantsCard from '../components/common/RestaurantsCard';
+import restaurantsAction from '../redux/restaurants/actions'
+
 import { restaurantAPI } from '../services/restaurantAPI';
 const { API_IMAGE_URL } = require('../utils/config');
+
+
+const { setDishesWithTags, setLatestReviews } = restaurantsAction;
 class Home extends Component {
     state = {
         isHomePage: true,
         data: [],
-        dishesWithTag: []
-
     }
     handleOverlay = value => {
         this.setState({ overlay: !value });
@@ -27,21 +30,33 @@ class Home extends Component {
         toggleFilterMenu({ drawerOpen: toggleMenu });
     };
     componentDidMount = () => {
-        Promise.all([reviewAPI.getLatestReview(), restaurantAPI.getDishesWithTags()]).then(
-            res => this.setState({
-                data: res
-            }))
+        Promise.all([
+            reviewAPI.getLatestReview(),
+            restaurantAPI.getDishesWithTags(),
+            restaurantAPI.getRestaurentsWithNumberOfReview()
+        ]).then(
+            res => {
+                this.props.setDishesWithTags(res[1]);
+                this.props.setLatestReviews(res[0]);
+                this.setState({
+                    data: res[2]
+                })
+
+            }
+
+        )
 
     }
     render() {
 
-        const { currentRestaurent, classes } = this.props;
+
+        const { currentRestaurent, classes, latestReviews, dishesWithTags, topten } = this.props;
+        console.log("top ten ===>", topten);
         let avatar = '/static/imgs/image-not-found-dark.png';
         console.log("curent restaurents", currentRestaurent && currentRestaurent[0]);
 
-        const { isHomePage, dishesWithTag } = this.state;
-        console.log("data===>", this.state.data);
-        console.log("dishes ====>", dishesWithTag);
+        const { isHomePage, data } = this.state;
+        console.log("dishes ====>", dishesWithTags);
         return <React.Fragment>
             <RestaurantLayout
                 selectedPageTab={0}
@@ -62,8 +77,8 @@ class Home extends Component {
                     <Grid container direction="column">
                         {/* best around you container */}
                         <Grid item container direction="column">
-                            {this.state.data.length > 0 && <SectionHeaders text="best around you" value={this.state.data[1].length} />}
-                            {this.state.data.length > 0 && <Grid container direction="row">
+                            {dishesWithTags != null && dishesWithTags.length > 0 && <SectionHeaders text="best around you" value={dishesWithTags.length} />}
+                            {dishesWithTags != null && dishesWithTags.length > 0 && <Grid container direction="row">
                                 <div className={
                                     css`
                                     display:flex;
@@ -79,17 +94,22 @@ class Home extends Component {
                                 }>
 
 
-                                    {this.state.data[1].map(rec => <NewDishCard classes={classes}
+                                    {dishesWithTags.map(rec => <NewDishCard classes={classes}
 
                                         name={rec.tag} des={rec.dishes.length + " dishes"}
-                                        url={API_IMAGE_URL + "/assets/images/tags/" + rec.dishes[0].tag.url} />)}
+                                        url={API_IMAGE_URL + "/assets/images/tags/" + rec.dishes[0].tag.url}
+                                        type="dishes"
+                                    />)}
 
                                 </div>
                             </Grid>}
-                            {<SectionHeaders text="Resturants around you" value="45" />}
-                            <Grid item container direction="row"> {[1, 2, 3].map(rec => <RestaurantsCard />)}</Grid>
-                            {this.state.data.length && <SectionHeaders text="Lastest reviews" value={this.state.data[0].length} />}
-                            {this.state.data.length && <Grid container direction="row">
+                            {<SectionHeaders text="Resturants around you" value={data && data.length} />}
+                            {data && data.length > 0 && <Grid item container direction="row"> {data.map(rec => <RestaurantsCard />)}
+
+
+                            </Grid>}
+                            {latestReviews != null && latestReviews.length && <SectionHeaders text="Lastest reviews" value={latestReviews.length} />}
+                            {latestReviews != null && latestReviews.length && <Grid container direction="row">
                                 <div className={
                                     css`
                                     display:flex;
@@ -105,11 +125,12 @@ class Home extends Component {
                                 }>
 
 
-                                    {this.state.data[0].map(rec => <NewDishCard
+                                    {latestReviews.map(rec => <NewDishCard
 
                                         name={rec.product.name}
                                         des={rec.product.restaurant.name}
                                         review={rec.ratings}
+                                        type="restaurant"
                                         url={API_IMAGE_URL + "/assets/images/dishes/" + rec.product.pimage.name + "/" + rec.product.pimage.path}
                                         classes={classes} />)}
 
@@ -132,11 +153,12 @@ class Home extends Component {
                                 }>
 
 
-                                    {[1, 2, 4, 3, 4, "d", 2, 3, 4, 3, 2].map(rec => <NewDishCard
+                                    {topten && topten.map(rec => <NewDishCard
 
-                                        name="DISH FULL NAME"
-                                        des="Meesa"
-                                        review="2.5"
+                                        name={rec.name}
+                                        des={rec.restaurant_id[0].name}
+                                        review={rec.avgRatings}
+                                        url={API_IMAGE_URL + "/assets/images/dishes/" + rec.images[0].name + "/" + rec.images[0].path}
                                         classes={classes} />)}
 
                                 </div>
@@ -163,12 +185,15 @@ class Home extends Component {
 export default connect(state => ({
     global: state.global,
     restaurants: state.RestaurantsReducer.restaurants,
-    dishes: state.RestaurantsReducer.dishes,
+    topten: state.RestaurantsReducer.dishes && state.RestaurantsReducer.dishes.sort((a, b) => (a.avgRatings < b.avgRatings ? 1 : -1)),
     currentRestaurent: state.RestaurantsReducer.currentRestaurent,
+    dishesWithTags: state.RestaurantsReducer.dishesWithTags,
+    latestReviews: state.RestaurantsReducer.latestReviews,
+
 }),
     {
         // toggleFilterMenu,
         // updateStoreWithQuery,
-        // selectFilterTab,
-        // showHideMenu
+        setLatestReviews,
+        setDishesWithTags
     })(withStyles(styles)(Home))

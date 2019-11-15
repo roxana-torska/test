@@ -14,9 +14,12 @@ export default function NewDishCard(props) {
             background: #FFFFFF;
             box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.24), 0px 0px 2px rgba(0, 0, 0, 0.12);
             border-radius: 2px;
-            width:300px;
+            width:200px;
             margin-top:10px;
             margin-left:10px;
+            @media screen and (min-width: 600px) {
+                width:300px;
+              } 
             `
         }>
             <img src={props.url}
@@ -24,7 +27,7 @@ export default function NewDishCard(props) {
                 className={
                     css`
                         width:200px;
-                       
+                       overflow:hidden;
                         height:200px;
                         @media screen and (min-width: 600px) {
                             width:300px;
@@ -44,6 +47,7 @@ export default function NewDishCard(props) {
                     display: flex;
                     word-wrap:normal;
                     align-items: flex-end;
+                    overflow-x: scroll;
                     color: #4A4A4A;
                     margin-right:50px;
                     @media screen and (min-width: 600px) {
@@ -56,7 +60,7 @@ export default function NewDishCard(props) {
                 {name.toUpperCase()}
 
             </pre>
-            <Typography
+            {props.type == "dishes" ? <Typography
                 className={
                     css`
                         font-family: Lato;
@@ -76,7 +80,33 @@ export default function NewDishCard(props) {
             >
                 {des}
 
-            </Typography>
+            </Typography> : <Typography
+                className={
+                    css`
+                    font-family: Lato;
+                    font-style: normal;
+                    font-weight: normal;
+                    margin: 10px 0px 0px 10px;
+                    font-size: 14px;
+                    line-height: 16px;
+                    /* or 114% */
+                    
+                    display: flex;
+                    align-items: flex-end;
+                    
+                    color: #838383
+
+                `
+                }
+
+            >
+                    {des}
+
+                </Typography>
+
+
+
+            }
             {review && <div className={css`
                 margin-right:5px;
                 float:right;
@@ -85,7 +115,7 @@ export default function NewDishCard(props) {
                     css`
                     display:inline-block;
                     color:red;
-                    margin-top:50px
+                    margin-top:30px
                 `
                 }>
                     {review}

@@ -6,7 +6,7 @@ const restaurantsAction = {
     SET_DISHES_TAGS: "SET_DISHES_TAGS",
     SET_DISH_RATING: "SET_DISH_RATING",
 
-    SET_LATEST_REVIEWS:"SET_LATEST_REVIEWS",
+    SET_LATEST_REVIEWS: "SET_LATEST_REVIEWS",
 
     GET_MENUS: "GET_MENUS",
     GET_MENUS_SUCCESSFUL: "GET_MENUS_SUCCESSFUL",
@@ -18,8 +18,9 @@ const restaurantsAction = {
     SET_CURRENT_RESTAURANT: "SET_CURRENT_RESTAURANT",
 
     setLatestReviews: data => {
+        console.log("data=====>", data);
         return {
-            type: restaurantsAction.SET-SET_LATEST_REVIEWS,
+            type: restaurantsAction.SET_LATEST_REVIEWS,
             data
         }
     },
