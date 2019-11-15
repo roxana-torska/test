@@ -14,7 +14,7 @@ export default function NewDishCard(props) {
             background: #FFFFFF;
             box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.24), 0px 0px 2px rgba(0, 0, 0, 0.12);
             border-radius: 2px;
-            width:200px;
+            width:150px;
             margin-top:10px;
             margin-left:10px;
             @media screen and (min-width: 600px) {
@@ -26,9 +26,9 @@ export default function NewDishCard(props) {
 
                 className={
                     css`
-                        width:200px;
-                       overflow:hidden;
-                        height:200px;
+                        width:150px;
+                       
+                        height:150px;
                         @media screen and (min-width: 600px) {
                             width:300px;
                           } 

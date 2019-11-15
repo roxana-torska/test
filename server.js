@@ -298,6 +298,9 @@ app
     server.get('/home', (req, res) => {
       app.render(req, res, '/home');
     })
+    server.get('/dishes', (req, res) => {
+      app.render(req, res, '/dishes');
+    })
 
     server.get('*', (req, res) => {
       return handle(req, res);

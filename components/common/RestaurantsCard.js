@@ -5,7 +5,8 @@ import { css } from "emotion";
 
 
 
-export default function RestaurantsCard() {
+export default function RestaurantsCard(props) {
+    const { name, address, reviews, isOpened } = props
     return (
 
         <Grid xs={12} sm={12} md={5} lg={5}>
@@ -44,9 +45,9 @@ export default function RestaurantsCard() {
                                 }
 
                             >
-                                MEESA
+                                {name}
 
-                             </Typography>
+                            </Typography>
                         </Grid>
                         <Grid item>
                             <Typography className={css`
@@ -62,9 +63,8 @@ export default function RestaurantsCard() {
                                                      
                                                      color: #838383;
                                                      `}>
-                                lorem Street 16, Tel-Aviv
-                                Kfar Shmarijahu, 18
-                                                     </Typography>
+                                {address}
+                            </Typography>
 
                         </Grid>
 
@@ -93,7 +93,7 @@ export default function RestaurantsCard() {
                                                      padding-right:10px;
                                                      color: #999999;
                                                      `}>
-                                {true ? "closed :(" : ""}
+                                {!isOpened ? "closed :(" : ""}
                             </Typography>
                         </Grid>
                         <Grid item>
@@ -112,7 +112,7 @@ export default function RestaurantsCard() {
                                                      
                                                      color: #E53935;
                                                      `}>
-                                13 Review
+                                {reviews}
                             </Typography>
 
                         </Grid>

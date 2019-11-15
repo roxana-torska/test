@@ -11,7 +11,7 @@ import SectionHeaders from '../components/common/SectionHeaders';
 import NewDishCard from '../components/common/NewDishCard';
 import RestaurantsCard from '../components/common/RestaurantsCard';
 import restaurantsAction from '../redux/restaurants/actions'
-
+import moment from 'moment';
 import { restaurantAPI } from '../services/restaurantAPI';
 const { API_IMAGE_URL } = require('../utils/config');
 
@@ -47,6 +47,36 @@ class Home extends Component {
         )
 
     }
+    getCurrentDate = (opening, closing) => {
+        console.log(opening);
+        var d = new Date();
+        var weekday = new Array(7);
+        weekday[0] = "Sunday";
+        weekday[1] = "Monday";
+        weekday[2] = "Tuesday";
+        weekday[3] = "Wednesday";
+        weekday[4] = "Thursday";
+        weekday[5] = "Friday";
+        weekday[6] = "Saturday";
+        let day = weekday[d.getDay()];
+        let openingHour = opening[day][0];
+        let closingHour = closing[day][0];
+        console.log(openingHour);
+        console.log(closingHour);
+
+        var format = 'hh:mm';
+        var time = moment(d.getHours() + ":" + d.getMinutes(), format);
+        var beforeTime = moment(openingHour, format)
+        var afterTime = moment(closingHour, format)
+        //  target = LocalTime.parse( "01:00:00" ) ;
+        if (time.isBetween(beforeTime, afterTime)) {
+            return true
+        } else {
+            return false;
+
+        }
+
+    }
     render() {
 
 
@@ -56,6 +86,8 @@ class Home extends Component {
         console.log("curent restaurents", currentRestaurent && currentRestaurent[0]);
 
         const { isHomePage, data } = this.state;
+
+        console.log("data===>", data);
         console.log("dishes ====>", dishesWithTags);
         return <React.Fragment>
             <RestaurantLayout
@@ -104,7 +136,14 @@ class Home extends Component {
                                 </div>
                             </Grid>}
                             {<SectionHeaders text="Resturants around you" value={data && data.length} />}
-                            {data && data.length > 0 && <Grid item container direction="row"> {data.map(rec => <RestaurantsCard />)}
+                            {data && data.length > 0 && <Grid item container direction="row">
+                                {data.map(rec => <RestaurantsCard
+                                    address={rec.address}
+                                    name={rec.restaurant.name}
+                                    isOpened={this.getCurrentDate(rec.opening_hours, rec.closing_hours)}
+                                    reviews={rec.reviews.length + " Reviews"}
+
+                                />)}
 
 
                             </Grid>}
