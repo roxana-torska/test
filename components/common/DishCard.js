@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { withStyles } from '@material-ui/core';
+import { withStyles, Typography } from '@material-ui/core';
 import styles from '../../styles/common';
 import ListCardItem from '../../components/card/listCardItem';
 import Grid from '@material-ui/core/Grid';
@@ -11,11 +11,14 @@ import { connect } from 'react-redux';
 import RatingInFabIcon from './RatingInFabIcon';
 import Modal from './Modal';
 import ReviewCard from '../review/ReviewCard';
+import { Star } from '@material-ui/icons';
+import { css } from 'emotion';
 
 class DishCard extends PureComponent {
   state = {
     showReview: false,
     open: false,
+    userDishRating: 0,
   };
 
   showReviewDialog = evt => {
@@ -23,6 +26,9 @@ class DishCard extends PureComponent {
     const { showReview } = this.state;
     this.setState({ showReview: !showReview });
   };
+  showReviewCard = () => {
+    this.setState({ showReview: true });
+  }
 
   handleDishCardCancel = evt => {
     evt.stopPropagation();
@@ -31,15 +37,23 @@ class DishCard extends PureComponent {
     onCancel(evt);
   };
 
-  handleOnSubmit = (event, commonRating, dishId) => {
+  handleOnSubmit = (type, commonRating, dishId) => {
     const { onSubmit } = this.props;
     // this.setState({ showReview: true });
-    onSubmit(event, commonRating, dishId);
+    onSubmit(type, commonRating, dishId);
   };
   showDishDetails = (evt) => {
-    
-    window.location.href = `/dish-details/${this.props.data.id}/${this.props.restaurantsName}`;
+    window.location.href = `/dish-details/${this.props.data.id}/${this.props.data.providerName}`;
     // window.location.href = `/dish-details/${this.props.data.id}`
+  }
+  onIncreament = () => {
+    let { userDishRating } = this.state;
+    console.log("user rating===>", userDishRating)
+    if (userDishRating < 10) {
+      this.setState({
+        userDishRating: this.state.userDishRating + 1
+      })
+    }
   }
   render() {
     const {
@@ -50,9 +64,9 @@ class DishCard extends PureComponent {
       showUserReview
     } = this.props;
     console.log("data====>", data);
-    const { showReview } = this.state;
+    let { showReview, userDishRating } = this.state;
     let dishAvatar = '';
-    let userDishRating = 0;
+
     let dishAvgRating = data.avgRatings;
     if (data.images.length) {
       dishAvatar = `${API_IMAGE_URL}/assets/images/dishes/${data.images[0].name}/${
@@ -119,13 +133,37 @@ class DishCard extends PureComponent {
                   style={{ textAlign: 'right', position: 'relative' }}
                   zeroMinWidth
                 >
-                  <RatingInFabIcon
+                  <div onClick={this.showReviewCard}>
+                    <StarRate className={
+                      css`
+                        font-size:24px,
+                      `
+                    } color="primary" />
+                    <Typography
+                      className={
+                        css`
+                          font-family: Lato;
+                          font-size: 12px;
+                          line-height: 20px;
+                          /* or 167% */
+                          color: #F44336;
+                          margin-top:2px;
+                          display:inline-block;
+                          vertical-align:top;
+
+                      `
+                      }
+                    >
+                      Quick Rate
+                    </Typography>
+                  </div>
+                  {/* <RatingInFabIcon
                     handleClickOpen={this.handleClickOpen}
                     reviewRating={data.reviews && data.reviews.ratings || 0}
                     handleOnSubmit={this.props.onSubmit}
                     data={{ "type": data.type, "dishId": data.id }}
                     showDetails={this.showDishDetails}
-                  />
+                  /> */}
 
                   {/* <ReviewCard url={dishAvatar || '/static/imgs/image-not-found-dark.png'} /> */}
                 </Grid>
@@ -133,7 +171,7 @@ class DishCard extends PureComponent {
             }
           />
         </Grid>
-        {/* {showReview ? (
+        {showReview ? (
           <Grid item xs={12} style={{ marginTop: '20px' }}>
             <ListCardItem
               title={
@@ -176,8 +214,11 @@ class DishCard extends PureComponent {
                     style={{ textAlign: 'right' }}
                     zeroMinWidth
                     className={classes.makeAReview}
+
                   >
-                    to full review
+                    <span onClick={this.showDishDetails}>
+                      to full review
+                    </span>
                   </Grid>
                 </Grid>
               }
@@ -185,6 +226,7 @@ class DishCard extends PureComponent {
                 <UpdateRating
                   rating={userDishRating || 0}
                   showBorder={true}
+                  onIncreament={this.onIncreament}
                   onSubmit={this.handleOnSubmit}
                   onCancel={this.handleDishCardCancel}
                   dishData={data}
@@ -192,7 +234,7 @@ class DishCard extends PureComponent {
               }
             />
           </Grid>
-        ) : null} */}
+        ) : null}
       </Grid>
     );
   }

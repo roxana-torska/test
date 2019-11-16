@@ -85,7 +85,7 @@ export default function RestaurantsCard(props) {
                                                      font-size: 12px;
                                                      line-height: 28px;
                                                      /* identical to box height, or 233% */
-                                                     
+                                                     height: 28px;
                                                      display: flex;
                                                      align-items: center;
                                                      margin: 5px 0px 0px 0px;

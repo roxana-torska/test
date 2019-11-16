@@ -13,6 +13,7 @@ import RestaurantsCard from '../components/common/RestaurantsCard';
 import restaurantsAction from '../redux/restaurants/actions'
 import moment from 'moment';
 import { restaurantAPI } from '../services/restaurantAPI';
+import DishesList from '../components/restaurantLists/dishLists';
 const { API_IMAGE_URL } = require('../utils/config');
 
 
@@ -77,10 +78,24 @@ class Home extends Component {
         }
 
     }
+    handleListItemClick = (evt, index, value) => {
+        console.log("valueeeeeeeeeeeeeeeeeeeeeeeee=>", value)
+        if (value.type === 'restaurant') {
+
+            window.location.href = `/restaurants/${value.slug}`;
+        }
+        if (value.type === 'dish') {
+            // window.location.href = `/dish-details?id=${value.slug}&name=${value.primary}`;
+            // window.location.href = `/dish-details/${value.slug}`;
+        }
+    };
+    handleReviewSubmit = () => {
+        this.setState({ openDialog: true });
+    };
     render() {
 
 
-        const { currentRestaurent, classes, latestReviews, dishesWithTags, topten } = this.props;
+        const { currentRestaurent, classes, latestReviews, dishesWithTags, topten, dishes } = this.props;
         console.log("top ten ===>", topten);
         let avatar = '/static/imgs/image-not-found-dark.png';
         console.log("curent restaurents", currentRestaurent && currentRestaurent[0]);
@@ -124,8 +139,6 @@ class Home extends Component {
                                     `
 
                                 }>
-
-
                                     {dishesWithTags.map(rec => <NewDishCard classes={classes}
 
                                         name={rec.tag} des={rec.dishes.length + " dishes"}
@@ -174,6 +187,19 @@ class Home extends Component {
                                         classes={classes} />)}
 
                                 </div>
+                            </Grid>}
+                            {<SectionHeaders text="Explore near you" />}
+                            {dishes != null && <Grid item xs={12}>
+                                <DishesList
+                                    listItemOnClick={this.handleListItemClick}
+                                    listData={dishes}
+                                    listItemClass={classes.restaurantsListItem}
+                                    changeOverlay={this.handleOverlay}
+                                    // restaurantsName={restaurant ? restaurant.primary : id}
+                                    // isLoggedIn={isLoggedIn}
+                                    onReviewSubmit={this.handleReviewSubmit}
+                                />
+
                             </Grid>}
                             {<SectionHeaders text="top 10" />}
                             <Grid container direction="row">
@@ -224,6 +250,7 @@ class Home extends Component {
 export default connect(state => ({
     global: state.global,
     restaurants: state.RestaurantsReducer.restaurants,
+    dishes: state.RestaurantsReducer.dishes,
     topten: state.RestaurantsReducer.dishes && state.RestaurantsReducer.dishes.sort((a, b) => (a.avgRatings < b.avgRatings ? 1 : -1)),
     currentRestaurent: state.RestaurantsReducer.currentRestaurent,
     dishesWithTags: state.RestaurantsReducer.dishesWithTags,

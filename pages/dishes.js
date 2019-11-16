@@ -48,7 +48,7 @@ class Home extends Component {
                 />
                 {/* main container */}
                 <div style={{
-                    margin: "5px 10px 5px 10px",
+                    margin: "5px 0px 10px 0px",
 
                 }}>
                     <Grid container
