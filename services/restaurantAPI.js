@@ -13,7 +13,9 @@ export const restaurantAPI = {
 		}
 	},
 	getDishesWithTags: async (payload) => {
+		let { token } = payload;
 		let response = await request(`${API_URL}/dishes/get-dishes-tags`, {
+			headers: { Authorization: `Bearer ${token}` },
 			method: 'GET'
 		});
 		console.log("response dish tag====>", response);

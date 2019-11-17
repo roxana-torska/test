@@ -39,6 +39,7 @@ class DishesList extends PureComponent {
         ratings,
         dishId,
         type,
+        createdAt: new Date(),
       },
       token: this.props.global.token,
     }

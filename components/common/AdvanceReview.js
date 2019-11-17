@@ -4,6 +4,7 @@ import { Modal, Grid, Typography } from "@material-ui/core";
 import { PhotoCamera, Add, Remove, Close } from "@material-ui/icons";
 import ReviewTags from "./ReviewTags";
 import AddvanceReviewFields from "./AdvanceReviewFields";
+import { css } from "emotion";
 
 class AdvanceReview extends Component {
 
@@ -179,6 +180,7 @@ class AdvanceReview extends Component {
                                 handleChange={handleLikeChange}
                                 value={likeItem}
                                 handleSubmit={addLikeItem}
+                                classes={classes}
                             />
                         </Grid>
                         <Grid>
@@ -199,6 +201,7 @@ class AdvanceReview extends Component {
                                 handleChange={handleDisLikeChange}
                                 value={disLikeItem}
                                 handleSubmit={addDisLikeItem}
+                                classes={classes}
 
 
                             />
@@ -213,6 +216,46 @@ class AdvanceReview extends Component {
 
                             />}
                         </Grid>
+                        <Grid item xs={12}>
+                            <div
+
+                                onClick={handleReviewSubmit}
+
+                                className={
+                                    css`
+                                    margin-top: 30px;
+                                    background: #F44336;
+                                    height:35px;
+                                    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.24), 0px 0px 2px rgba(0, 0, 0, 0.12);
+                                    border-radius: 2px;
+                                    diplay:flex;
+                                    justify-content:center;
+                            
+                            `
+                                }>
+                                <Typography className={
+                                    css`
+                                    font-family: Lato;
+                                    font-style: normal;
+                                    font-weight: 900;
+                                    font-size: 12px;
+                                    line-height: 14px;
+                                    /* identical to box height */
+
+                                    text-align: center;
+                                    letter-spacing: 0.5px;
+                                    padding-top:10px;
+                                    color: #FFFFFF;
+                                    `
+                                }>
+                                    Save
+                                </Typography>
+
+                            </div>
+
+                        </Grid>
+
+
                     </Grid>
 
                 </div>

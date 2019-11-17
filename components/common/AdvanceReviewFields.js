@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Divider, Grid, Typography, TextField } from '@material-ui/core';
+import { Divider, Grid, Typography, TextField, Button } from '@material-ui/core';
 
 import AdvanceReviewRow from './AdvancReviewRow';
 import { css } from 'emotion';
@@ -9,7 +9,7 @@ import { css } from 'emotion';
 class AddvanceReviewFields extends Component {
     render() {
         const { reviewData, handleDecreament, handleIncreament } = this.props;
-     
+
         return (
             <React.Fragment>
                 <Divider style={{
@@ -26,7 +26,7 @@ class AddvanceReviewFields extends Component {
                         />
                     })}
                     <Grid >
-                       
+
                         <TextField
                             id="outlined-textarea"
                             placeholder="spill your guts"
@@ -41,34 +41,44 @@ class AddvanceReviewFields extends Component {
                         />
                     </Grid>
                     <Grid container direction="row">
-                        <Grid item xs={6}>
-                            <Typography
-                                onClick={this.props.hideAdvance}
-                                style={{
-                                    textDecoration: "underline",
-                                    fontSize: "14px",
-                                    lineHeight: "17px",
-                                    color: "#D1D3D4",
-                                    cursor: "pointer"
-                                }}
-                            >
-                                simple review
-                        </Typography>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Typography
+
+                        <Grid item xs={12}>
+                            <div
+
                                 onClick={this.props.handleReviewSubmit}
-                                style={{
-                                    textDecoration: "underline",
-                                    float: "right",
-                                    fontSize: "14px",
-                                    lineHeight: "17px",
-                                    // color: "#D1D3D4",
-                                    cursor: "pointer"
-                                }}
-                            >
-                                Submit review
-                        </Typography>
+
+                                className={
+                                    css`
+                            background: #F44336;
+                            height:35px;
+                            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.24), 0px 0px 2px rgba(0, 0, 0, 0.12);
+                            border-radius: 2px;
+                            diplay:flex;
+                            justify-content:center;
+
+                            
+                            `
+                                }>
+                                <Typography className={
+                                    css`
+                                    font-family: Lato;
+                                    font-style: normal;
+                                    font-weight: 900;
+                                    font-size: 12px;
+                                    line-height: 14px;
+                                    /* identical to box height */
+
+                                    text-align: center;
+                                    letter-spacing: 0.5px;
+                                    padding-top:10px;
+                                    color: #FFFFFF;
+                                    `
+                                }>
+                                    Save
+                                </Typography>
+
+                            </div>
+
                         </Grid>
                     </Grid>
 

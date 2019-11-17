@@ -6,6 +6,7 @@ import { css } from 'emotion'
 
 
 export default function ReviewLastRow(props) {
+    console.log("props===>", props);
     return (
         <Grid xs={4}>
 

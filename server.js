@@ -134,7 +134,7 @@ app
       // app.render(req, res, actualPage);
       let isLoggedIn = req.loggedInToken ? true : false;
       if (isLoggedIn) {
-        res.redirect('/restaurants');
+        res.redirect('/home');
       } else {
         res.redirect('/welcome-to-dishin');
       }
@@ -301,7 +301,9 @@ app
     server.get('/dishes', (req, res) => {
       app.render(req, res, '/dishes');
     })
-
+    server.get('/dishbytag', (req, res) => {
+      app.render(req, res, '/dishbytag');
+    })
     server.get('*', (req, res) => {
       return handle(req, res);
     });

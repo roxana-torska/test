@@ -1,5 +1,6 @@
 import React from 'react'
 import { AddCircleRounded, CancelRounded, CheckCircleOutlineRounded } from "@material-ui/icons";
+
 export default function ReviewTags(props) {
     const {
         showInput,
@@ -9,7 +10,8 @@ export default function ReviewTags(props) {
         closeInput,
         value,
         handleChange,
-        handleSubmit
+        handleSubmit,
+        classes
     } = props
     return (
         <div style={{
@@ -30,7 +32,8 @@ export default function ReviewTags(props) {
                     key={index}
                     style={{
                         marginLeft: "5px",
-                        cursor: "pointer"
+                        cursor: "pointer",
+
                     }}>X</span>
             </div>
 
@@ -51,8 +54,9 @@ export default function ReviewTags(props) {
                         width: "30px",
                         height: "30px",
                         verticalAlign: "top",
+
                     }}>
-                    <AddCircleRounded />
+                    <AddCircleRounded className={classes.reviewIconColor} />
                 </span>
             </div>}
             {showInput && <React.Fragment>
@@ -73,8 +77,9 @@ export default function ReviewTags(props) {
                     marginTop: "20px",
                     verticalAlign: "top",
                 }}>
-                    <CheckCircleOutlineRounded onClick={handleSubmit} />
-                    <CancelRounded onClick={closeInput} />
+                    <CheckCircleOutlineRounded onClick={handleSubmit} className={classes.reviewIconColor} />
+                    <CancelRounded onClick={closeInput}
+                        className={classes.reviewIconColor} />
                 </div>
             </React.Fragment>}
         </div>

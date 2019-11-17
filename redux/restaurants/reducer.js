@@ -5,6 +5,11 @@ function RestaurantsReducer(state = {
     dishesWithTags: null,
 }, action) {
     switch (action.type) {
+        case restaurantsAction.SET_CUSTUM_DISHES:
+            return {
+                ...state,
+                custumDishes: action.data
+            }
         case restaurantsAction.SET_DISHES_TAGS:
             console.log("reducer inside data===>", action.data)
             return {

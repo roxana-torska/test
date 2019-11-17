@@ -12,11 +12,18 @@ const restaurantsAction = {
     GET_MENUS_SUCCESSFUL: "GET_MENUS_SUCCESSFUL",
     GET_MENUS_FAIL: "GET_MENUS_FAIL",
 
-
+    SET_CUSTUM_DISHES: "SET_CUSTUM_DISHES",
 
 
     SET_CURRENT_RESTAURANT: "SET_CURRENT_RESTAURANT",
 
+
+    setCustumDishes: data => {
+        return {
+            type: restaurantsAction.SET_CUSTUM_DISHES,
+            data,
+        }
+    },
     setLatestReviews: data => {
         console.log("data=====>", data);
         return {

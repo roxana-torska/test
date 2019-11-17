@@ -13,6 +13,7 @@ import WindowResizeListener from 'react-window-size-listener';
 import Salad from '../components/customIcon/Salad';
 import DonutsIcon from '../components/customIcon/DonutsIcon';
 import ShareWith from '../components/common/ShareWith';
+import RestaurantLayout from '../components/layouts/RestaurantLayout';
 
 class SocialMediaList extends PureComponent {
     validators = {
@@ -129,7 +130,14 @@ class SocialMediaList extends PureComponent {
 
         }
         return (
-            <AppLayout {...this.props}>
+            <RestaurantLayout
+                selectedPageTab={0}
+                toggleMenu={this.handleToggleMenu}
+                changeOverlay={this.handleOverlay}
+                isHomePage={true}
+                isDishDetails={true}
+            // restaurantsName="BEST AOUND YOU"
+            >
                 <WindowResizeListener
                     onResize={windowSize => {
                         this.setState({ winHeight: windowSize.windowHeight });
@@ -247,7 +255,7 @@ class SocialMediaList extends PureComponent {
                         />
                     </Grid>
                 </form>
-            </AppLayout >
+            </RestaurantLayout >
         );
     }
 }

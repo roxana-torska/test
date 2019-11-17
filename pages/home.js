@@ -17,11 +17,26 @@ import DishesList from '../components/restaurantLists/dishLists';
 const { API_IMAGE_URL } = require('../utils/config');
 
 
-const { setDishesWithTags, setLatestReviews } = restaurantsAction;
+const { setDishesWithTags, setLatestReviews, setCustumDishes,setCurrentResuarant } = restaurantsAction;
 class Home extends Component {
     state = {
         isHomePage: true,
         data: [],
+    }
+    handleClick = (tag) => {
+        const { dishesWithTags, dishes } = this.props;
+        let filtered = dishesWithTags.filter(rec => rec.tag == tag)
+        if (filtered.length > 0) {
+            filtered = filtered[0].dishes.map(rec => dishes.find((rec1) => rec1._id == rec._id))
+        }
+        this.props.setCustumDishes(filtered);
+        setTimeout(() => {
+            window.location.href = "/dishbytag"
+        }, 500);
+    }
+    showDishDetails = (dishId, providerName) => {
+        window.location.href = `/dish-details/${dishId}/${providerName}`;
+        // window.location.href = `/dish-details/${this.props.data.id}`
     }
     handleOverlay = value => {
         this.setState({ overlay: !value });
@@ -33,10 +48,11 @@ class Home extends Component {
     componentDidMount = () => {
         Promise.all([
             reviewAPI.getLatestReview(),
-            restaurantAPI.getDishesWithTags(),
+            restaurantAPI.getDishesWithTags({ token: this.props.global.token }),
             restaurantAPI.getRestaurentsWithNumberOfReview()
         ]).then(
             res => {
+                console.log("response====>", res);
                 this.props.setDishesWithTags(res[1]);
                 this.props.setLatestReviews(res[0]);
                 this.setState({
@@ -79,9 +95,7 @@ class Home extends Component {
 
     }
     handleListItemClick = (evt, index, value) => {
-        console.log("valueeeeeeeeeeeeeeeeeeeeeeeee=>", value)
         if (value.type === 'restaurant') {
-
             window.location.href = `/restaurants/${value.slug}`;
         }
         if (value.type === 'dish') {
@@ -92,18 +106,29 @@ class Home extends Component {
     handleReviewSubmit = () => {
         this.setState({ openDialog: true });
     };
+
+
+    showDishes = () => {
+        window.location.href = "/dishes"
+    }
+
+    showRestaurentsDetails = (id) => {
+        let data = restaurantAPI.getCurrentRestaurant(id).then(response => {
+            console.log("data====>", response.data);
+            this.props.setCurrentResuarant({ data: response.data })
+           
+        })
+        if(data){
+            window.location.href="/restaurant-details"
+        }
+}
     render() {
 
 
         const { currentRestaurent, classes, latestReviews, dishesWithTags, topten, dishes } = this.props;
-        console.log("top ten ===>", topten);
-        let avatar = '/static/imgs/image-not-found-dark.png';
-        console.log("curent restaurents", currentRestaurent && currentRestaurent[0]);
+
 
         const { isHomePage, data } = this.state;
-
-        console.log("data===>", data);
-        console.log("dishes ====>", dishesWithTags);
         return <React.Fragment>
             <RestaurantLayout
                 selectedPageTab={0}
@@ -124,7 +149,10 @@ class Home extends Component {
                     <Grid container direction="column">
                         {/* best around you container */}
                         <Grid item container direction="column">
-                            {dishesWithTags != null && dishesWithTags.length > 0 && <SectionHeaders text="best around you" value={dishesWithTags.length} />}
+                            {dishesWithTags != null && dishesWithTags.length > 0 && <SectionHeaders
+                                text="best around you"
+                                value={dishesWithTags.length}
+                                onclick={this.showDishes} />}
                             {dishesWithTags != null && dishesWithTags.length > 0 && <Grid container direction="row">
                                 <div className={
                                     css`
@@ -139,9 +167,12 @@ class Home extends Component {
                                     `
 
                                 }>
-                                    {dishesWithTags.map(rec => <NewDishCard classes={classes}
+                                    {dishesWithTags.map(rec => <NewDishCard
 
-                                        name={rec.tag} des={rec.dishes.length + " dishes"}
+                                        classes={classes}
+                                        onclick={this.handleClick}
+                                        name={rec.tag}
+                                        des={rec.dishes.length + " dishes"}
                                         url={API_IMAGE_URL + "/assets/images/tags/" + rec.dishes[0].tag.url}
                                         type="dishes"
                                     />)}
@@ -152,6 +183,8 @@ class Home extends Component {
                             {data && data.length > 0 && <Grid item container direction="row">
                                 {data.map(rec => <RestaurantsCard
                                     address={rec.address}
+                                    data={rec}
+                                    onclick={this.showRestaurentsDetails}
                                     name={rec.restaurant.name}
                                     isOpened={this.getCurrentDate(rec.opening_hours, rec.closing_hours)}
                                     reviews={rec.reviews.length + " Reviews"}
@@ -160,7 +193,8 @@ class Home extends Component {
 
 
                             </Grid>}
-                            {latestReviews != null && latestReviews.length && <SectionHeaders text="Lastest reviews" value={latestReviews.length} />}
+                            {latestReviews != null && latestReviews.length && <SectionHeaders
+                                text="Lastest reviews" value={latestReviews.length} />}
                             {latestReviews != null && latestReviews.length && <Grid container direction="row">
                                 <div className={
                                     css`
@@ -178,10 +212,11 @@ class Home extends Component {
 
 
                                     {latestReviews.map(rec => <NewDishCard
-
+                                        data={rec}
                                         name={rec.product.name}
                                         des={rec.product.restaurant.name}
                                         review={rec.ratings}
+                                        onclick={this.showDishDetails}
                                         type="restaurant"
                                         url={API_IMAGE_URL + "/assets/images/dishes/" + rec.product.pimage.name + "/" + rec.product.pimage.path}
                                         classes={classes} />)}
@@ -219,8 +254,10 @@ class Home extends Component {
 
 
                                     {topten && topten.map(rec => <NewDishCard
-
+                                        type="topten"
+                                        data={rec}
                                         name={rec.name}
+                                        onclick={this.showDishDetails}
                                         des={rec.restaurant_id[0].name}
                                         review={rec.avgRatings}
                                         url={API_IMAGE_URL + "/assets/images/dishes/" + rec.images[0].name + "/" + rec.images[0].path}
@@ -261,5 +298,7 @@ export default connect(state => ({
         // toggleFilterMenu,
         // updateStoreWithQuery,
         setLatestReviews,
-        setDishesWithTags
+        setCurrentResuarant,
+        setDishesWithTags,
+        setCustumDishes
     })(withStyles(styles)(Home))

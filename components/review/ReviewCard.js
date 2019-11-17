@@ -74,7 +74,7 @@ class ReviewCard extends Component {
                                 display:inline-block;
                                 vertical-align:top;
                                 background: #E57373;
-                            `
+                            ` 
                         }>
 
                         </Typography>

@@ -17,9 +17,15 @@ import SentimentSatisfiedSharpIcon from '@material-ui/icons/SentimentSatisfiedSh
 import dishIcon from '../customIcon/dishIcon';
 import DishIcon from '../customIcon/dishIcon';
 import ReviewLastRow from './ReviewLastRow';
+import moment from 'moment';
 export default function Review(props) {
-    console.log("data====>", props.data)
+    console.log("review data data====>", props.data)
+
     const { data, index, total } = props
+    let createdDate = "";
+    if (data.createdAt) {
+        createdDate = moment(data.createdAt).utc().format('YYYY-MM-DD')
+    }
     return (
         <Grid item lg={4} md={6} xs={12} sm={12}>
             <div className={props.classes.reviewCard}>
@@ -37,7 +43,8 @@ export default function Review(props) {
                                 </IconButton>
                             }
                             title={data.user.first_name}
-                            subheader="September 14, 2016"
+                            subheader={createdDate}
+
                         />
                     </div>
                     <img
@@ -99,9 +106,9 @@ export default function Review(props) {
                                 </Typography>)}
                             </Grid>}
                             <Grid container direction="row">
-                                {data.valueForMoneyRatings && <ReviewLastRow value={data.valueForMoneyRatings} name="Value for money"/>}
-                                {data.tasteRatings && <ReviewLastRow value={data.tasteRatings} name="Taste"/>}
-                                {data.lookAndFeelRatings && <ReviewLastRow value={data.lookAndFeelRatings} name="Look and feel" />}
+                                {data.valueForMoneyRatings ? <ReviewLastRow value={data.valueForMoneyRatings} name="Value for money" /> : ""}
+                                {data.tasteRatings ? <ReviewLastRow value={data.tasteRatings} name="Taste" /> : ""}
+                                {data.lookAndFeelRatings ? <ReviewLastRow value={data.lookAndFeelRatings} name="Look and feel" /> : ""}
                             </Grid>
                         </Grid>
 

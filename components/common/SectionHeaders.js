@@ -6,7 +6,7 @@ import { css } from 'emotion'
 export default function SectionHeaders(props) {
     return (
         <Grid item container direction="row">
-            <Grid item xs={8} sm={8} md={8} lg={10}>
+            <Grid item xs={8} sm={8} md={8} lg={10} >
                 <Typography
                     className={
                         css`
@@ -28,16 +28,21 @@ export default function SectionHeaders(props) {
             </Grid>
 
             <Grid item xs={4} sm={4} md={4} lg={2} >
-                {props.value && <div className={css`
+                {props.value && <div onClick={props.onclick} className={css`
             width:50%;
             background: #F44336;
             box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.24), 0px 0px 2px rgba(0, 0, 0, 0.12);
             border-radius: 2px;
             margin-left:50%;
+            cursor:pointer;
             
             `}>
-                    <Typography className={
-                        css`
+                    <Typography
+
+
+
+                        className={
+                            css`
                         font-family: Lato;
                         font-style: normal;
                         font-weight: normal;
@@ -48,7 +53,7 @@ export default function SectionHeaders(props) {
                        
                     `
 
-                    }>
+                        }>
                         All({props.value})
                 </Typography>
 

@@ -6,10 +6,11 @@ import { css } from "emotion";
 
 
 export default function RestaurantsCard(props) {
-    const { name, address, reviews, isOpened } = props
+    const { name, address, reviews, isOpened, data, onclick } = props
+    console.log("data insisde restaurants ====>", data);
     return (
 
-        <Grid xs={12} sm={12} md={5} lg={5}>
+        <Grid xs={12} sm={12} md={5} lg={5} onClick={() => onclick(data.restaurant_id)}>
             <div className={
                 css`
                     background: #FFFFFF;

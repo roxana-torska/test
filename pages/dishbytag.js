@@ -13,7 +13,7 @@ import restaurantsAction from '../redux/restaurants/actions'
 const { setCustumDishes } = restaurantsAction;
 const { API_IMAGE_URL } = require('../utils/config');
 
-class Dishes extends Component {
+class DishesByTags extends Component {
     state = {
         isHomePage: true,
         data: [],
@@ -33,9 +33,6 @@ class Dishes extends Component {
             filtered = filtered[0].dishes.map(rec => dishes.find((rec1) => rec1._id == rec._id))
         }
         this.props.setCustumDishes(filtered);
-        setTimeout(() => {
-            window.location.href = "/dishbytag"
-        }, 500);
     }
     handleListItemClick = (evt, index, value) => {
         console.log("valueeeeeeeeeeeeeeeeeeeeeeeee=>", value)
@@ -55,7 +52,7 @@ class Dishes extends Component {
     render() {
 
 
-        const { currentRestaurent, classes, latestReviews, dishesWithTags, topten } = this.props;
+        const { classes, dishesWithTags, custumDishes } = this.props;
         const { dishData } = this.state;
 
         console.log(dishData);
@@ -82,35 +79,18 @@ class Dishes extends Component {
                     margin: "5px 0px 10px 0px",
 
                 }}>
-                    {!dishData.length > 0 ? <Grid container
-                        justify="center"
-                        alignItems="center"
-                        direction="row">
-                        {/* best around you container */}
-                        {dishesWithTags != null && dishesWithTags.length > 0 && dishesWithTags.map(rec => <Grid item xs={5}
+                    <Grid item xs={12}>
+                        <DishesList
+                            listItemOnClick={this.handleListItemClick}
+                            listData={custumDishes}
+                            listItemClass={classes.restaurantsListItem}
+                            changeOverlay={this.handleOverlay}
+                            // restaurantsName={restaurant ? restaurant.primary : id}
+                            // isLoggedIn={isLoggedIn}
+                            onReviewSubmit={this.handleReviewSubmit}
+                        />
 
-                        >
-
-                            <NewDishCard classes={classes}
-                                onclick={this.handleClick}
-                                name={rec.tag} des={rec.dishes.length + " dishes"}
-                                url={API_IMAGE_URL + "/assets/images/tags/" + rec.dishes[0].tag.url}
-                                type="dishes"
-                            /></Grid>)}
-
-
-                    </Grid> : <Grid item xs={12}>
-                            <DishesList
-                                listItemOnClick={this.handleListItemClick}
-                                listData={dishData}
-                                listItemClass={classes.restaurantsListItem}
-                                changeOverlay={this.handleOverlay}
-                                // restaurantsName={restaurant ? restaurant.primary : id}
-                                // isLoggedIn={isLoggedIn}
-                                onReviewSubmit={this.handleReviewSubmit}
-                            />
-
-                        </Grid>}
+                    </Grid>
                 </div>
 
 
@@ -129,7 +109,7 @@ export default connect(state => ({
     dishes: state.RestaurantsReducer.dishes,
     topten: state.RestaurantsReducer.dishes && state.RestaurantsReducer.dishes.sort((a, b) => (a.avgRatings < b.avgRatings ? 1 : -1)),
     currentRestaurent: state.RestaurantsReducer.currentRestaurent,
-    dishesWithTags: state.RestaurantsReducer.dishesWithTags,
+    custumDishes: state.RestaurantsReducer.custumDishes,
     latestReviews: state.RestaurantsReducer.latestReviews,
 
 }),
@@ -138,4 +118,4 @@ export default connect(state => ({
         // updateStoreWithQuery,
         // setLatestReviews,
         setCustumDishes
-    })(withStyles(styles)(Dishes))
+    })(withStyles(styles)(DishesByTags))

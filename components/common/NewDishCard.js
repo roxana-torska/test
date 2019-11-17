@@ -4,24 +4,41 @@ import { css } from 'emotion'
 import { StarRate } from '@material-ui/icons'
 
 
+const handleClick = (props) => {
+    const { name, des, review, data, type, onclick } = props
 
+    if (type == "dishes" && onclick) {
+        onclick(name);
+    }
+    if (type == "restaurant" && onclick) {
+        onclick(data.product._id, data.product.restaurant.name);
+    }
+    if (type == "topten" && onclick) {
+        onclick(data._id, data.restaurant_id[0].name)
+    }
+}
 export default function NewDishCard(props) {
-    const { classes, name, des, review } = props
+    const { classes, name, des, review, data, type } = props
+    console.log("data inside new Card", data);
     return (
 
-        <div className={
-            css`
-            background: #FFFFFF;
-            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.24), 0px 0px 2px rgba(0, 0, 0, 0.12);
-            border-radius: 2px;
-            width:157px;
-            margin-top:10px;
-            margin-left:10px;
-            @media screen and (min-width: 600px) {
-                width:300px;
-              } 
+        <div
+
+            onClick={() => handleClick(props)}
+
+            className={
+                css`
+                    background: #FFFFFF;
+                    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.24), 0px 0px 2px rgba(0, 0, 0, 0.12);
+                    border-radius: 2px;
+                    width:157px;
+                    margin-top:10px;
+                    margin-left:10px;
+                    @media screen and (min-width: 600px) {
+                        width:300px;
+                    } 
             `
-        }>
+            }>
             <img src={props.url}
 
                 className={

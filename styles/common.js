@@ -16,6 +16,9 @@ const styles = theme => {
     cover: {
       width: 151,
     },
+    reviewIconColor: {
+      color: '#C4C4C4',
+    },
     container: {
       display: 'flex',
       flexWrap: 'wrap'
@@ -56,6 +59,7 @@ const styles = theme => {
       maxHeight: "85vh",
       backgroundColor: "white",
       overflow: "hidden",
+      overflowY: "scroll",
       border: '2px solid #000',
       padding: "10px",
       ['@media screen and (min-height:550px) and (max-height:600px)']: {

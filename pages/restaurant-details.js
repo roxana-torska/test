@@ -36,14 +36,14 @@ class RestaurantDetails extends Component {
         const { currentRestaurent } = this.props;
         let avatar = '/static/imgs/image-not-found-dark.png';
         // const { name, images } = currentRestaurent && currentRestaurent[0].restaurant[0];
-        console.log("curent restaurents", currentRestaurent && currentRestaurent[0]);
+        console.log("curent restaurents", );
         const { isDishDetails } = this.state;
         return <React.Fragment>
             <RestaurantLayout
                 selectedPageTab={0}
                 toggleMenu={this.handleToggleMenu}
                 changeOverlay={this.handleOverlay}
-                restaurantsName={currentRestaurent ? currentRestaurent[0].restaurant[0].name : ""}
+                restaurantsName={currentRestaurent ? currentRestaurent[0].restaurant.name : ""}
                 isDishDetails={isDishDetails}
             >
                 <WindowResizeListener

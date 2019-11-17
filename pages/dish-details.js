@@ -38,8 +38,8 @@ class DishDetails extends Component {
 	state = {
 		showModal: false,
 		isDishDetails: true,
-		likeTags: ["apples", "banana"],
-		dislikeTags: ["hello", "hello2"],
+		likeTags: [],
+		dislikeTags: [],
 		showLikeInput: false,
 		likeItem: "",
 		disLikeItem: "",
@@ -84,7 +84,9 @@ class DishDetails extends Component {
 				dislikes: dislikeTags,
 				dishId: this.props.id,
 				typeId: this.props.id,
-				typeObject: "Dish"
+				typeObject: "Dish",
+
+				createdAt: new Date(),
 
 			},
 			token: this.props.global.token,
@@ -239,7 +241,7 @@ class DishDetails extends Component {
 			valueForMoney,
 			lookAndFeel,
 			taste,
-			
+
 
 		} = this.state;
 		let reviewData = [
@@ -250,7 +252,7 @@ class DishDetails extends Component {
 		const { classes, name } = this.props;
 		const selectedDish = this.props.dishes != null && this.getSelectedDish();
 		console.log("selected dish ====>", selectedDish);
-		
+
 
 
 		return <React.Fragment>
@@ -321,7 +323,7 @@ class DishDetails extends Component {
 
 							</Grid>
 							<Grid container direction="column" >
-								<Grid>
+								<Grid onClick={this.handleSaveReview}>
 									<span
 										style={{
 											position: "absolute",
@@ -334,13 +336,13 @@ class DishDetails extends Component {
 										color: "#E53935",
 										lineHeight: "20px",
 										fontSize: "50px",
-										right: "50px",
+										right: "35px",
 										top: "390px",
 										width: "50px",
 										height: "45px"
 
 									}}>
-										{selectedDish[0].avgRatings!=null && selectedDish[0].avgRatings.toFixed(1)}
+										{selectedDish[0].avgRatings != null && selectedDish[0].avgRatings.toFixed(0)}
 									</Typography>
 
 									<span
@@ -499,16 +501,16 @@ class DishDetails extends Component {
 							</Grid>
 						</Grid>
 						<Grid >
-							<div style={{
+							{/* <div style={{
 								background: "#F44336",
 								marginTop: "20px",
 								height: "56px",
 								width: "100wv",
 								padding: "20px 10% 0px 10%",
-							}}>
-								<Grid container direction="row">
+							}}> */}
+							{/* <Grid container direction="row"> */}
 
-									<Grid item xs={4}>
+							{/* <Grid item xs={4}>
 										<span
 											style={{
 												color: "white",
@@ -526,12 +528,12 @@ class DishDetails extends Component {
 										>
 											Cancel
 									</span>
-									</Grid>
-									<Grid item xs={2} sm={2} md={4} lg={4}>
+									</Grid> */}
+							{/* <Grid item xs={2} sm={2} md={4} lg={4}>
 
-									</Grid>
+									</Grid> */}
 
-									<Grid item xs={6} md={4} lg={2} sm={6}>
+							{/* <Grid item xs={6} md={4} lg={2} sm={6}>
 										<span onClick={this.handleSaveReview} style={{
 											color: "white",
 											verticalAlign: "top"
@@ -542,9 +544,9 @@ class DishDetails extends Component {
 										}}>
 											Save a Review
 								</span>
-									</Grid>
-								</Grid>
-							</div>
+									</Grid> */}
+							{/* </Grid>
+							</div> */}
 						</Grid>
 					</Grid>
 					<Grid>
