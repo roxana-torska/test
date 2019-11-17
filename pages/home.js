@@ -12,16 +12,115 @@ import NewDishCard from '../components/common/NewDishCard';
 import RestaurantsCard from '../components/common/RestaurantsCard';
 import restaurantsAction from '../redux/restaurants/actions'
 import moment from 'moment';
+import * as _ from 'lodash';
+import { getLocation } from '../utils/common';
+import actions from '../redux/global/actions';
 import { restaurantAPI } from '../services/restaurantAPI';
 import DishesList from '../components/restaurantLists/dishLists';
 const { API_IMAGE_URL } = require('../utils/config');
 
 
-const { setDishesWithTags, setLatestReviews, setCustumDishes,setCurrentResuarant } = restaurantsAction;
+const {
+    toggleFilterMenu,
+    updateStoreWithQuery,
+    selectFilterTab,
+    showHideMenu
+} = actions;
+const { setDishesWithTags, setLatestReviews, setCustumDishes, setCurrentResuarant, setRestaurants, setDishes, } = restaurantsAction;
 class Home extends Component {
     state = {
         isHomePage: true,
         data: [],
+    }
+
+    static async getInitialProps({ store, isServer, query }) {
+        if (query) {
+            let { restaurants, dishes, similarRestaurants, ...queryParams } = query;
+            console.log("query dishes===>", dishes);
+            let sponsoredRestaurants = restaurants.filter(
+                rec => rec.restaurant_id.isSponsored
+            );
+            restaurants = restaurants.filter(rec => !rec.restaurant_id.isSponsored);
+
+            restaurants = restaurants.map(rec => {
+                let restAvatar = '';
+
+                if (rec.restaurant_id.images.length) {
+                    restAvatar = `${API_IMAGE_URL}/assets/images/restaurants/${
+                        rec.restaurant_id.slug
+                        }/${rec.restaurant_id.images[0].path}`;
+                }
+
+                return {
+                    avatar: restAvatar,
+                    primary: rec.restaurant_id.name,
+                    slug: rec.restaurant_id.slug,
+                    secondary: rec.address,
+                    id: rec.restaurant_id._id,
+                    providerName: '',
+                    isSponsored: rec.restaurant_id.isSponsored,
+                    distance: _.isNumber(rec.distance)
+                        ? (rec.distance / 1000).toFixed(2)
+                        : null,
+                    type: 'restaurant',
+                    totalReviews: rec.dishes.totalReviews
+                };
+            });
+            sponsoredRestaurants = sponsoredRestaurants.map(rec => {
+                let restAvatar = '';
+
+                if (rec.restaurant_id.images.length) {
+                    restAvatar = `${API_IMAGE_URL}/assets/images/restaurants/${
+                        rec.restaurant_id.slug
+                        }/${rec.restaurant_id.images[0].path}`;
+                }
+
+                return {
+                    avatar: restAvatar,
+                    primary: rec.restaurant_id.name,
+                    slug: rec.restaurant_id.slug,
+                    secondary: rec.address,
+                    id: rec.restaurant_id._id,
+                    providerName: '',
+                    isSponsored: rec.restaurant_id.isSponsored,
+                    distance: _.isNumber(rec.distance)
+                        ? (rec.distance / 1000).toFixed(2)
+                        : null,
+                    type: 'restaurant',
+                    totalReviews: rec.dishes.totalReviews
+                };
+            });
+
+            similarRestaurants = similarRestaurants.map(rec => {
+                let restAvatar = '';
+
+                if (rec.restaurant_id.images.length) {
+                    restAvatar = `${API_IMAGE_URL}/assets/images/restaurants/${
+                        rec.restaurant_id.slug
+                        }/${rec.restaurant_id.images[0].path}`;
+                }
+                return {
+                    avatar: restAvatar,
+                    primary: rec.restaurant_id.name,
+                    slug: rec.restaurant_id.slug,
+                    secondary: rec.address,
+                    id: rec.restaurant_id._id,
+                    providerName: '',
+                    isSponsored: rec.restaurant_id.isSponsored,
+                    type: 'restaurant',
+                    distance: null,
+                    totalReviews: rec.dishes.totalReviews
+                };
+            });
+            return {
+                queryParams: { ...queryParams },
+                restaurants,
+                selectedTab: 0,
+                dishes,
+                sponsoredRestaurants,
+                similarRestaurants
+            };
+        }
     }
     handleClick = (tag) => {
         const { dishesWithTags, dishes } = this.props;
@@ -45,7 +144,8 @@ class Home extends Component {
         const { toggleFilterMenu } = this.props;
         toggleFilterMenu({ drawerOpen: toggleMenu });
     };
-    componentDidMount = () => {
+    componentDidMount() {
+        const { updateStoreWithQuery, queryParams, setRestaurants, setDishes } = this.props;
         Promise.all([
             reviewAPI.getLatestReview(),
             restaurantAPI.getDishesWithTags({ token: this.props.global.token }),
@@ -62,8 +162,37 @@ class Home extends Component {
             }
 
         )
+        if (typeof document !== 'undefined') {
+            window.addEventListener('scroll', this.handleOnScroll);
+        }
+        let localLocation = getLocation();
+        const { filters } = queryParams;
+        if (
+            filters &&
+            filters.location &&
+            (filters.location.lng && filters.location.lat)
+        ) {
+            localLocation = filters.location;
+        } else {
+            queryParams.filters = queryParams.filters || {};
+            queryParams.filters.location = { ...localLocation };
+        }
+
+        updateStoreWithQuery({
+            ...queryParams,
+            selectedPageTab: 0,
+            location: { ...localLocation }
+        });
+
+        setRestaurants({
+            data: this.props.sponsoredRestaurants,
+        })
+        setDishes({
+            data: this.props.dishes
+        })
 
     }
+
     getCurrentDate = (opening, closing) => {
         console.log(opening);
         var d = new Date();
@@ -116,12 +245,12 @@ class Home extends Component {
         let data = restaurantAPI.getCurrentRestaurant(id).then(response => {
             console.log("data====>", response.data);
             this.props.setCurrentResuarant({ data: response.data })
-           
+
         })
-        if(data){
-            window.location.href="/restaurant-details"
+        if (data) {
+            window.location.href = "/restaurant-details"
         }
-}
+    }
     render() {
 
 
@@ -287,7 +416,7 @@ class Home extends Component {
 export default connect(state => ({
     global: state.global,
     restaurants: state.RestaurantsReducer.restaurants,
-    dishes: state.RestaurantsReducer.dishes,
+    // dishes: state.RestaurantsReducer.dishes,
     topten: state.RestaurantsReducer.dishes && state.RestaurantsReducer.dishes.sort((a, b) => (a.avgRatings < b.avgRatings ? 1 : -1)),
     currentRestaurent: state.RestaurantsReducer.currentRestaurent,
     dishesWithTags: state.RestaurantsReducer.dishesWithTags,
@@ -297,8 +426,14 @@ export default connect(state => ({
     {
         // toggleFilterMenu,
         // updateStoreWithQuery,
-        setLatestReviews,
+        toggleFilterMenu,
+        updateStoreWithQuery,
+        selectFilterTab,
+        showHideMenu,
+        setRestaurants,
+        setDishes,
         setCurrentResuarant,
+        setLatestReviews,
         setDishesWithTags,
         setCustumDishes
     })(withStyles(styles)(Home))

@@ -23,6 +23,7 @@ import { stringify } from 'qs';
 import { setLocation } from '../utils/common';
 import FooterActions from '../components/common/FooterActions';
 import { DishinMashroomIcon } from '../components/customIcon/customIcon';
+import restaurantsAction from '../redux/restaurants/actions';
 const { setCurrentLocation } = actions;
 
 class WelcomeToDishIn extends PureComponent {
@@ -115,6 +116,7 @@ class WelcomeToDishIn extends PureComponent {
       .getRestaurants({ name: '', location: { ...location } })
       .then(response => {
         if (response.status === 'ok') {
+          console.log("resposed data===>", response.data);
           let restaurants = response.data.map(rec => {
             return {
               avatar: this.getRestaurantAvatar(rec.restaurant_id),
@@ -137,6 +139,7 @@ class WelcomeToDishIn extends PureComponent {
   handListItemClick = (evt, selectedIndex) => {
     evt.preventDefault();
     const found = this.state.restaurants[selectedIndex] || { primary: '' };
+    console.log("found-===>", found);
     if (found.primary) {
       this.setState({ selectedIndex, restaurantName: found.primary });
     } else {
@@ -190,6 +193,8 @@ class WelcomeToDishIn extends PureComponent {
       global: { location }
     } = this.props;
     const { restaurants, winHeight, winWidth } = this.state;
+
+    console.log("restaurents=====>", restaurants)
     // const restaurants = [];
     let adjustHeightGridOne = 10;
     let adjustHeightGridThree = 8;

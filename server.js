@@ -295,8 +295,24 @@ app
       app.render(req, res, "/restaurant-details");
     });
 
-    server.get('/home', (req, res) => {
-      app.render(req, res, '/home');
+    server.get('/home', hydrateLoggedIn,(req, res) => {
+      let query = req.query || {};
+      console.log("req query=====>",req.query);
+      let isLoggedIn = req.loggedInToken ? true : false;
+      let userData = req.user || {};
+      console.log(chalk.bgGreen(req.user))
+      getRestaurants(query, req.loggedInToken).then(response => {
+        console.log("response dishes====>", response.dishes);
+        query.restaurants = response.restaurants || [];
+        query.dishes = response.dishes || [];
+        query.similarRestaurants = response.similarRestaurants || [];
+        query.isLoggedIn = isLoggedIn;
+        query.user = req.user;
+        query.loggedInToken = req.loggedInToken;
+        query.systemTags = response.systemTags;
+        const actualPage = '/home';
+        app.render(req, res, actualPage, query);
+      });
     })
     server.get('/dishes', (req, res) => {
       app.render(req, res, '/dishes');

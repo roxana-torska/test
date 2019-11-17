@@ -35,7 +35,7 @@ export default function Review(props) {
                 `}>
                         <CardHeader
                             avatar={
-                                <Avatar alt={data.user.first_name} src={data.image[0].path} />
+                                <Avatar alt={data.user.first_name} src={data.image && data.image.length > 0 && data.image[0].path} />
                             }
                             action={
                                 <IconButton >
