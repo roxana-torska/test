@@ -14,6 +14,7 @@ import ReviewsIcon from '../components/customIcon/ReviewsIcon';
 import MenusIcon from '../components/customIcon/MenusIcon';
 import { reviewAPI } from '../services/reviewAPI';
 import ReviewCard from '../components/review/ReviewCard';
+import * as _ from 'lodash'
 class RestaurantDetails extends Component {
     state = {
         isDishDetails: true,
@@ -30,13 +31,27 @@ class RestaurantDetails extends Component {
         reviewAPI.getLatestReview().then(res => this.setState({
             data: res
         }))
+        let list = this.props.currentRestaurent[0].open_days.map((rec) => {
+
+
+            return { rec: this.props.currentRestaurent[0].opening_hours[rec] }
+
+        });
+        var result = _(list)
+            .groupBy(x => x)
+            .map((value, key) => ({
+                time: value,
+                index: key,
+            }))
+            .value();
+        console.log("result opening hour===>", result);
     }
     render() {
 
         const { currentRestaurent } = this.props;
         let avatar = '/static/imgs/image-not-found-dark.png';
         // const { name, images } = currentRestaurent && currentRestaurent[0].restaurant[0];
-        console.log("curent restaurents", );
+        console.log("curent restaurents", currentRestaurent);
         const { isDishDetails } = this.state;
         return <React.Fragment>
             <RestaurantLayout

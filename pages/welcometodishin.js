@@ -24,7 +24,9 @@ import { setLocation } from '../utils/common';
 import FooterActions from '../components/common/FooterActions';
 import { DishinMashroomIcon } from '../components/customIcon/customIcon';
 import restaurantsAction from '../redux/restaurants/actions';
+import { restaurantAPI } from '../services/restaurantAPI';
 const { setCurrentLocation } = actions;
+const { setCurrentResuarant } = restaurantsAction
 
 class WelcomeToDishIn extends PureComponent {
   state = {
@@ -155,6 +157,16 @@ class WelcomeToDishIn extends PureComponent {
     return <div style={{ ...style, ...thumbStyle }} {...props} />;
   };
 
+  showRestaurentsDetails = (id) => {
+    let data = restaurantAPI.getCurrentRestaurant(id).then(response => {
+      console.log("data====>", response.data);
+      this.props.setCurrentResuarant({ data: response.data })
+
+    })
+    if (data) {
+      window.location.href = "/restaurant-details"
+    }
+  }
   handleSubmit = evt => {
     evt.preventDefault();
     const {
@@ -163,11 +175,12 @@ class WelcomeToDishIn extends PureComponent {
     console.log("autoComplete", this.autoComplete);
     const selectedItem = this.autoComplete.selectedItem;
     if (selectedItem && selectedItem.selectedItem) {
-      console.log("item", selectedItem.selectedItem);
-      // window.location.href = `/restaurants/${slug(
-      //   selectedItem.selectedItem,
-      //   { lower: true }
-      // )}`;
+      let result = this.autoComplete.props.data.filter(rec => rec.label == selectedItem.selectedItem);
+      console.log("slected Item after filter====>", result);
+      if (result.length > 0) {
+        this.showRestaurentsDetails(result[0].id);
+      }
+
     } else {
       if (searchText) {
 
@@ -411,6 +424,7 @@ export default connect(
     global: state.global
   }),
   {
+    setCurrentResuarant,
     setCurrentLocation
   }
 )(withStyles(styles)(WelcomeToDishIn));

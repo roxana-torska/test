@@ -207,8 +207,6 @@ class Home extends Component {
         let day = weekday[d.getDay()];
         let openingHour = opening[day][0];
         let closingHour = closing[day][0];
-        console.log(openingHour);
-        console.log(closingHour);
 
         var format = 'hh:mm';
         var time = moment(d.getHours() + ":" + d.getMinutes(), format);
