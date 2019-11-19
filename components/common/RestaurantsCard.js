@@ -17,9 +17,10 @@ export default function RestaurantsCard(props) {
                     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.24), 0px 0px 2px rgba(0, 0, 0, 0.12);
                     border-radius: 2px;
                     margin-top:10px;
+                    margin-left:15px;
                     padding-bottom:10px;
                     margin-bottom:20px;
-                    margin-right:10px;
+                    
                     `
             }>
                 <Grid container direction="row">
@@ -35,7 +36,7 @@ export default function RestaurantsCard(props) {
                             <Typography
                                 className={
                                     css`
-                                                            font-family: Bebas Neue;
+                                                            font-family: BebasNeue;
                                                             font-size: 20px;
                                                             line-height: 24px;
                                                             display: flex;

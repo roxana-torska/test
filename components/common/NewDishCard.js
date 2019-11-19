@@ -19,7 +19,7 @@ const handleClick = (props) => {
 }
 export default function NewDishCard(props) {
     const { classes, name, des, review, data, type } = props
-    console.log("data inside new Card", data);
+    
     return (
 
         <div
@@ -32,8 +32,7 @@ export default function NewDishCard(props) {
                     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.24), 0px 0px 2px rgba(0, 0, 0, 0.12);
                     border-radius: 2px;
                     width:157px;
-                    margin-top:10px;
-                    margin-right:15px;
+                    margin:10px 0px 0px 15px;
                     @media screen and (min-width: 600px) {
                         width:300px;
                     } 
@@ -44,7 +43,6 @@ export default function NewDishCard(props) {
                 className={
                     css`
                         width:157px;
-                       
                         height:150px;
                         @media screen and (min-width: 600px) {
                             width:300px;

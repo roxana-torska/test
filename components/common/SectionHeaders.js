@@ -6,17 +6,18 @@ import { css } from 'emotion'
 export default function SectionHeaders(props) {
     return (
         <Grid item container direction="row">
-            <Grid item xs={8} sm={8} md={8} lg={10} >
+            <Grid item xs={10} sm={10} md={10} lg={10} >
                 <Typography
                     className={
                         css`
-                    font-family: Bebas Neue;
-                    font-size: 17px;
-                    line-height: 29px;
-                    display: flex;
-                    align-items: center;
-                  
-                    color: #4A4A4A;
+                        font-family: BebasNeue;
+                        font-size: 24px;
+                        line-height: 29px;
+                        font-weight: bold;
+                        display: flex;
+                        margin-left:15px;
+                        align-items: center;                        
+                        color: #4A4A4A;
                     @media screen and (min-width: 600px) {
                         font-siz:24px;
                 } ;
@@ -27,29 +28,26 @@ export default function SectionHeaders(props) {
                 </Typography>
             </Grid>
 
-            <Grid item xs={4} sm={4} md={4} lg={2} >
+            <Grid item xs={2} sm={2} md={2} lg={2} >
                 {props.value && <div onClick={props.onclick} className={css`
-            width:50%;
-            background: #F44336;
-            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.24), 0px 0px 2px rgba(0, 0, 0, 0.12);
-            border-radius: 2px;
-            margin-left:50%;
-            cursor:pointer;
+                        width:82%;
+                        background: #F44336;
+                        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.24), 0px 0px 2px rgba(0, 0, 0, 0.12);
+                        border-radius: 2px;
+                        margin-left:20%;
+                        cursor:pointer;
             
             `}>
                     <Typography
-
-
-
                         className={
                             css`
-                        font-family: Lato;
-                        font-style: normal;
-                        font-weight: normal;
-                        font-size: 12px;
-                        line-height: 28px;
-                        margin-left:22%;
-                        color:#FFFFFF;
+                            font-family: Lato;
+                            font-style: normal;
+                            font-weight: normal;
+                            font-size: 12px;
+                            line-height: 28px;
+                            margin-left: 25%;
+                            color:#FFFFFF;
                        
                     `
 
