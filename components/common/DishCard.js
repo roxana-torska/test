@@ -43,8 +43,9 @@ class DishCard extends PureComponent {
     onSubmit(type, commonRating, dishId);
   };
   showDishDetails = (evt) => {
-    window.location.href = `/dish-details/${this.props.data.id}/${this.props.data.providerName}`;
-    // window.location.href = `/dish-details/${this.props.data.id}`
+    console.log("dish data===>",this.props.data)
+    window.location.href = `/dish-details/${this.props.data.slug}/${this.props.data.providerName}`;
+    
   }
   onIncreament = () => {
     let { userDishRating } = this.state;

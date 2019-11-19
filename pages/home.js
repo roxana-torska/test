@@ -133,9 +133,10 @@ class Home extends Component {
             window.location.href = "/dishbytag"
         }, 500);
     }
-    showDishDetails = (dishId, providerName) => {
-        window.location.href = `/dish-details/${dishId}/${providerName}`;
-        // window.location.href = `/dish-details/${this.props.data.id}`
+    showDishDetails = (slug, providerName) => {
+        console.log("slug", slug);
+        window.location.href = `/dish-details/${slug}/${providerName}`;
+        // // window.location.href = `/dish-details/${this.props.data.id}`
     }
     handleOverlay = value => {
         this.setState({ overlay: !value });

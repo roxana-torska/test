@@ -278,9 +278,9 @@ app
 
     })
 
-    server.get("/dish-details/:id/:name", (req, res) => {
+    server.get("/dish-details/:slug/:name", (req, res) => {
       console.log(req.params);
-      app.render(req, res, '/dish-details', { id: req.params.id, name: req.params.name });
+      app.render(req, res, '/dish-details', { slug: req.params.slug, name: req.params.name });
     })
 
 

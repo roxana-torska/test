@@ -32,8 +32,8 @@ const tagIcons = {
 	halal: halalIcon
 };
 class DishDetails extends Component {
-	static async getInitialProps({ query: { id, name } }) {
-		return { id, name }
+	static async getInitialProps({ query: { slug, name } }) {
+		return { slug, name }
 	}
 	state = {
 		showModal: false,
@@ -207,7 +207,7 @@ class DishDetails extends Component {
 	};
 	getSelectedDish = () => {
 		const { dishes } = this.props;
-		const selectedDish = dishes.filter(rec => rec._id == this.props.id);
+		const selectedDish = dishes.filter(rec => rec.slug == this.props.slug);
 		return selectedDish;
 	}
 	getTag = (item) => {

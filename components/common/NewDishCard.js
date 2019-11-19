@@ -11,15 +11,17 @@ const handleClick = (props) => {
         onclick(name);
     }
     if (type == "restaurant" && onclick) {
-        onclick(data.product._id, data.product.restaurant.name);
+        console.log("product")
+        onclick(data.product.slug, data.product.restaurant.name);
     }
     if (type == "topten" && onclick) {
-        onclick(data._id, data.restaurant_id[0].name)
+        onclick(data.slug, data.restaurant_id[0].name)
     }
 }
 export default function NewDishCard(props) {
     const { classes, name, des, review, data, type } = props
-    
+    console.log("dataa===============new  card   >", data);
+
     return (
 
         <div
