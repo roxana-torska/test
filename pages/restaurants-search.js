@@ -8,7 +8,7 @@ import { APP_URL, API_IMAGE_URL } from '../utils/config';
 import { Scrollbars } from 'react-custom-scrollbars';
 import RestaurantList from '../components/restaurantLists/RestaurantList';
 import SpeedDials from '../components/menu/FloatingActionMenu';
-import actions from '../redux/global/actions';
+
 import { connect } from 'react-redux';
 import SponsoredRestaurantsList from '../components/restaurantLists/sponsoredRestaurantsLists';
 import DishesList from '../components/restaurantLists/dishLists';
@@ -19,6 +19,7 @@ import * as _ from 'lodash';
 import { getLocation } from '../utils/common';
 import restaurantsAction from '../redux/restaurants/actions'
 import { restaurantAPI } from '../services/restaurantAPI';
+import actions from '../redux/global/actions';
 const { setRestaurants, setDishes, setCurrentResuarant } = restaurantsAction;
 
 const {

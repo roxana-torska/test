@@ -15,10 +15,12 @@ import MenusIcon from '../components/customIcon/MenusIcon';
 import { reviewAPI } from '../services/reviewAPI';
 import ReviewCard from '../components/review/ReviewCard';
 import * as _ from 'lodash'
+import { css } from 'emotion';
 class RestaurantDetails extends Component {
     state = {
         isDishDetails: true,
         data: [],
+        timeData: [],
     }
     handleOverlay = value => {
         this.setState({ overlay: !value });
@@ -27,32 +29,60 @@ class RestaurantDetails extends Component {
         const { toggleFilterMenu } = this.props;
         toggleFilterMenu({ drawerOpen: toggleMenu });
     };
+    getTimingAndValues = (days, open_hours) => {
+        let list = days.map(rec => {
+            return { "day": rec.substring(0, 3), "time": open_hours[rec] }
+        })
+        var result = _(list)
+            .groupBy(x => x.time)
+            .map((value, key) => ({
+                time: key,
+                days: value,
+            }))
+            .value();
+        this.setState({
+            timeData: result
+        })
+
+
+    }
+
+
+
+
     componentDidMount = () => {
         reviewAPI.getLatestReview().then(res => this.setState({
             data: res
         }))
-        let list = this.props.currentRestaurent[0].open_days.map((rec) => {
-
-
-            return { rec: this.props.currentRestaurent[0].opening_hours[rec] }
-
-        });
-        var result = _(list)
-            .groupBy(x => x)
-            .map((value, key) => ({
-                time: value,
-                index: key,
-            }))
-            .value();
-        console.log("result opening hour===>", result);
+        this.getTimingAndValues(this.props.currentRestaurent[0].open_days, this.props.currentRestaurent[0].opening_hours);
+        let list = this.props.currentRestaurent[0].open_days.map((rec) => this.props.currentRestaurent[0].opening_hours[rec]);
+        // var result = _(list)
+        //     .groupBy(x => x)
+        //     .map((value, key) => ({
+        //         time: value,
+        //         index: key,
+        //     }))
+        //     .value();
+        // console.log("result opening hour===>", result);
     }
+
+    getDesh = (length, index) => {
+        if (parseInt(length) - parseInt(index) > 1) {
+            console.log(length)
+            console.log(index)
+            return "-"
+        }
+        return ""
+    }
+
     render() {
 
         const { currentRestaurent } = this.props;
         let avatar = '/static/imgs/image-not-found-dark.png';
         // const { name, images } = currentRestaurent && currentRestaurent[0].restaurant[0];
         console.log("curent restaurents", currentRestaurent);
-        const { isDishDetails } = this.state;
+        const { isDishDetails, timeData } = this.state;
+        console.log("open data ==>", timeData);
         return <React.Fragment>
             <RestaurantLayout
                 selectedPageTab={0}
@@ -158,6 +188,34 @@ class RestaurantDetails extends Component {
                                         marginBottom: "14px"
                                     }}>
                                         <ClockIcon />
+
+                                        {timeData.length > 0 && <div className={
+                                            css`
+                                                display: inline;
+                                                vertical-align:top;
+                                                margin-left:10px
+                                            `
+                                        }>
+                                            {
+                                                timeData.map(rec1 => {
+                                                    return <React.Fragment><div className={
+                                                        css`
+                                                            display:inline-block
+        
+                                                      `
+                                                    }>
+                                                        {rec1.days.map((record, index) => <span>{record.day + "" + this.getDesh(rec1.days.length, index)} </span>)}
+                                                        <span>:{rec1.time}</span>
+                                                    </div><span className={css`
+                                                        height:10px;
+                                                        background:grey;
+
+                                                    `}></span> </React.Fragment>
+                                                })
+                                            }
+
+                                        </div>}
+
 
                                     </div>
 

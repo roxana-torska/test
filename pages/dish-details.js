@@ -277,7 +277,9 @@ class DishDetails extends Component {
 								width: "100%",
 								height: "296px",
 								objectFit: "cover",
-								backgroundSize: "cover"
+								backgroundSize: "cover",
+								marginTop: "-25px",
+
 							}}
 							src={`${API_IMAGE_URL}/assets/images/dishes/${selectedDish[0].images[0].name}/${selectedDish[0].images[0].path}`} />
 					</Grid>

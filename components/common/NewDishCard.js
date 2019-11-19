@@ -33,7 +33,7 @@ export default function NewDishCard(props) {
                     border-radius: 2px;
                     width:157px;
                     margin-top:10px;
-                    margin-left:10px;
+                    margin-right:15px;
                     @media screen and (min-width: 600px) {
                         width:300px;
                     } 
