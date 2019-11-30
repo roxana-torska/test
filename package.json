@@ -4,7 +4,8 @@
   "description": "Dishin App",
   "main": "index.js",
   "scripts": {
-    "dev": "node server.js",
+		"dev": "node server.js",
+		"prod": "NODE_ENV=production node server.js",
     "build": "next build",
     "start": " node server.js"
   },
@@ -22,7 +23,6 @@
     "express": "^4.16.4",
     "i": "^0.3.6",
     "immutable": "^4.0.0-rc.12",
-    "ip": "^1.1.5",
     "isomorphic-fetch": "^2.2.1",
     "js-cookie": "^2.2.0",
     "jss": "^9.8.7",
@@ -43,6 +43,7 @@
     "passport-facebook": "^3.0.0",
     "passport-google-oauth": "^2.0.0",
     "passport-instagram": "^1.0.0",
+    "public-ip": "^4.0.0",
     "qs": "^6.6.0",
     "react": "^16.10.2",
     "react-custom-scrollbars": "^4.2.1",
