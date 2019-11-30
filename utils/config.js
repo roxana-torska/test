@@ -11,7 +11,7 @@ const configs = function() {
 
     case 'production':
       return {
-        APP_URL: 'https://dishin.mindzhub.com',
+        APP_URL: 'http://localhost:3001',
         API_URL: 'https://18.197.19.138:8282/api',
         API_IMAGE_URL: 'https://dishinapi.mindzhub.com'
       };
