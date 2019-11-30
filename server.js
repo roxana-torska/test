@@ -1,6 +1,6 @@
 const express = require('express');
 const next = require('next');
-const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser'); 
 const bodyParser = require('body-parser');
 const chalk = require('chalk')
 const dev = process.env.NODE_ENV !== 'production';
