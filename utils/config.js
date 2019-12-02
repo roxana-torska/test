@@ -12,7 +12,7 @@ const configs = function() {
     case 'production':
       return {
         APP_URL: 'http://localhost:3001',
-        API_URL: 'https://ec2-54-93-251-83.eu-central-1.compute.amazonaws.com:8282/api',
+        API_URL: 'http://ec2-54-93-251-83.eu-central-1.compute.amazonaws.com:8282/api',
         API_IMAGE_URL: 'https://ec2-54-93-251-83.eu-central-1.compute.amazonaws.com:8282'
       };
     default:
