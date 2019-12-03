@@ -4,9 +4,9 @@ const configs = function() {
   switch (process.env.NODE_ENV) {
     case 'development':
       return {
-        APP_URL: 'http://localhost:3001',
-        API_URL: 'http://localhost:8282/api',
-        API_IMAGE_URL: 'http://localhost:8282'
+        APP_URL: 'http://ec2-54-93-251-83.eu-central-1.compute.amazonaws.com',
+        API_URL: 'http://ec2-54-93-251-83.eu-central-1.compute.amazonaws.com:8282/api',
+        API_IMAGE_URL: 'http://ec2-54-93-251-83.eu-central-1.compute.amazonaws.com:8282'
       };
 
     case 'production':
@@ -17,9 +17,9 @@ const configs = function() {
       };
     default:
       return {
-        APP_URL: 'http://localhost:3001',
-        API_URL: 'http://localhost:8282/api',
-        API_IMAGE_URL: 'http://localhost:8282'
+        APP_URL: 'http://ec2-54-93-251-83.eu-central-1.compute.amazonaws.com',
+        API_URL: 'http://ec2-54-93-251-83.eu-central-1.compute.amazonaws.com:8282/api',
+        API_IMAGE_URL: 'http://ec2-54-93-251-83.eu-central-1.compute.amazonaws.com:8282'
       };
   }
 };
