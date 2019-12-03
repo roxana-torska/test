@@ -11,9 +11,9 @@ const configs = function() {
 
     case 'production':
       return {
-        APP_URL: 'http://ec2-54-93-251-83.eu-central-1.compute.amazonaws.com',
-        API_URL: 'http://ec2-54-93-251-83.eu-central-1.compute.amazonaws.com:8282/api',
-        API_IMAGE_URL: 'http://ec2-54-93-251-83.eu-central-1.compute.amazonaws.com:8282'
+        APP_URL: 'http://ec2-3-120-243-142.eu-central-1.compute.amazonaws.com',
+        API_URL: 'http://ec2-3-120-243-142.eu-central-1.compute.amazonaws.com:8282/api',
+        API_IMAGE_URL: 'http://ec2-3-120-243-142.eu-central-1.compute.amazonaws.com:8282'
       };
     default:
       return {
