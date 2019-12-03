@@ -13,7 +13,7 @@ const configs = function() {
       return {
         APP_URL: 'http://localhost:3001',
         API_URL: 'http://ec2-54-93-251-83.eu-central-1.compute.amazonaws.com:8282/api',
-        API_IMAGE_URL: 'https://ec2-54-93-251-83.eu-central-1.compute.amazonaws.com:8282'
+        API_IMAGE_URL: 'http://ec2-54-93-251-83.eu-central-1.compute.amazonaws.com:8282'
       };
     default:
       return {
