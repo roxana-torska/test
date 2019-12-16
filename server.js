@@ -78,6 +78,18 @@ const getMenus = async () => {
     console.log("nothing retrieve");
   }
 }
+
+const getCategories = async (restaurantSlug, menuName) => {
+	console.log('categories called');
+	const url = `${API_URL}/restaurants/${restaurantSlug}/${menuName}/getCategories`;
+	let response = await request(url);
+	if (response.status.toLowerCase() === 'ok') {
+    return response.data;
+  } else {
+    return [];
+  }
+}
+
 const getReviews = async function (res, payload) {
   const url = `${API_URL}/reviews`;
   const token = payload.token;
@@ -276,21 +288,31 @@ app
         console.log("error menu respinse", err);
       })
 
-    })
+		})
+		
+		server.get('/restaurants/:slug/menu/:name', (req, res) => {
+			console.log("niv===>", req.params);
+			getCategories(req.params.slug, req.params.menuName).then(response => {
+        app.render(req, res, '/showcategory', { slug: req.params.slug, categoryData: response })
+        console.log("category response =====>", res);
+      }).catch(err => {
+        console.log("error menu response", err);
+      });
+		});
 
     server.get("/dish-details/:slug/:name", (req, res) => {
       console.log(req.params);
       app.render(req, res, '/dish-details', { slug: req.params.slug, name: req.params.name });
-    })
+    });
 
 
     server.get("/social-medialist", (req, res) => {
       app.render(req, res, "/social-medialist");
-    })
+    });
 
     server.get("/thankyou", (req, res) => {
       app.render(req, res, "/thankyou");
-    })
+    });
     server.get('/restaurant-details', (req, res) => {
       app.render(req, res, "/restaurant-details");
     });

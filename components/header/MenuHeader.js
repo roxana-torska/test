@@ -30,7 +30,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 
 const { setSearchValue, updateUserRewards, hideFilterFabIcon } = actions;
 
-class RestaurantHeader extends Component {
+class MenuHeader extends Component {
 	state = {
 		userDrawer: false,
 		overlay: false,
@@ -228,10 +228,10 @@ class RestaurantHeader extends Component {
 			this.setState({ hideRegularBar: false });
 		}
 	};
-	showRestaurantsName = () => {
-		const { restaurantsName } = this.props;
-		if (restaurantsName) {
-			return <Typography style={{ color: "white", fontSize: "20px", fontFamily: "bebasneue" }}>{restaurantsName}</Typography>
+	showMenuName = () => {
+		const { menuName } = this.props;
+		if (menuName) {
+			return <Typography style={{ color: "white", fontSize: "20px", fontFamily: "bebasneue" }}>{menuName}</Typography>
 		}
 		return <img
 			src='/static/imgs/logo.png'
@@ -245,7 +245,7 @@ class RestaurantHeader extends Component {
 		if (!hideRegularBar) {
 			return (
 				<div className={classes.topBarLogoContainer}>
-					{this.showRestaurantsName()}
+					{this.showMenuName()}
 				</div>
 			)
 		}
@@ -595,7 +595,7 @@ class RestaurantHeader extends Component {
 	}
 }
 
-RestaurantHeader.propTypes = {
+MenuHeader.propTypes = {
 	classes: PropTypes.object.isRequired
 };
 
@@ -608,4 +608,4 @@ export default connect(
 		updateUserRewards,
 		hideFilterFabIcon
 	}
-)(withStyles(styles)(RestaurantHeader));
+)(withStyles(styles)(MenuHeader));
