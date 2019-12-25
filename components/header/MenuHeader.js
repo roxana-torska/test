@@ -288,7 +288,7 @@ class MenuHeader extends Component {
 						}}
 					>
 						<Grid item xs={1} />
-						<Grid item xs={5}>
+						{/* <Grid item xs={5}>
 							<FormControl className={classes.restaurantMenuItem}>
 								<Select
 									value={selectedMenu || menuData[0].name}
@@ -312,7 +312,7 @@ class MenuHeader extends Component {
 									)}
 								</Select>
 							</FormControl>
-						</Grid>
+						</Grid> */}
 
 						<Grid item xs={5} style={{ textAlign: 'right' }}>
 							<FormControl className={classes.restaurantMenuItem}>
