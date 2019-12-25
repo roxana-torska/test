@@ -23,9 +23,9 @@ function Transition(props) {
     return <Slide direction='down' {...props} />;
 }
 class ShowCategory extends React.Component {
-    static async getInitialProps({ query: { slug, menuName } }) {
+    static async getInitialProps({ query: { slug, menuName, menuData } }) {
 
-        return { slug, menuName }
+        return { slug, menuName, menuData }
     }
     state = {
         restaurant: null,
@@ -137,7 +137,8 @@ class ShowCategory extends React.Component {
             id,
             menuData,
 						menuName
-        } = this.props;
+				} = this.props;
+				console.log('in showcategory', menuName)
         const { restaurant, restaurantDishes } = this.state;
         console.log("restaurantDishes=====>", restaurantDishes);
         console.log("menu data inside showmenu component", menuData);

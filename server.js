@@ -79,9 +79,9 @@ const getMenus = async () => {
   }
 }
 
-const getCategories = async (restaurantSlug, menuName) => {
+const getCategories = async () => {
 	console.log('categories called');
-	const url = `${API_URL}/restaurants/${restaurantSlug}/${menuName}/getCategories`;
+	const url = `${API_URL}/restaurants/getMenus`;
 	let response = await request(url);
 	if (response.status.toLowerCase() === 'ok') {
     return response.data;
@@ -292,8 +292,9 @@ app
 		
 		server.get('/restaurants/:slug/menu/:name', (req, res) => {
 			console.log("niv===>", req.params);
-			getCategories(req.params.slug, req.params.menuName).then(response => {
-        app.render(req, res, '/showcategory', { slug: req.params.slug, categoryData: response })
+			getMenus().then(response => {
+				console.log('this is the response', response)
+        app.render(req, res, '/showcategory', { slug: req.params.slug, menuData: response, menuName: req.params.name })
         console.log("category response =====>", res);
       }).catch(err => {
         console.log("error menu response", err);

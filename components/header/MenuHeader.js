@@ -348,43 +348,47 @@ class MenuHeader extends Component {
 						<Grid item xs={1} />
 					</Grid>
 				) : (
-						<Tabs
-							indicatorColor='primary'
-							textColor='primary'
-							variant='fullWidth'
-							value={selectedPageTab}
-							onChange={this.handleTabChange}
-							classes={{ root: classes.topSearchTabsRoot }}
-						>
-							<Tab
-								label='Results'
-								classes={{ root: classes.topSearchTabRoot }}
-							/>
-							<Tab
-								label='Reviews'
-								classes={{ root: classes.topSearchTabRoot }}
-							/>
-							<Tab
-								label={
-									<div>
-										<Badge
-											color='primary'
-											badgeContent={rewardCount}
-											classes={{ badge: classes.rewardCount }}
-										>
-											Rewards
-							  </Badge>
-									</div>
-								}
-								classes={{ root: classes.topSearchTabRoot }}
-							/>
-						</Tabs>
+					<div></div>
+						// <Tabs
+						// 	indicatorColor='primary'
+						// 	textColor='primary'
+						// 	variant='fullWidth'
+						// 	value={selectedPageTab}
+						// 	onChange={this.handleTabChange}
+						// 	classes={{ root: classes.topSearchTabsRoot }}
+						// >
+						// 	<Tab
+						// 		label='Results'
+						// 		classes={{ root: classes.topSearchTabRoot }}
+						// 	/>
+						// 	<Tab
+						// 		label='Reviews'
+						// 		classes={{ root: classes.topSearchTabRoot }}
+						// 	/>
+						// 	<Tab
+						// 		label={
+						// 			<div>
+						// 				<Badge
+						// 					color='primary'
+						// 					badgeContent={rewardCount}
+						// 					classes={{ badge: classes.rewardCount }}
+						// 				>
+						// 					Rewards
+						// 	  </Badge>
+						// 			</div>
+						// 		}
+						// 		classes={{ root: classes.topSearchTabRoot }}
+						// 	/>
+						// </Tabs>
 					)
 			)
 		}
 	}
 	handleArrowIcon = (menuData) => {
 		const { isDishDetails, classes } = this.props;
+		console.log(
+			'menuData', menuData
+		)
 		if (!isDishDetails) {
 			if (menuData) {
 				return menuData.length ? (

@@ -47,7 +47,8 @@ class MenuLayout extends Component {
       menuName,
       isDishDetails,
       isHomePage,
-    } = this.props;
+		} = this.props;
+		console.log('in menu layout,' , menuName)
     const { hideSplash } = this.state;
     return hideSplash ? (
       <React.Fragment>
