@@ -36,7 +36,7 @@ export const restaurantAPI = {
 	getMenus: async (restaurantId) => {
 		console.log('from the API', restaurantId);
 		let response = await request(
-			`${API_URL}/restaurants/${restaurantId}/getMenus`
+			`${API_URL}/restaurants/getMenus`
 		);
 		if (response.status.toLowerCase() === "ok") {
 			return response.data

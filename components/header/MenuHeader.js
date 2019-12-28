@@ -229,9 +229,39 @@ class MenuHeader extends Component {
 		}
 	};
 	showMenuName = () => {
-		const { menuName } = this.props;
+		const { menuName, classes } = this.props;
+		const { selectedMenu, selectedMenuCategory, menuCategories } = this.state;
 		if (menuName) {
-			return <Typography style={{ color: "white", fontSize: "20px", fontFamily: "bebasneue" }}>{menuName}</Typography>
+			return <Typography style={{ color: "white", fontSize: "20px", fontFamily: "bebasneue" }}>{menuName}
+				<FormControl className={classes.restaurantMenuItem}>
+					<Select
+						value={
+							selectedMenuCategory ||
+							(menuCategories.length ? menuCategories[0].name : '')
+						}
+						onChange={this.handleMenuCategoryChange}
+						disableUnderline
+						classes={{
+							root: classnames(
+								classes.restaurantMenuSelect,
+								classes.marginNormal
+							),
+							selectMenu: classes.restaurantMenuSelected,
+							icon: classes.restaurantMenuLabel
+						}}
+					>
+						{menuCategories.map(menuCat =>
+							menuCat ? (
+								<MenuItem
+									key={`${menuCat._id}_menu_cat`}
+									value={menuCat.name}
+								>
+									{menuCat.name}
+								</MenuItem>
+							) : null
+						)}
+					</Select>
+				</FormControl></Typography>
 		}
 		return <img
 			src='/static/imgs/logo.png'
@@ -348,7 +378,7 @@ class MenuHeader extends Component {
 						<Grid item xs={1} />
 					</Grid>
 				) : (
-					<div></div>
+						<div></div>
 						// <Tabs
 						// 	indicatorColor='primary'
 						// 	textColor='primary'
@@ -485,7 +515,7 @@ class MenuHeader extends Component {
 							spacing={0}
 							style={{ height: '50%', display: 'flex', flexWrap: 'nowrap' }}
 						>
-							<div style={{ width: '3%' }} />
+							{/* <div style={{ width: '3%' }} /> */}
 							<div style={{ width: '97%' }}>
 								<Grid
 									container
@@ -502,7 +532,7 @@ class MenuHeader extends Component {
 									</Grid>
 									<Grid
 										item
-										xs={9}
+										xs={10}
 										style={{
 											textAlign: 'left',
 											paddingRight: '16px',
@@ -511,7 +541,7 @@ class MenuHeader extends Component {
 									>
 										{this.searchComponent(hideRegularBar)}
 									</Grid>
-									<Grid item xs={1} style={{ textAlign: 'left' }}>
+									{/* <Grid item xs={1} style={{ textAlign: 'left' }}>
 										{!this.props.isHomePage && <SearchIcon
 											color='primary'
 											onClick={this.handleShowSearchBar}
@@ -520,7 +550,7 @@ class MenuHeader extends Component {
 										/>
 										}
 
-									</Grid>
+									</Grid> */}
 									<Grid
 										item
 										xs={1}
@@ -592,7 +622,7 @@ class MenuHeader extends Component {
 					>
 
 					</Grid>
-					{this.getHeaderTabs()}
+					{/* {this.getHeaderTabs()} */}
 				</AppBar>
 			</div>
 		);
