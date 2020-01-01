@@ -28,7 +28,7 @@ import classnames from 'classnames';
 import WindowResizeListener from 'react-window-size-listener';
 import ClearIcon from '@material-ui/icons/Clear';
 
-const { setSearchValue, updateUserRewards, hideFilterFabIcon } = actions;
+const { setSearchValue, updateUserRewards, hideFilterFabIcon, setCurrentCategory } = actions;
 
 class MenuHeader extends Component {
 	state = {
@@ -152,6 +152,7 @@ class MenuHeader extends Component {
 			menuCategories,
 			selectedMenuCategory
 		});
+		setCurrentCategory(selectedMenuCategory);
 		// onMenuChange(selected, selectedMenuCategory);
 	};
 	handleMenuChange = evt => {
@@ -159,10 +160,11 @@ class MenuHeader extends Component {
 		this.selectMenu(selectedMenu);
 	};
 	handleMenuCategoryChange = evt => {
-		const { onMenuChange } = this.props;
+		const { onMenuChange, setCurrentCategory } = this.props;
 		const { selectedMenu } = this.state;
 		const selectedMenuCategory = evt.target.value;
 		this.setState({ selectedMenuCategory });
+		setCurrentCategory(selectedMenuCategory);
 		// onMenuChange(selectedMenu, selectedMenuCategory);
 	};
 
@@ -640,6 +642,7 @@ export default connect(
 	{
 		setSearchValue,
 		updateUserRewards,
-		hideFilterFabIcon
+		hideFilterFabIcon,
+		setCurrentCategory
 	}
 )(withStyles(styles)(MenuHeader));

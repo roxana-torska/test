@@ -173,7 +173,8 @@ class ShowCategory extends React.Component {
                             changeOverlay={this.handleOverlay}
                             restaurantsName={restaurant ? restaurant.primary : id}
                             // isLoggedIn={isLoggedIn}
-                            onReviewSubmit={this.handleReviewSubmit}
+														onReviewSubmit={this.handleReviewSubmit}
+														groupByCategories={true}
                         />
                     </Grid>
 

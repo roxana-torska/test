@@ -38,7 +38,8 @@ export function globalReducer(state = {
   systemTags: [],
   lastRatedDish: '',
   defaultRefferal: null,
-  hideFabIcon: false
+	hideFabIcon: false,
+	selectedCategory: '',
 }, action) {
   switch (action.type) {
     case actions.TOGGLE_FILTER_MENU:
@@ -177,7 +178,13 @@ export function globalReducer(state = {
       return {
         ...state,
         hideFabIcon: action.value,
-      }
+			}
+		case actions.SET_CURRENT_CATEGORY:
+			console.log('niv at reducer', action);
+			return {
+				...state,
+				selectedCategory: action.selectedCategory
+			}
     default:
       return state;
   }
