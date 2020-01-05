@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Component } from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import styles from '../../styles/common';
@@ -13,12 +13,21 @@ import { restaurantAPI } from '../../services/restaurantAPI';
 import restaurantsAction from '../../redux/restaurants/actions'
 const { setDishes } = restaurantsAction;
 const { updateUserReview } = actions;
-class DishesList extends PureComponent {
+class DishesList extends Component {
+	constructor(props) {
+		super(props);
+		this.myRef = React.createRef();
+	}
+
+	componentDidUpdate() {
+		this.scrollToMyRef();
+	}
+	
 	state = {
 		anchorEl: null,
 		reviewOpen: false,
 		commonRating: null,
-		currentItem: {}
+		currentItem: {},
 	};
 
 	handleReviewClose = evt => {
@@ -92,40 +101,70 @@ class DishesList extends PureComponent {
 			</ListItem>
 		);
 	};
+
+	componentDidMount() {
+		// this.scrollToMyRef();
+	}
+
+	groupBy = key => array =>
+		array.reduce((objectsByKeyValue, obj) => {
+			const value = obj[key];
+			value.map(val => objectsByKeyValue[val['name']] = (objectsByKeyValue[val['name']] || []).concat(obj));
+			return objectsByKeyValue;
+		}, {});
+
+	scrollToMyRef = () => { console.log('offset', this.myRef);window.scrollTo(0, this.myRef.current.offsetTop) }
+
 	render() {
-		const { listData, listItemOnClick, classes, global: { selectedCategory } } = this.props;
+		const { listData, listItemOnClick, classes, global: { selectedCategory }, menuData } = this.props;
 		console.log("liest data===>", listData);
 		console.log('selectedCategory', selectedCategory);
-		const filteredList = listData.filter(dish => dish.menuCategories.find(category => category.name == selectedCategory));
-		return filteredList.length ? (
+		const groupByCategory = this.groupBy('menuCategories');
+		const groupedData = groupByCategory(listData);
+		console.log('menuData in list', menuData)
+		console.log('groupedData', groupedData)
+		// const filteredList = listData.filter(dish => dish.menuCategories.find(category => category.name == selectedCategory));
+		return Object.keys(groupedData).length ? (
 			<List className={classes.listRoot}>
-				{filteredList.map((dish, index) => {
-					console.log("dishes=====>", dish);
-					let dishAvatar = '';
-					if (dish.images.length) {
-						dishAvatar = `${API_IMAGE_URL}/assets/images/dishes/${dish.slug}/${
-							dish.images[0].path
-							}`;
+				{menuData[0]['category'].map(category => {
+					const categoryName = category.name;
+					console.log('conditioning', categoryName in groupedData)
+					if (categoryName in groupedData) {
+						return (
+							<div>
+								<span ref={categoryName === selectedCategory ? this.myRef : null}>{categoryName}</span>
+								{groupedData[categoryName].map((dish, index) => {
+									console.log("dishesNiv=====>", dish);
+									let dishAvatar = '';
+									if (dish.images.length) {
+										dishAvatar = `${API_IMAGE_URL}/assets/images/dishes/${dish.slug}/${
+											dish.images[0].path
+											}`;
+									}
+									const item = {
+										avatar: dishAvatar,
+										primary: dish.name,
+										slug: dish.slug,
+										images: dish.images,
+										secondary: dish.desc,
+										price: dish.price,
+										id: dish._id,
+										avgRatings: dish.avgRatings || 0,
+										avgValueForMoneyRatings: dish.avgValueForMoneyRatings,
+										avgTasteRatings: dish.avgTasteRatings,
+										avgLookAndFeelRatings: dish.avgLookAndFeelRatings,
+										providerName: dish.restaurant_id ? dish.restaurant_id[0].name : '',
+										reviews: dish.reviews ? dish.reviews[0] : [],
+										tags: dish.tags || [],
+										type: 'dish'
+									};
+									return this.getItemLists(item, listItemOnClick, index);
+								})}
+							</div>
+						)
 					}
-					const item = {
-						avatar: dishAvatar,
-						primary: dish.name,
-						slug: dish.slug,
-						images: dish.images,
-						secondary: dish.desc,
-						price: dish.price,
-						id: dish._id,
-						avgRatings: dish.avgRatings || 0,
-						avgValueForMoneyRatings: dish.avgValueForMoneyRatings,
-						avgTasteRatings: dish.avgTasteRatings,
-						avgLookAndFeelRatings: dish.avgLookAndFeelRatings,
-						providerName: dish.restaurant_id ? dish.restaurant_id[0].name : '',
-						reviews: dish.reviews ? dish.reviews[0] : [],
-						tags: dish.tags || [],
-						type: 'dish'
-					};
-					return this.getItemLists(item, listItemOnClick, index);
-				})}
+				})
+				}
 			</List>
 		) : (
 				<List className={classes.listRoot}>

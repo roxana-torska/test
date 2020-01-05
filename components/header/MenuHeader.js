@@ -146,6 +146,7 @@ class MenuHeader extends Component {
 		if (menu) {
 			menuCategories = [...menu.category];
 			selectedMenuCategory = menuCategories[0].name;
+			console.log('initisl', selectedMenuCategory)
 		}
 		this.setState({
 			selectedMenu: selected,

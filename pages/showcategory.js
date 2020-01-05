@@ -175,6 +175,7 @@ class ShowCategory extends React.Component {
                             // isLoggedIn={isLoggedIn}
 														onReviewSubmit={this.handleReviewSubmit}
 														groupByCategories={true}
+														menuData={menuData}
                         />
                     </Grid>
 
