@@ -113,7 +113,7 @@ class DishesList extends Component {
 			return objectsByKeyValue;
 		}, {});
 
-	scrollToMyRef = () => { console.log('offset', this.myRef);window.scrollTo(0, this.myRef.current.offsetTop) }
+	scrollToMyRef = () => { if(this.myRef.current != null) window.scrollTo(0, this.myRef.current.offsetTop) }
 
 	render() {
 		const { listData, listItemOnClick, classes, global: { selectedCategory }, menuData } = this.props;
@@ -132,7 +132,7 @@ class DishesList extends Component {
 					if (categoryName in groupedData) {
 						return (
 							<div>
-								<span ref={categoryName === selectedCategory ? this.myRef : null}>{categoryName}</span>
+								<span ref={categoryName === selectedCategory ? this.myRef : null} className={classes.subCategoryName}>{categoryName}</span>
 								{groupedData[categoryName].map((dish, index) => {
 									console.log("dishesNiv=====>", dish);
 									let dishAvatar = '';
