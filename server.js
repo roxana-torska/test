@@ -347,7 +347,7 @@ app
       return handle(req, res);
     });
 
-    server.listen(3001, err => {
+    server.listen(3001, '127.0.0.1' ,err => {
       if (err) throw err;
       console.log(`> Ready on ${APP_URL}`);
     });
