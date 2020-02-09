@@ -116,7 +116,9 @@ class DishesList extends Component {
 	scrollToMyRef = () => { if(this.myRef.current != null) window.scrollTo(0, this.myRef.current.offsetTop) }
 
 	render() {
-		const { listData, listItemOnClick, classes, global: { selectedCategory }, menuData } = this.props;
+		const { 
+			
+			listData, listItemOnClick, classes, global: { selectedCategory }, menuData } = this.props;
 		console.log("liest data===>", listData);
 		console.log('selectedCategory', selectedCategory);
 		const groupByCategory = this.groupBy('menuCategories');
@@ -124,7 +126,7 @@ class DishesList extends Component {
 		console.log('menuData in list', menuData)
 		console.log('groupedData', groupedData)
 		// const filteredList = listData.filter(dish => dish.menuCategories.find(category => category.name == selectedCategory));
-		return Object.keys(groupedData).length ? (
+		return Object.keys(groupedData).length && menuData != null ? (
 			<List className={classes.listRoot}>
 				{menuData[0]['category'].map(category => {
 					const categoryName = category.name;
