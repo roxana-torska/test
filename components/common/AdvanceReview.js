@@ -41,6 +41,8 @@ class AdvanceReview extends Component {
             classes
         } = this.props;
 
+        console.log('niv ski ', selected);
+
         return (
             <Modal
                 style={{
@@ -108,7 +110,7 @@ class AdvanceReview extends Component {
                                                 paddingLeft: "10px",
                                             }}
                                         >
-                                            {selected.avgRatings.toFixed(1)}
+                                            {selected.avgRatings != null ? selected.avgRatings.toFixed(1) : null}
                                         </Typography>
                                     </Grid>
                                     <Grid item xs={2}>
