@@ -388,7 +388,7 @@ class Home extends Component {
                                         onclick={this.showDishDetails}
                                         des={rec.restaurant_id[0].name}
                                         review={rec.avgRatings}
-                                        url={API_IMAGE_URL + "/assets/images/dishes/" + rec.images[0].name + "/" + rec.images[0].path}
+                                        url={rec.images.length > 0 ? API_IMAGE_URL + "/assets/images/dishes/" + rec.images[0].name + "/" + rec.images[0].path : ''}
                                         classes={classes} />)}
 
                                 </div>
