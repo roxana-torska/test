@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "node server.js",
-    "prod": "NODE_ENV=production next start",
+    "prod": "NODE_ENV=production next start -p 3001",
 		"build": "next build",
-    "start": "next start"
+    "start": "next start -p 3001"
   },
   "author": "",
   "license": "ISC",
