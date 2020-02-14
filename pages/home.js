@@ -254,7 +254,7 @@ class Home extends Component {
 
 
         const { currentRestaurent, classes, latestReviews, dishesWithTags, topten, dishes } = this.props;
-				console.log('dishesWithTags', dishesWithTags);
+				console.log('topten', topten);
 
         const { isHomePage, data } = this.state;
         return <React.Fragment>
@@ -301,7 +301,7 @@ class Home extends Component {
                                         onclick={this.handleClick}
                                         name={rec.tag}
                                         des={rec.dishes.length + " dishes"}
-                                        url={`${API_IMAGE_URL}/assets/images/tags/${rec.tag.replace(' ', '-')}.jpg`}
+                                        url={`${API_IMAGE_URL}/assets/images/tags/${rec.tag.replace(' ', '-').toLowerCase()}.jpg`}
                                         type="dishes"
                                     />)}
 
