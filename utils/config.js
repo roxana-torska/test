@@ -4,9 +4,9 @@ const configs = function() {
   switch (process.env.NODE_ENV) {
     case 'development':
       return {
-        APP_URL: 'http://localhost:3001',
-        API_URL: 'http://localhost:8282/api',
-        API_IMAGE_URL: 'http://localhost:8282'
+        APP_URL: 'http://dishin.co',
+        API_URL: 'http://backend.dishin.co/api',
+        API_IMAGE_URL: 'http://backend.dishin.co'
       };
 
     case 'production':
