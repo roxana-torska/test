@@ -63,6 +63,7 @@ class RestaurantDetails extends Component {
 		reviewAPI.getLatestReview().then(res => this.setState({
 			data: res
 		}))
+		console.log('this.props are', this.props);
 		this.getTimingAndValues(this.props.currentRestaurent[0].open_days, this.props.currentRestaurent[0].opening_hours);
 		let list = this.props.currentRestaurent[0].open_days.map((rec) => this.props.currentRestaurent[0].opening_hours[rec]);
 		// var result = _(list)
