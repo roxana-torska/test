@@ -244,11 +244,8 @@ class Home extends Component {
         let data = restaurantAPI.getCurrentRestaurant(id).then(response => {
             console.log("data====>", response.data);
             this.props.setCurrentResuarant({ data: response.data })
-
+						window.location.href = "/restaurant-details"
         })
-        if (data) {
-            window.location.href = "/restaurant-details"
-        }
     }
     render() {
 
