@@ -22,7 +22,7 @@ class DishesList extends Component {
 	componentDidUpdate() {
 		this.scrollToMyRef();
 	}
-	
+
 	state = {
 		anchorEl: null,
 		reviewOpen: false,
@@ -107,17 +107,17 @@ class DishesList extends Component {
 	}
 
 	groupBy = key => array =>
-		array.reduce((objectsByKeyValue, obj) => {
+		array.filter(e => e).reduce((objectsByKeyValue, obj) => {
 			const value = obj[key];
 			value.map(val => objectsByKeyValue[val['name']] = (objectsByKeyValue[val['name']] || []).concat(obj));
 			return objectsByKeyValue;
 		}, {});
 
-	scrollToMyRef = () => { if(this.myRef.current != null) window.scrollTo(0, this.myRef.current.offsetTop) }
+	scrollToMyRef = () => { if (this.myRef.current != null) window.scrollTo(0, this.myRef.current.offsetTop) }
 
 	render() {
-		const { 
-			
+		const {
+
 			listData, listItemOnClick, classes, global: { selectedCategory }, menuData } = this.props;
 		console.log("liest data===>", listData);
 		console.log('selectedCategory', selectedCategory);
