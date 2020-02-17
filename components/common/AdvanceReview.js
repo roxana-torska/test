@@ -85,7 +85,7 @@ class AdvanceReview extends Component {
                                     <Typography
                                         style={{
                                             fontSize: "20px",
-                                            fontFamily: "Bebas Neue",
+                                            fontFamily: "BebasNeue",
                                             color: "#938E8E",
                                             // marginLeft: "20px",
                                         }}

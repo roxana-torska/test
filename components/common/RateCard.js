@@ -37,7 +37,7 @@ export default function RateCard(props) {
                             <Grid container justify="center" >
                                 <Typography
                                     style={{
-                                        fontFamily: "Bebas Neue",
+                                        fontFamily: "BebasNeue",
                                         fontSize: "21px",
                                         lineHeight: "25px",
                                         color: "#E53935"

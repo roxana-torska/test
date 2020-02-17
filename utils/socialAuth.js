@@ -95,8 +95,8 @@ module.exports = server => {
   passport.use(
     new FacebookStrategy(
       {
-        clientID: '1801834103451410', //'318699738713309', //"1165866970222123", // Use your Facebook App Id
-        clientSecret: '77263ee892e02918732bfd11f1f77f0a', //'2f1afdebd940fced3346c5690550cae3', //"b5a47642cd15662884cd089a81973f97", // Use your Facebook App Secret
+        clientID: '1165866970222123', //'318699738713309', //"1165866970222123", // Use your Facebook App Id
+        clientSecret: 'b5a47642cd15662884cd089a81973f97', //'2f1afdebd940fced3346c5690550cae3', //"b5a47642cd15662884cd089a81973f97", // Use your Facebook App Secret
         callbackURL: `${APP_URL}/auth/facebook/callback`,
         profileFields: ['id', 'email', 'name', 'displayName', 'picture'] //This
       },

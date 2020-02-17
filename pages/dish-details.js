@@ -252,7 +252,10 @@ class DishDetails extends Component {
 		const { classes, name } = this.props;
 		const selectedDish = this.props.dishes != null && this.getSelectedDish();
 		console.log("selected dish ====>", selectedDish);
-
+		let dishAvatar = '';
+		if (selectedDish[0] && 'images' in selectedDish[0] && selectedDish[0].images.length > 0) {
+			dishAvatar = `${API_IMAGE_URL}/assets/images/dishes/${selectedDish[0].images[0].name}/${selectedDish[0].images[0].path}`;
+		}
 
 
 		return <React.Fragment>
@@ -260,7 +263,7 @@ class DishDetails extends Component {
 				selectedPageTab={0}
 				toggleMenu={this.handleToggleMenu}
 				changeOverlay={this.handleOverlay}
-				restaurantsName={name ? name : ""}
+				restaurantsName={selectedDish[0].name ? selectedDish[0].name : ""}
 				isDishDetails={isDishDetails}
 			>
 				<WindowResizeListener
@@ -281,7 +284,7 @@ class DishDetails extends Component {
 								marginTop: "-25px",
 
 							}}
-							src={`${API_IMAGE_URL}/assets/images/dishes/${selectedDish[0].images[0].name}/${selectedDish[0].images[0].path}`} />
+							src={dishAvatar || '/static/imgs/image-not-found-dark.png'} />
 					</Grid>
 					<Grid item>
 						<Grid container direction="row">
@@ -292,8 +295,9 @@ class DishDetails extends Component {
 
 											lineHeight: "32px",
 											fontSize: "24px",
-											fontFamily: "Bebas Neue",
-											marginLeft: "17px"
+											fontFamily: "BebasNeue",
+											marginLeft: "17px",
+											color:'#4A4A4A'
 
 										}}
 									>
@@ -329,8 +333,9 @@ class DishDetails extends Component {
 									<span
 										style={{
 											position: "absolute",
-											right: "110px",
-											top: "390.34px",
+											right: "102px",
+											top: "383px",
+											color: "#E53935",
 										}}><Remove /></span>
 									<Typography style={{
 										position: "absolute",
@@ -341,7 +346,8 @@ class DishDetails extends Component {
 										right: "35px",
 										top: "390px",
 										width: "50px",
-										height: "45px"
+										height: "45px",
+										fontFamily: "BebasNeue"
 
 									}}>
 										{selectedDish[0].avgRatings != null && selectedDish[0].avgRatings.toFixed(0)}
@@ -350,8 +356,9 @@ class DishDetails extends Component {
 									<span
 										style={{
 											position: "absolute",
-											right: "5px",
-											top: "390.34px",
+											right: "22.5px",
+											top: "383px",
+											color: "#E53935",
 										}}><Add /></span>
 								</Grid>
 								<Grid>
@@ -389,7 +396,7 @@ class DishDetails extends Component {
 										reviewData={reviewData}
 										handleReviewSubmit={this.handleReviewSubmit}
 
-										dishImage={`${API_IMAGE_URL}/assets/images/dishes/${selectedDish[0].images[0].name}/${selectedDish[0].images[0].path}`}
+										dishImage={dishAvatar || '/static/imgs/image-not-found-dark.png'}
 										classes={classes}
 									/>
 								</Grid>

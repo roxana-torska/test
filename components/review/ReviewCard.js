@@ -17,7 +17,7 @@ class ReviewCard extends Component {
                         <Typography
                             className={
                                 css`
-                                    font-family: Bebas Neue;
+                                    font-family: BebasNeue;
                                     font-size: 27px;
                                     line-height: 32px;
                                     color: #FF5959;

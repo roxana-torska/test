@@ -40,15 +40,15 @@ class ShowCategory extends React.Component {
         return <div style={{ ...style, ...thumbStyle }} {...props} />;
     };
 
-    handListItemClick = (evt, selectedIndex) => {
-        evt.preventDefault();
-        const found = this.state.restaurants[selectedIndex] || { primary: '' };
-        if (found.primary) {
-            this.setState({ selectedIndex, restaurantName: found.primary });
-        } else {
-            this.setState({ selectedIndex: '', restaurantName: '' });
-        }
-    };
+    // handListItemClick = (evt, selectedIndex) => {
+    //     evt.preventDefault();
+    //     const found = this.state.restaurants[selectedIndex] || { primary: '' };
+    //     if (found.primary) {
+    //         this.setState({ selectedIndex, restaurantName: found.primary });
+    //     } else {
+    //         this.setState({ selectedIndex: '', restaurantName: '' });
+    //     }
+    // };
 
     handleSortClick = () => {
         const { toggleFilterMenu, selectFilterTab } = this.props;
@@ -81,7 +81,7 @@ class ShowCategory extends React.Component {
         }
         if (value.type === 'dish') {
             // window.location.href = `/dish-details?id=${value.slug}&name=${value.primary}`;
-            // window.location.href = `/dish-details/${value.slug}`;
+            window.location.href = `/dish-details/${value.slug}`;
         }
     };
 
