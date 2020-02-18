@@ -263,7 +263,7 @@ class DishDetails extends Component {
 				selectedPageTab={0}
 				toggleMenu={this.handleToggleMenu}
 				changeOverlay={this.handleOverlay}
-				restaurantsName={selectedDish[0].name ? selectedDish[0].name : ""}
+				restaurantsName={selectedDish ? selectedDish[0].name : ""}
 				isDishDetails={isDishDetails}
 			>
 				<WindowResizeListener
@@ -350,7 +350,7 @@ class DishDetails extends Component {
 										fontFamily: "BebasNeue"
 
 									}}>
-										{selectedDish[0].avgRatings != null && selectedDish[0].avgRatings.toFixed(0)}
+										{selectedDish[0].avgRatings != null ? selectedDish[0].avgRatings.toFixed(0) : 0}
 									</Typography>
 
 									<span

@@ -110,7 +110,7 @@ class AdvanceReview extends Component {
                                                 paddingLeft: "10px",
                                             }}
                                         >
-                                            {selected.avgRatings != null ? selected.avgRatings.toFixed(1) : null}
+                                            {selected.avgRatings != null ? selected.avgRatings.toFixed(1) : 0}
                                         </Typography>
                                     </Grid>
                                     <Grid item xs={2}>
