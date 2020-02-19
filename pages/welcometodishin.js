@@ -30,6 +30,7 @@ const { setCurrentResuarant } = restaurantsAction
 
 class WelcomeToDishIn extends PureComponent {
   state = {
+		showSuggestions: false,
     searchValue: '',
     restaurants: [],
     enableApi: true,
@@ -195,7 +196,12 @@ class WelcomeToDishIn extends PureComponent {
         notify(`Please select a restaurant`);
       }
     }
-  };
+	};
+	
+	openSuggestions = () => {
+		this.setState({ showSuggestions: true });
+	}
+
   autoCompleteRef = ref => {
     this.autoComplete = ref;
   };
@@ -334,7 +340,8 @@ class WelcomeToDishIn extends PureComponent {
                   name='restaurantName'
                   placeholder='Restaurant Name'
                   data={restaurants}
-                  isOpen={restaurants ? true : false}
+									isOpen={restaurants && this.state.showSuggestions ? true : false}
+									openSuggestions={this.openSuggestions}
                 />
               </div>
 

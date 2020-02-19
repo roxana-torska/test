@@ -79,7 +79,8 @@ class AutoComplete extends React.Component {
   stateReducer = (state, changes) => {
     // this prevents the menu from being closed when the user
     // selects an item with a keyboard or mouse
-    const { setSearchValue } = this.props;
+		const { setSearchValue, openSuggestions } = this.props;
+		openSuggestions();
     setSearchValue(state.inputValue);
     switch (changes.type) {
       case Downshift.stateChangeTypes.keyDownEnter:
