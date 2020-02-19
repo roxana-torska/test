@@ -81,7 +81,7 @@ class ShowCategory extends React.Component {
         }
         if (value.type === 'dish') {
             // window.location.href = `/dish-details?id=${value.slug}&name=${value.primary}`;
-            window.location.href = `/dish-details/${value.slug}`;
+            window.location.href = `/dish-details/${value.slug}/${this.state.restaurant.primary}`;
         }
     };
 

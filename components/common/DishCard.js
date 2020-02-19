@@ -26,7 +26,8 @@ class DishCard extends PureComponent {
     const { showReview } = this.state;
     this.setState({ showReview: !showReview });
   };
-  showReviewCard = () => {
+  showReviewCard = e => {
+		e.stopPropagation();
     this.setState({ showReview: true });
   }
 
