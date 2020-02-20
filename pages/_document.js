@@ -16,7 +16,7 @@ class _Document extends Document {
             content='minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no'
           />
           <meta name='apple-mobile-web-app-capable' content='yes' />
-          <meta name='apple-mobile-web-app-status-bar-style' content='black' />
+          <meta name='apple-mobile-web-app-status-bar-style' content='black-translucent' />
           <meta
             name='theme-color'
             content={
