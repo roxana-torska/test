@@ -278,7 +278,8 @@ const styles = theme => {
     },
     topBarLogoContainer: {
       textAlign: 'center',
-      width: '100%'
+      width: '100%',
+      marginTop: '14px'
     },
     topBgIconContainer: {
       position: 'relative',

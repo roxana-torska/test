@@ -228,7 +228,7 @@ class WelcomeToDishIn extends PureComponent {
     if (rootHeight < minVisibleHeight) {
       rootHeight = minVisibleHeight;
     } else {
-      adjustHeightGridOne = ((rootHeight - minVisibleHeight) * 30) / 100;
+      adjustHeightGridOne = ((rootHeight - minVisibleHeight) * 18) / 100;
       adjustHeightGridThree = ((rootHeight - minVisibleHeight) * 25) / 100;
       adjustHeightGridFive = ((rootHeight - minVisibleHeight) * 15) / 100;
       adjustHeightGridSeven = ((rootHeight - minVisibleHeight) * 20) / 100;
