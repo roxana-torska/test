@@ -13,7 +13,7 @@ function AppHeader(props) {
       <AppBar color='primary'>
         <Toolbar>
           <div className={classes.topBarLogoContainer}>
-            <img src='/static/imgs/logo.png' />
+            <img style={{ width: '27px', marginTop: '5px' }} src='/static/imgs/logo.svg' />
           </div>
         </Toolbar>
       </AppBar>

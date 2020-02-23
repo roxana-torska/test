@@ -267,8 +267,8 @@ class MenuHeader extends Component {
 				</FormControl></Typography>
 		}
 		return <img
-			src='/static/imgs/logo.png'
-			style={{ width: '23px', height: '15px' }}
+			src='/static/imgs/logo.svg'
+			style={{ width: '27px', marginTop: '5px' }}
 		/>
 	}
 	searchComponent = (hideRegularBar) => {
@@ -440,15 +440,18 @@ class MenuHeader extends Component {
 							color='primary'
 							onClick={this.handleShowSearchBar}
 							className={classes.userDrawerCloseButton}
-							style={{ width: '18px', height: '18px' }}
+							style={{ width: '27px', height: '27px', marginTop: '5px' }}
 						/>
+
 					)
 			}
 			return <SearchIcon
 				color='primary'
 				onClick={this.handleShowSearchBar}
 				className={classes.userDrawerCloseButton}
-				style={{ width: '18px', height: '18px' }}
+				style={{ width: '27px', height: '27px', marginTop: '5px' }}
+
+
 			/>
 
 		}
@@ -564,14 +567,16 @@ class MenuHeader extends Component {
 											<MoreVert
 												className={classes.drawerMenuIcon}
 												onClick={this.handleUserMenuOpen}
-												style={{ width: '14px', height: '14px' }}
+												style={{ width: '27px', height: '27px', marginTop: '5px' }}
+
+
 											/>
 										) : (
 												<ClearIcon
 													className={classes.iconWhite}
 													onClick={this.handleOnClear}
-													style={{ width: '14px', height: '14px' }}
-												/>
+													style={{ width: '27px', height: '27px', marginTop: '5px' }} />
+
 											)}
 									</Grid>
 								</Grid>
