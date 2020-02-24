@@ -20,7 +20,7 @@ const splashScreen = {
 const splashLogo = {
   width: "100px",
   height: "100px",
-  backgroundImage: "url(/static/imgs/logo.png)",
+  backgroundImage: "url(/static/imgs/logo.svg)",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
   backgroundColor: "#f44336"
@@ -46,10 +46,10 @@ class AppLayout extends Component {
         <AppFooter />
       </React.Fragment>
     ) : (
-      <div style={splashScreen}>
-        <div style={splashLogo} />
-      </div>
-    );
+        <div style={splashScreen}>
+          <div style={splashLogo} />
+        </div>
+      );
   }
 }
 

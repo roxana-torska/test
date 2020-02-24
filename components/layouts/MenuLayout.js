@@ -20,7 +20,7 @@ const splashScreen = {
 const splashLogo = {
   width: '100px',
   height: '100px',
-  backgroundImage: 'url(/static/imgs/logo.png)',
+  backgroundImage: 'url(/static/imgs/logo.svg)',
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
   backgroundColor: '#f44336'
@@ -47,8 +47,8 @@ class MenuLayout extends Component {
       menuName,
       isDishDetails,
       isHomePage,
-		} = this.props;
-		console.log('in menu layout,' , menuName)
+    } = this.props;
+    console.log('in menu layout,', menuName)
     const { hideSplash } = this.state;
     return hideSplash ? (
       <React.Fragment>

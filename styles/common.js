@@ -279,7 +279,8 @@ const styles = theme => {
     topBarLogoContainer: {
       textAlign: 'center',
       width: '100%',
-      marginTop: '14px'
+
+
     },
     topBgIconContainer: {
       position: 'relative',
@@ -1485,14 +1486,14 @@ const styles = theme => {
       boxShadow: 'none',
       borderRadius: '0px',
       textTransform: 'none'
-		},
-		
-		subCategoryName: {
-			paddingLeft: '16px',
-			paddingRight: '16px',
-			fontSize: '1.3em',
-    	fontFamily: 'BebasNeue',
-		},
+    },
+
+    subCategoryName: {
+      paddingLeft: '16px',
+      paddingRight: '16px',
+      fontSize: '1.3em',
+      fontFamily: 'BebasNeue',
+    },
 
     disabled: {}
   };

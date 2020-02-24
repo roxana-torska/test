@@ -234,8 +234,8 @@ class RestaurantHeader extends Component {
 			return <Typography style={{ color: "white", fontSize: "20px", fontFamily: "bebasneue" }}>{restaurantsName}</Typography>
 		}
 		return <img
-			src='/static/imgs/logo.png'
-			style={{ width: '23px', height: '15px' }}
+			src='/static/imgs/logo.svg'
+			style={{ width: '27px', marginTop: '5px', marginLeft: '20px' }}
 		/>
 	}
 	searchComponent = (hideRegularBar) => {
@@ -403,7 +403,7 @@ class RestaurantHeader extends Component {
 							color='primary'
 							onClick={this.handleShowSearchBar}
 							className={classes.userDrawerCloseButton}
-							style={{ width: '18px', height: '18px' }}
+							style={{ width: '30px', height: '30px' }}
 						/>
 					)
 			}
@@ -411,7 +411,7 @@ class RestaurantHeader extends Component {
 				color='primary'
 				onClick={this.handleShowSearchBar}
 				className={classes.userDrawerCloseButton}
-				style={{ width: '18px', height: '18px' }}
+				style={{ width: '27px', marginTop: '5px' }}
 			/>
 
 		}
@@ -527,13 +527,13 @@ class RestaurantHeader extends Component {
 											<MoreVert
 												className={classes.drawerMenuIcon}
 												onClick={this.handleUserMenuOpen}
-												style={{ width: '14px', height: '14px' }}
+												style={{ height: '26px', marginTop: '5px' }}
 											/>
 										) : (
 												<ClearIcon
 													className={classes.iconWhite}
 													onClick={this.handleOnClear}
-													style={{ width: '14px', height: '14px' }}
+													style={{ height: '26px', marginTop: '5px' }}
 												/>
 											)}
 									</Grid>
