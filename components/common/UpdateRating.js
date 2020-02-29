@@ -19,9 +19,10 @@ class UpdateRating extends Component {
     showThankyou: false,
     openDialog: false
   };
-  Share = () => {
-    console.log("share clicked");
-    window.location.href = "/social-medialist"
+  Share = event => {
+		console.log("share clicked");
+		event.stopPropagation();
+		window.location.href = "/social-medialist"
   }
   handleDecrementRating = event => {
     event.stopPropagation();
