@@ -1,7 +1,7 @@
 {
   "name": "dishin",
   "version": "1.0.0",
-  "description": "Dishin App",
+  "description": "Dishin' App",
   "main": "index.js",
   "scripts": {
     "dev": "node server.js",

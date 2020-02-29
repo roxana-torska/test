@@ -209,7 +209,7 @@ class SocialMediaList extends PureComponent {
                                     {
                                         name: "Facebook",
                                         url: "www.facebook.com/username",
-                                        href: 'http://www.facebook.com/share.php?u=www.dishin.pk'
+                                        href: 'http://www.facebook.com/share.php?u=http://dishin.co'
                                     }
                                     ,
                                     {

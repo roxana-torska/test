@@ -165,7 +165,7 @@ class DishinApp extends App {
     return (
       <Container>
         <Head>
-          <title>Dishin App</title>
+          <title>Dishin' App</title>
         </Head>
         <JssProvider
           registry={this.pageContext.sheetsRegistry}
