@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import { observer } from "mobx-react";
-import AppHeader from "../header/AppHeader";
+import DyneAppBar from "../header/DyneAppBar";
 import AppFooter from "../footer/AppFooter";
 import { withStyles } from "@material-ui/core/styles";
 import Notifier from "../common/Notifier";
@@ -15,7 +15,7 @@ const splashScreen = {
   justifyContent: "center",
   alignItems: "center",
   margin: "0px",
-  padding: "0px"
+  padding: "0px",
 };
 const splashLogo = {
   width: "100px",
@@ -23,12 +23,12 @@ const splashLogo = {
   backgroundImage: "url(/static/imgs/logo.svg)",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
-  backgroundColor: "#f44336"
+  backgroundColor: "#f44336",
 };
 
 class AppLayout extends Component {
   state = {
-    hideSplash: false
+    hideSplash: false,
   };
   componentDidMount() {
     setTimeout(() => {
@@ -40,16 +40,16 @@ class AppLayout extends Component {
     const { hideSplash } = this.state;
     return hideSplash ? (
       <React.Fragment>
-        <AppHeader />
+        <DyneAppBar />
         <div>{children}</div>
         <Notifier />
         <AppFooter />
       </React.Fragment>
     ) : (
-        <div style={splashScreen}>
-          <div style={splashLogo} />
-        </div>
-      );
+      <div style={splashScreen}>
+        <div style={splashLogo} />
+      </div>
+    );
   }
 }
 

@@ -1,34 +1,34 @@
-import React, { Component } from 'react';
-import { Grid } from '@material-ui/core';
-import { observer } from 'mobx-react';
-import MenuHeader from '../header/MenuHeader';
-import AppFooter from '../footer/AppFooter';
-import { withStyles } from '@material-ui/core/styles';
-import Notifier from '../common/Notifier';
-import styles from '../../styles/common';
+import React, { Component } from "react";
+import { Grid } from "@material-ui/core";
+import { observer } from "mobx-react";
+import DyneAppBar from "../header/DyneAppBar";
+import AppFooter from "../footer/AppFooter";
+import { withStyles } from "@material-ui/core/styles";
+import Notifier from "../common/Notifier";
+import styles from "../../styles/common";
 
 const splashScreen = {
-  width: '100vw',
-  height: '100vh',
-  display: 'flex',
-  fontSize: '0px',
-  justifyContent: 'center',
-  alignItems: 'center',
-  margin: '0px',
-  padding: '0px'
+  width: "100vw",
+  height: "100vh",
+  display: "flex",
+  fontSize: "0px",
+  justifyContent: "center",
+  alignItems: "center",
+  margin: "0px",
+  padding: "0px",
 };
 const splashLogo = {
-  width: '100px',
-  height: '100px',
-  backgroundImage: 'url(/static/imgs/logo.svg)',
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
-  backgroundColor: '#f44336'
+  width: "100px",
+  height: "100px",
+  backgroundImage: "url(/static/imgs/logo.svg)",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+  backgroundColor: "#f44336",
 };
 
 class MenuLayout extends Component {
   state = {
-    hideSplash: false
+    hideSplash: false,
   };
   componentDidMount() {
     setTimeout(() => {
@@ -48,11 +48,11 @@ class MenuLayout extends Component {
       isDishDetails,
       isHomePage,
     } = this.props;
-    console.log('in menu layout,', menuName)
+    console.log("in menu layout,", menuName);
     const { hideSplash } = this.state;
     return hideSplash ? (
       <React.Fragment>
-        <MenuHeader
+        <DyneAppBar
           selectedPageTab={selectedPageTab}
           toggleMenu={toggleMenu}
           changeOverlay={changeOverlay}
@@ -67,10 +67,10 @@ class MenuLayout extends Component {
         {/* <RestaurantFooter /> */}
       </React.Fragment>
     ) : (
-        <div style={splashScreen}>
-          <div style={splashLogo} />
-        </div>
-      );
+      <div style={splashScreen}>
+        <div style={splashLogo} />
+      </div>
+    );
   }
 }
 
