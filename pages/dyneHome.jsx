@@ -6,7 +6,7 @@ import ProductCategories from "./modules/views/ProductCategories";
 import AppFooter from "./modules/views/AppFooter";
 
 import DyneAppBar from "../components/header/DyneAppBar";
-import League from "../components/modules/views/League";
+// import League from "../components/modules/views/League";
 
 //redux
 

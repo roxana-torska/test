@@ -1,4 +1,4 @@
-import { LIST_DISHES } from "../actions/types";
+import { LIST_DISHES } from "./types";
 const intialState = [];
 
 export default function DishesReducer(state = intialState, action) {
