@@ -39,7 +39,6 @@ export function userReducer(state = hydrateUser(), action) {
         .set('loading', false)
         .set('error', null);
     case actions.USER_RECOVERY_PASSWORD_RECEIVED:
-      console.log('action recovery received', action.status);
       return state
         .set('user', action.status)
         .set('loading', false)

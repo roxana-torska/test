@@ -21,7 +21,7 @@ class SponsoredRestaurantsList extends PureComponent {
         selected={selectedIndex === key}
         alignItems='flex-start'
         className={classes.listItem}
-        //  onClick={evt => listItemOnClick(evt, key, el)}
+        onClick={evt => listItemOnClick(evt, key, el)}
       >
         <ListCardItem
           title={

@@ -16,7 +16,8 @@ const globalActions = {
   UPDATE_USER_AND_TOKEN: 'UPDATE_USER_AND_TOKEN',
   UPDATE_REVIEW_DATA: 'UPDATE_REVIEW_DATA',
   UPDATE_USER_REVIEW: 'UPDATE_USER_REVIEW',
-  HIDE_FILTER_FAB_ICON: 'HIDE_FILTER_FAB_ICON',
+	HIDE_FILTER_FAB_ICON: 'HIDE_FILTER_FAB_ICON',
+	SET_CURRENT_CATEGORY: "SET_CURRENT_CATEGORY",
   toggleFilterMenu: value => ({
     type: globalActions.TOGGLE_FILTER_MENU,
     drawerOpen: value.drawerOpen
@@ -93,7 +94,11 @@ const globalActions = {
   hideFilterFabIcon: value => ({
     type: globalActions.HIDE_FILTER_FAB_ICON,
     value
-  })
+	}),
+	setCurrentCategory: category => ({
+			type: globalActions.SET_CURRENT_CATEGORY,
+			selectedCategory: category
+	}),
 };
 
 export default globalActions;

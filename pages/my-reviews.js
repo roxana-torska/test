@@ -25,7 +25,7 @@ class MyReviews extends PureComponent {
       if (rec.typeId.images.length > 0) {
         dishAvatar = `${API_IMAGE_URL}/assets/images/dishes/${
           rec.typeId.slug
-        }/${rec.typeId.images[0].path}`;
+          }/${rec.typeId.images[0].path}`;
       } else {
         dishAvatar = '';
       }
@@ -42,7 +42,6 @@ class MyReviews extends PureComponent {
 
   componentDidMount() {
     const { updateStoreWithQuery, queryParams } = this.props;
-    console.log("query params=====>",queryParams);
     if (typeof document !== 'undefined') {
       window.addEventListener('scroll', this.handleOnScroll);
     }
@@ -95,6 +94,7 @@ class MyReviews extends PureComponent {
     const { classes, myreviews } = this.props;
     const { winHeight } = this.state;
     let rootHeight = winHeight - 100;
+    console.log("length of review =====>", this.props.global.userReviews)
     return (
       <RestaurantLayout
         selectedPageTab={1}
@@ -113,23 +113,23 @@ class MyReviews extends PureComponent {
           alignItems='center'
           spacing={0}
         >
-          {myreviews.length > 0 ? (
+          {this.props.global.userReviews.length > 0 ? (
             <Grid item xs={12} style={{ margin: '20px 0px' }}>
               <ReviewLists
                 listItemOnClick={this.handListItemClick}
-                listData={myreviews}
+                listData={Object.values(this.props.global.userReviews)}
                 listItemClass={classes.restaurantsListItem}
               />
             </Grid>
           ) : (
-            <Grid
-              item
-              xs={12}
-              style={{ margin: '40px 0px', textAlign: 'center' }}
-            >
-              No reviews found
+              <Grid
+                item
+                xs={12}
+                style={{ margin: '40px 0px', textAlign: 'center' }}
+              >
+                No reviews found
             </Grid>
-          )}
+            )}
         </Grid>
       </RestaurantLayout>
     );
@@ -138,7 +138,7 @@ class MyReviews extends PureComponent {
 
 export default connect(
   state => ({
-    global: state.global.toJSON()
+    global: state.global
   }),
   {
     updateStoreWithQuery,

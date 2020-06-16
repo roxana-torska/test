@@ -97,12 +97,3 @@ export function* checkRecoveryToken() {
   });
 }
 
-export default function* rootSaga() {
-  yield all([
-    fork(login),
-    fork(logout),
-    fork(signUp),
-    fork(recoveryPassword),
-    fork(checkRecoveryToken)
-  ]);
-}

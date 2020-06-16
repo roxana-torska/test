@@ -20,7 +20,7 @@ const splashScreen = {
 const splashLogo = {
   width: '100px',
   height: '100px',
-  backgroundImage: 'url(/static/imgs/logo.png)',
+  backgroundImage: 'url(/static/imgs/logo.svg)',
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
   backgroundColor: '#f44336'
@@ -43,7 +43,10 @@ class RestaurantLayout extends Component {
       toggleMenu,
       changeOverlay,
       menuData,
-      onMenuChange
+      onMenuChange,
+      restaurantsName,
+      isDishDetails,
+      isHomePage,
     } = this.props;
     const { hideSplash } = this.state;
     return hideSplash ? (
@@ -53,17 +56,20 @@ class RestaurantLayout extends Component {
           toggleMenu={toggleMenu}
           changeOverlay={changeOverlay}
           menuData={menuData}
-          onMenuChange={onMenuChange}
+          isDishDetails={isDishDetails}
+          isHomePage={isHomePage}
+          // onMenuChange={onMenuChange}
+          restaurantsName={restaurantsName}
         />
         <div className={classes.headerMarginSuppress}>{children}</div>
         <Notifier />
         {/* <RestaurantFooter /> */}
       </React.Fragment>
     ) : (
-      <div style={splashScreen}>
-        <div style={splashLogo} />
-      </div>
-    );
+        <div style={splashScreen}>
+          <div style={splashLogo} />
+        </div>
+      );
   }
 }
 

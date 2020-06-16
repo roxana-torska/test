@@ -7,18 +7,42 @@ import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProductio
 import logger from 'redux-logger';
 
 import { call } from 'redux-saga/effects';
+import { func } from 'prop-types';
 
 const initStore = (initialState = {}) => {
   const sagaMiddleware = createSagaMiddleware();
   const middlewares = [logger, thunk, sagaMiddleware];
+  function saveToLocalStorage(state) {
+    try {
+      const serielizedState = JSON.stringify(state);
+      localStorage.setItem("state", serielizedState);
 
+    } catch (e) {
+      console.log("error ===>", e);
+    }
+  }
+  function loadFromLocalStorage() {
+    try {
+      const serielizedState = localStorage.getItem("state");
+      if (serielizedState == null) {
+        return undefined
+      }
+      return JSON.parse(serielizedState);
+    } catch (e) {
+      return undefined
+    }
+  }
+  const persitedStore = loadFromLocalStorage();
   const store = createStore(
     combineReducers({
       ...reducers
     }),
+    persitedStore,
     composeWithDevTools(applyMiddleware(...middlewares))
   );
-
+  store.subscribe(() => {
+    return saveToLocalStorage(store.getState());
+  })
   // autoRestart saga when any exception in any saga
   function autoRestart(generator) {
     return function* autoRestarting(...args) {

@@ -95,8 +95,8 @@ module.exports = server => {
   passport.use(
     new FacebookStrategy(
       {
-        clientID: '1801834103451410', //'318699738713309', //"1165866970222123", // Use your Facebook App Id
-        clientSecret: '77263ee892e02918732bfd11f1f77f0a', //'2f1afdebd940fced3346c5690550cae3', //"b5a47642cd15662884cd089a81973f97", // Use your Facebook App Secret
+        clientID: '1165866970222123', //'318699738713309', //"1165866970222123", // Use your Facebook App Id
+        clientSecret: 'b5a47642cd15662884cd089a81973f97', //'2f1afdebd940fced3346c5690550cae3', //"b5a47642cd15662884cd089a81973f97", // Use your Facebook App Secret
         callbackURL: `${APP_URL}/auth/facebook/callback`,
         profileFields: ['id', 'email', 'name', 'displayName', 'picture'] //This
       },
@@ -109,7 +109,8 @@ module.exports = server => {
       {
         clientID: 'f8a94180cd744a1398d3b6e214ee9752', //'066c10e2d2d248b5a48c84e4ad3e2262',
         clientSecret: '81a5d5eaa7aa46d49ad611ccaa7c64ff', //'08e3b247f21e437d9cd1c1fe899f976e',
-        callbackURL: `${APP_URL}/auth/instagram/callback`
+				callbackURL: `${APP_URL}/auth/instagram/callback`,
+				proxy: true
       },
       verifyHandler
     )
@@ -118,9 +119,8 @@ module.exports = server => {
   passport.use(
     new GoogleStrategy(
       {
-        clientID:
-          '534623236006-srt7mh987ri00soggbte1i5adra0eqv7.apps.googleusercontent.com',
-        clientSecret: 'b3ZMP5f_vT19Ve-q87Aob1j-',
+        clientID: '632648325896-gktvp61gvqmut0sgnrbl89rfd1mbjapq.apps.googleusercontent.com',
+        clientSecret: 'rIkQRhMGQ-cvUW5UlDcLCvt2',
         callbackURL: `${APP_URL}/auth/google/callback`
       },
       verifyHandler

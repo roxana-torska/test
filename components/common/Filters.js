@@ -205,7 +205,7 @@ class Filters extends React.Component {
             lng: position.coords.longitude,
             lat: position.coords.latitude
           };
-          console.log('pos', pos);
+          
           setCurrentLocation(pos);
           this.getDistanceFilter(pos);
         },
@@ -417,7 +417,7 @@ class Filters extends React.Component {
 
 export default connect(
   state => ({
-    global: state.global.toJSON()
+    global: state.global
   }),
   {
     toggleFilterAccordion,

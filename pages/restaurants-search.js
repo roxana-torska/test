@@ -8,7 +8,7 @@ import { APP_URL, API_IMAGE_URL } from '../utils/config';
 import { Scrollbars } from 'react-custom-scrollbars';
 import RestaurantList from '../components/restaurantLists/RestaurantList';
 import SpeedDials from '../components/menu/FloatingActionMenu';
-import actions from '../redux/global/actions';
+
 import { connect } from 'react-redux';
 import SponsoredRestaurantsList from '../components/restaurantLists/sponsoredRestaurantsLists';
 import DishesList from '../components/restaurantLists/dishLists';
@@ -17,6 +17,11 @@ import WindowResizeListener from 'react-window-size-listener';
 import Slide from '@material-ui/core/Slide';
 import * as _ from 'lodash';
 import { getLocation } from '../utils/common';
+import restaurantsAction from '../redux/restaurants/actions'
+import { restaurantAPI } from '../services/restaurantAPI';
+import actions from '../redux/global/actions';
+const { setRestaurants, setDishes, setCurrentResuarant } = restaurantsAction;
+
 const {
   toggleFilterMenu,
   updateStoreWithQuery,
@@ -43,7 +48,7 @@ class Restaurants extends React.Component {
     if (rec.images.length) {
       return `${API_IMAGE_URL}/assets/images/restaurants/${rec.slug}/${
         rec.images[0].path
-      }`;
+        }`;
     } else {
       return '';
     }
@@ -64,7 +69,7 @@ class Restaurants extends React.Component {
         if (rec.restaurant_id.images.length) {
           restAvatar = `${API_IMAGE_URL}/assets/images/restaurants/${
             rec.restaurant_id.slug
-          }/${rec.restaurant_id.images[0].path}`;
+            }/${rec.restaurant_id.images[0].path}`;
         }
 
         return {
@@ -88,7 +93,7 @@ class Restaurants extends React.Component {
         if (rec.restaurant_id.images.length) {
           restAvatar = `${API_IMAGE_URL}/assets/images/restaurants/${
             rec.restaurant_id.slug
-          }/${rec.restaurant_id.images[0].path}`;
+            }/${rec.restaurant_id.images[0].path}`;
         }
 
         return {
@@ -106,13 +111,14 @@ class Restaurants extends React.Component {
           totalReviews: rec.dishes.totalReviews
         };
       });
+
       similarRestaurants = similarRestaurants.map(rec => {
         let restAvatar = '';
 
         if (rec.restaurant_id.images.length) {
           restAvatar = `${API_IMAGE_URL}/assets/images/restaurants/${
             rec.restaurant_id.slug
-          }/${rec.restaurant_id.images[0].path}`;
+            }/${rec.restaurant_id.images[0].path}`;
         }
         return {
           avatar: restAvatar,
@@ -138,7 +144,8 @@ class Restaurants extends React.Component {
     }
   }
   componentDidMount() {
-    const { updateStoreWithQuery, queryParams } = this.props;
+    const { updateStoreWithQuery, queryParams, setRestaurants, setDishes } = this.props;
+
     if (typeof document !== 'undefined') {
       window.addEventListener('scroll', this.handleOnScroll);
     }
@@ -160,11 +167,21 @@ class Restaurants extends React.Component {
       selectedPageTab: 0,
       location: { ...localLocation }
     });
+
+    setRestaurants({
+      data: this.props.sponsoredRestaurants,
+    })
+    setDishes({
+      data: this.props.dishes
+    })
+
   }
 
   componentWillUnmount() {
+
     if (typeof document !== 'undefined') {
       window.removeEventListener('scroll', this.handleOnScroll);
+
     }
   }
 
@@ -210,8 +227,14 @@ class Restaurants extends React.Component {
   };
 
   handleListItemClick = (evt, index, value) => {
+    console.log("value======>", value);
     if (value.type === 'restaurant') {
-      window.location.href = `/restaurants/${value.slug}`;
+      let data = restaurantAPI.getCurrentRestaurant(value.id).then(response => {
+        console.log("data====>", response.data);
+        this.props.setCurrentResuarant({ data: response.data })
+
+      });
+      window.location.href = `/restaurants/${value.id}`;
     }
     if (value.type === 'dish') {
       window.location.href = `/dish-details/${value.slug}`;
@@ -253,8 +276,11 @@ class Restaurants extends React.Component {
       sponsoredRestaurants,
       dishes,
       global: { name, isLoggedIn, lastRatedDish, hideFabIcon },
-      similarRestaurants
+      similarRestaurants,
+      restaurantss
     } = this.props;
+
+
     const { winHeight, overlay, openDialog, hideMainMenu } = this.state;
     let rootHeight = winHeight - 100;
 
@@ -279,22 +305,22 @@ class Restaurants extends React.Component {
           style={{ marginTop: '104px' }}
         >
           {!sponsoredRestaurants.length &&
-          !restaurants.length &&
-          !dishes.length ? (
-            <Grid item xs={12}>
-              <NotFound name={name} isLoggedIn={isLoggedIn} />
-              <p
-                style={{ margin: '20px', borderBottom: '2px solid #ededed' }}
-              />
-              <SponsoredRestaurantsList
-                listItemOnClick={this.handleListItemClick}
-                listData={similarRestaurants}
-                listItemClass={classes.restaurantsListItem}
-              />
-            </Grid>
-          ) : (
-            ''
-          )}
+            !restaurants.length &&
+            !dishes.length ? (
+              <Grid item xs={12}>
+                <NotFound name={name} isLoggedIn={isLoggedIn} />
+                <p
+                  style={{ margin: '20px', borderBottom: '2px solid #ededed' }}
+                />
+                <SponsoredRestaurantsList
+                  listItemOnClick={this.handleListItemClick}
+                  listData={similarRestaurants}
+                  listItemClass={classes.restaurantsListItem}
+                />
+              </Grid>
+            ) : (
+              ''
+            )}
           {sponsoredRestaurants.length ? (
             <Grid item xs={12}>
               <SponsoredRestaurantsList
@@ -304,8 +330,8 @@ class Restaurants extends React.Component {
               />
             </Grid>
           ) : (
-            ''
-          )}
+              ''
+            )}
           {restaurants.length ? (
             <Grid item xs={12}>
               {sponsoredRestaurants.length ? (
@@ -324,8 +350,8 @@ class Restaurants extends React.Component {
               />
             </Grid>
           ) : (
-            ''
-          )}
+              ''
+            )}
           {dishes.length ? (
             <Grid item xs={12}>
               {restaurants.length && sponsoredRestaurants.length ? (
@@ -347,8 +373,8 @@ class Restaurants extends React.Component {
               />
             </Grid>
           ) : (
-            ''
-          )}
+              ''
+            )}
           {similarRestaurants.length <= 0 && !hideFabIcon ? (
             <SpeedDials
               sortClick={this.handleSortClick}
@@ -365,12 +391,16 @@ class Restaurants extends React.Component {
 
 export default connect(
   state => ({
-    global: state.global.toJSON()
+    global: state.global,
+    restaurantss: state.RestaurantsReducer.restaurants,
   }),
   {
     toggleFilterMenu,
     updateStoreWithQuery,
     selectFilterTab,
-    showHideMenu
+    showHideMenu,
+    setRestaurants,
+    setDishes,
+    setCurrentResuarant
   }
 )(withStyles(styles)(Restaurants));

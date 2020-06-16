@@ -17,7 +17,7 @@ export default class extends Component {
   render() {
     return (
       <div>
-        <p>Hello, {this.props.user.email} This is Dishin App</p>
+        <p>Hello, {this.props.user.email} This is Dishin' App</p>
         <Link href={`/test-server/DrMac`}>
           <a>
             Click to DrMac (

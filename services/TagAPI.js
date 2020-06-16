@@ -6,7 +6,7 @@ export const tagAPI = {
   getTags: async function(payload) {
     console.log("payload====>",payload);
     let response = await request(
-      `/tags/with-counts?${stringify(payload)}`,
+      `${API_URL}/tags/with-counts?${stringify(payload)}`,
       {}
     );
     if (response.status.toLowerCase() === 'ok') {
