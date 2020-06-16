@@ -229,60 +229,44 @@ class WelcomeToDishIn extends PureComponent {
               minHeight: `${rootHeight}px`
             }}
           >
+       
             <Grid
               item
-              style={{
-                //backgroundColor: '#f0f0f0',
-                height: `${adjustHeightGridOne}px`,
-                width: '100%'
-              }}
-            />
-            <Grid
-              item
-              style={
-                {
-                  //backgroundColor: '#666',
-                  // height: '60px',
-                  // width: '100%'
-                }
-              }
+             class={classes.weKnowWhereYouAre}
               className={classes.adjustHeightGridTwo}
             >
-              <div
-                className={classes.dihsinBackground}
-                style={{ margin: '0 14px' }}
-              >
-                <DishinMashroomIcon className={classes.topBgIconRight} />
-              </div>
-              <div style={{ margin: '0 16px' }}>
+            
+             
+            {location.address ? (
+                <React.Fragment>
                 <Typography
-                  variant='h1'
+                  variant='p'
                   align='center'
-                  className={classes.pageTitleRed}
+                
                 >
-                  WELCOME TO DISHIN
-                </Typography>
+            Best in
+            </Typography>
                 <div
-                  className={classnames(
-                    classes.footerLatoTextNormal,
-                    classes.locationAddress
-                  )}
+                 
+                 
                   style={{
-                    margin: '0 26px',
+                 
                     textAlign: 'center',
-                    marginTop: '7px'
+                    margin: '0 7px'
                   }}
                 >
-                  {location.address ? (
-                    <React.Fragment>
-                      <RoomIcon className={classes.iconRoot} />
+                
+               
+                </div>
                       {location.address}
+                      
                     </React.Fragment>
                   ) : (
                     'where are you dining today?'
                   )}
-                </div>
-              </div>
+           
+             
+            
             </Grid>
             <Grid
               item

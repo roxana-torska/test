@@ -1,3 +1,6 @@
+
+
+
 import { SheetsRegistry } from 'react-jss';
 import {
   createMuiTheme,
@@ -18,15 +21,16 @@ const theme = createMuiTheme({
     },
     primary: {
       // light: will be calculated from palette.primary.main,
-      main: '#f44336'
+      main: '#232947'
       // dark: will be calculated from palette.primary.main,
       // contrastText: will be calculated to contrast with palette.primary.main
     },
     secondary: {
       light: '#fff',
-      main: '#fff',
+      main: '#F9F9F9',
       dark: '#f4f4f4',
-      contrastText: '#fff'
+      contrastText: '#fff',
+
     },
     // error: will use the default color
     action: {

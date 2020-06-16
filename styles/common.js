@@ -13,7 +13,7 @@ const styles = theme => {
       flexWrap: 'wrap'
     },
     pageTitleRed: {
-      fontFamily: "'BebasNeue', 'sans-serif'",
+      fontFamily: "'Poppins', 'sans-serif'",
       fontSize: getRemFontSizeByPx(30),
       color: theme.palette.primary.main,
       fontWeight: 'normal',
@@ -36,7 +36,7 @@ const styles = theme => {
       padding: '16px'
     },
     pageTitle: {
-      fontFamily: "'BebasNeue', 'sans-serif'",
+      fontFamily: "'Poppins', 'sans-serif'",
       fontSize: '1.5em',
       textAlign: 'center'
       // ['@media (max-width:320px)']: {
@@ -45,13 +45,13 @@ const styles = theme => {
     },
 
     reviewDish: {
-      fontFamily: ' sans-serif',
+      fontFamily: "'Poppins', 'sans-serif'",
       fontSize: '0.7em',
       textAlign: 'center'
     },
     btnRaisedLightNormalRed: {
       backgroundColor: theme.palette.primary.main,
-      fontFamily: '"Lato"',
+      fontFamily: "'Poppins', 'sans-serif'",
       textTransform: 'capitalize',
       fontSize: getRemFontSizeByPx(12),
       color: '#FFFFFF',
@@ -71,7 +71,7 @@ const styles = theme => {
     },
     inputFieldGrey: {
       color: '#757575',
-      fontFamily: "'Lato'",
+      fontFamily: "'Poppins', 'sans-serif'",
       fontSize: getRemFontSizeByPx(15),
       ['@media (max-width:320px)']: {
         fontSize: getRemFontSizeByPx(12)
@@ -83,7 +83,7 @@ const styles = theme => {
     },
     inputWhiteField: {
       color: '#fff',
-      fontFamily: "'Lato'",
+      fontFamily: "'Poppins', 'sans-serif'",
       fontSize: '1em'
       // ['@media (max-width:320px)']: {
       //   fontSize: '.7rem'
@@ -115,8 +115,8 @@ const styles = theme => {
     footerLatoTextNormal: {
       color: '#717171',
       fontSize: getRemFontSizeByPx(13),
-      fontFamily: "'Lato'",
-      fontWeight: 'normal',
+    fontFamily: "'Poppins', 'sans-serif'",
+      fontWeight: '200',
       fontStyle: 'normal',
       fontStretch: 'normal',
       lineHeight: 1,
@@ -180,6 +180,10 @@ const styles = theme => {
       textAlign: 'center',
       width: '100%'
     },
+    topBarLogo: {
+      textAlign: 'center',
+      width: '90px'
+    },
     topBgIconContainer: {
       position: 'relative',
       height: '56px',
@@ -187,25 +191,21 @@ const styles = theme => {
         height: '64px'
       }
     },
-    topBgIconRight: {
-      position: 'absolute',
-      width: '110px',
-      height: '110px',
-      top: '-22px',
-      right: '0px',
-      zIndex: -1,
-      // [theme.breakpoints.up('sm')]: {
-      //   width: '129px',
-      //   height: '129px',
-      //   top: '75px'
-      // },
-      ['@media (max-width:320px)']: {
-        height: '80px',
-        right: '0px'
-      }
+    topBarIcon: {
+ 
+  width:"19px",
+
+      
     },
     headerMarginSuppress: {
       marginTop: '78px'
+    },
+    headerHr: {
+      display: "block" ,
+      height: "1px",
+      border: 0,
+      borderTop:`1px solid ${theme.palette.secondary.main}`,
+      margin: "0em 0; padding: 0",
     },
     recoverPasswordDialog: {
       padding: '20px',
@@ -219,6 +219,15 @@ const styles = theme => {
       // ['@media (max-width:320px)']: {
       //   fontSize: '.9rem'
       // }
+    },
+    weKnowWhereYouAre:{
+      backgroundColor:theme.palette.secondary.main,
+      width:"100%",
+      padding:"10px",
+      display: "flex",
+      flexDirection: "row",
+      alignItems:"center",
+      justifyContent:"center"
     },
     recoverPasswordText: {
       fontFamily: "'Lato'",

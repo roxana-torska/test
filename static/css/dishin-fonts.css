@@ -1,13 +1,22 @@
-@font-face {
-	font-family: 'BebasNeue';
-	font-style: normal;
-	font-weight: 400;
-	src: local('BebasNeue'), local('BebasNeue-Regular'), url(/static/fonts/BebasNeue/BebasNeue-Regular.ttf) format('truetype'), url(/static/fonts/BebasNeue/BebasNeue-Regular.otf) format('opentype');
-  }
+
+
+
 
   @font-face {
-	font-family: 'BebasNeue';
-	font-style: normal;
+	font-family: 'Poppins';
+	font-style: bold;
 	font-weight: 400;
-	src: local('BebasNeue'), local('BebasNeue-Bold'), url(/static/fonts/BebasNeue/BebasNeue-Bold.ttf) format('truetype'), url(/static/fonts/BebasNeue/BebasNeue-Bold.otf) format('opentype');
+	src: local('Poppins'), local('Poppins-Bold'), url(/static/fonts/Poppins/Poppins-Bold.ttf) format('truetype'), url(/static/fonts/Poppins/Poppins-Bold.otf) format('opentype');
+  }
+  @font-face {
+	font-family: 'Poppins';
+	font-style: medium;
+	font-weight: 600;
+	src: local('Poppins'), local('Poppins'), url(/static/fonts/Poppins/Poppins-medium.ttf) format('truetype'), url(/static/fonts/Poppins/Poppins=Bold.otf) format('opentype');
+  }
+  @font-face {
+	font-family: 'Poppins';
+	font-style: normal;
+	font-weight: 200;
+	src: local('Poppins'), local('Poppins'), url(/static/fonts/Poppins/Poppins-Regular.ttf) format('truetype'), url(/static/fonts/Poppins/Poppins-Regular.otf) format('opentype');
   }
