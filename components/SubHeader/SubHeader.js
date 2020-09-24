@@ -89,9 +89,10 @@ const SubHeader = (props) => {
             value={value}
             onChange={handleChange}
             indicatorColor="primary"
-            textColor="#6B6F83"
+            // textColor="#6B6F83"
+            textColor="secondary"
             variant="scrollable"
-            scrollButtons="desktop"
+            // scrollButtons="desktop"
             aria-label="scrollable auto tabs example"
           >
             <Tab
