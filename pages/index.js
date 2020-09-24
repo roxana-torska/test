@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import Link from 'next/link';
-import Router from 'next/router';
-import { APP_URL } from '../utils/config';
+import React, { Component } from "react";
+import Link from "next/link";
+import Router from "next/router";
+import { APP_URL } from "../utils/config";
 export default class extends Component {
   static getInitialProps({ req }) {
     if (!req) {
-      Router.push('/sign-in');
+      Router.push("/sign-in");
     }
     const { user } = req;
     if (!user) {
-      Router.push('/sign-in');
+      Router.push("/sign-in");
     }
     return { user };
   }

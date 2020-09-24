@@ -1,17 +1,14 @@
+import React from "react";
+import { Provider } from "react-redux";
+import App, { Container } from "next/app";
+import Head from "next/head";
+import { MuiThemeProvider } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import JssProvider from "react-jss/lib/JssProvider";
+import withRedux from "next-redux-wrapper";
 
-
-import React from 'react';
-import { Provider } from 'react-redux';
-import App, { Container } from 'next/app';
-import Head from 'next/head';
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import JssProvider from 'react-jss/lib/JssProvider';
-import withRedux from 'next-redux-wrapper';
-import withReduxSaga from 'next-redux-saga';
-import { initStore } from '../redux/store';
-import getPageContext from '../utils/getPageContext';
-import { trimExt } from 'upath';
+import { initStore } from "../redux/store";
+import getPageContext from "../utils/getPageContext";
 
 class DishinApp extends App {
   pageContext = getPageContext();
@@ -21,12 +18,12 @@ class DishinApp extends App {
         // Call page-level getInitialProps
         ...(Component.getInitialProps
           ? await Component.getInitialProps(ctx)
-          : {})
-      }
+          : {}),
+      },
     };
   }
 
-  captureClientY = event => {
+  captureClientY = (event) => {
     // only respond to a single touch
     // const scrollingElem = document.getElementsByClassName(
     //   'autoCompleteScroll'
@@ -35,11 +32,11 @@ class DishinApp extends App {
     // console.log('targetTouches', event.targetTouches);
     if (event.targetTouches.length === 1) {
       this._clientY = event.targetTouches[0].clientY;
-      console.log('clientY', this._clientY);
+      console.log("clientY", this._clientY);
     }
   };
 
-  handleBackgroundScroll = evt => {
+  /*   handleBackgroundScroll = evt => {
     const scrollingElem = document.getElementsByClassName(
       'autoCompleteScroll'
     )[0];
@@ -93,33 +90,35 @@ class DishinApp extends App {
     }
 
     return true;
-  };
+  }; */
 
   componentDidMount() {
-    const jssStyles = document.querySelector('#jss-server-side');
+    const jssStyles = document.querySelector("#jss-server-side");
     if (jssStyles && jssStyles.parentNode) {
       jssStyles.parentNode.removeChild(jssStyles);
     }
     this._clientY = 0;
-    console.log('router pathname', this.props.router.asPath);
+    console.log("router pathname", this.props.router.asPath);
     if (
       [
-        '/welcome-to-dishin',
-        '/sign-in',
-        '/new-sign-in',
-        '/sign-up',
-        '/new-sign-up',
-        '/recover-password',
-        '/reset-password',
-        '/verify-email'
+        "/welcome-to-dishin",
+        "/sign-in",
+        "/new-sign-in",
+        "/sign-up",
+        "/new-sign-up",
+        "/recover-password",
+        "/reset-password",
+        "/verify-email",
+        "/dish",
+        "/restaurant",
       ].includes(this.props.router.asPath)
     ) {
-      document.body.style.overflow = 'hidden'; //special page cases
-      document.addEventListener('touchstart', this.captureClientY, {
-        passive: false
+      document.body.style.overflow = "hidden"; //special page cases
+      document.addEventListener("touchstart", this.captureClientY, {
+        passive: false,
       });
-      document.addEventListener('touchmove', this.handleBackgroundScroll, {
-        passive: false
+      document.addEventListener("touchmove", this.handleBackgroundScroll, {
+        passive: false,
       });
     }
     this.updateDishInHistory();
@@ -128,25 +127,26 @@ class DishinApp extends App {
   componentWillUnmount() {
     if (
       [
-        '/welcome-to-dishin',
-        '/sign-in',
-        '/new-sign-in',
-        '/sign-up',
-        '/new-sign-up',
-        '/recover-password',
-        '/reset-password',
-        '/verify-email'
+        "/welcome-to-dishin",
+        "/sign-in",
+        "/new-sign-in",
+        "/sign-up",
+        "/new-sign-up",
+        "/recover-password",
+        "/reset-password",
+        "/verify-email",
+        "/dish",
       ].includes(this.props.router.asPath)
     ) {
-      document.removeEventListener('touchstart', this.captureClientY);
-      document.removeEventListener('touchmove', this.handleBackgroundScroll);
+      document.removeEventListener("touchstart", this.captureClientY);
+      document.removeEventListener("touchmove", this.handleBackgroundScroll);
     }
   }
 
   updateDishInHistory = () => {
     let dishInHistory = [];
-    if (localStorage.getItem('dishInHistory')) {
-      dishInHistory = JSON.parse(localStorage.getItem('dishInHistory'));
+    if (localStorage.getItem("dishInHistory")) {
+      dishInHistory = JSON.parse(localStorage.getItem("dishInHistory"));
     }
     if (document.referrer) {
       let lastValue = null;
@@ -156,9 +156,9 @@ class DishinApp extends App {
       } else {
         dishInHistory.push(document.referrer);
       }
-      localStorage.setItem('dishInHistory', JSON.stringify(dishInHistory));
+      localStorage.setItem("dishInHistory", JSON.stringify(dishInHistory));
     } else {
-      localStorage.removeItem('dishInHistory');
+      localStorage.removeItem("dishInHistory");
     }
   };
 
@@ -167,7 +167,7 @@ class DishinApp extends App {
     return (
       <Container>
         <Head>
-          <title>Dishin' App</title>
+          <title>Dyne</title>
         </Head>
         <JssProvider
           registry={this.pageContext.sheetsRegistry}
@@ -188,4 +188,4 @@ class DishinApp extends App {
   }
 }
 
-export default withRedux(initStore, { debug: true })(DishinApp); // withReduxSaga(,{async: true})
+export default withRedux(initStore, { debug: true })(DishinApp);

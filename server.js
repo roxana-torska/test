@@ -1,28 +1,20 @@
-const express = require('express');
-const next = require('next');
-const cookieParser = require('cookie-parser'); 
-const bodyParser = require('body-parser');
-const chalk = require('chalk')
-const dev = process.env.NODE_ENV !== 'production';
+const express = require("express");
+const next = require("next");
+const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
+const chalk = require("chalk");
+const dev = process.env.NODE_ENV !== "production";
 
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-const {
-  getToken,
-  setToken,
-  getDecodedToken,
-  setLocation,
-  getLocation,
-  decodeToken
-} = require('./utils/common');
-const SocialAuth = require('./utils/socialAuth');
-const { request } = require('./utils/request2');
-const { API_URL, APP_URL } = require('./utils/config');
-const { stringify } = require('qs');
+const { getToken, setToken, getDecodedToken } = require("./utils/common");
+const SocialAuth = require("./utils/socialAuth");
+const { request } = require("./utils/request2");
+const { API_URL, APP_URL } = require("./utils/config");
+const { stringify } = require("qs");
 
 const hydrateLoggedIn = function (req, res, next) {
-
   const loggedInToken = getToken(req);
   if (loggedInToken) {
     req.loggedInToken = loggedInToken;
@@ -45,7 +37,7 @@ const validateRecoveryToken = async function (payload) {
 const verifyUser = async function (payload) {
   let { token } = payload;
   let response = await request(`${API_URL}/public/verify-email?token=${token}`);
-  console.log('response*****', response);
+
   return response;
 };
 
@@ -59,44 +51,78 @@ const getRestaurants = async function (payload, token) {
     tempToken = `Bearer `;
   }
   let response = await request(url, {
-    headers: { Authorization: tempToken }
+    headers: { Authorization: tempToken },
   });
-  if (response.status.toLowerCase() === 'ok') {
+  if (response.status.toLowerCase() === "ok") {
     return response.data;
   } else {
     return [];
   }
 };
+
+const getRestaurantAndDishesBySlug = async (slug) => {
+  const url = `${API_URL}/restaurants/getBySlug?slug=${slug}`;
+  const response = await request(url);
+
+  if (response.status.toLowerCase() === "ok") {
+    return response.data;
+  } else {
+    console.log("err nothing here");
+  }
+};
+
+const getDishes = async () => {
+  let url = `${API_URL}/dishes/`;
+
+  let response = await request(url, {
+    method: "GET",
+  });
+  console.log(response);
+  return response;
+};
+
+const getDishBySlug = async (slug) => {
+  console.log("getDishBySlug");
+  const url = `${API_URL}/dishes/getBySlug?slug=${slug}`;
+  const response = await request(url);
+  console.log(chalk.blue("response"), response);
+  if (response.status.toLowerCase() === "ok") {
+    return response.data.dish;
+  } else {
+    console.log("err nothing here");
+  }
+};
+
 const getMenus = async () => {
   console.log("menues called ");
   const url = `${API_URL}/restaurants/getMenus`;
   let response = await request(url);
   console.log(chalk.blue("response===="), response);
-  if (response.status.toLowerCase() === 'ok') {
+  if (response.status.toLowerCase() === "ok") {
     return response.data;
   } else {
     console.log("nothing retrieve");
   }
-}
+};
 
 const getCategories = async () => {
-	console.log('categories called');
-	const url = `${API_URL}/restaurants/getMenus`;
-	let response = await request(url);
-	if (response.status.toLowerCase() === 'ok') {
+  console.log("categories called");
+  const url = `${API_URL}/restaurants/getMenus`;
+  let response = await request(url);
+  if (response.status.toLowerCase() === "ok") {
     return response.data;
   } else {
     return [];
   }
-}
+};
 
 const getReviews = async function (res, payload) {
   const url = `${API_URL}/reviews`;
   const token = payload.token;
   let response = await request(url, {
-    headers: { Authorization: `Bearer ${token}` }
+    headers: { Authorization: `Bearer ${token}` },
   });
-  if (response.status.toLowerCase() === 'ok') {
+  if (response.status.toLowerCase() === "ok") {
     return response.data;
   } else {
   }
@@ -104,8 +130,8 @@ const getReviews = async function (res, payload) {
 
 const getSystemRewards = async function () {
   const url = `${API_URL}/systemRewards`;
-  let response = await request(url);
-  if (response.status.toLowerCase() === 'ok') {
+  let response = await request(url, {});
+  if (response.status.toLowerCase() === "ok") {
     return response.data;
   } else {
     return [];
@@ -123,104 +149,120 @@ app
     SocialAuth(server);
 
     // give all Nextjs's request to Nextjs before anything else
-    server.get('/_next/*', (req, res) => {
+    server.get("/_next/*", (req, res) => {
       handle(req, res);
     });
 
-    server.get('/static/*', (req, res) => {
+    server.get("/static/*", (req, res) => {
       handle(req, res);
     });
 
     //local auth routes to keep client logged in
-    server.get('/auth/callback', (req, res) => {
+    server.get("/auth/callback", (req, res) => {
       setToken(res, req.query.token || null);
-      let redirectUrl = req.query.redirect || '/';
+      let redirectUrl = req.query.redirect || "/";
       res.redirect(redirectUrl);
     });
-    server.get('/auth/token', (req, res) => {
+    server.get("/auth/token", (req, res) => {
       res.json({ token: getToken(req) });
     });
 
-    server.get('/', hydrateLoggedIn, (req, res) => {
+    server.get("/", hydrateLoggedIn, (req, res) => {
       // const actualPage = '/index';
       // app.render(req, res, actualPage);
       let isLoggedIn = req.loggedInToken ? true : false;
       if (isLoggedIn) {
-        res.redirect('/home');
+        res.redirect("/welcome-to-dishin");
       } else {
-        res.redirect('/welcome-to-dishin');
+        res.redirect("sign-up");
       }
     });
 
-    server.get('/sign-in', (req, res) => {
-      let redirectUrl = req.query.redirect || '';
-      const actualPage = '/login';
+    server.get("/sign-in", (req, res) => {
+      let redirectUrl = req.query.redirect || "";
+      const actualPage = "/login";
       app.render(req, res, actualPage, { redirect: redirectUrl });
     });
 
-    server.get('/sign-out', (req, res) => {
-      setToken(res, '');
-      res.redirect('/sign-in');
+    server.get("/sign-out", (req, res) => {
+      setToken(res, "");
+      app.render(req, res, "/login");
     });
 
-    server.get('/sign-up', (req, res) => {
-      const actualPage = '/signup';
+    server.get("/sign-up", (req, res) => {
+      const actualPage = "/signup";
       app.render(req, res, actualPage);
     });
 
-    server.get('/social-login/:provider', (req, res) => {
+    server.get("/social-login/:provider", (req, res) => {
       const provider = req.params.provider;
     });
 
-    server.get('/recover-password', (req, res) => {
-      const actualPage = '/recoverpassword';
+    server.get("/recover-password", (req, res) => {
+      const actualPage = "/recoverpassword";
       app.render(req, res, actualPage);
     });
 
-    server.get('/welcome-to-dishin', (req, res) => {
-      const actualPage = '/welcometodishin';
-      app.render(req, res, actualPage);
+    server.get("/welcome-to-dishin", async (req, res) => {
+      const actualPage = "/welcometodishin";
+      await getDishes()
+        .then((dishes) => {
+          console.log("dishes are", dishes);
+          app.render(req, res, actualPage, dishes);
+        })
+        .catch((err) => {
+          console.log("Error", err);
+        });
     });
 
-    server.get('/reset-password', (req, res) => {
-      const actualPage = '/resetpassword';
+    server.get("/dish/:slug", async (req, res) => {
+      console.log("Params===>", req.params);
+      const slug = req.params.slug;
+      // const restaurant = await getRestaurants(name, req.loggedInToken);
+      const dish = await getDishBySlug(slug);
+      console.log("dish is", dish);
+      app.render(req, res, "/dish", { dish });
+    });
+
+    server.get("/reset-password", (req, res) => {
+      const actualPage = "/resetpassword";
       const queryParams = { token: req.query.token };
       validateRecoveryToken(queryParams)
-        .then(response => {
-          if (response.status == 'ok' && response.isTokenValid) {
+        .then((response) => {
+          if (response.status == "ok" && response.isTokenValid) {
             app.render(req, res, actualPage, queryParams);
           } else {
             app.render(req, res, actualPage, { token: null });
           }
         })
-        .catch(err => {
+        .catch((err) => {
           app.render(req, res, actualPage, { token: null });
         });
     });
 
-    server.get('/verify-email', (req, res) => {
+    server.get("/verify-email", (req, res) => {
       const queryParams = { token: req.query.token };
-      const actualPage = '/verifyemail';
+      const actualPage = "/verifyemail";
       verifyUser(queryParams)
-        .then(response => {
-          if (response.status.toLowerCase() === 'ok') {
+        .then((response) => {
+          if (response.status.toLowerCase() === "ok") {
             app.render(req, res, actualPage, {
-              verifyStatus: response.verifyStatus
+              verifyStatus: response.verifyStatus,
             });
           } else {
             app.render(req, res, actualPage, { verifyStatus: null });
           }
         })
-        .catch(err => {
+        .catch((err) => {
           app.render(req, res, actualPage, { verifyStatus: null });
         });
     });
 
-    server.get('/restaurants', hydrateLoggedIn, (req, res) => {
+    server.get("/dish", hydrateLoggedIn, (req, res) => {
       let query = req.query || {};
       let isLoggedIn = req.loggedInToken ? true : false;
       let userData = req.user || {};
-      getRestaurants(query, req.loggedInToken).then(response => {
+      getRestaurants(query, req.loggedInToken).then((response) => {
         console.log("response dishes====>", response.dishes);
         query.restaurants = response.restaurants || [];
         query.dishes = response.dishes || [];
@@ -229,45 +271,45 @@ app
         query.user = req.user;
         query.loggedInToken = req.loggedInToken;
         query.systemTags = response.systemTags;
-        const actualPage = '/restaurants-search';
+        const actualPage = "/restaurants-search";
         app.render(req, res, actualPage, query);
       });
     });
 
-    server.get('/my-reviews', hydrateLoggedIn, (req, res) => {
+    server.get("/my-reviews", hydrateLoggedIn, (req, res) => {
       console.log("my review ======>", req.loggedInToken);
-      const actualPage = '/my-reviews';
+      const actualPage = "/my-reviews";
       // let user_id = null;
       // if (req.user) {
       //   user_id = req.user.user_id;
       // } else {
       //   res.redirect('/sign-in');
       // }
-      getReviews(res, { token: req.loggedInToken }).then(response => {
+      getReviews(res, { token: req.loggedInToken }).then((response) => {
         const query = {
           myreviews: response,
           user: req.user,
           isLoggedIn: req.loggedInToken ? true : false,
-          loggedInToken: req.loggedInToken
+          loggedInToken: req.loggedInToken,
         };
         app.render(req, res, actualPage, query);
       });
     });
 
-    server.get('/rewards', hydrateLoggedIn, (req, res) => {
-      const actualPage = '/rewards';
-      getSystemRewards().then(response => {
+    server.get("/rewards", hydrateLoggedIn, (req, res) => {
+      const actualPage = "/rewards";
+      getSystemRewards().then((response) => {
         const query = {
           rewards: response,
           user: req.user,
           isLoggedIn: req.loggedInToken ? true : false,
-          loggedInToken: req.loggedInToken
+          loggedInToken: req.loggedInToken,
         };
         app.render(req, res, actualPage, query);
       });
     });
 
-    server.get('/user-update/callback', (req, res) => {
+    server.get("/user-update/callback", (req, res) => {
       let token = req.query.token || null;
 
       setToken(res, token);
@@ -278,34 +320,41 @@ app
       // res.redirect(redirectUrl);
     });
 
-
-    server.get('/restaurants/:id', (req, res) => {
+    server.get("/restaurants/:slug", async (req, res) => {
       console.log("Params===>", req.params);
-      getMenus().then(response => {
-        app.render(req, res, '/showmenu', { id: req.params.id, menuData: response })
-        console.log("menu response =====>", res);
-      }).catch(err => {
-        console.log("error menu respinse", err);
-      })
-
-		})
-		
-		server.get('/restaurants/:slug/menu/:name', (req, res) => {
-			console.log("niv===>", req.params);
-			getMenus().then(response => {
-				console.log('this is the response', response)
-        app.render(req, res, '/showcategory', { slug: req.params.slug, menuData: response, menuName: req.params.name })
-        console.log("category response =====>", res);
-      }).catch(err => {
-        console.log("error menu response", err);
+      const slug = req.params.slug;
+      // const restaurant = await getRestaurants(name, req.loggedInToken);
+      const { restaurant, dishes } = await getRestaurantAndDishesBySlug(slug);
+      app.render(req, res, "/restaurant", {
+        restaurant,
+        dishes,
       });
-		});
+    });
+
+    server.get("/restaurants/:slug/menu/:name", (req, res) => {
+      console.log("niv===>", req.params);
+      getMenus()
+        .then((response) => {
+          console.log("this is the response", response);
+          app.render(req, res, "/showcategory", {
+            slug: req.params.slug,
+            menuData: response,
+            menuName: req.params.name,
+          });
+          console.log("category response =====>", res);
+        })
+        .catch((err) => {
+          console.log("error menu response", err);
+        });
+    });
 
     server.get("/dish-details/:slug/:name", (req, res) => {
       console.log(req.params);
-      app.render(req, res, '/dish-details', { slug: req.params.slug, name: req.params.name });
+      app.render(req, res, "/dish-details", {
+        slug: req.params.slug,
+        name: req.params.name,
+      });
     });
-
 
     server.get("/social-medialist", (req, res) => {
       app.render(req, res, "/social-medialist");
@@ -314,17 +363,17 @@ app
     server.get("/thankyou", (req, res) => {
       app.render(req, res, "/thankyou");
     });
-    server.get('/restaurant-details', (req, res) => {
+    server.get("/restaurant-details", (req, res) => {
       app.render(req, res, "/restaurant-details");
     });
 
-    server.get('/home', hydrateLoggedIn,(req, res) => {
+    server.get("/home", hydrateLoggedIn, (req, res) => {
       let query = req.query || {};
-      console.log("req query=====>",req.query);
+      console.log("req query=====>", req.query);
       let isLoggedIn = req.loggedInToken ? true : false;
       let userData = req.user || {};
-      console.log(chalk.bgGreen(req.user))
-      getRestaurants(query, req.loggedInToken).then(response => {
+      console.log(chalk.bgGreen(req.user));
+      getRestaurants(query, req.loggedInToken).then((response) => {
         console.log("response dishes====>", response.dishes);
         query.restaurants = response.restaurants || [];
         query.dishes = response.dishes || [];
@@ -333,26 +382,26 @@ app
         query.user = req.user;
         query.loggedInToken = req.loggedInToken;
         query.systemTags = response.systemTags;
-        const actualPage = '/home';
+        const actualPage = "/home";
         app.render(req, res, actualPage, query);
       });
-    })
-    server.get('/dishes', (req, res) => {
-      app.render(req, res, '/dishes');
-    })
-    server.get('/dishbytag', (req, res) => {
-      app.render(req, res, '/dishbytag');
-    })
-    server.get('*', (req, res) => {
+    });
+    server.get("/dishes", (req, res) => {
+      app.render(req, res, "/dishes");
+    });
+    server.get("/dishbytag", (req, res) => {
+      app.render(req, res, "/dishbytag");
+    });
+    server.get("*", (req, res) => {
       return handle(req, res);
     });
 
-    server.listen(3001, '0.0.0.0' ,err => {
+    server.listen(3001, "0.0.0.0", (err) => {
       if (err) throw err;
       console.log(`> Ready on ${APP_URL}`);
     });
   })
-  .catch(ex => {
+  .catch((ex) => {
     console.error(ex.stack);
     process.exit(1);
   });

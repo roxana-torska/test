@@ -1,61 +1,61 @@
-import React, { PureComponent } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import CustomInput from '../components/customInput/CustomInput';
-import Button from '@material-ui/core/Button';
-import AppLayout from '../components/layouts/AppLayout';
-import { Typography } from '@material-ui/core';
-import styles from '../styles/common';
-import classnames from 'classnames';
-import Link from 'next/link';
-import SvgIcon from '@material-ui/core/SvgIcon';
-import validator from '../utils/validator';
-import notify from '../utils/notifier';
-import { userAPI } from '../services/userAPI';
-import Router from 'next/router';
-import { APP_URL } from '../utils/config';
-import FooterActions from '../components/common/FooterActions';
-import WindowResizeListener from 'react-window-size-listener';
-import { DishinMashroomIcon } from '../components/customIcon/customIcon';
+import React, { PureComponent } from "react";
+import { withStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import CustomInput from "../components/customInput/CustomInput";
+import Button from "@material-ui/core/Button";
+import AppLayout from "../components/layouts/AppLayout";
+import { Typography } from "@material-ui/core";
+import styles from "../styles/common";
+import classnames from "classnames";
+import Link from "next/link";
+import SvgIcon from "@material-ui/core/SvgIcon";
+import validator from "../utils/validator";
+import notify from "../utils/notifier";
+import { userAPI } from "../services/userAPI";
+import Router from "next/router";
+import { APP_URL } from "../utils/config";
+import FooterActions from "../components/FooterActions/FooterActions.js";
+import { connect } from "react-redux";
+import WindowResizeListener from "react-window-size-listener";
 
 class SignUp extends PureComponent {
-  getFieldValue = name => {
-    return this.state[name] || '';
+  getFieldValue = (name) => {
+    return this.state[name] || "";
   };
   validators = {
     email: {
-      required: { message: 'Please use your email' },
-      email: true
+      required: { message: "Please use your email" },
+      email: true,
     },
     password: {
-      required: { message: 'Password required' },
+      required: { message: "Password required" },
       minLength: { length: 8 },
       equalsTo: {
-        value: this.getFieldValue.bind(this, 'confirmPassword'),
-        message: `The confirm password doesn't match with the given password`
-      }
+        value: this.getFieldValue.bind(this, "confirmPassword"),
+        message: `The confirm password doesn't match with the given password`,
+      },
     },
     confirmPassword: {
-      required: { message: 'Password required' },
+      required: { message: "Password required" },
       minLength: { length: 8 },
       equalsTo: {
-        value: this.getFieldValue.bind(this, 'password'),
-        message: `The confirm password doesn't match with the given password`
-      }
-    }
+        value: this.getFieldValue.bind(this, "password"),
+        message: `The confirm password doesn't match with the given password`,
+      },
+    },
   };
   state = {
-    email: '',
-    password: '',
-    confirmPassword: '',
+    email: "",
+    password: "",
+    confirmPassword: "",
     emailError: false,
     passwordError: false,
     confirmPasswordError: false,
-    emailErrorMessage: '',
-    passwordErrorMessage: '',
-    confirmPasswordErrorMessage: '',
-    winHeight: '100vh',
-    winWidth: '100vw'
+    emailErrorMessage: "",
+    passwordErrorMessage: "",
+    confirmPasswordErrorMessage: "",
+    winHeight: "100vh",
+    winWidth: "100vw",
   };
 
   handleFieldChange = (name, value, notSetValue) => {
@@ -69,7 +69,7 @@ class SignUp extends PureComponent {
     } else if (notSetValue === false) {
       state = {};
       state[`${name}Error`] = false;
-      state[`${name}ErrorMessage`] = '';
+      state[`${name}ErrorMessage`] = "";
       state[name] = value;
     }
     if (state) {
@@ -79,13 +79,13 @@ class SignUp extends PureComponent {
   };
 
   validateForm = () => {
-    const result = Object.keys(this.validators).map(field => {
+    const result = Object.keys(this.validators).map((field) => {
       return this.handleFieldChange(field, this.state[field], true);
     });
     return !result.includes(true);
   };
 
-  handleSubmit = evt => {
+  handleSubmit = (evt) => {
     evt.preventDefault();
     if (this.validateForm()) {
       const { email, password, confirmPassword } = this.state;
@@ -94,17 +94,18 @@ class SignUp extends PureComponent {
           params: {
             email,
             password,
-            confirmPassword
-          }
+            confirmPassword,
+          },
         })
-        .then(response => {
-          if (response.status.toUpperCase() === 'OK') {
+        .then((response) => {
+          if (response.status.toUpperCase() === "OK") {
             Router.push(`/auth/callback?token=${response.data.token}`);
           } else {
             notify(response.error);
           }
         });
     } else {
+      console.log("Err!");
       this.setState({ error: true });
     }
   };
@@ -123,7 +124,7 @@ class SignUp extends PureComponent {
       passwordErrorMessage,
       confirmPasswordErrorMessage,
       winHeight,
-      winWidth
+      winWidth,
     } = this.state;
     // const restaurants = [];
     let adjustHeightGridOne = 10;
@@ -148,20 +149,20 @@ class SignUp extends PureComponent {
     return (
       <AppLayout {...this.props}>
         <WindowResizeListener
-          onResize={windowSize => {
+          onResize={(windowSize) => {
             this.setState({ winHeight: windowSize.windowHeight });
           }}
         />
         <form className={classes.container} onSubmit={this.handleSubmit}>
           <Grid
             container
-            direction='column'
-            justify='space-between'
-            alignItems='center'
+            direction="column"
+            justify="space-between"
+            alignItems="center"
             spacing={0}
             style={{
-              margin: '0px',
-              minHeight: `${rootHeight}px`
+              margin: "0px",
+              minHeight: `${rootHeight}px`,
             }}
           >
             <Grid
@@ -169,7 +170,7 @@ class SignUp extends PureComponent {
               style={{
                 // backgroundColor: '#999',
                 height: `${adjustHeightGridOne}px`,
-                width: '100%'
+                width: "100%",
               }}
             />
             <Grid
@@ -183,14 +184,12 @@ class SignUp extends PureComponent {
             >
               <div
                 className={classes.dihsinBackground}
-                style={{ margin: '0 14px' }}
-              >
-                <DishinMashroomIcon className={classes.topBgIconRight} />
-              </div>
-              <div style={{ margin: '0 16px', textAlign: 'center' }}>
+                style={{ margin: "0 14px" }}
+              ></div>
+              <div style={{ margin: "0 16px", textAlign: "center" }}>
                 <Typography
-                  variant='h1'
-                  align='center'
+                  variant="h1"
+                  align="center"
                   className={classes.pageTitleRed}
                 >
                   SIGN UP
@@ -202,7 +201,7 @@ class SignUp extends PureComponent {
               style={{
                 //  backgroundColor: '#f0f0f0',
                 height: `${adjustHeightGridThree}px`,
-                width: '100%'
+                width: "100%",
               }}
             />
             <Grid
@@ -214,36 +213,36 @@ class SignUp extends PureComponent {
               // }}
               className={classes.adjustHeightSignFour}
             >
-              <div style={{ margin: '0 42px' }}>
+              <div style={{ margin: "0 42px" }}>
                 <CustomInput
-                  id='email'
-                  label='Email'
+                  id="email"
+                  label="Email"
                   error={emailError}
                   helperText={<span>{emailErrorMessage}</span>}
-                  onChange={event =>
-                    this.handleFieldChange('email', event.target.value)
+                  onChange={(event) =>
+                    this.handleFieldChange("email", event.target.value)
                   }
                   fullWidth
                 />
                 <CustomInput
-                  id='password'
-                  label='Set up a password'
-                  type='password'
+                  id="password"
+                  label="Set up a password"
+                  type="password"
                   error={passwordError}
                   helperText={<span>{passwordErrorMessage}</span>}
-                  onChange={event =>
-                    this.handleFieldChange('password', event.target.value)
+                  onChange={(event) =>
+                    this.handleFieldChange("password", event.target.value)
                   }
                 />
                 <CustomInput
-                  id='confirmPassword'
-                  label='Confirm Password'
-                  type='password'
+                  id="confirmPassword"
+                  label="Confirm Password"
+                  type="password"
                   error={confirmPasswordError}
                   helperText={<span>{confirmPasswordErrorMessage}</span>}
-                  onChange={event =>
+                  onChange={(event) =>
                     this.handleFieldChange(
-                      'confirmPassword',
+                      "confirmPassword",
                       event.target.value
                     )
                   }
@@ -255,7 +254,7 @@ class SignUp extends PureComponent {
               style={{
                 //  backgroundColor: '#555',
                 height: `${adjustHeightGridFive}px`,
-                width: '100%'
+                width: "100%",
               }}
             />
             <Grid
@@ -267,9 +266,9 @@ class SignUp extends PureComponent {
               // }}
               className={classes.adjustHeightGridSix}
             >
-              <div style={{ margin: '0 82px' }}>
+              <div style={{ margin: "0 82px" }}>
                 <Button
-                  size='medium'
+                  size="medium"
                   className={classes.btnRaisedLightNormalRed}
                   fullWidth
                   onClick={this.handleSubmit}
@@ -283,14 +282,14 @@ class SignUp extends PureComponent {
               style={{
                 //backgroundColor: '#a4a4a4',
                 height: `${adjustHeightGridSeven}px`,
-                width: '100%'
+                width: "100%",
               }}
             />
             <Grid item className={classes.adjustHeightGridEight}>
               <FooterActions
                 linkAction={
                   <div className={classes.footerLatoTextNormal}>
-                    Already in Dishin?{' '}
+                    Already in Dishin?{" "}
                     <a
                       href={`/sign-in`}
                       className={classnames(
@@ -299,7 +298,7 @@ class SignUp extends PureComponent {
                       )}
                     >
                       Log in
-                    </a>{' '}
+                    </a>{" "}
                     to the app
                   </div>
                 }
@@ -310,7 +309,7 @@ class SignUp extends PureComponent {
               style={{
                 //backgroundColor: '#e9e9e9',
                 height: `${adjustHeightGridNine}px`,
-                width: '100%'
+                width: "100%",
               }}
             />
           </Grid>
@@ -320,4 +319,11 @@ class SignUp extends PureComponent {
   }
 }
 
-export default withStyles(styles)(SignUp);
+export default connect(
+  (state) => ({
+    global: state.global,
+    searchTerm: state.DishesReducer.searchTerm,
+    force: state.DishesReducer.force,
+  }),
+  null
+)(withStyles(styles)(SignUp));

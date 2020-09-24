@@ -1,104 +1,104 @@
-const globalActions = {
-  TOGGLE_FILTER_MENU: 'TOGGLE_FILTER_MENU',
-  TOGGLE_FILTER_ACCORDION: 'TOGGLE_FILTER_ACCORDION',
-  UPDATE_STORE_WITH_QUERY: 'UPDATE_STORE_WITH_QUERY',
-  UPDATE_SELECTED_FILTER_ITEM: 'UPDATE_SELECTED_FILTER_ITEM',
-  SELECT_FILTER_TAB: 'SELECT_FILTER_TAB',
-  Selected_Tags_Index: 'Selected_Tags_Index',
-  Selected_Price_Range: 'Selected_Price_Range',
-  UPDATE_SELECTED_RESTAURANT_COUNT: 'UPDATE_SELECTED_RESTAURANT_COUNT',
-  UPDATE_SORT: 'UPDATE_SORT',
-  SET_CURRENT_LOCATION: 'SET_CURRENT_LOCATION',
-  SET_SEARCH_VALUE: 'SET_SEARCH_VALUE',
-  UPDATE_USER_REWARDS: 'UPDATE_USER_REWARDS',
-  CLEAR_FILTERS: 'CLEAR_FILTERS',
-  SHOW_HIDE_MENU: 'SHOW_HIDE_MENU',
-  UPDATE_USER_AND_TOKEN: 'UPDATE_USER_AND_TOKEN',
-  UPDATE_REVIEW_DATA: 'UPDATE_REVIEW_DATA',
-  UPDATE_USER_REVIEW: 'UPDATE_USER_REVIEW',
-	HIDE_FILTER_FAB_ICON: 'HIDE_FILTER_FAB_ICON',
-	SET_CURRENT_CATEGORY: "SET_CURRENT_CATEGORY",
-  toggleFilterMenu: value => ({
+export const globalActions = {
+  TOGGLE_FILTER_MENU: "TOGGLE_FILTER_MENU",
+  TOGGLE_FILTER_ACCORDION: "TOGGLE_FILTER_ACCORDION",
+  UPDATE_STORE_WITH_QUERY: "UPDATE_STORE_WITH_QUERY",
+  UPDATE_SELECTED_FILTER_ITEM: "UPDATE_SELECTED_FILTER_ITEM",
+  SELECT_FILTER_TAB: "SELECT_FILTER_TAB",
+  Selected_Tags_Index: "Selected_Tags_Index",
+  Selected_Price_Range: "Selected_Price_Range",
+  UPDATE_SELECTED_RESTAURANT_COUNT: "UPDATE_SELECTED_RESTAURANT_COUNT",
+  UPDATE_SORT: "UPDATE_SORT",
+  SET_CURRENT_LOCATION: "SET_CURRENT_LOCATION",
+  SET_SEARCH_VALUE: "SET_SEARCH_VALUE",
+  UPDATE_USER_REWARDS: "UPDATE_USER_REWARDS",
+  CLEAR_FILTERS: "CLEAR_FILTERS",
+  SHOW_HIDE_MENU: "SHOW_HIDE_MENU",
+  UPDATE_USER_AND_TOKEN: "UPDATE_USER_AND_TOKEN",
+  UPDATE_REVIEW_DATA: "UPDATE_REVIEW_DATA",
+  UPDATE_USER_REVIEW: "UPDATE_USER_REVIEW",
+  HIDE_FILTER_FAB_ICON: "HIDE_FILTER_FAB_ICON",
+  SET_CURRENT_CATEGORY: "SET_CURRENT_CATEGORY",
+  toggleFilterMenu: (value) => ({
     type: globalActions.TOGGLE_FILTER_MENU,
-    drawerOpen: value.drawerOpen
+    drawerOpen: value.drawerOpen,
   }),
-  toggleFilterAccordion: value => ({
+  toggleFilterAccordion: (value) => ({
     type: globalActions.TOGGLE_FILTER_ACCORDION,
-    selectedFilterAccordion: value.selectedFilterAccordion
+    selectedFilterAccordion: value.selectedFilterAccordion,
   }),
-  selectedTagsIndex: value => ({
+  selectedTagsIndex: (value) => ({
     type: globalActions.Selected_Tags_Index,
-    selectedTagsItems: value.selectedTagsItems
+    selectedTagsItems: value.selectedTagsItems,
   }),
-  selectedPriceRange: value => ({
+  selectedPriceRange: (value) => ({
     type: globalActions.Selected_Price_Range,
-    selectedPriceRangeItem: value.selectedPriceRangeItem
+    selectedPriceRangeItem: value.selectedPriceRangeItem,
   }),
-  updateStoreWithQuery: queryParams => ({
+  updateStoreWithQuery: (queryParams) => ({
     type: globalActions.UPDATE_STORE_WITH_QUERY,
-    queryParams
+    queryParams,
   }),
   updateSelectedFilterItem: (filter, filterValue) => ({
     type: globalActions.UPDATE_SELECTED_FILTER_ITEM,
     filter,
-    filterValue
+    filterValue,
   }),
-  selectFilterTab: selectedFilterTab => ({
+  selectFilterTab: (selectedFilterTab) => ({
     type: globalActions.SELECT_FILTER_TAB,
-    selectedFilterTab
+    selectedFilterTab,
   }),
   updateSelectedRestaurantCount: (selectedType, restaurants) => ({
     type: globalActions.UPDATE_SELECTED_RESTAURANT_COUNT,
     selectedType,
-    restaurants
+    restaurants,
   }),
   updateSort: (sortValue, sortDirection) => ({
     type: globalActions.UPDATE_SORT,
     sortValue,
-    sortDirection
+    sortDirection,
   }),
-  setCurrentLocation: location => ({
+  setCurrentLocation: (location) => ({
     type: globalActions.SET_CURRENT_LOCATION,
-    location
+    location,
   }),
-  setSearchValue: value => ({
+  setSearchValue: (value) => ({
     type: globalActions.SET_SEARCH_VALUE,
-    value
+    value,
   }),
-  updateUserRewards: userRewards => ({
+  updateUserRewards: (userRewards) => ({
     type: globalActions.UPDATE_USER_REWARDS,
-    userRewards
+    userRewards,
   }),
   clearSelectedFilters: (filter, filterValue) => ({
     type: globalActions.CLEAR_FILTERS,
     filter,
-    filterValue
+    filterValue,
   }),
   showHideMenu: (hideMenu, scrollValue) => ({
     type: globalActions.SHOW_HIDE_MENU,
     hideMenu,
-    scrollValue
+    scrollValue,
   }),
-  updateUserAndToken: data => ({
+  updateUserAndToken: (data) => ({
     type: globalActions.UPDATE_USER_AND_TOKEN,
-    data
+    data,
   }),
-  updateReviewData: tagsData => ({
+  updateReviewData: (tagsData) => ({
     type: globalActions.UPDATE_REVIEW_DATA,
-    tagsData
+    tagsData,
   }),
-  updateUserReview: review => ({
+  updateUserReview: (review) => ({
     type: globalActions.UPDATE_USER_REVIEW,
-    review
+    review,
   }),
-  hideFilterFabIcon: value => ({
+  hideFilterFabIcon: (value) => ({
     type: globalActions.HIDE_FILTER_FAB_ICON,
-    value
-	}),
-	setCurrentCategory: category => ({
-			type: globalActions.SET_CURRENT_CATEGORY,
-			selectedCategory: category
-	}),
+    value,
+  }),
+  setCurrentCategory: (category) => ({
+    type: globalActions.SET_CURRENT_CATEGORY,
+    selectedCategory: category,
+  }),
 };
 
 export default globalActions;

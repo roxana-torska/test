@@ -1,7 +1,7 @@
-const jwt_decode = require('jwt-decode');
+const jwt_decode = require("jwt-decode");
 
 const getToken = function(req) {
-  let token = req.cookies['DishIn-token'] || null;
+  let token = req.cookies["DishIn-token"] || null;
   if (token) {
     return token;
   }
@@ -10,7 +10,7 @@ const getToken = function(req) {
 const setToken = function(res, token) {
   const expiresIn = new Date();
   expiresIn.setMonth(expiresIn.getMonth() + 1);
-  res.cookie('DishIn-token', token, { expires: expiresIn, httpOnly: true });
+  res.cookie("DishIn-token", token, { expires: expiresIn, httpOnly: true });
 };
 
 const getDecodedToken = function(token) {
@@ -53,21 +53,21 @@ const getQueryParams = function(data) {
     if (lng && lat) {
       filters.location = {
         lng,
-        lat
+        lat,
       };
     }
   }
   if (data.lng && data.lat) {
     filters.location = {
       lng: data.lng,
-      lat: data.lat
+      lat: data.lat,
     };
   }
 
   if (data.searchText) {
     result.searchText = data.searchText;
   }
-  if (data.sort && data.sort === 'distance') {
+  if (data.sort && data.sort === "distance") {
     result.sort = data.sort;
   } else {
     if (data.sort) {
@@ -87,14 +87,16 @@ const setLocation = function(location) {
   if (location) {
     const tempLocation = {
       lng: location.lng,
-      lat: location.lat
+      lat: location.lat,
     };
-    localStorage.setItem('location', JSON.stringify(tempLocation));
+    localStorage.setItem("location", JSON.stringify(tempLocation));
+    console.log("this is the localstorage", localStorage.getItem("location"));
   }
 };
 
 const getLocation = function() {
-  let location = localStorage.getItem('location') || '';
+  let location = localStorage.getItem("location") || "";
+  console.log("this is the localstorage", location);
   if (location) {
     return JSON.parse(location);
   }
@@ -108,5 +110,5 @@ module.exports = {
   getQueryParams,
   setLocation,
   getLocation,
-  decodeToken
+  decodeToken,
 };

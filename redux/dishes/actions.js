@@ -1,18 +1,30 @@
-import { LIST_DISHES } from "./types";
-import axios from "axios";
+import { GET_DISHES, SEARCH_DISHES, CLEAR } from "./types";
 
-export const listDishes = () => (dispatch) => {
-  axios
-    .get("/dishes", {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-    })
-    .then((info) => {
-      console.log(info);
-      dispatch({
-        type: LIST_DISHES,
-        payload: info,
-      });
+import { dishesAPI } from "../../services/dishesAPI";
+
+export const getDishes = () => (dispatch) => {
+  dishesAPI.getDishes().then((info) => {
+    console.log("data is", info);
+    dispatch({
+      type: GET_DISHES,
+      payload: info.data,
     });
+  });
+};
+
+export const searchDishes = (searchTerm, force) => (dispatch) => {
+  dishesAPI.searchDishes(searchTerm).then((info) => {
+    dispatch({
+      type: SEARCH_DISHES,
+      payload: { info, searchTerm, force },
+    });
+  });
+};
+export const clearSearch = () => (dispatch) => {
+  dishesAPI.getDishes().then((info) => {
+    dispatch({
+      type: CLEAR,
+      payload: { info, searchTerm: null },
+    });
+  });
 };

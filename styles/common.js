@@ -1,22 +1,58 @@
+import TabIndicator from "@material-ui/core/Tabs/TabIndicator";
+var poppins = "Poppins";
 const rootFontSize = 14;
-const getRemFontSizeByPx = function(px) {
+const primaryColor = "#242948";
+const getRemFontSizeByPx = function (px) {
   let remValue = px / rootFontSize;
   return remValue.toFixed(3) + "rem";
 };
 const styles = (theme) => {
   return {
-    root: {
-      flexGrow: 1,
-      scrollX: "none",
+    hide: { display: "none !important" },
+    relative: { position: "relative" },
+    absolute: { position: "absolute" },
+    fixed: { position: "fixed" },
+    flex: { display: "flex" },
+    flexRow: { flexDirection: "row" },
+    flexColumn: { flexDirection: "column" },
+    flexAlignStart: { alignItems: "flex-start" },
+    flexAlignCenter: { alignItems: "center" },
+    flexAlignBaseline: { alignItems: "baseline" },
+    flexAlignEnd: { alignItems: "flex-end" },
+    flexJustifyStart: { justifyContent: "flex-start" },
+    flexFustifyCenter: { justifyContent: "center" },
+    flexJustifyEnd: { justifyContent: "flex-end" },
+    flexJustifyAround: { justifyContent: "space-around" },
+    flexJustifyBetween: { justifyContent: "space-between" },
+    flexJustifyEvenly: { justifyContent: "space-evenly" },
+    center: { textAlign: "center" },
+
+    hr: {
+      border: 0,
+      borderTop: "1px solid #E1E2E7",
+      margin: 0,
+      padding: 0,
+
+      outline: "0px",
+      height: "0px",
+      borderStyle: "solid",
     },
+
+    //material
+    root: {
+      scrollX: "none",
+      height: "45px",
+    },
+
     card: {
       display: "flex",
     },
     cover: {
       width: 151,
     },
-    reviewIconColor: {
-      color: "#C4C4C4",
+    iconClosh: {
+      height: "13px",
+      transform: "translate(0px,1px)",
     },
     container: {
       display: "flex",
@@ -28,22 +64,7 @@ const styles = (theme) => {
     backdrop: {
       position: "absolute",
     },
-    TagIcon: {
-      fontSize: "17px",
-    },
-    pageTitleRed: {
-      fontFamily: "'Poppins', 'sans-serif'",
-      fontSize: getRemFontSizeByPx(30),
-      color: theme.palette.primary.main,
-      fontWeight: "normal",
-      fontStyle: "normal",
-      fontStretch: "normal",
-      lineHeight: "normal",
-      letterSpacing: "normal",
-      ["@media (max-width:320px)"]: {
-        fontSize: getRemFontSizeByPx(25),
-      },
-    },
+
     textInDish: {
       fontSize: "2em",
       color: theme.palette.primary.main,
@@ -52,60 +73,32 @@ const styles = (theme) => {
       // }
     },
     // review Card Size management
-    reviewCardSize: {
-      width: 370,
-      minHeight: 258,
-      maxHeight: "85vh",
-      backgroundColor: "white",
-      overflow: "hidden",
-      overflowY: "scroll",
-      border: "2px solid #000",
-      padding: "10px",
-      ["@media screen and (min-height:550px) and (max-height:600px)"]: {
-        maxHeight: "95vh",
-      },
-    },
-    valueMoneyDiv: {
-      height: "14px",
-      width: "205px",
-      margin: "57px 0px 0px 47px",
-      display: "inline-block",
-      verticalAlign: "top",
-      background: "#FFCDD2",
-      ["@media (max-width:340px)"]: {
-        width: "165px",
-      },
-    },
+
     pageSpacing: {
       padding: "16px",
     },
     reviewCard: {
-      width: "90%",
-      margin: "40px 0px 0px 15px",
+      width: "100%",
+      boxShadow: "none",
+      margin: "0px 0px 0px 0px",
       background: "#FFFEFE",
-      boxShadow:
-        "0px -2px 4px rgba(0, 0, 0, 0.1), 0px 4px 4px rgba(0, 0, 0, 0.25)",
-      borderRadius: "3px",
-      ["@media (max-width: 320px)"]: {
-        width: "300px",
-        margin: "40px 10px 0px 10px",
-      },
-      ["@media screen and (min-width: 321px) and (max-width:360px)"]: {
-        width: "340px",
-        margin: "40px 10px 0px 10px",
-      },
-      ["@media screen and (min-width: 361px) and (max-width: 380px) "]: {
-        width: "355px",
-        margin: "40px 10px 0px 10px",
-      },
-      ["@media screen and (min-width: 381px) and (max-width: 400px) "]: {
-        width: "380px",
-        margin: "40px 10px 0px 10px",
-      },
-      ["@media screen and (min-width: 401px) and (max-width: 420px) "]: {
-        width: "391px",
-        margin: "40px 10px 0px 10px",
-      },
+      fontWeight: 300,
+    },
+    ["@media screen and (min-width: 321px) and (max-width:360px)"]: {
+      width: "340px",
+      margin: "0px 0px 0px 0px",
+    },
+    ["@media screen and (min-width: 361px) and (max-width: 380px) "]: {
+      width: "355px",
+      margin: "0px 0px 0px 0px",
+    },
+    ["@media screen and (min-width: 381px) and (max-width: 400px) "]: {
+      width: "380px",
+      margin: "0px 0px 0px 0px",
+    },
+    ["@media screen and (min-width: 401px) and (max-width: 420px) "]: {
+      width: "391px",
+      margin: "0px 0px 0px 0px",
     },
 
     pageTitle: {
@@ -117,42 +110,44 @@ const styles = (theme) => {
       // }
     },
 
+    AppBar: { padding: "0px" },
     reviewDish: {
       fontFamily: "'Poppins', 'sans-serif'",
       fontSize: "0.7em",
       textAlign: "center",
+      backgroundColor: "#fffff",
     },
-    btnRaisedLightNormalRed: {
-      backgroundColor: theme.palette.primary.main,
-      fontFamily: "'Poppins', 'sans-serif'",
-      textTransform: "capitalize",
-      fontSize: getRemFontSizeByPx(12),
-      color: "#FFFFFF",
-      padding: "6px",
-      boxShadow: "0 2px 2px 1px rgba(0, 0, 0, .2)",
-      fontWeight: "900",
-      borderRadius: "3px",
-      letterSpacing: "0.5px",
-      objectFit: "contain",
+    AppBarBlack: {
+      padding: "0px",
+      transition: "background-color 500ms ease-in",
+      backgroundColor: "#000000",
+    },
+
+    topBarBlackLogoContainer: {
+      textAlign: "center",
+      alignSelf: "center",
       width: "100%",
-      "&:hover": {
-        backgroundColor: theme.palette.primary.main,
-      },
-      ["@media (max-width:320px)"]: {
-        fontSize: getRemFontSizeByPx(10),
-      },
     },
+    topBarBlackLogo: {
+      textAlign: "center",
+      width: "60px",
+      transform: "translate(3.9px,1px) ",
+    },
+    AppBarBlackLog: {},
+
     inputFieldGrey: {
       color: "#757575",
       fontFamily: "'Poppins', 'sans-serif'",
       fontSize: getRemFontSizeByPx(15),
+      fontWeight: 200,
       ["@media (max-width:320px)"]: {
         fontSize: getRemFontSizeByPx(12),
       },
       lineHeight: 1,
       "& input": {
-        color: "#757575",
+        color: theme.palette.primary.main,
       },
+      "& before": { display: "none" },
     },
     inputWhiteField: {
       color: "#fff",
@@ -165,6 +160,9 @@ const styles = (theme) => {
     fontInherit: {
       font: "inherit",
     },
+    inputFiled: {
+      display: "none",
+    },
     inputUnderline: {
       font: "inherit",
       // ['@media (max-width:320px)']: {
@@ -174,17 +172,16 @@ const styles = (theme) => {
         borderColor: "#aeaeae !important",
         borderWidth: "1px !important",
       },
-      "&:after": {
+      "&:before": {
         borderBottomColor: "#aeaeae",
         borderBottomWidth: "1px",
       },
     },
-    cssFocused: {},
+
     inputLabel: {
-      "&$cssFocused": {
-        color: "#757575",
-      },
+      height: "90px",
     },
+
     footerLatoTextNormal: {
       color: "#717171",
       fontSize: getRemFontSizeByPx(13),
@@ -199,6 +196,12 @@ const styles = (theme) => {
     },
     footerLatoTextBold: {
       fontWeight: "600",
+    },
+    bold: {
+      fontWeight: "600",
+      color: primaryColor,
+      fontSize: "14px",
+      textDecoration: "underline",
     },
     btnContainer: {
       margin: "89px 40px 50px",
@@ -218,77 +221,45 @@ const styles = (theme) => {
         color: "red",
       },
     },
-    footerBgIconLeft: {
-      position: "absolute",
-      left: "0px",
-      top: "80%",
-      backgroundImage: "url(/static/imgs/frame-left.png)",
-      backgroundPosition: "right",
-      backgroundRepeat: "no-repeat",
-      zIndex: -1,
-      width: "35px",
-      height: "89px",
-      // ['@media (max-width:320px)']: {
-      //   top: '-140px'
-      // }
-    },
-    footerBgIconRight: {
-      position: "absolute",
-      right: "0px",
-      top: "75%",
-      backgroundImage: "url(/static/imgs/frame-right.png)",
-      backgroundPosition: "left",
-      backgroundRepeat: "no-repeat",
-      zIndex: -1,
-      width: "55px",
-      height: "85px",
-      // ['@media (max-width:320px)']: {
-      //   top: '-176px'
-      // }
-    },
 
-    footerBgIconCenter: {
-      marginLeft: "50%",
-      transform: "translate(-50%, -50%)",
-      marginTop: "10px",
-      backgroundRepeat: "no-repeat",
-      zIndex: -1,
-      width: "70px",
-      height: "85px",
-      // ['@media (max-width:320px)']: {
-      //   top: '-176px'
-      // }
-    },
-
-    socialIcon: {
-      width: "40px",
-      height: "40px",
-      ["@media (max-width:320px)"]: {
-        width: "35px",
-        height: "35px",
-      },
-    },
     topBarLogoContainer: {
       textAlign: "center",
+      alignSelf: "center",
       width: "100%",
     },
     topBarLogo: {
       textAlign: "center",
-      width: "90px",
+      width: "60px",
+      transform: "translate(0px,-1px)",
     },
-    topBgIconContainer: {
-      position: "relative",
-      height: "56px",
-      [theme.breakpoints.up("sm")]: {
-        height: "64px",
-      },
-    },
+    topBgIconContainer: {},
     topBarIcon: {
-      width: "19px",
+      width: "16px",
     },
+    topBarIconBack: {
+      width: "11px",
+    },
+    topBarIconSearch: {
+      transform: "translate(-12px,-6px)",
+    },
+    topBarIconMenu: {
+      transform: "translate(8px,-5px)",
+    },
+    topBarProfileImg: { width: "28px" },
+    topBarIcon: {
+      width: "16px",
+    },
+
+    topBarSearch: { width: "100%", transform: "translate(0px,-3px)" },
+    scroll: { overflowY: "scroll", height: "100vh" },
     headerMarginSuppress: {
       marginTop: "78px",
     },
+    topbarBlack: {
+      filter: "invert(1) brightness(500)",
+      background: "transparent",
+    },
+
     headerHr: {
       display: "block",
       height: "1px",
@@ -309,807 +280,7 @@ const styles = (theme) => {
       //   fontSize: '.9rem'
       // }
     },
-    weKnowWhereYouAre: {
-      backgroundColor: theme.palette.secondary.main,
-      width: "100%",
-      padding: "10px",
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    recoverPasswordText: {
-      fontFamily: "'Lato'",
-      fontSize: "1em",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '.7rem'
-      // }
-    },
-    modalFooter: {
-      padding: "15px",
-      textAlign: "right",
-      paddingTop: "0",
-      margin: "0",
-    },
-    inputHelperText: {
-      textAlign: "right",
-      // ['@media (max-width:320px)']: {
-      //   marginTop: '0px'
-      // }
-    },
-    iconRoot: {
-      color: theme.palette.primary.main,
-    },
-    listRoot: {
-      width: "100%",
-    },
-    listRootItem: {
-      "&:hover": {
-        backgroundColor: "#f5f5f5",
-      },
-      fontFamily: "'Lato'",
-      fontSize: "1em",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '.7rem'
-      // }
-    },
-    listItemTextPrimary: {
-      fontFamily: "'Lato'",
-      fontSize: "1em",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '.7rem'
-      // }
-    },
-    listScroll: {},
-    pageInfo: {
-      fontFamily: "'Lato'",
-      fontSize: "2em",
-      lineHeight: 3,
-      color: "#999",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '1.7rem'
-      // }
-    },
-    appBarShadowNone: {
-      boxShadow: "none",
-    },
-    searchFilterIcon: {
-      width: "20px",
-      height: "20px",
-    },
-    searchFilterIconColor: {
-      color: "#fff",
-    },
-    drawerIcon: {
-      textAlign: "right",
-    },
-    drawerPaper: {
-      width: "90%",
-    },
-    drawerPaperRoot: {
-      boxShadow: "none",
-      borderRadius: "0px",
-    },
-    drawerCloseIcon: {
-      color: "#000",
-    },
-    inputSearchField: {
-      color: "#757575",
-      fontFamily: "'Lato'",
-      fontSize: "1.5em",
-      margin: "0px",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '.9rem'
-      // }
-    },
-    drawerIconOpen: {
-      padding: "0px",
-      margin: "0px",
-      textAlign: "right",
-    },
-    filterDrawerHead: {
-      backgroundColor: "#fff",
-    },
-    drawerClose: {
-      fontSize: "1em",
-    },
-    drawerCloseButton: {
-      padding: "3px",
-    },
-    restaurantsListItem: {
-      borderColor: "#757575 !important",
-      borderWidth: "1px !important",
-      boxShadow: "0.1px 1px 1px .2px rgba(0, 0, 0, .4)",
-      marginBottom: "20px",
-      paddingLeft: "10px",
-      paddingRight: "10px",
-    },
-    textColorPrimary: {
-      color: "#444",
-    },
-    tabSelected: {
-      color: "#999",
-    },
-    drawerOpenButton: {
-      padding: "0px",
-      borderRadius: "0px",
-    },
-    inputWhiteLabel: {
-      color: "#fff",
-      "&$cssFocused": {
-        color: "#fff",
-      },
-    },
-    inputWhiteUnderline: {
-      "&:hover:not($disabled):before,&:before": {
-        //borderColor: '#F9D7D6 !important',
-        borderWidth: "0px !important",
-      },
-      "&:after": {
-        // borderBottomColor: '#F9D7D6',
-        borderBottomWidth: "0px",
-      },
-    },
-    iconWhite: {
-      color: "#FFF",
-    },
-    searchBarMargin: {
-      margin: "16px 0px 0px 0px",
-    },
-    topSearchTabRoot: {
-      minHeight: "48px",
-      backgroundColor: "#eeeeee",
-      color: theme.palette.primary.main,
-      fontFamily: "Roboto",
-      fontSize: "1rem",
-      textTransform: "none !important",
-    },
-    topSearchTabsRoot: {
-      minHeight: "48px",
-    },
-    btnIcon: {
-      padding: "0px",
-      margin: "0px",
-    },
-    restaurantSort: {
-      marginBottom: "30px",
-      paddingLeft: "24px",
-      paddingRight: "24px",
-      marginTop: "20px",
-    },
-    restaurantDistanceSort: {
-      marginBottom: "30px;",
-      borderColor: "#757575 !important",
-      borderWidth: "1px !important",
-      paddingLeft: "24px",
-      paddingRight: "24px",
-    },
-    selectedDirection: {
-      color: "#4a4a4a",
-    },
-    filterRestaurantCount: {
-      textAlign: "right",
-    },
-    listItemRectAvatar: {
-      borderRadius: 0,
-      marginTop: 0,
-      width: "100px",
-      height: "100px",
-    },
-    reviewListAvatar: {
-      height: "40px",
-      width: "40px",
-    },
-    listMultiItem: {
-      width: "100%",
-    },
-    fabMenu: {
-      position: "fixed",
-      "&$fabDirectionUp, &$fabDirectionLeft": {
-        bottom: theme.spacing.unit * 2,
-        right: theme.spacing.unit * 3,
-      },
-      "&$fabDirectionDown, &$fabDirectionRight": {
-        top: theme.spacing.unit * 2,
-        left: theme.spacing.unit * 3,
-      },
-    },
-    fabDirectionUp: {},
-    fabDirectionRight: {},
-    fabDirectionDown: {},
-    fabDirectionLeft: {},
-    filterMenuIcon: {
-      width: "20px",
-      height: "20px",
-    },
-    filterIcon: {
-      backgroundColor: "#fff",
-    },
-    filterClear: {
-      backgroundColor: "rgba(0, 0, 0, 0.08)",
-      color: "#a9a9a9",
-    },
-    filterContainerMargin: {
-      marginTop: "56px",
-      [theme.breakpoints.up("sm")]: {
-        marginTop: "64px",
-      },
-    },
-    filterTabsRoot: {
-      width: "100%",
-    },
-    filterLabelFont: {
-      fontSize: "1.2rem",
-      fontWeight: 600,
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '.8rem'
-      // }
-    },
-    filterTabRoot: {
-      fontSize: "1.2rem",
-      fontWeight: 600,
-      minHeight: "56px",
-      [theme.breakpoints.up("sm")]: {
-        minHeight: "64px",
-      },
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '.8rem'
-      // }
-    },
-    userDrawerCardHeader: {
-      position: "absolute",
-      zIndex: "999",
-      top: "1px",
-      padding: "0px",
-    },
-    userDrawerCloseButton: {
-      color: "#fff",
-      textAlign: "left",
-    },
-    userDrawerCardMedia: {
-      height: "100%",
-      backgroundColor: theme.palette.primary.main,
-    },
-    userDrawerContentRoot: {
-      padding: "0px",
-    },
-    userDrawerUserImage: {
-      height: "150px",
-      width: "150px",
-      border: "3px solid #fff",
-      borderRadius: "50%",
-    },
-    userDrawerTextField: {
-      width: "100%",
-    },
-    userDrawerCreateIcon: {
-      color: "#a9a9a9",
-    },
-    notFoundDesc: {
-      fontFamily: "'Lato'",
-      fontSize: ".9em",
-      color: "#757575",
-    },
-    notFoundHeading: {
-      fontFamily: "'Lato'",
-      fontSize: "1.2em",
-      color: theme.palette.primary.main,
-      fontWeight: "600",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '.8rem'
-      // }
-    },
-    reviewsListImg: {
-      height: "317px",
-      width: "100%",
-    },
-    moodIcon: {
-      color: "red",
-      marginRight: "10px",
-    },
-    userAvatar: {
-      position: "absolute",
-      top: "22px",
-    },
-    userName: {
-      color: "#4a4a4a",
-      fontFamily: "'Lato'",
-      fontSize: "1.2em",
-      fontWeight: "600",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '.8rem'
-      // }
-    },
-    userEmail: {
-      color: "#979797",
-      fontFamily: "'Lato'",
-      fontSize: ".7em",
-    },
-    listCardItem: {
-      borderColor: "#757575 !important",
-      boxShadow: "0.1px 1px 3px .2px rgba(0, 0, 0, .4)",
-      height: "160px",
-    },
-    listCardImage: {
-      height: "100%",
-      width: "100%",
-      padding: "10px",
-      objectFit: "cover",
-    },
-    listCardImageFullWidth: {
-      height: "100%",
-      width: "100%",
-      padding: "10px",
-      marginRight: "5px",
-      objectFit: "cover",
-    },
-    listCardTitle: {
-      fontFamily: "'BebasNeue'",
-      fontSize: "1.3em",
-      marginBottom: "10px",
-      whiteSpace: "nowrap",
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '.9rem'
-      // }
-    },
-    listCardDescription: {
-      fontFamily: "'Lato'",
-      fontSize: ".8em",
-      color: "#838383",
-      height: "48px",
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '.7rem'
-      // }
-    },
-    reviewListIcon: {
-      textAlign: "right",
-    },
-    reviewFooterItem: {
-      fontFamily: "'Lato'",
-      fontSize: ".6em",
-      color: "#838383",
-      marginTop: "24px",
-    },
-    listItem: {
-      "&:hover, &:focus, &:active, &:visited": {
-        backgroundColor: "#fff",
-      },
-    },
-    iconsInReviewsList: {
-      textAlign: "center",
-    },
-    dishDetailsTabs: {
-      backgroundColor: "gray",
-      textAlign: "center",
-    },
 
-    valueForMoney: {
-      color: "#ffcdd2",
-      height: "20px",
-      backgroundColor: "#f1f0f1",
-    },
-    taste: {
-      color: "#e57373",
-      height: "20px",
-      backgroundColor: "#f1f0f1",
-    },
-    lookAndFeel: {
-      color: "#d32f2f",
-      height: "20px",
-      backgroundColor: "#f1f0f1",
-    },
-    reviewsListCard: {
-      margin: "16px",
-      padding: "16px",
-    },
-    marginNormal: {
-      margin: "0px",
-    },
-    couponCardItemRight: {
-      fontFamily: "'Lato'",
-      fontSize: ".9em",
-      textAlign: "center",
-      paddingTop: "36px",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '.7rem'
-      // }
-    },
-
-    downloadCoupon: {
-      color: theme.palette.primary.main,
-      border: "1px solid",
-      borderColor: theme.palette.primary.main,
-    },
-    redeemContent: {
-      fontFamily: "'Lato'",
-      fontSize: "1em",
-      textAlign: "center",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '.7rem'
-      // }
-    },
-    redeemEmailText: {
-      fontSize: "1em",
-      textAlign: "left",
-      color: "#878787",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '.7rem'
-      // }
-    },
-    redeemEmail: {
-      padding: "10px",
-      backgroundColor: "#fafafa",
-      fontSize: ".9em",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '.7rem'
-      // }
-    },
-    addAnotherEmail: {
-      fontSize: "1em",
-      textAlign: "center",
-      color: "#878787",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '.7rem'
-      // }
-    },
-    redeemFooter: {
-      textAlign: "center",
-    },
-
-    redeemUserEmail: {
-      color: "#878787",
-      fontSize: ".8em",
-    },
-    emailCheck: {
-      textAlign: "right",
-    },
-    reviewFooterItemIcon: {
-      verticalAlign: "middle",
-      fontSize: "1.5em",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '1rem'
-      // }
-    },
-    listCardFooterPrice: {
-      fontFamily: "'BebasNeue'",
-      fontSize: "1em",
-      fontWeight: "600",
-      color: "#000",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '1rem'
-      // }
-    },
-    listCardRestaurant: {
-      fontSize: "1.1em",
-      textDecoration: "underline",
-      whiteSpace: "nowrap",
-      overflow: "hidden",
-      textOverFlow: "ellipsis",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '.8rem'
-      // }
-    },
-    listCardRating: {
-      fontFamily: "'BebasNeue'",
-      fontSize: "1.4em",
-      color: theme.palette.primary.main,
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '1rem'
-      // }
-    },
-    listCardActionButton: {
-      // width: '40px',
-      // height: '40px',
-      backgroundColor: theme.palette.primary.main,
-      borderRadius: "0px",
-      // ['@media (max-width:320px)']: {
-      //   width: '30px',
-      //   height: '30px'
-      // }
-    },
-    overlay: {
-      position: "fixed",
-      width: "100%",
-      height: "100%",
-      top: "0px",
-      left: "0px",
-      right: "0px",
-      bottom: "0px",
-      backgroundColor: "rgba(0,0,0,0.5)",
-      zIndex: 999,
-      cursor: "pointer",
-    },
-    filterClearLabel: {
-      textDecoration: "capitalize",
-      padding: "0 25px",
-    },
-    dishDescription: {
-      fontFamily: "'Lato'",
-      fontSize: "1em",
-      paddingTop: "10px",
-      lineHeight: "24px",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '.7rem'
-      // }
-    },
-    dishHeadings: {
-      fontSize: "1.6em",
-      fontFamily: "'BebasNeue', 'bold'",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '.9rem'
-      // }
-    },
-    dishDetailIconSize: {
-      color: "#838383",
-      height: "24px",
-      width: "24px",
-      padding: "0px",
-    },
-
-    dishDetailTagHeading: {
-      fontFamily: "Lato Bold",
-      fontSize: "1em",
-      fontWeight: "600",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '.7rem'
-      // }
-    },
-    contactMeButton: {
-      textAlign: "center",
-    },
-    autoCompleteContainer: {
-      position: "relative",
-    },
-    autoCompletePaper: {
-      // position: 'absolute',
-      // zIndex: 1,
-      // left: 0,
-      // right: 0,
-      height: "144px",
-      overflow: "hidden",
-      overflowY: "scroll",
-      ["@media (max-width:320px)"]: {
-        height: "84px",
-      },
-    },
-    autoCompleteMenuItem: {
-      fontSize: getRemFontSizeByPx(15), //'0.7rem',
-      padding: "12px",
-      lineHeight: 1.33,
-      color: "#494949",
-      ["@media (max-width:320px)"]: {
-        fontSize: getRemFontSizeByPx(12),
-        padding: "2px",
-      },
-    },
-    autoCompleteAvatar: {
-      width: "24px",
-      height: "24px",
-    },
-    labelCapitalTransform: {
-      textTransform: "capitalize",
-      paddingLeft: "15px",
-      paddingRight: "15px",
-    },
-    userDrawerRoot: {
-      borderRadius: "0px",
-      boxShadow: "none",
-    },
-    floatingFilterSubmit: {
-      position: "fixed",
-      zIndex: 999,
-      bottom: "20px",
-      width: "100%",
-    },
-    restaurantMenu: {
-      display: "flex",
-      flexWrap: "wrap",
-    },
-    restaurantMenuItem: {
-      minWidth: 120,
-      maxWidth: 300,
-    },
-    restaurantMenuLabel: {
-      "&:focus": {
-        color: "#fff",
-      },
-      color: "#fff",
-    },
-
-    couponCardItem: {
-      borderColor: "#757575 !important",
-      boxShadow: "0.1px 1px 3px .2px rgba(0, 0, 0, .4)",
-      height: "116px",
-      borderRadius: "3px",
-      // ['@media (max-width:320px)']: {
-      //   height: '100px'
-      // }
-    },
-    couponCardItemLeft: {
-      textAlign: "center",
-      height: "100%",
-      width: "100%",
-      borderRight: "1px dotted #c3c2c1",
-      paddingTop: "25px",
-      backgroundImage: "url(/static/imgs/back.png)",
-      backgroundPosition: "left",
-      backgroundRepeat: "repeat",
-    },
-    couponCardItemDecNo: {
-      fontFamily: "'Montserrat'",
-      fontSize: "1.9rem",
-      color: theme.palette.primary.main,
-      textAlign: "center",
-      fontWeight: 600,
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '1.2rem'
-      // }
-    },
-    couponCardItemDec: {
-      fontFamily: "'Lato'",
-      fontSize: ".7em",
-      color: "#757575",
-    },
-
-    activeCoupon: {
-      color: theme.palette.primary.main,
-    },
-    inactiveCoupon: {
-      color: "#c3c2c1",
-    },
-    roundBorderTop: {
-      borderBottom: "1px solid #eee",
-      width: "15px",
-      height: "15px",
-      borderRadius: "50%",
-      top: "-8px",
-      right: "-8px",
-      backgroundColor: "#fff",
-      boxShadow: " 0px -1px 0px rgba(0, 0, 0, 0.2) inset",
-    },
-    roundBorderBottom: {
-      borderTop: "1px solid #eee",
-      width: "15px",
-      height: "15px",
-      borderRadius: "50%",
-      bottom: "-8px",
-      right: "-8px",
-      backgroundColor: "#fff",
-      boxShadow: " 0px 1px 0px rgba(0, 0, 0, 0.2) inset",
-    },
-    rewardHeading: {
-      fontFamily: "'Lato'",
-      fontSize: "1em",
-      fontWeight: "600",
-      textAlign: "center",
-      color: "#878787",
-      marginBottom: "10px",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '.8rem'
-      // }
-    },
-    rewardProgress: {
-      height: "0.5em",
-      borderRadius: "13px",
-      backgroundColor: "#f1f0f1",
-    },
-    pointToGainText: {
-      fontFamily: "'Lato'",
-      fontSize: "1em",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '.7rem'
-      // }
-    },
-    pointToGain: {},
-    rewardCount: {
-      top: "50%",
-      left: "-32px",
-      width: "20px",
-      backgroundColor: "#fff",
-      color: theme.palette.primary.main,
-    },
-    redeemHead: {
-      textAlign: "center",
-      fontFamily: "'Lato'",
-      fontSize: "1em",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '.7rem'
-      // }
-    },
-    redeemHeading: {
-      color: theme.palette.primary.main,
-      fontFamily: "'BebasNeue'",
-      fontSize: "1.9em",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '1rem'
-      // }
-    },
-    redeemDesc: {
-      fontSize: "1em",
-      color: "#878787",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '.7rem'
-      // }
-    },
-    redeemUserName: {
-      fontSize: ".9em",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '.7rem'
-      // }
-    },
-    redeemVerticalSpacer: {
-      // ['@media (max-width:320px)']: {
-      //   display: 'none'
-      // }
-    },
-    restaurantMenuSelect: {
-      color: "#fff",
-      fontSize: "1rem",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '.7rem'
-      // }
-      // ['@media (max-width:768px)']: {
-      //   fontSize: '.8rem'
-      // }
-    },
-    restaurantMenuOutlined: {
-      color: theme.palette.primary.main,
-    },
-    dishDescTags: {
-      "& li": {
-        display: "inline-block",
-      },
-      padding: "0px",
-    },
-    colorPrimary: {
-      color: theme.palette.primary.main,
-    },
-    dishDescLi: {
-      fontSize: "15px",
-    },
-    dishDetailSecColor: {
-      color: "#979797",
-    },
-    roomServiceTitle: {
-      color: "#626262",
-      padding: "5px",
-    },
-    distDetailFooter: {
-      marginTop: "10px",
-      marginBottom: "10px",
-    },
-    futureTime: {
-      color: "#626262",
-      fontSize: "1em",
-      fontFamily: "Lato",
-      marginTop: "10px",
-      fontWeight: "600",
-      textDecoration: "underline",
-    },
-    reviewRating: {
-      fontFamily: "'BebasNeue'",
-      fontSize: getRemFontSizeByPx(21),
-      color: "#fff",
-      width: "100%",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '1rem',
-      //   width: '30px'
-      // }
-    },
-    makeAReview: {
-      color: theme.palette.primary.main,
-      fontSize: getRemFontSizeByPx(14),
-      fontFamily: "Lato",
-      textDecoration: "underline",
-      lineHeight: "17px",
-      // ['@media (max-width:320px)']: {
-      //   fontSize: '.7rem'
-      // }
-    },
     roomServiceIcon: {
       height: "20px",
       width: "28px",
@@ -1181,11 +352,7 @@ const styles = (theme) => {
       fontSize: "1em",
       color: "#979797",
     },
-    reviewDialogFooterButton: {
-      fontFamily: "Roboto",
-      fontSize: ".9em",
-      color: "#979797",
-    },
+
     makeAReviewPopoverPaper: {
       boxShadow: "none",
     },
@@ -1241,60 +408,6 @@ const styles = (theme) => {
       paddingBottom: "5px",
     },
 
-    simpleListItem: {
-      borderBottom: "1px solid #979797",
-    },
-    listCardActionButtonRoot: {
-      minWidth: "0px",
-      color: "#fff",
-      boxShadow: "none",
-      padding: "0px",
-    },
-    sliderImg: {
-      width: "100%",
-      height: "400px",
-      ["@media (max-width:720px)"]: {
-        height: "240px",
-      },
-    },
-    ReservetableHeading: {
-      color: "gray",
-      fontFamily: "'BebasNeue'",
-    },
-    mobileStepper: {
-      flexGrow: 1,
-      color: "white",
-      position: "absolute",
-      bottom: "0px",
-      backgroundColor: "transparent",
-      width: "100%",
-    },
-    latestReviewAvatar: {
-      width: "28px",
-      height: "28px",
-      marginBottom: "5px",
-    },
-    restaurantDetailDesc: {
-      fontFamily: "Lato",
-      fontSize: ".9em",
-      color: "#979797",
-    },
-    listCardRestaurantName: {
-      fontFamily: "Lato",
-      fontSize: ".6em",
-    },
-    listCardDishRating: {
-      fontFamily: "'BebasNeue'",
-      fontSize: ".8em",
-      color: theme.palette.primary.main,
-    },
-    listCardActionButtonMin: {
-      boxShadow: "none",
-    },
-    dishCardYouRate: {
-      fontFamily: "Lato",
-      fontSize: getRemFontSizeByPx(12),
-    },
     restaurantReviews: {
       color: theme.palette.primary.main,
       fontSize: ".8em",
@@ -1359,17 +472,6 @@ const styles = (theme) => {
       backgroundColor: "#ffffff",
     },
 
-    advanceRatingAva: {
-      width: "25px",
-      height: "25px",
-    },
-    editUSerImage: {
-      position: "absolute",
-      right: "0",
-      zIndex: 999,
-      bottom: "0",
-      left: "70px",
-    },
     restaurantMenuSelected: {
       width: "100px",
     },
@@ -1378,101 +480,12 @@ const styles = (theme) => {
       bottom: "50%",
       left: "50%",
     },
-    locationAddress: {
-      fontSize: `${getRemFontSizeByPx(14)} !important`,
-      ["@media (max-width:320px)"]: {
-        fontSize: `${getRemFontSizeByPx(11)} !important`,
-      },
+    location: {
+      marginLeft: "5px",
+      fontWeight: 400,
+      textDecoration: "underline",
     },
-    footerActionsCT: {
-      position: "relative",
-    },
-    adjustHeightGridTwo: {
-      height: "60px",
-      width: "100vw",
-      ["@media (max-width:320px)"]: {
-        height: "43px",
-      },
-    },
-    adjustHeightGridFour: {
-      height: "177px",
-      width: "100vw",
-      ["@media (max-width:320px)"]: {
-        height: "116px",
-      },
-    },
-    adjustHeightGridSix: {
-      height: "36px",
-      width: "100vw",
-      textAlign: "center",
-      ["@media (max-width:320px)"]: {
-        height: "31px",
-      },
-    },
-    adjustHeightGridEight: {
-      height: "145px",
-      width: "100vw",
-      textAlign: "center",
-      ["@media (max-width:320px)"]: {
-        height: "130px",
-      },
-    },
-    autoCompleteListCT: {
-      height: "144px",
-      ["@media (max-width:320px)"]: {
-        height: "88px",
-      },
-    },
-    adjustHeightGridFourNoGeo: {
-      height: "35px",
-      width: "100vw",
-      ["@media (max-width:320px)"]: {
-        height: "20px",
-      },
-    },
-    dihsinBackground: {
-      position: "relative",
-    },
-    adjustHeightSignTwo: {
-      height: "36px",
-      width: "100%",
-      ["@media (max-width:320px)"]: {
-        height: "26px",
-      },
-    },
-    adjustHeightSignFour: {
-      height: "198px",
-      width: "100%",
-      ["@media (max-width:320px)"]: {
-        height: "189px",
-      },
-    },
-    adjustHeightSigninFour: {
-      height: "132px",
-      width: "100%",
-      ["@media (max-width:320px)"]: {
-        height: "126px",
-      },
-    },
-    adjustHeightGridFourRP: {
-      height: "67px",
-      width: "100%",
-      ["@media (max-width:320px)"]: {
-        height: "63px",
-      },
-    },
-    dishProviderName: {
-      fontSize: `${getRemFontSizeByPx(12)}`,
-      fontFamily: "Lato",
-      color: "#4A4A4A",
-      lineHeight: "16px",
-    },
-    listCardDishPrice: {
-      fontSize: `${getRemFontSizeByPx(15)}`,
-      fontFamily: "Lato",
-      color: "#4A4A4A",
-      lineHeight: "20px",
-    },
+
     quickReviewCard: {
       backgroundColor: theme.palette.primary.main,
     },
@@ -1482,14 +495,476 @@ const styles = (theme) => {
       textTransform: "none",
     },
 
-    subCategoryName: {
-      paddingLeft: "16px",
-      paddingRight: "16px",
-      fontSize: "1.3em",
-      fontFamily: "BebasNeue",
+    disabled: {},
+    leagueTitle: {
+      backgroundColor: theme.palette.secondary.main,
+      textAlign: "center",
+      padding: "8px 0px 8px 0px",
+      fontWeight: 300,
+      marginBottom: "0px",
+      fontSize: "14px !important",
+      color: "#232947",
+    },
+    heroDish: {
+      margin: "0px",
+      paddingLeft: "18px",
+      paddingRight: "18px",
+      marginLeft: 0,
+    },
+    heroDishDescription: {
+      fontWeight: 300,
+      textAlign: "left",
+
+      fontSize: "13px",
+      fontWeight: 300,
     },
 
-    disabled: {},
+    heroDishDishName: {
+      color: primaryColor,
+      fontFamily: "Poppins",
+      fontSize: "22px",
+      textAlign: "left",
+      transform: "translate(0px,8px)",
+      whiteSpace: "nowrap",
+    },
+
+    heroDishRestarauntName: {
+      fontFamily: "Poppins",
+      fontSize: "15px",
+      fontWeight: 200,
+      textDecoration: "underline",
+      textAlign: "left",
+    },
+
+    heroDishHeader: {
+      padding: 0,
+      margin: "5px 0px 3px 0px",
+      "&:hover": {},
+    },
+    heroDishMedia: {
+      height: 0,
+      paddingTop: "56.25%", // 16:9
+      margin: "0px 0px 0px 0px",
+      paddingBottom: "0px",
+      backgroundColor: "#EFF2F4",
+    },
+
+    heroDishBottom: { padding: "8px 0px !important" },
+    CollapsedDishAction: {
+      fontWeight: 300,
+      textTransform: "capitalize",
+      textDecoration: "underline",
+      fontSize: "15px",
+      transform: "translate(0px,0px)",
+    },
+
+    LeagueDishAction: {
+      fontWeight: 300,
+      textTransform: "capitalize",
+      textDecoration: "underline",
+      fontSize: "18px",
+      transform: "translate(0px,0px)",
+    },
+    heroDishexpandOpen: {
+      transform: "rotate(180deg)",
+    },
+
+    heroDishHeaderActions: {},
+    heroDishScore: {
+      fontSize: "16px",
+      fontWeight: 300,
+      color: theme.palette.primary.main,
+      display: "flex",
+      alignItems: "center",
+    },
+    heroDishScoreFloat: {
+      transform: "translate(4px)",
+    },
+    league: {
+      overflow: "visible",
+    },
+    collapsedDish: {
+      width: "calc(100vw - 18px)",
+    },
+
+    collapsedDishDishName: {
+      fontFamily: "Poppins",
+      fontSize: "21px",
+      textAlign: "left",
+      transform: "translate(-22px,-4px)",
+      whiteSpace: "nowrap",
+      lineHeight: 0,
+      color: "#232947",
+    },
+    horLine: {
+      color: "#E1E2E7",
+      margin: "0px 4px 0px 4px",
+    },
+
+    collapsedDishAvatar: {
+      height: 0,
+      overflow: "visible",
+      padding: "0px 6px  0px 0px",
+      margin: "0px 5px",
+      height: "66px",
+      border: "none",
+      backgroundColor: "transparent",
+      transform: "translate(-8px,0px)",
+    },
+    collapsedDishAvatarImg: {
+      border: "none",
+      overflow: "visible",
+      height: "60px",
+      marginLeft: "8px",
+      transform: "scale(1.1)",
+    },
+    collapsedDishActions: {
+      fontFamily: "Poppins",
+
+      transform: "translate(0px,4px)",
+      whiteSpace: "nowrap",
+      lineHeight: "20px",
+    },
+    collapsedSubHeader: {
+      lineHeight: 0,
+      display: "flex",
+      width: "100%",
+      justifyContent: "space-between",
+      fontFamily: "Poppins",
+      fontSize: "15px",
+      fontWeight: 200,
+
+      textAlign: "right",
+      color: "#232947",
+    },
+    collapsedSubHeaderLeft: {
+      transform: "translate(-22px,22px)",
+      textDecoration: "underline",
+      color: "#232947",
+    },
+    collapsedSubHeaderRight: {
+      transform: "translate(0px,16px)",
+      textDecoration: "none",
+    },
+
+    appBar: {
+      backgroundColor: "#ffffff",
+    },
+    categories: {
+      padding: "10px 0px",
+    },
+    categoriesCategory: {
+      margin: "10px auto",
+      height: "100px",
+      width: "calc(100% - 20px)",
+      overflow: "hidden",
+      background: "black",
+      color: "#ffffff",
+      position: "relative",
+
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+
+      "&:after": {
+        content: `""`,
+        opacity: "0.4",
+        display: "block",
+        position: "absolute",
+        width: "100%",
+        height: "100%",
+        background: "black",
+      },
+      "&:hover:after": {
+        content: `""`,
+        opacity: "0.2",
+        display: "block",
+        position: "absolute",
+        width: "100%",
+        height: "100%",
+        background: "black",
+      },
+    },
+    ExploreTitle: {
+      textAlign: "left",
+      padding: "8px 20px 8px 20px",
+      position: "relative",
+
+      fontWeight: 300,
+      marginBottom: "0px",
+      fontWeight: "400px",
+
+      color: "#232947",
+
+      backgroundColor: "#ffffff",
+
+      borderBottom: "1px solid #2E3451",
+      borderTop: "1px solid #2E3451",
+
+      fontSize: "14px !important",
+
+      boxSizing: "border-box",
+    },
+    reviewTitle: {
+      fontWeight: 700,
+      fontFamily: "Poppins",
+      color: theme.palette.primary.main,
+      fontSize: "20px",
+      padding: "10px",
+    },
+    reviewFormContainer: {
+      "& img": {
+        paddingRight: "10px",
+        cursor: "pointer",
+        opacity: 0.5,
+      },
+      "& img.selected": {
+        opacity: 1,
+      },
+      padding: "10px",
+      textAlign: "center",
+    },
+
+    textArea: {
+      width: "85%",
+      height: "120px",
+    },
+    reviewLink: {
+      textDecoration: "underline !important",
+      fontSize: "16px",
+    },
+    relativeSmall: {
+      fontSize: "0.85rem",
+    },
+    rightButton: {
+      position: "absolute",
+      right: "0px",
+      top: "3px",
+    },
+    tabsContainer: {
+      backgroundColor: theme.palette.secondary.main,
+      textAlign: "center",
+      padding: "0px 20px",
+      fontWeight: 300,
+      marginBottom: "0px",
+      fontSize: "15px !important",
+      height: "37px",
+      overflow: "hidden",
+    },
+    tabs: {
+      padding: "0px",
+      margin: "0px",
+      maxHeight: "10px",
+      height: "30px",
+    },
+    tab: {
+      color: "#2329476c",
+      minHeight: "37px",
+
+      "&.selected": {
+        color: "#232947",
+      },
+    },
+    indicator: {
+      display: "none",
+    },
+    tabLabel: {
+      fontSize: "14px",
+    },
+    Review: {
+      maxWidth: 345,
+    },
+    ReviewMedia: {
+      height: 0,
+      paddingTop: "56.25%", // 16:9
+    },
+    ReviewExpand: {
+      transform: "rotate(0deg)",
+      marginLeft: "auto",
+      transition: theme.transitions.create("transform", {
+        duration: theme.transitions.duration.shortest,
+      }),
+    },
+    ReviewExpandOpen: {
+      transform: "rotate(180deg)",
+    },
+    ReviewAvatar: {
+      backgroundColor: primaryColor,
+    },
+    dyneScore: {
+      fontSize: "16px",
+      fontWeight: 300,
+      fontFamily: "Poppins",
+      color: theme.palette.primary.main,
+      display: "flex",
+      alignItems: "center",
+    },
+    link: {
+      fontSize: "16px",
+      fontWeight: 300,
+      fontFamily: "Poppins",
+      color: theme.palette.primary.main,
+      display: "flex",
+      alignItems: "center",
+      textTransform: "none",
+      padding: "3px 9px",
+    },
+    action: {
+      fontWeight: 300,
+      textTransform: "capitalize",
+      textDecoration: "underline",
+      fontSize: "18px",
+      transform: "translate(0px,0px)",
+    },
+
+    footer: {
+      fontFamily: "Poppins",
+
+      display: "flex",
+      padding: "0px 0px 20px 16px",
+      flexWrap: "wrap",
+
+      width: "100%",
+      backgroundColor: "#070617",
+      justifyContent: "center",
+    },
+    footerCol: {
+      flexBasis: "160px",
+      display: "flex",
+      flexDirection: "column",
+      height: "auto",
+      float: "left",
+      boxSizing: "border-box",
+    },
+    footerColH1: {
+      margin: 0,
+      padding: 0,
+      fontFamily: "inherit",
+      fontSize: "12px",
+      lineHeight: "17px",
+      padding: "20px 0px 5px 0px",
+      color: "rgba(255,255,255)",
+      fontWeight: "normal",
+      textTransform: "uppercase",
+      letterSpacing: " 0.250em",
+    },
+    footerColUl: {
+      listStyleType: "none",
+      margin: 0,
+      padding: 0,
+    },
+    footerColUlLi: {
+      color: "#999999",
+      fontSize: "14px",
+      fontFamily: "inherit",
+      fontWeight: "bold",
+      padding: "5px 0px 5px 0px",
+      cursor: "pointer",
+      transition: ".2s",
+    },
+    padTop: {
+      paddingTop: 6,
+      paddingBottom: 4,
+      display: "inline-block",
+    },
+    footerSocial: {
+      display: "flex",
+      paddingRight: "5px !important",
+
+      "&:hover": {
+        color: "#ffffff",
+        transition: ".1s",
+      },
+    },
+    clearfix: {
+      clear: "both",
+    },
+    dishPageOrderList: {
+      display: "flex",
+      width: "100%",
+      justifyContent: "space-between",
+    },
+    dishPageOrderListItem: {
+      flexBasis: "90px",
+      height: "30px",
+      textTransform: "none",
+      textDecoration: "underline",
+      fontSize: "16px",
+      fontWeight: "200",
+    },
+    dishPageOrderListImg: {
+      minwidth: "60px",
+    },
+    dishPageOrderListTitle: {
+      minwidth: "30px",
+
+      textAlign: "left",
+      fontFamily: "Poppins",
+      fontWeight: 300,
+      marginBottom: "0px",
+      fontWeight: "400px",
+      fontSize: "16px !important",
+      color: "#232947",
+    },
+    sectionDevider: {
+      backgroundColor: "#ffffff",
+      textAlign: "center",
+      padding: "8px 0px 8px 0px",
+      fontWeight: 300,
+      borderBottom: "1px solid #2E3451",
+      borderTop: "1px solid #2E3451",
+      marginBottom: "0px",
+      fontSize: "14px !important",
+      color: "#232947",
+      boxSizing: "border-box",
+    },
+    devider: {
+      width: "1px",
+      height: "100%",
+      background: "#0000001c",
+    },
+
+    DrawerLayout: {
+      background: "black",
+    },
+    AppheaderDrawer: {
+      filter: "invert(1)",
+    },
+    verticalMenu: {
+      padding: "50px",
+      display: "flex",
+      flexDirection: "column",
+      height: "100vh",
+      width: "100vw",
+      background: "black",
+      alignItems: "center",
+    },
+    verticalMenuItem: {
+      fontSize: "24px",
+      fontWeight: 100,
+      color: "white",
+      zIndex: 9,
+      margin: "20px",
+      textDecoration: "underline",
+      fontFamily: poppins,
+    },
+    verticalMenuBottomItems: {
+      fontFamily: "Poppins",
+      fontWeight: 300,
+      position: "absolute",
+      bottom: "0px",
+      display: "flex",
+      justifyContent: "space-around",
+      padding: "16px",
+      width: "100%",
+      borderTop: "1px solid white",
+    },
+    verticalMenuBottomItem: {
+      color: "white",
+    },
   };
 };
 

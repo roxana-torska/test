@@ -1,89 +1,88 @@
 const userActions = {
-  USER_LOGIN: 'USER_LOGIN',
-  USER_RECEIVED: 'USER_RECEIVED',
-  USER_LOGIN_ERROR: 'USER_LOGIN_ERROR',
-  USER_SIGN_UP: 'USER_SIGN_UP',
-  USER_SIGN_UP_ERROR: 'USER_SIGN_UP_ERROR',
-  USER_LOGOUT: 'USER_LOGOUT',
-  USER_LOGOUT_RECEIVED: 'USER_LOGOUT_RECEIVED',
-  USER_LOGOUT_ERROR: 'USER_LOGOUT_ERROR',
-  USER_RECOVERY_PASSWORD: 'USER_RECOVERY_PASSWORD',
-  USER_RECOVERY_PASSWORD_ERROR: 'USER_RECOVERY_PASSWORD_ERROR',
-  USER_RECOVERY_PASSWORD_RECEIVED: 'USER_RECOVERY_PASSWORD_RECEIVED',
-  CHECK_RECOVERY_TOKEN: 'CHECK_RECOVERY_TOKEN',
-  CHECK_RECOVERY_TOKEN_RECEIVED: 'CHECK_RECOVERY_TOKEN_RECEIVED',
-  CHECK_RECOVERY_TOKEN_ERROR: 'CHECK_RECOVERY_TOKEN_ERROR',
-  userLogin: userData => ({
+  USER_LOGIN: "USER_LOGIN",
+  USER_RECEIVED: "USER_RECEIVED",
+  USER_LOGIN_ERROR: "USER_LOGIN_ERROR",
+  USER_SIGN_UP: "USER_SIGN_UP",
+  USER_SIGN_UP_ERROR: "USER_SIGN_UP_ERROR",
+  USER_LOGOUT: "USER_LOGOUT",
+  USER_LOGOUT_RECEIVED: "USER_LOGOUT_RECEIVED",
+  USER_LOGOUT_ERROR: "USER_LOGOUT_ERROR",
+  USER_RECOVERY_PASSWORD: "USER_RECOVERY_PASSWORD",
+  USER_RECOVERY_PASSWORD_ERROR: "USER_RECOVERY_PASSWORD_ERROR",
+  USER_RECOVERY_PASSWORD_RECEIVED: "USER_RECOVERY_PASSWORD_RECEIVED",
+  CHECK_RECOVERY_TOKEN: "CHECK_RECOVERY_TOKEN",
+  CHECK_RECOVERY_TOKEN_RECEIVED: "CHECK_RECOVERY_TOKEN_RECEIVED",
+  CHECK_RECOVERY_TOKEN_ERROR: "CHECK_RECOVERY_TOKEN_ERROR",
+  userLogin: (userData) => ({
     type: userActions.USER_LOGIN,
-    loading: true,
-    email: userData.email,
-    password: userData.password
+    user: userData,
+    loading: false,
   }),
-  receivedUser: userData => ({
+  receivedUser: (userData) => ({
     type: userActions.USER_RECEIVED,
     loading: true,
-    user: userData
+    user: userData,
   }),
-  errorUserLogin: error => ({
+  errorUserLogin: (error) => ({
     type: userActions.USER_LOGIN_ERROR,
     loading: false,
-    error
+    error,
   }),
-  userLogout: userData => ({
+  userLogout: (userData) => ({
     type: userActions.USER_LOGOUT,
     loading: true,
-    user: userData
+    user: userData,
   }),
-  userLogoutReceived: userData => ({
+  userLogoutReceived: (userData) => ({
     type: userActions.USER_LOGOUT_RECEIVED,
     loading: false,
-    user: userData
+    user: userData,
   }),
-  errorUserLogout: error => ({
+  errorUserLogout: (error) => ({
     type: userActions.USER_LOGOUT_ERROR,
     loading: false,
-    error
+    error,
   }),
-  userSignUp: userData => ({
+  userSignUp: (userData) => ({
     type: userActions.USER_SIGN_UP,
     loading: true,
-    ...userData
+    ...userData,
   }),
-  errorUserSignUp: error => ({
+  errorUserSignUp: (error) => ({
     type: userActions.USER_SIGN_UP_ERROR,
     loading: false,
-    error
+    error,
   }),
-  userRecoveryPassword: email => ({
+  userRecoveryPassword: (email) => ({
     type: userActions.USER_RECOVERY_PASSWORD,
     loading: true,
-    email: email
+    email: email,
   }),
-  userRecoveryPasswordReceived: status => ({
+  userRecoveryPasswordReceived: (status) => ({
     type: userActions.USER_RECOVERY_PASSWORD_RECEIVED,
     loading: false,
-    user: status
+    user: status,
   }),
-  userRecoveryPasswordError: error => ({
+  userRecoveryPasswordError: (error) => ({
     type: userActions.USER_SIGN_UP_ERROR,
     loading: false,
-    error
+    error,
   }),
-  checkRecoveryToken: token => ({
+  checkRecoveryToken: (token) => ({
     type: userActions.CHECK_RECOVERY_TOKEN,
     loading: true,
-    token: token
+    token: token,
   }),
-  checkRecoveryTokenReceived: data => ({
+  checkRecoveryTokenReceived: (data) => ({
     type: userActions.CHECK_RECOVERY_TOKEN_RECEIVED,
     loading: false,
-    isTokenValid: data.isTokenValid
+    isTokenValid: data.isTokenValid,
   }),
-  checkRecoveryTokenError: error => ({
+  checkRecoveryTokenError: (error) => ({
     type: userActions.USER_RECOVERY_PASSWORD_ERROR,
     loading: false,
-    error
-  })
+    error,
+  }),
 };
 
 export default userActions;

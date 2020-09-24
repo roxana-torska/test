@@ -1,27 +1,32 @@
-import request from '../utils/request';
-import { API_URL } from '../utils/config';
-import { stringify } from 'qs';
-import { async } from 'rxjs/internal/scheduler/async';
+import request from "../utils/request";
+import { API_URL } from "../utils/config";
+import { stringify } from "qs";
+import { getDistance, convertDistance } from "geolib";
+import { async } from "rxjs/internal/scheduler/async";
 
 export const globalAPI = {
   getPriceRange: async function() {
     let response = await request(`${API_URL}/public/price-range`, {});
-    if (response.status.toLowerCase() === 'ok') {
+    if (response.status.toLowerCase() === "ok") {
       return response.data;
     } else {
       return [];
     }
   },
-  getDistance: async function(payload) {
-    let response = await request(
-      `${API_URL}/public/distance-to-me?${stringify(payload)}`,
-      {}
-    );
-    if (response.status.toLowerCase() === 'ok') {
-      return response.data;
-    } else {
-      return [];
-    }
+  // getDistance: async function(payload) {
+  //   let response = await request(
+  //     `${API_URL}/public/distance-to-me?${stringify(payload)}`,
+  //     {}
+  //   );
+  //   if (response.status.toLowerCase() === 'ok') {
+  //     return response.data;
+  //   } else {
+  //     return [];
+  //   }
+  // },
+  getDistanceToMe: async (start, end) => {
+    const distance = getDistance(start, end);
+    return convertDistance(distance, "km").toFixed(1);
   },
   addContributeData: async function(payload) {
     const params = {
@@ -29,19 +34,19 @@ export const globalAPI = {
       restaurantName: payload.restaurantName,
       dishName: payload.dishName,
       city: payload.city,
-      dishScore: payload.dishScore
+      dishScore: payload.dishScore,
     };
     let response = await request(`${API_URL}/public/contribute`, {
-      method: 'POST',
+      method: "POST",
       body: {
-        ...params
-      }
+        ...params,
+      },
     });
     return response;
   },
   getSearchBy: async function(payload) {
     let response = await request(`${API_URL}/public/search-by`);
-    if (response.status.toLowerCase() === 'ok') {
+    if (response.status.toLowerCase() === "ok") {
       return response.data;
     } else {
       return [];
@@ -50,10 +55,10 @@ export const globalAPI = {
   addReservationRequest: async function(payload) {
     let params = { ...payload.params };
     let response = await request(`${API_URL}/public/reservation-request`, {
-      method: 'POST',
+      method: "POST",
       body: {
-        ...params
-      }
+        ...params,
+      },
     });
     return response;
   },
@@ -61,11 +66,11 @@ export const globalAPI = {
     let params = { ...payload.params };
     let response = await request(`${API_URL}/public/save-capture-image`, {
       headers: { Authorization: `Bearer ${token}` },
-      method: 'POST',
+      method: "POST",
       body: {
-        ...params
-      }
+        ...params,
+      },
     });
     return response;
-  }
+  },
 };

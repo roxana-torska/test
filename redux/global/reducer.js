@@ -1,57 +1,60 @@
-import actions from './actions';
-import { getLocation } from '../../utils/common';
+import actions from "./actions";
+import { getLocation } from "../../utils/common";
 
-export function globalReducer(state = {
-  drawerOpen: false,
-  selectedFilterAccordion: '',
-  selectedTagsItems: [],
-  selectedPriceRangeItem: '',
-  selectedPageTab: -1,
-  selectedFilterTab: 0,
-  filters: {
-    tags: [],
-    price: '',
-    distanceToMe: '',
-    searchBy: 'Everywhere',
-    location: { lng: '', lat: '' }
+export function globalReducer(
+  state = {
+    drawerOpen: false,
+    selectedFilterAccordion: "",
+    selectedTagsItems: [],
+    selectedPriceRangeItem: "",
+    selectedPageTab: -1,
+    selectedFilterTab: 0,
+    filters: {
+      tags: [],
+      price: "",
+      distanceToMe: "",
+      searchBy: "Everywhere",
+      location: { lng: "", lat: "" },
+    },
+    sort: "rate",
+    direction: "dsc",
+    location: { lng: "", lat: "", address: "" },
+    searchText: "",
+    isLoggedIn: false,
+    user: {},
+    userRewards: [],
+    hideMainMenu: true,
+    scrollValue: 0,
+    token: null,
+    reviewsData: {
+      likes: "",
+      dislikes: "",
+      ratings: 0,
+      valueForMoney: 0,
+      taste: 0,
+      lookAndFeel: 0,
+      description: "",
+    },
+    userReviews: [],
+    systemTags: [],
+    lastRatedDish: "",
+    defaultRefferal: null,
+    hideFabIcon: false,
+    selectedCategory: "",
   },
-  sort: 'rate',
-  direction: 'dsc',
-  location: { lng: '', lat: '', address: '' },
-  searchText: '',
-  isLoggedIn: false,
-  user: {},
-  userRewards: [],
-  hideMainMenu: true,
-  scrollValue: 0,
-  token: null,
-  reviewsData: {
-    likes: '',
-    dislikes: '',
-    ratings: 0,
-    valueForMoney: 0,
-    taste: 0,
-    lookAndFeel: 0,
-    description: ''
-  },
-  userReviews: [],
-  systemTags: [],
-  lastRatedDish: '',
-  defaultRefferal: null,
-	hideFabIcon: false,
-	selectedCategory: '',
-}, action) {
+  action
+) {
   switch (action.type) {
     case actions.TOGGLE_FILTER_MENU:
       return {
         ...state,
         drawerOpen: action.drawerOpen,
-      }
+      };
     case actions.TOGGLE_FILTER_ACCORDION:
       return {
         ...state,
-        selectedFilterAccordion: action.selectedFilterAccordion
-      }
+        selectedFilterAccordion: action.selectedFilterAccordion,
+      };
     case actions.UPDATE_STORE_WITH_QUERY: {
       let filters = state.filters;
       filters = { ...filters, ...action.queryParams.filters };
@@ -64,7 +67,7 @@ export function globalReducer(state = {
         user,
         location,
         loggedInToken,
-        systemTags
+        systemTags,
       } = action.queryParams;
       return {
         ...state,
@@ -78,93 +81,92 @@ export function globalReducer(state = {
         location: { ...location },
         token: loggedInToken,
         systemTags,
-
-
-      }
-
-
+      };
     }
     case actions.UPDATE_SELECTED_FILTER_ITEM: {
       let filters = { ...state.filters };
       filters[action.filter] = action.filterValue.filterValue;
       return {
         ...state,
-        filters: { ...filters }
-      }
+        filters: { ...filters },
+      };
     }
     case actions.SELECT_FILTER_TAB:
       return {
         ...state,
         selectedFilterTab: action.selectedFilterTab,
-      }
+      };
     case actions.Selected_Tags_Index: {
       return {
         ...state,
-        selectedTagsItems: action.selectedTagsItems ? action.selectedTagsItems : [],
-      }
-
+        selectedTagsItems: action.selectedTagsItems
+          ? action.selectedTagsItems
+          : [],
+      };
     }
     case actions.Selected_Price_Range:
       return {
         ...state,
-        selectedPriceRangeItem: action.selectedPriceRangeItem ? action.selectedPriceRangeItem : ""
-      }
+        selectedPriceRangeItem: action.selectedPriceRangeItem
+          ? action.selectedPriceRangeItem
+          : "",
+      };
     case actions.UPDATE_SORT:
       return {
         ...state,
         sort: action.sortValue,
         direction: action.sortDirection,
-      }
+      };
     case actions.SET_CURRENT_LOCATION:
+      console.log("action is", action);
       if (action.location) {
         return {
           ...state,
-          location: { ...action.location }
-        }
-
+          location: { ...action.location },
+        };
       } else {
         return {
           ...state,
-          location: { lng: "", lat: "", address: "" }
-        }
+          location: { lng: "", lat: "", address: "" },
+        };
       }
     case actions.SET_SEARCH_VALUE:
       return {
         ...state,
         searchText: action.value,
-      }
+      };
 
     case actions.UPDATE_USER_REWARDS:
       return {
         ...state,
-        userRewards: action.userRewards
-      }
+        userRewards: action.userRewards,
+      };
     case actions.CLEAR_FILTERS:
       let filters = state.filters;
       filters[action.filter] = action.filterValue;
       return {
         ...state,
-        filters: { ...filters }
-      }
+        filters: { ...filters },
+      };
     case actions.SHOW_HIDE_MENU:
       return {
         ...state,
         hideMainMenu: action.hideMenu,
         scrollValue: action.scrollValue,
-      }
+      };
 
     case actions.UPDATE_USER_AND_TOKEN:
       return {
         ...state,
         user: action.data.user,
         token: action.data.token,
-      }
+      };
 
     case actions.UPDATE_REVIEW_DATA:
       return {
         ...state,
-        reviewsData: { ...action.tagsData.tempReviews }
-      }
+        reviewsData: { ...action.tagsData.tempReviews },
+      };
     case actions.UPDATE_USER_REVIEW:
       console.log("dish id at reducer ===>", action.review);
       let userReviews = state.userReviews;
@@ -173,18 +175,18 @@ export function globalReducer(state = {
         ...state,
         userReviews: [...userReviews],
         lastRatedDish: action.review.typeId,
-      }
+      };
     case actions.HIDE_FILTER_FAB_ICON:
       return {
         ...state,
         hideFabIcon: action.value,
-			}
-		case actions.SET_CURRENT_CATEGORY:
-			console.log('niv at reducer', action);
-			return {
-				...state,
-				selectedCategory: action.selectedCategory
-			}
+      };
+    case actions.SET_CURRENT_CATEGORY:
+      console.log("niv at reducer", action);
+      return {
+        ...state,
+        selectedCategory: action.selectedCategory,
+      };
     default:
       return state;
   }

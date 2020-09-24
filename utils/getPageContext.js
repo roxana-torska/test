@@ -1,42 +1,41 @@
-
-
-
-import { SheetsRegistry } from 'react-jss';
+import { SheetsRegistry } from "react-jss";
 import {
   createMuiTheme,
-  createGenerateClassName
-} from '@material-ui/core/styles';
+  createGenerateClassName,
+} from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
+  root: {
+    height: "1px",
+  },
   typography: {
     useNextVariants: true,
-    fontFamily: '"Lato", "Roboto", "Helvetica", "Arial", sans-serif'
+    fontFamily: '"Poppins", "Roboto", "Helvetica", "Arial", sans-serif',
   },
   button: {
-    fontFamily: '"Lato", "Roboto", "Helvetica", "Arial", sans-serif'
+    fontFamily: '"Poppins", "Roboto", "Helvetica", "Arial", sans-serif',
   },
   palette: {
     background: {
-      default: '#fff'
+      default: "#fff",
     },
     primary: {
       // light: will be calculated from palette.primary.main,
-      main: '#232947'
+      main: "#232947",
       // dark: will be calculated from palette.primary.main,
       // contrastText: will be calculated to contrast with palette.primary.main
     },
     secondary: {
-      light: '#fff',
-      main: '#F9F9F9',
-      dark: '#f4f4f4',
-      contrastText: '#fff',
-
+      light: "#fff",
+      main: "#efefef",
+      dark: "#f4f4f4",
+      contrastText: "#fff",
     },
     // error: will use the default color
     action: {
-      hover: '#f44336'
-    }
-  }
+      hover: "#f44336",
+    },
+  },
 });
 
 const createPageContext = () => {
@@ -44,7 +43,7 @@ const createPageContext = () => {
     theme,
     sheetsManager: new Map(),
     sheetsRegistry: new SheetsRegistry(),
-    generateClassName: createGenerateClassName()
+    generateClassName: createGenerateClassName(),
   };
 };
 

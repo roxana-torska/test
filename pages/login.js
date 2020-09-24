@@ -1,43 +1,56 @@
-import React, { PureComponent } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import CustomInput from '../components/customInput/CustomInput';
-import Button from '@material-ui/core/Button';
-import AppLayout from '../components/layouts/AppLayout';
-import { Typography } from '@material-ui/core';
-import styles from '../styles/common';
-import classnames from 'classnames';
-import validator from '../utils/validator';
-import { userAPI } from '../services/userAPI';
-import notify from '../utils/notifier';
-import { APP_URL } from '../utils/config';
-import FooterActions from '../components/common/FooterActions';
-import WindowResizeListener from 'react-window-size-listener';
-import { DishinMashroomIcon } from '../components/customIcon/customIcon';
+import React, { Fragment, PureComponent } from "react";
+import { withStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import CustomInput from "../components/customInput/CustomInput";
+import Button from "@material-ui/core/Button";
+import AppLayout from "../components/layouts/AppLayout";
+import { Typography } from "@material-ui/core";
+import styles from "../styles/common";
+import classnames from "classnames";
+import validator from "../utils/validator";
+import { userAPI } from "../services/userAPI";
+import notify from "../utils/notifier";
+import { APP_URL } from "../utils/config";
+import SocialLinks from "../components/SocialLinks/SocialLinks";
+import WindowResizeListener from "react-window-size-listener";
+import actions from "../redux/user/actions";
+import { connect } from "react-redux";
+import request from "../utils/request";
+import Notifier from "../components/Notifier/Notifier";
+const { userLogin, userLogout } = actions;
 
 class Login extends PureComponent {
   validators = {
     email: {
-      required: { message: 'Please use your email' },
-      email: true
+      required: { message: "Please use your email" },
+      email: true,
     },
     password: {
-      required: { message: 'Password required' }
-    }
+      required: { message: "Password required" },
+    },
   };
   state = {
-    email: '',
-    password: '',
+    email: "",
+    password: "",
     emailError: false,
     passwordError: false,
-    emailErrorMessage: '',
-    passwordErrorMessage: '',
-    winHeight: '100vh',
-    winWidth: '100vw'
+    emailErrorMessage: "",
+    passwordErrorMessage: "",
+    winHeight: "100vh",
   };
 
+  componentDidMount() {
+    if (window.location.href == `${APP_URL}/sign-out`) {
+      let { userLogout } = this.props;
+      userLogout(null);
+      setTimeout(() => {
+        window.location.href = "/sign-in";
+      }, 500);
+    }
+  }
+
   static getInitialProps({ store, isServer, query }) {
-    let redirectUrl = query && query.redirect ? query.redirect : '';
+    let redirectUrl = query && query.redirect ? query.redirect : "";
     return { isServer, redirectUrl };
   }
 
@@ -52,7 +65,7 @@ class Login extends PureComponent {
     } else if (notSetValue === false) {
       state = {};
       state[`${name}Error`] = false;
-      state[`${name}ErrorMessage`] = '';
+      state[`${name}ErrorMessage`] = "";
       state[name] = value;
     }
     if (state) {
@@ -62,30 +75,44 @@ class Login extends PureComponent {
   };
 
   validateForm = () => {
-    const result = Object.keys(this.validators).map(field => {
+    const result = Object.keys(this.validators).map((field) => {
       return this.handleFieldChange(field, this.state[field], true);
     });
     return !result.includes(true);
   };
 
-  handleSubmit = evt => {
+  handleSubmit = (evt) => {
     const { redirectUrl } = this.props;
     evt.preventDefault();
     if (this.validateForm()) {
       const { email, password } = this.state;
+
       userAPI
         .login({
           params: {
             email,
-            password
-          }
+            password,
+          },
         })
-        .then(response => {
-          if (response.status.toUpperCase() === 'OK') {
+        .then((response) => {
+          if (response.status.toUpperCase() === "OK") {
             let url = `/auth/callback?token=${
               response.data.token
             }&redirect=${escape(redirectUrl)}`;
-            window.location.href = url;
+            request(`/user-update/callback?token=${response.data.token}`)
+              .then((response) => {
+                console.log(response);
+                if (response.user) {
+                  let { userLogin } = this.props;
+                  console.log(userLogin);
+
+                  userLogin(response.user);
+                  window.location.href = "/welcome-to-dishin";
+                }
+              })
+              .catch((err) => {
+                notify(err);
+              });
           } else {
             notify(response.error);
           }
@@ -98,173 +125,131 @@ class Login extends PureComponent {
   render() {
     const { classes } = this.props;
     const {
+      updateUserAndToken,
       emailError,
       passwordError,
       emailErrorMessage,
       passwordErrorMessage,
       winHeight,
-      winWidth
     } = this.state;
-    let adjustHeightGridOne = 10;
-    let adjustHeightGridThree = 8;
-    let adjustHeightGridFive = 3;
-    let adjustHeightGridSeven = 5;
-    let adjustHeightGridNine = 2;
-    let rootHeight = winHeight - 56;
-    let minVisibleHeight = 361;
-    if (winWidth <= 312) {
-      minVisibleHeight = 312;
-    }
-    if (rootHeight < minVisibleHeight) {
-      rootHeight = minVisibleHeight;
-    } else {
-      adjustHeightGridOne = ((rootHeight - minVisibleHeight) * 30) / 100;
-      adjustHeightGridThree = ((rootHeight - minVisibleHeight) * 15) / 100;
-      adjustHeightGridFive = ((rootHeight - minVisibleHeight) * 20) / 100;
-      adjustHeightGridSeven = ((rootHeight - minVisibleHeight) * 25) / 100;
-      adjustHeightGridNine = ((rootHeight - minVisibleHeight) * 10) / 100;
-    }
+    let rootHeight = winHeight - 100;
     return (
-      <AppLayout {...this.props}>
-        <WindowResizeListener
-          onResize={windowSize => {
-            this.setState({ winHeight: windowSize.windowHeight });
-          }}
-        />
-        <form className={classes.container} onSubmit={this.handleSubmit}>
-          <Grid
-            container
-            direction='column'
-            justify='space-between'
-            alignItems='center'
-            spacing={0}
-            style={{
-              margin: '0px',
-              minHeight: `${rootHeight}px`
+      <Fragment>
+        <AppLayout mode="login" {...this.props}>
+          <WindowResizeListener
+            onResize={(windowSize) => {
+              this.setState({ winHeight: windowSize.windowHeight });
             }}
-          >
+          />
+          <form className={classes.container} onSubmit={this.handleSubmit}>
             <Grid
-              item
+              container
+              direction="column"
+              justify="space-between"
+              alignItems="center"
+              spacing={0}
               style={{
-                // backgroundColor: '#999',
-                height: `${adjustHeightGridOne}px`,
-                width: '100%'
+                margin: "0px 16px",
+                height: `${rootHeight}px`,
               }}
-            />
-            <Grid item className={classes.adjustHeightSignTwo}>
-              <div
-                className={classes.dihsinBackground}
-                style={{ margin: '0 14px' }}
-              >
-                <DishinMashroomIcon className={classes.topBgIconRight} />
-              </div>
-              <div style={{ margin: '0 16px', textAlign: 'center' }}>
+            >
+              <Grid item>{"  "}</Grid>
+              <Grid item>
                 <Typography
-                  variant='h1'
-                  align='center'
+                  variant="h1"
+                  align="center"
                   className={classes.pageTitleRed}
                 >
-                  LOGIN
+                  Sign In
                 </Typography>
-              </div>
+              </Grid>
+              <Grid item style={{ width: "100%" }}>
+                <div style={{ margin: "0 26px" }}>
+                  <CustomInput
+                    id="email"
+                    label="Email"
+                    error={emailError}
+                    helperText={<span>{emailErrorMessage}</span>}
+                    onChange={(event) =>
+                      this.handleFieldChange("email", event.target.value)
+                    }
+                    fullWidth
+                  />
+                  <CustomInput
+                    id="password"
+                    label="Password"
+                    type="password"
+                    error={passwordError}
+                    helperText={<span>{passwordErrorMessage}</span>}
+                    fullWidth
+                    onChange={(event) =>
+                      this.handleFieldChange("password", event.target.value)
+                    }
+                  />
+                </div>
+              </Grid>
+              <Grid item style={{ width: "100%" }}>
+                <div style={{ margin: "0 40px" }}>
+                  <Button
+                    size="medium"
+                    className={classes.btnRaisedLightNormalRed}
+                    fullWidth
+                    onClick={this.handleSubmit}
+                  >
+                    Log In
+                  </Button>
+                </div>
+              </Grid>
+              <Grid item style={{ textAlign: "center" }}>
+                <Typography>&#160;</Typography>
+                <div className={classes.footerLatoTextNormal}>
+                  New User?{" "}
+                  <a
+                    href={`/sign-up`}
+                    className={classnames(
+                      classes.footerLatoTextBold,
+                      classes.footerLink1
+                    )}
+                  >
+                    Sign Up
+                  </a>{" "}
+                  to the app
+                </div>
+                <Typography>&#160;</Typography>
+                <div className={classes.footerLatoTextNormal}>
+                  Or Connect with
+                </div>
+                <Typography>&#160;</Typography>
+                <SocialLinks />
+              </Grid>
+              <Grid item>
+                <div className={classes.footerLatoTextNormal}>
+                  Forgot Password?{" "}
+                  <a
+                    href={`/recover-password`}
+                    className={classnames(
+                      classes.footerLatoTextBold,
+                      classes.footerLink1
+                    )}
+                  >
+                    Recover Password
+                  </a>
+                </div>
+              </Grid>
             </Grid>
-            <Grid
-              item
-              style={{
-                //  backgroundColor: '#f0f0f0',
-                height: `${adjustHeightGridThree}px`,
-                width: '100%'
-              }}
-            />
-            <Grid
-              item
-              style={{ width: '100%' }}
-              className={classes.adjustHeightSigninFour}
-            >
-              <div style={{ margin: '0 42px' }}>
-                <CustomInput
-                  id='email'
-                  label='Email'
-                  error={emailError}
-                  helperText={<span>{emailErrorMessage}</span>}
-                  onChange={event =>
-                    this.handleFieldChange('email', event.target.value)
-                  }
-                  fullWidth
-                />
-                <CustomInput
-                  id='password'
-                  label='Password'
-                  type='password'
-                  error={passwordError}
-                  helperText={<span>{passwordErrorMessage}</span>}
-                  fullWidth
-                  onChange={event =>
-                    this.handleFieldChange('password', event.target.value)
-                  }
-                />
-              </div>
-            </Grid>
-            <Grid
-              item
-              style={{
-                //  backgroundColor: '#555',
-                height: `${adjustHeightGridFive}px`,
-                width: '100%'
-              }}
-            />
-            <Grid item className={classes.adjustHeightGridSix}>
-              <div style={{ margin: '0 82px' }}>
-                <Button
-                  size='medium'
-                  className={classes.btnRaisedLightNormalRed}
-                  fullWidth
-                  onClick={this.handleSubmit}
-                >
-                  Log In
-                </Button>
-              </div>
-            </Grid>
-            <Grid
-              item
-              style={{
-                //backgroundColor: '#a4a4a4',
-                height: `${adjustHeightGridSeven}px`,
-                width: '100%'
-              }}
-            />
-            <Grid item className={classes.adjustHeightGridEight}>
-              <FooterActions
-                linkAction={
-                  <div className={classes.footerLatoTextNormal}>
-                    Not a user yet?{' '}
-                    <a
-                      href={`/sign-up`}
-                      className={classnames(
-                        classes.footerLatoTextBold,
-                        classes.footerLink1
-                      )}
-                    >
-                      Sign up
-                    </a>{' '}
-                    to the app
-                  </div>
-                }
-              />
-            </Grid>
-            <Grid
-              item
-              style={{
-                // backgroundColor: '#e9e9e9',
-                height: `${adjustHeightGridNine}px`,
-                width: '100%'
-              }}
-            />
-          </Grid>
-        </form>
-      </AppLayout>
+          </form>
+        </AppLayout>
+        <Notifier />
+      </Fragment>
     );
   }
 }
-
-export default withStyles(styles)(Login);
+export default connect(
+  (state) => ({
+    user: state.user,
+  }),
+  {
+    userLogin,
+    userLogout,
+  }
+)(withStyles(styles)(Login));

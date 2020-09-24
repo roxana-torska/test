@@ -1,13 +1,13 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import createSagaMiddleware from 'redux-saga';
-import * as reducers from './reducers';
-import rootSaga from './sagas';
-import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProduction';
-import logger from 'redux-logger';
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import createSagaMiddleware from "redux-saga";
+import * as reducers from "./reducers";
+import rootSaga from "./sagas";
+import { composeWithDevTools } from "redux-devtools-extension";
+import logger from "redux-logger";
 
-import { call } from 'redux-saga/effects';
-import { func } from 'prop-types';
+import { call } from "redux-saga/effects";
+import { func } from "prop-types";
 
 const initStore = (initialState = {}) => {
   const sagaMiddleware = createSagaMiddleware();
@@ -15,34 +15,36 @@ const initStore = (initialState = {}) => {
   function saveToLocalStorage(state) {
     try {
       const serielizedState = JSON.stringify(state);
+      console.log(serielizedState);
       localStorage.setItem("state", serielizedState);
-
     } catch (e) {
       console.log("error ===>", e);
     }
   }
+
   function loadFromLocalStorage() {
     try {
       const serielizedState = localStorage.getItem("state");
       if (serielizedState == null) {
-        return undefined
+        return undefined;
       }
-      return JSON.parse(serielizedState);
+      console.log(serielizedState);
+      return JSON.parse(serielizedState).set("drawerOpen", false);
     } catch (e) {
-      return undefined
+      return undefined;
     }
   }
   const persitedStore = loadFromLocalStorage();
   const store = createStore(
     combineReducers({
-      ...reducers
+      ...reducers,
     }),
     persitedStore,
     composeWithDevTools(applyMiddleware(...middlewares))
   );
   store.subscribe(() => {
     return saveToLocalStorage(store.getState());
-  })
+  });
   // autoRestart saga when any exception in any saga
   function autoRestart(generator) {
     return function* autoRestarting(...args) {

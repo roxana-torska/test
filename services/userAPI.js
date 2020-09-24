@@ -1,45 +1,48 @@
-import request from '../utils/request';
-import { API_URL } from '../utils/config';
-import { getToken } from '../utils/config';
+import request from "../utils/request";
+import { API_URL } from "../utils/config";
+import { getToken } from "../utils/config";
 
 export const userAPI = {
   handleLogin: async function(payload) {
     let params = { ...payload.params };
     let response = await request(`/sign-in`, {
-      method: 'POST',
+      method: "POST",
       body: {
-        ...params
-      }
+        ...params,
+      },
     });
+    cl;
     return response;
   },
   login: async function(payload) {
     let params = { ...payload.params };
     let response = await request(`${API_URL}/users/sign-in`, {
-      method: 'POST',
+      method: "POST",
       body: {
-        ...params
-      }
+        ...params,
+      },
     });
+
     return response;
   },
   signUp: async function(payload) {
     let params = { ...payload.params };
+
     let response = await request(`${API_URL}/users/sign-up`, {
-      method: 'POST',
+      method: "POST",
       body: {
-        ...params
-      }
+        ...params,
+      },
     });
     return response;
   },
   recoverPassword: async function(payload) {
     let params = { ...payload.params };
     let response = await request(`${API_URL}/users/forget-password`, {
-      method: 'POST',
+      method: "POST",
       body: {
-        ...params
-      }
+        ...params,
+      },
     });
     return response;
   },
@@ -48,15 +51,15 @@ export const userAPI = {
     const { token } = params;
     const tempParams = {
       password: params.password,
-      confirmPassword: params.confirmPassword
+      confirmPassword: params.confirmPassword,
     };
     let response = await request(
       `${API_URL}/public/reset-password?token=${token}`,
       {
-        method: 'POST',
+        method: "POST",
         body: {
-          ...tempParams
-        }
+          ...tempParams,
+        },
       }
     );
     return response;
@@ -64,10 +67,10 @@ export const userAPI = {
   getRestaurants: async function(payload) {
     let {
       name,
-      location: { lat, lng }
+      location: { lat, lng },
     } = payload;
-    lat = lat || '';
-    lng = lng || '';
+    lat = lat || "";
+    lng = lng || "";
     let response = await request(
       `${API_URL}/restaurants/autocomplete?name=${name}&lat=${lat}&lng=${lng}`
     );
@@ -77,15 +80,15 @@ export const userAPI = {
     let params = { ...payload.params };
     const tempParams = {
       fieldName: params.fieldName,
-      fieldValue: params.fieldValue
+      fieldValue: params.fieldValue,
     };
     const token = params.token;
     let response = await request(`${API_URL}/users/update/`, {
       headers: { Authorization: `Bearer ${token}` },
-      method: 'POST',
+      method: "POST",
       body: {
-        ...tempParams
-      }
+        ...tempParams,
+      },
     });
     return response;
   },
@@ -94,13 +97,13 @@ export const userAPI = {
     let response = await request(`${API_URL}/users/upload-image/`, {
       headers: {
         Authorization: `Bearer ${token}`,
-        'content-type': 'multipart/form-data'
+        "content-type": "multipart/form-data",
       },
-      method: 'POST',
+      method: "POST",
       body: {
-        ...params
-      }
+        ...params,
+      },
     });
     return response;
-  }
+  },
 };

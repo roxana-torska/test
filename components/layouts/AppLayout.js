@@ -1,11 +1,13 @@
-import React, { Component } from "react";
-import { Grid } from "@material-ui/core";
-import { observer } from "mobx-react";
-import DyneAppBar from "../header/DyneAppBar";
+import React, { Component, Fragment } from "react";
+
+import { connect } from "react-redux";
+import AppHeader from "../header/AppHeader";
 import AppFooter from "../footer/AppFooter";
 import { withStyles } from "@material-ui/core/styles";
-import Notifier from "../common/Notifier";
+
 import styles from "../../styles/common";
+import SubHeader from "../SubHeader/SubHeader";
+import DrawerMenu from "../DrawerMenu/DrawerMenu";
 
 const splashScreen = {
   width: "100vw",
@@ -23,7 +25,6 @@ const splashLogo = {
   backgroundImage: "url(/static/imgs/logo.svg)",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
-  backgroundColor: "#f44336",
 };
 
 class AppLayout extends Component {
@@ -34,17 +35,44 @@ class AppLayout extends Component {
     setTimeout(() => {
       this.setState({ hideSplash: true });
     }, 500);
+    console.log;
   }
   render() {
-    const { children, classes } = this.props;
+    const {
+      children,
+      classes,
+      mode,
+      DishesRef,
+      ExploreRef,
+      scrollFun,
+      scrollContainer,
+      tabsValue,
+    } = this.props;
     const { hideSplash } = this.state;
+    const { drawerOpen } = this.props;
+
     return hideSplash ? (
-      <React.Fragment>
-        <DyneAppBar />
-        <div>{children}</div>
-        <Notifier />
-        <AppFooter />
-      </React.Fragment>
+      drawerOpen ? (
+        <Fragment>
+          <AppHeader mode={"drawer"} />
+          <DrawerMenu></DrawerMenu>
+        </Fragment>
+      ) : (
+        <div>
+          <AppHeader mode={mode} />
+          <SubHeader
+            DishesRef={DishesRef}
+            ExploreRef={ExploreRef}
+            scrollContainer={scrollContainer}
+            scrollFun={scrollFun}
+            tabsValue={tabsValue}
+            mode={mode}
+          />
+          <div>{children}</div>
+
+          {mode != "login" && <AppFooter />}
+        </div>
+      )
     ) : (
       <div style={splashScreen}>
         <div style={splashLogo} />
@@ -53,4 +81,6 @@ class AppLayout extends Component {
   }
 }
 
-export default observer(withStyles(styles)(AppLayout));
+export default connect((state) => ({
+  drawerOpen: state.global.drawerOpen,
+}))(withStyles(styles)(AppLayout));

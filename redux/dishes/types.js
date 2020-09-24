@@ -1,1 +1,4 @@
-export const LIST_DISHES = "LIST_DISHES";
+export const SEARCH_DISHES = "SEARCH_DISHES";
+
+export const GET_DISHES = "GET_DISHES";
+export const CLEAR = "CLEAR";
