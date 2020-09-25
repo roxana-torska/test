@@ -8,13 +8,12 @@ const configs = function () {
         API_URL: "http://localhost:8282/api",
         API_IMAGE_URL: "localhost:8282",
       };
-    /*
     case "production":
       return {
-        APP_URL: "http://dyne.menu"
-        API_URL: "http://backend.dyne.menu/api",
-        API_IMAGE_URL: "http://backend.dyne.menu",
-      }; */
+        APP_URL: "http://13.58.25.57:3001",
+        API_URL: "http://13.58.25.57:8282/api",
+        API_IMAGE_URL: "http://13.58.25.57:8282",
+      };
     default:
       return {
         APP_URL: 'http://localhost:3001',
