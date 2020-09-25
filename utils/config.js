@@ -1,6 +1,7 @@
 const configs = function () {
   console.log("env", process.env.NODE_ENV);
   console.log("os.getName()");
+  console.log('EENNVV()' + process.env.NODE_ENV);
   switch (process.env.NODE_ENV) {
     case "development":
       return {
