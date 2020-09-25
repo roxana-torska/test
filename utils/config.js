@@ -12,7 +12,7 @@ const configs = function () {
       return {
         APP_URL: "http://13.58.25.57:3001",
         API_URL: "http://13.58.25.57:8282/api",
-        API_IMAGE_URL: "http://13.58.25.57:8282",
+        API_IMAGE_URL: "13.58.25.57:8282",
       };
     default:
       return {
