@@ -13,7 +13,7 @@ import Geocode from "react-geocode";
 import { APP_URL, API_IMAGE_URL } from "../utils/config";
 import RoomIcon from "@material-ui/icons/Room";
 import { Scrollbars } from "react-custom-scrollbars";
-import SocialLinks from "../components/common/SocialLinks";
+import SocialLinks from "../components/SocialLinks/SocialLinks";
 import actions from "../redux/global/actions";
 import { connect } from "react-redux";
 import WindowResizeListener from "react-window-size-listener";

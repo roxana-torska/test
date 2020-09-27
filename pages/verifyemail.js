@@ -9,10 +9,10 @@ import classnames from 'classnames';
 import Link from 'next/link';
 import Router from 'next/router';
 import { APP_URL } from '../utils/config';
-import SocialLinks from '../components/common/SocialLinks';
+import SocialLinks from '../components/SocialLinks/SocialLinks';
 import WindowResizeListener from 'react-window-size-listener';
 import { DishinMashroomIcon } from '../components/customIcon/customIcon';
-import FooterActions from '../components/common/FooterActions';
+import FooterActions from '../components/FooterActions/FooterActions';
 
 class VerifyEmail extends PureComponent {
   state = {

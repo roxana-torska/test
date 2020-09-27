@@ -24,7 +24,7 @@ import notify from '../utils/notifier';
 import { APP_URL } from '../utils/config';
 import Router from 'next/router';
 import { DishinMashroomIcon } from '../components/customIcon/customIcon';
-import FooterActions from '../components/common/FooterActions';
+import FooterActions from '../components/FooterActions/FooterActions';
 import WindowResizeListener from 'react-window-size-listener';
 
 function Transition(props) {

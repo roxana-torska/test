@@ -14,7 +14,7 @@ import notify from '../utils/notifier';
 import Router from 'next/router';
 import { APP_URL } from '../utils/config';
 import { userAPI } from '../services/userAPI';
-import FooterActions from '../components/common/FooterActions';
+import FooterActions from '../components/FooterActions/FooterActions';
 import WindowResizeListener from 'react-window-size-listener';
 import { DishinMashroomIcon } from '../components/customIcon/customIcon';
 
