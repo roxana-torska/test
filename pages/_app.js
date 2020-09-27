@@ -11,6 +11,21 @@ import { initStore } from "../redux/store";
 import getPageContext from "../utils/getPageContext";
 
 class DishinApp extends App {
+  fullscreenEnabled =
+    document.fullscreenEnabled ||
+    document.mozFullScreenEnabled ||
+    document.documentElement.webkitRequestFullScreen;
+
+  requestFullscreen = function requestFullscreen(element) {
+    if (element.requestFullscreen) {
+      element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) {
+      element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullScreen) {
+      element.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+    }
+  };
+
   pageContext = getPageContext();
   static async getInitialProps({ Component, ctx }) {
     return {
@@ -93,6 +108,10 @@ class DishinApp extends App {
   }; */
 
   componentDidMount() {
+    if (fullscreenEnabled) {
+      requestFullscreen(document.documentElement);
+    }
+
     const jssStyles = document.querySelector("#jss-server-side");
     if (jssStyles && jssStyles.parentNode) {
       jssStyles.parentNode.removeChild(jssStyles);

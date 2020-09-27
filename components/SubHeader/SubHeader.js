@@ -143,15 +143,6 @@ const SubHeader = (props) => {
               style={{ textTransform: "none" }}
               label="Followed"
             />{" "}
-            <Tab
-              classes={{
-                root: classes.tab,
-                label: classes.tabLabel,
-                selected: "selected",
-              }}
-              style={{ textTransform: "none" }}
-              label="more"
-            />
           </Tabs>
         ) : (
           <div ref={ExploreRef}>
