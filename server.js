@@ -174,7 +174,7 @@ app
       if (isLoggedIn) {
         res.redirect("/welcome-to-dishin");
       } else {
-        res.redirect("sign-up");
+        res.redirect("/welcome-to-dishin");
       }
     });
 

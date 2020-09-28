@@ -81,76 +81,81 @@ const WelcomeToDishIn = (props) => {
   return (
     <Fragment>
       <ScrollTo>
-        {({ scroll }) => (
-          <AppLayout
-            DishesRef={DishesRef}
-            ExploreRef={ExploreRef}
-            scrollContainer={scrollContainer}
-            scrollFun={scroll}
-            mode={mode}
-            tabsValue={tabsValue}
-          >
-            {mode === "home" ? (
-              <div>
-                <ScrollArea
-                  style={{ height: "calc(100vh)", overflowY: "scroll" }}
-                >
-                  <Grid
-                    className={classes.adjustHeightGridOne}
-                    container
-                    direction="column"
-                    justify="space-between"
-                    alignItems="center"
-                    spacing={0}
+        {({ scroll }) => {
+          return (
+            <AppLayout
+              DishesRef={DishesRef}
+              ExploreRef={ExploreRef}
+              scrollContainer={scrollContainer}
+              scrollFun={scroll}
+              mode={mode}
+              tabsValue={tabsValue}
+            >
+              {mode === "home" ? (
+                <div>
+                  <ScrollArea
+                    style={{ height: "calc(100vh)", overflowY: "scroll" }}
                   >
-                    <Grid item>
-                      <League
-                        scroll
-                        dishes={firstdishes}
-                        mode={mode}
-                        location={
-                          <span style={{ textDecoration: "underline" }}>
-                            {location.address || "Telaviv"}
-                          </span>
-                        }
-                      ></League>
+                    <Grid
+                      className={classes.adjustHeightGridOne}
+                      container
+                      direction="column"
+                      justify="space-between"
+                      alignItems="center"
+                      spacing={0}
+                    >
+                      <Grid item>
+                        <League
+                          scroll
+                          dishes={firstdishes}
+                          mode={mode}
+                          location={
+                            <span style={{ textDecoration: "underline" }}>
+                              {location.address || "Telaviv"}
+                            </span>
+                          }
+                        ></League>
+                      </Grid>
                     </Grid>
-                  </Grid>
-                  <Categories />
-                  <Reviews />
-                  <AppFooter />
-                </ScrollArea>
-              </div>
-            ) : (
-              <div>
-                <ScrollArea
-                  onScroll={(e) => {
-                    handleScroll(e, scroll);
-                  }}
-                  style={{ height: "calc(100vh - 60px)", overflowY: "scroll" }}
-                >
-                  <Grid
-                    className={classes.adjustHeightGridOne}
-                    container
-                    direction="column"
-                    justify="space-between"
-                    alignItems="center"
-                    spacing={0}
+                    <Categories />
+                    <Reviews />
+                    <AppFooter />
+                  </ScrollArea>
+                </div>
+              ) : (
+                <div>
+                  <ScrollArea
+                    onScroll={(e) => {
+                      handleScroll(e, scroll);
+                    }}
+                    style={{
+                      height: "calc(100vh - 60px)",
+                      overflowY: "scroll",
+                    }}
                   >
-                    <Grid item>
-                      <League
-                        DishesRef={DishesRef}
-                        dishes={dishes.info.data}
-                        location={location.address}
-                      ></League>
+                    <Grid
+                      className={classes.adjustHeightGridOne}
+                      container
+                      direction="column"
+                      justify="space-between"
+                      alignItems="center"
+                      spacing={0}
+                    >
+                      <Grid item>
+                        <League
+                          DishesRef={DishesRef}
+                          dishes={dishes.info.data}
+                          location={location.address}
+                        ></League>
+                      </Grid>
                     </Grid>
-                  </Grid>
-                  <Categories ExploreRef={ExploreRef}></Categories>
-                </ScrollArea>
-              </div>
-            )}
-          </AppLayout>
-        )}
+                    <Categories ExploreRef={ExploreRef}></Categories>
+                  </ScrollArea>
+                </div>
+              )}
+            </AppLayout>
+          );
+        }}
       </ScrollTo>
     </Fragment>
   );

@@ -16,9 +16,9 @@ const configs = function () {
       };
     default:
       return {
-        APP_URL: 'http://localhost:3001',
-        API_URL: 'http://localhost:8282/api',
-        API_IMAGE_URL: 'localhost:8282',
+        APP_URL: "http://localhost:3001",
+        API_URL: "http://localhost:8282/api",
+        API_IMAGE_URL: "localhost:8282",
       };
   }
 };
