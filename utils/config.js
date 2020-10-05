@@ -27,6 +27,8 @@ Object.keys(ifaces).forEach(function (ifname) {
   });
 });
 
+localIPAddress = localIPAddress || 'localhost';
+
 const configs = function () {
   console.log("env", process.env.NODE_ENV);
   console.log("os.getName()");
