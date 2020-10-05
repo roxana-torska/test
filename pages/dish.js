@@ -25,10 +25,11 @@ const Dish = ({ dish }) => {
                 dishName={dish.dishName}
                 restaurantName={dish.restaurantName}
                 score={dish.dyneScore}
-                image={`../../../static/imgs/Dishes/${dish.restaurantName.replace(
-                  " ",
-                  "-"
-                )}/${dish.dishName.replace(/\s/g, "-")}.jpg`}
+                // image={`../../../static/imgs/Dishes/${dish.restaurantName.replace(
+                //   " ",
+                //   "-"
+                // )}/${dish.dishName.replace(/\s/g, "-")}.jpg`}
+                image={`../../../static/imgs/Dishes/${dish.restaurantName}/${dish.dishName}.jpg`}
               ></HeroDish>
               <OrderList
                 tenbis={dish.tenbis}

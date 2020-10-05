@@ -22,7 +22,7 @@ import Button from "@material-ui/core/Button";
 
 const HeroDish = (props) => {
   const { location, classes, dishName, restaurantName, imgSrc, score } = props;
-  console.log("imgSrc", imgSrc);
+  const img = imgSrc || props.image;
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -63,7 +63,7 @@ const HeroDish = (props) => {
 
       <CardMedia
         className={classes.heroDishMedia}
-        image={imgSrc}
+        image={img}
         title="Paella dish"
       />
       <CardContent className={clsx(classes.heroDishBottom)}>
