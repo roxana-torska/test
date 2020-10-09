@@ -114,10 +114,11 @@ function CollapsedDish(props) {
           <CardMedia
             onClick={() => Router.push(`/dish/${dishSlug}`)}
             className={classes.heroDishMedia}
-            image={`../../../static/imgs/Dishes/${restaurantName.replace(
-              " ",
-              "-"
-            )}/${dishName.replace(/\s/g, "-")}.jpg`}
+            // image={`../../../static/imgs/Dishes/${restaurantName.replace(
+            //   " ",
+            //   "-"
+            // )}/${dishName.replace(/\s/g, "-")}.jpg`}
+            image={`../../../static/imgs/Dishes/${restaurantName}/${dishName}.jpg`}
             title={"Paella dish"}
           />
           <CardContent className={clsx(classes.heroDishBottom)}>
