@@ -6,7 +6,6 @@ export default function DishesReducer(state = intialState, action) {
   const { type, payload } = action;
   switch (type) {
     case GET_DISHES:
-      console.log("payload", payload);
       return {
         ...state,
         dishes: payload,

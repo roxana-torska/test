@@ -13,8 +13,8 @@ import AppFooter from "../components/footer/AppFooter";
 
 const { setCurrentLocation } = actions;
 
-const Dish = ({ dish }) => {
-  console.log("dish in props", dish);
+const Dish = ({ dish, token }) => {
+  console.log(dish);
   return (
     <Fragment>
       <ScrollTo>
@@ -35,9 +35,8 @@ const Dish = ({ dish }) => {
                 ontopo={dish.ontopo}
                 wolt={dish.wolt}
               />
-              <Reviews withForm={true} />
+              <Reviews dishId={dish._id} token={token} withForm={true} />
               <Categories />
-              <AppFooter />
             </ScrollArea>
           </AppLayout>
         )}
@@ -46,9 +45,9 @@ const Dish = ({ dish }) => {
   );
 };
 
-Dish.getInitialProps = async ({ query: { dish } }) => {
-  console.log("ddd dish", dish);
-  return { dish };
+Dish.getInitialProps = async ({ query: { dish, token } }) => {
+  console.log("toekn", token);
+  return { dish, token };
 };
 
 export default connect(

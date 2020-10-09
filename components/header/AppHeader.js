@@ -46,35 +46,30 @@ const AppHeader = (props) => {
 
   if (mode === "back" || mode === "restaurant") {
     return (
-      <div className={classes.root}>
-        <AppBar position="static" elevation={0} color="inherit">
-          <Toolbar className={classes.topbar}>
-            <IconButton
-              className={classes.topBarIconSearch}
-              onClick={handleBack}
-            >
-              <img
-                className={classes.topBarIconBack}
-                src="../../static/imgs/Assets/SVG/icons/topBar-icon-back.svg"
-              />
-            </IconButton>
-            <div className={classes.topBarLogoContainer}>
-              <img className={classes.topBarLogo} src="/static/imgs/logo.svg" />
-            </div>
+      <div className={classes.topbar} elevation={0} color="inherit">
+        <Toolbar>
+          <IconButton className={classes.topBarIconSearch} onClick={handleBack}>
+            <img
+              className={classes.topBarIconBack}
+              src="../../static/imgs/Assets/SVG/icons/topBar-icon-back.svg"
+            />
+          </IconButton>
+          <div className={classes.topBarLogoContainer}>
+            <img className={classes.topBarLogo} src="/static/imgs/logo.svg" />
+          </div>
 
-            <IconButton
-              className={classes.topBarIconMenu}
-              onClick={(e) => {
-                toggleDrawer(e);
-              }}
-            >
-              <img
-                className={classes.topBarIcon}
-                src="/static/icons/topBar-icon-hamburger.svg"
-              />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
+          <IconButton
+            className={classes.topBarIconMenu}
+            onClick={(e) => {
+              toggleDrawer(e);
+            }}
+          >
+            <img
+              className={classes.topBarIcon}
+              src="/static/icons/topBar-icon-hamburger.svg"
+            />
+          </IconButton>
+        </Toolbar>
       </div>
     );
   } else if (searchMode) {

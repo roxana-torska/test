@@ -4,7 +4,6 @@ import { dishesAPI } from "../../services/dishesAPI";
 
 export const getDishes = () => (dispatch) => {
   dishesAPI.getDishes().then((info) => {
-    console.log("data is", info);
     dispatch({
       type: GET_DISHES,
       payload: info.data,

@@ -221,7 +221,12 @@ const styles = (theme) => {
         color: "red",
       },
     },
-
+    topbar: {
+      height: "49px",
+    },
+    topbarBack: {
+      height: "49px",
+    },
     topBarLogoContainer: {
       textAlign: "center",
       alignSelf: "center",
@@ -964,6 +969,27 @@ const styles = (theme) => {
     },
     verticalMenuBottomItem: {
       color: "white",
+    },
+    reviewBtn: {
+      cursor: "pointer",
+      color: "white",
+      backgroundColor: "black",
+      width: "42px",
+      position: "absolute",
+      height: "100%",
+      right: 0,
+      top: 0,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      fontSize: "24px",
+      fontWeight: "200",
+      "&:hover": {
+        opacity: "0.9",
+      },
+    },
+    reviewBtnx: {
+      transform: "rotate(45deg) scale(1.1)",
     },
   };
 };

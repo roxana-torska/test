@@ -90,10 +90,11 @@ class DishinApp extends App {
     }
 
     return true;
-  }; */
+  }; 
 
   componentDidMount() {
-    document.querySelector("body").addEventListener("mousedown", () => {
+    let body = document.querySelector("body");
+    body.addEventListener("click", () => {
       var doc = window.document;
       var docEl = doc.documentElement;
 
@@ -113,6 +114,12 @@ class DishinApp extends App {
         requestFullScreen.call(docEl);
       }
     });
+
+    setTimeout(() => {
+      body.click();
+    }, 200);
+ */
+  componentDidMount() {
     const jssStyles = document.querySelector("#jss-server-side");
     if (jssStyles && jssStyles.parentNode) {
       jssStyles.parentNode.removeChild(jssStyles);
@@ -188,7 +195,14 @@ class DishinApp extends App {
       <Container>
         <Head>
           <title>Dyne</title>
+          <meta
+            name="viewport"
+            content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
+          />
+          <meta name="apple-mobile-web-app-capable" content="yes" />
+          <meta name="apple-mobile-web-app-title" content="Dyne" />
         </Head>
+
         <JssProvider
           registry={this.pageContext.sheetsRegistry}
           generateClassName={this.pageContext.generateClassName}

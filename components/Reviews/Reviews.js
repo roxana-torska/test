@@ -20,8 +20,9 @@ const Reviews = (props) => {
     ExploreRef,
     mode,
     withForm,
+    token,
+    dishId,
   } = props;
-  console.log(mode);
 
   const toggleReviewForm = () => {
     setShowReviewForm(!showReviewForm);
@@ -58,17 +59,33 @@ const Reviews = (props) => {
           zIndex: "999999",
         }}
       ></div>
-      <Typography className={classes.ExploreTitle}>
+      <div className={classes.ExploreTitle}>
         {withForm
           ? showReviewForm === false
             ? "Latest Reviews"
             : "Add a Review"
           : "Latest Reviews"}
-        <Button onClick={toggleReviewForm} className={classes.rightButton}>
-          {withForm ? (showReviewForm === false ? `+` : `x`) : ""}
-        </Button>
-      </Typography>
-      <ReviewForm show={showReviewForm && withForm} />
+        <div
+          className={withForm && classes.reviewBtn}
+          onClick={toggleReviewForm}
+        >
+          {withForm ? (
+            showReviewForm === false ? (
+              <div className={classes.reviewBtnp}>+</div>
+            ) : (
+              <div className={classes.reviewBtnx}>+</div>
+            )
+          ) : (
+            ""
+          )}
+        </div>
+      </div>
+      <ReviewForm
+        dishId={dishId}
+        token={token}
+        show={showReviewForm && withForm}
+        close={toggleReviewForm}
+      />
       <div className={classes.reviews} component="section">
         {reviewsArr.map((review) => (
           <Review key={review.id} review={review} />

@@ -215,13 +215,14 @@ app
         });
     });
 
-    server.get("/dish/:slug", async (req, res) => {
+    server.get("/dish/:slug", hydrateLoggedIn, async (req, res) => {
       console.log("Params===>", req.params);
+      const token = getToken(req);
       const slug = req.params.slug;
-      // const restaurant = await getRestaurants(name, req.loggedInToken);
+
       const dish = await getDishBySlug(slug);
       console.log("dish is", dish);
-      app.render(req, res, "/dish", { dish });
+      app.render(req, res, "/dish", { dish, token });
     });
 
     server.get("/reset-password", (req, res) => {
@@ -256,24 +257,6 @@ app
         .catch((err) => {
           app.render(req, res, actualPage, { verifyStatus: null });
         });
-    });
-
-    server.get("/dish", hydrateLoggedIn, (req, res) => {
-      let query = req.query || {};
-      let isLoggedIn = req.loggedInToken ? true : false;
-      let userData = req.user || {};
-      getRestaurants(query, req.loggedInToken).then((response) => {
-        console.log("response dishes====>", response.dishes);
-        query.restaurants = response.restaurants || [];
-        query.dishes = response.dishes || [];
-        query.similarRestaurants = response.similarRestaurants || [];
-        query.isLoggedIn = isLoggedIn;
-        query.user = req.user;
-        query.loggedInToken = req.loggedInToken;
-        query.systemTags = response.systemTags;
-        const actualPage = "/restaurants-search";
-        app.render(req, res, actualPage, query);
-      });
     });
 
     server.get("/my-reviews", hydrateLoggedIn, (req, res) => {

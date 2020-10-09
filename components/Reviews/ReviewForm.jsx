@@ -4,9 +4,10 @@ import { connect } from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import styles from "../../styles/common";
 import { Button, FormHelperText } from "@material-ui/core";
+import { reviewAPI } from "../../services/reviewAPI";
 
 const ReviewForm = (props) => {
-  const { classes, show } = props;
+  const { classes, show, token, dishId } = props;
   const [rating, setRating] = useState(null);
   const [formState, setFormState] = useState(0);
   const [reviewText, setReviewText] = useState("");
@@ -36,7 +37,17 @@ const ReviewForm = (props) => {
       const newFormState = formState + 1;
       setFormState(newFormState);
       if (newFormState > 1) {
-        // pressed twice
+        reviewAPI
+          .postReview({
+            reviewText: reviewText,
+            token: token,
+            dishId: dishId,
+            score: rating,
+          })
+          .then((response) => {
+            console.log(response);
+            props.close();
+          });
       }
     }
   };

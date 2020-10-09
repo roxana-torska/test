@@ -11,27 +11,22 @@ class _Document extends Document {
       <html lang="en" dir="ltr">
         <Head>
           <meta charset="utf-8" />
-          <meta
-            name="viewport"
-            content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
-          />
+
           <meta name="apple-mobile-web-app-capable" content="yes" />
+          <meta name="mobile-web-app-capable" content="yes"></meta>
+          <meta name="apple-mobile-web-app-title" content="Dyne" />
           <meta
             name="apple-mobile-web-app-status-bar-style"
             content="black-translucent"
           />
-          <meta
-            name="theme-color"
-            content={
-              pageContext ? pageContext.theme.palette.primary.main : null
-            }
-          />
+          <meta name="theme-color" content="#000000" />
           <link
             rel="stylesheet"
-            href="//fonts.googleapis.com/css?family=Roboto:300,400,500|PT+Sans|Lato|Montserrat|Abril+Fatface"
+            href="//fonts.googleapis.com/css?family=Roboto:300,400,500|PT+Sans|Lato|Poppins|Montserrat|Abril+Fatface"
           />
           <link rel="stylesheet" href="/static/css/dishin-fonts.css" />
           <link rel="stylesheet" href="/static/css/custom.css" />
+          <link rel="manifest" href="/manifest.json"></link>
         </Head>
         <body>
           <Main />

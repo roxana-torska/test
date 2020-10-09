@@ -1,19 +1,26 @@
-import request from '../utils/request';
-import { API_URL } from '../utils/config';
+import request from "../utils/request";
+import { API_URL } from "../utils/config";
+import { setToken, getDecodedToken } from "../utils/common";
 
 export const reviewAPI = {
-  addAndUpdateReview: async function (payload) {
-    console.log("payload====>", payload);
-    let { token, ...params } = payload;
-    let url = `${API_URL}/review/update-dish-review`
-
+  postReview: async function (payload) {
+    let { token, reviewText, dishId, score } = payload;
+    let url = `${API_URL}/review/`;
+    let userId = getDecodedToken(token).user_id;
+    console.log(userId);
     let response = await request(url, {
       headers: { Authorization: `Bearer ${token}` },
-      method: 'POST',
+      method: "POST",
       body: {
-        ...params
-      }
+        review: {
+          reviewText,
+          dishId,
+          userId: userId,
+          score: score,
+        },
+      },
     });
+    console.log(response);
     return response;
   },
   getReviews: async function (payload) {
@@ -21,19 +28,16 @@ export const reviewAPI = {
     const url = `${API_URL}/review`;
     const token = payload.token;
     let response = await request(url, {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${token}` },
     });
-    if (response.status.toLowerCase() === 'ok') {
+    if (response.status.toLowerCase() === "ok") {
       return response.data;
     } else {
     }
   },
   getLatestReview: async function () {
     const url = `${API_URL}/review/get-reviews`;
-    let response = await request(url, {
-    });
+    let response = await request(url, {});
     return response.data;
-  }
-
-}
-
+  },
+};
