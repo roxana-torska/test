@@ -697,10 +697,10 @@ const styles = (theme) => {
       textAlign: "left",
       padding: "8px 20px 8px 20px",
       position: "relative",
-
+      fontFamily: "Poppins",
       fontWeight: 300,
       marginBottom: "0px",
-      fontWeight: "400px",
+      fontWeight: "400",
 
       color: "#232947",
 
@@ -974,22 +974,23 @@ const styles = (theme) => {
       cursor: "pointer",
       color: "white",
       backgroundColor: "black",
-      width: "42px",
+      width: "40px",
       position: "absolute",
       height: "100%",
       right: 0,
       top: 0,
       display: "flex",
+      flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
-      fontSize: "24px",
-      fontWeight: "200",
+
       "&:hover": {
         opacity: "0.9",
       },
     },
+    reviewBtnp: { transform: "translate(1px,1px)  scale(1.2)" },
     reviewBtnx: {
-      transform: "rotate(45deg) scale(1.1)",
+      transform: "translate(1px,1px) rotate(45deg) scale(1.3)",
     },
   };
 };

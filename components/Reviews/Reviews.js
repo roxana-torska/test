@@ -71,9 +71,13 @@ const Reviews = (props) => {
         >
           {withForm ? (
             showReviewForm === false ? (
-              <div className={classes.reviewBtnp}>+</div>
+              <div className={classes.reviewBtnp}>
+                <img src="../../static/icons/plus.svg"></img>
+              </div>
             ) : (
-              <div className={classes.reviewBtnx}>+</div>
+              <div className={classes.reviewBtnx}>
+                <img src="../../static/icons/plus.svg" />
+              </div>
             )
           ) : (
             ""
