@@ -1,7 +1,7 @@
 import TabIndicator from "@material-ui/core/Tabs/TabIndicator";
 var poppins = "Poppins";
 const rootFontSize = 14;
-const primaryColor = "#242948";
+const primaryColor = "#000000";
 const getRemFontSizeByPx = function (px) {
   let remValue = px / rootFontSize;
   return remValue.toFixed(3) + "rem";
@@ -234,7 +234,12 @@ const styles = (theme) => {
     },
     topBarLogo: {
       textAlign: "center",
-      width: "60px",
+      width: "110px",
+      transform: "translate(0px,-2px)",
+    },
+    footerLogo: {
+      textAlign: "center",
+      width: "120px",
       transform: "translate(0px,-1px)",
     },
     topBgIconContainer: {},
@@ -508,7 +513,7 @@ const styles = (theme) => {
       fontWeight: 300,
       marginBottom: "0px",
       fontSize: "14px !important",
-      color: "#232947",
+      color: "#000000",
     },
     heroDish: {
       margin: "0px",
@@ -543,7 +548,7 @@ const styles = (theme) => {
 
     heroDishHeader: {
       padding: 0,
-      margin: "5px 0px 3px 0px",
+
       "&:hover": {},
     },
     heroDishMedia: {
@@ -599,7 +604,7 @@ const styles = (theme) => {
       transform: "translate(-22px,-4px)",
       whiteSpace: "nowrap",
       lineHeight: 0,
-      color: "#232947",
+      color: "#000000",
     },
     horLine: {
       color: "#E1E2E7",
@@ -619,9 +624,114 @@ const styles = (theme) => {
     collapsedDishAvatarImg: {
       border: "none",
       overflow: "visible",
-      height: "60px",
+      height: "55px",
       marginLeft: "8px",
       transform: "scale(1.1)",
+    },
+    scrollRate1: {
+      opacity: 0.3,
+      border: "none",
+      overflow: "visible",
+      height: "80px",
+      backgroundColor: "#0000002c",
+      padding: "12px",
+      borderRadius: "50%",
+      marginRight: "14px",
+    },
+    scrollRate1selected: {
+      backgroundColor: "white",
+      filter: " invert(1)",
+      border: "none",
+      overflow: "visible",
+      height: "80px",
+
+      padding: "12px",
+      borderRadius: "50%",
+      marginRight: "14px",
+    },
+    scrollRate2: {
+      opacity: 0.3,
+      border: "none",
+      overflow: "visible",
+      height: "80px",
+      backgroundColor: "#0000002c",
+      padding: "12px 16px",
+      borderRadius: "50%",
+      marginRight: "14px",
+    },
+    scrollRate2selected: {
+      backgroundColor: "white",
+      filter: " invert(1)",
+      border: "none",
+      overflow: "visible",
+      height: "80px",
+
+      padding: "12px 16px",
+      borderRadius: "50%",
+      marginRight: "14px",
+    },
+    scrollRate3: {
+      opacity: 0.3,
+      border: "none",
+      overflow: "visible",
+      height: "80px",
+      backgroundColor: "#0000002c",
+      borderRadius: "50%",
+      marginRight: "14px",
+      padding: "12px",
+    },
+    scrollRate3selected: {
+      backgroundColor: "white",
+      filter: " invert(1)",
+      border: "none",
+      overflow: "visible",
+      height: "80px",
+
+      padding: "12px",
+      borderRadius: "50%",
+      marginRight: "14px",
+    },
+    scrollRate4: {
+      opacity: 0.3,
+      border: "none",
+      overflow: "visible",
+      height: "80px",
+      backgroundColor: "#0000002c",
+      borderRadius: "50%",
+      marginRight: "14px",
+      padding: "12px 20px",
+    },
+    scrollRate4selected: {
+      backgroundColor: "white",
+      filter: " invert(1)",
+      border: "none",
+      overflow: "visible",
+      height: "80px",
+
+      padding: "12px 20px",
+      borderRadius: "50%",
+      marginRight: "14px",
+    },
+    scrollRate5: {
+      opacity: 0.3,
+      border: "none",
+      overflow: "visible",
+      height: "80px",
+      backgroundColor: "#0000002c",
+      padding: "12px 20px",
+      borderRadius: "50%",
+      marginRight: "14px",
+    },
+    scrollRate5selected: {
+      backgroundColor: "white",
+      filter: " invert(1)",
+      border: "none",
+      overflow: "visible",
+      height: "80px",
+
+      padding: "12px 20px",
+      borderRadius: "50%",
+      marginRight: "14px",
     },
     collapsedDishActions: {
       fontFamily: "Poppins",
@@ -640,12 +750,12 @@ const styles = (theme) => {
       fontWeight: 200,
 
       textAlign: "right",
-      color: "#232947",
+      color: "#000000",
     },
     collapsedSubHeaderLeft: {
-      transform: "translate(-22px,22px)",
+      transform: "translate(-22px,21px)",
       textDecoration: "underline",
-      color: "#232947",
+      color: "#000000",
     },
     collapsedSubHeaderRight: {
       transform: "translate(0px,16px)",
@@ -702,7 +812,7 @@ const styles = (theme) => {
       marginBottom: "0px",
       fontWeight: "400",
 
-      color: "#232947",
+      color: "#000000",
 
       backgroundColor: "#ffffff",
 
@@ -721,14 +831,6 @@ const styles = (theme) => {
       padding: "10px",
     },
     reviewFormContainer: {
-      "& img": {
-        paddingRight: "10px",
-        cursor: "pointer",
-        opacity: 0.5,
-      },
-      "& img.selected": {
-        opacity: 1,
-      },
       padding: "10px",
       textAlign: "center",
     },
@@ -766,11 +868,11 @@ const styles = (theme) => {
       height: "30px",
     },
     tab: {
-      color: "#2329476c",
+      color: "#0000006c",
       minHeight: "37px",
 
       "&.selected": {
-        color: "#232947",
+        color: "#000000",
       },
     },
     indicator: {
@@ -827,36 +929,36 @@ const styles = (theme) => {
 
     footer: {
       fontFamily: "Poppins",
-
-      display: "flex",
-      padding: "0px 0px 20px 16px",
+      display: "grid",
+      justifyItems: "center",
+      gridTemplateColumns: "1fr 1fr ",
+      gridTemplateRows: "40px 180px 180px ",
       flexWrap: "wrap",
-
+      minHeight: "600px",
       width: "100%",
-      backgroundColor: "#070617",
-      justifyContent: "center",
+      backgroundColor: "#000000",
     },
     footerCol: {
-      flexBasis: "160px",
       display: "flex",
       flexDirection: "column",
-      height: "auto",
-      float: "left",
+
       boxSizing: "border-box",
     },
     footerColH1: {
       margin: 0,
       padding: 0,
       fontFamily: "inherit",
-      fontSize: "12px",
+      fontSize: "14px",
       lineHeight: "17px",
       padding: "20px 0px 5px 0px",
       color: "rgba(255,255,255)",
       fontWeight: "normal",
-      textTransform: "uppercase",
-      letterSpacing: " 0.250em",
+      alignSelf: "center",
     },
     footerColUl: {
+      display: "flex",
+      alignItems: "center",
+      flexDirection: "column",
       listStyleType: "none",
       margin: 0,
       padding: 0,
@@ -869,6 +971,7 @@ const styles = (theme) => {
       padding: "5px 0px 5px 0px",
       cursor: "pointer",
       transition: ".2s",
+      alignSelf: "center",
     },
     padTop: {
       paddingTop: 6,
@@ -912,7 +1015,7 @@ const styles = (theme) => {
       marginBottom: "0px",
       fontWeight: "400px",
       fontSize: "16px !important",
-      color: "#232947",
+      color: "#000000",
     },
     sectionDevider: {
       backgroundColor: "#ffffff",
@@ -923,7 +1026,7 @@ const styles = (theme) => {
       borderTop: "1px solid #2E3451",
       marginBottom: "0px",
       fontSize: "14px !important",
-      color: "#232947",
+      color: "#000000",
       boxSizing: "border-box",
     },
     devider: {
@@ -970,10 +1073,28 @@ const styles = (theme) => {
     verticalMenuBottomItem: {
       color: "white",
     },
-    reviewBtn: {
+    subHeaderAddBtn: {
       cursor: "pointer",
-      color: "white",
-      backgroundColor: "black",
+      color: "black",
+      backgroundColor: "#0000000c",
+      width: "42px",
+      position: "absolute",
+      height: "100%",
+      right: 0,
+      top: 0,
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+
+      "&:hover": {
+        opacity: "0.9",
+      },
+    },
+    subHeaderCloseBtn: {
+      cursor: "pointer",
+      color: "black",
+      backgroundColor: "#000000",
       width: "40px",
       position: "absolute",
       height: "100%",
@@ -988,9 +1109,20 @@ const styles = (theme) => {
         opacity: "0.9",
       },
     },
-    reviewBtnp: { transform: "translate(1px,1px)  scale(1.2)" },
+    plusIcon: {
+      width: "14px",
+    },
+    reviewBtnp: {
+      filter: "brightness(0)",
+      transform: "translate(2px,2px)  scale(1.2)",
+    },
     reviewBtnx: {
-      transform: "translate(1px,1px) rotate(45deg) scale(1.3)",
+      transform: "translate(-1px,2px) rotate(45deg) scale(1.25)",
+    },
+    scrollRateContainer: {
+      display: "flex",
+      overflow: "scroll",
+      width: "calc(100vw - 20px)",
     },
   };
 };

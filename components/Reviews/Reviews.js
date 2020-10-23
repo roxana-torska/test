@@ -66,17 +66,28 @@ const Reviews = (props) => {
             : "Add a Review"
           : "Latest Reviews"}
         <div
-          className={withForm && classes.reviewBtn}
+          className={
+            withForm &&
+            (showReviewForm
+              ? classes.subHeaderCloseBtn
+              : classes.subHeaderAddBtn)
+          }
           onClick={toggleReviewForm}
         >
           {withForm ? (
             showReviewForm === false ? (
               <div className={classes.reviewBtnp}>
-                <img src="../../static/icons/plus.svg"></img>
+                <img
+                  className={classes.plusIcon}
+                  src="../../static/icons/plus.svg"
+                ></img>
               </div>
             ) : (
               <div className={classes.reviewBtnx}>
-                <img src="../../static/icons/plus.svg" />
+                <img
+                  className={classes.plusIcon}
+                  src="../../static/icons/plus.svg"
+                />
               </div>
             )
           ) : (

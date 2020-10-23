@@ -19,6 +19,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import styles from "../../styles/common";
 import Button from "@material-ui/core/Button";
+import dish from "../../pages/dish";
 
 const HeroDish = (props) => {
   const { location, classes, dishName, restaurantName, imgSrc, score } = props;
@@ -64,7 +65,7 @@ const HeroDish = (props) => {
       <CardMedia
         className={classes.heroDishMedia}
         image={img}
-        title="Paella dish"
+        title={dish.name}
       />
       <CardContent className={clsx(classes.heroDishBottom)}>
         <div className={clsx(classes.flex, classes.flexJustifyBetween)}>

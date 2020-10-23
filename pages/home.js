@@ -174,7 +174,8 @@ class Home extends Component {
     if (
       filters &&
       filters.location &&
-      filters.location.lng && filters.location.lat
+      filters.location.lng &&
+      filters.location.lat
     ) {
       localLocation = filters.location;
     } else {
@@ -378,7 +379,7 @@ class Home extends Component {
                     </div>
                   </Grid>
                 )}
-                {<SectionHeaders text="Explore near you" />}
+                {<SectionHeaders text="Leagues" />}
                 {dishes != null && (
                   <Grid item xs={12}>
                     <DishesList

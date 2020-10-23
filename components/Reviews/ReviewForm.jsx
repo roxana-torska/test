@@ -62,29 +62,33 @@ const ReviewForm = (props) => {
   return show === true ? (
     <div className={classes.reviewFormContainer}>
       <Typography className={classes.reviewTitle}>How was the Food?</Typography>
-      {formState === 0 ? (
-        indexArr.map((index) => {
-          return (
-            <img
-              className={`${classes.collapsedDishAvatarImg} ${
-                index == rating ? "selected" : ""
-              }`}
-              src={
-                "../../../static/imgs/Assets/SVG/icons/place" + index + ".svg"
-              }
-              onClick={() => selectRating(index)}
-              key={index}
-            ></img>
-          );
-        })
-      ) : (
-        <textarea
-          className={classes.textArea}
-          placeholder="Add a few words..."
-          onChange={handleChange}
-          value={reviewText}
-        ></textarea>
-      )}
+      <div className={classes.scrollRateContainer}>
+        {formState === 0 ? (
+          indexArr.map((index) => {
+            return (
+              <img
+                className={
+                  classes[
+                    `scrollRate` + index + (rating === index ? "selected" : "")
+                  ]
+                }
+                src={
+                  "../../../static/imgs/Assets/SVG/icons/place" + index + ".svg"
+                }
+                onClick={() => selectRating(index)}
+                key={index}
+              ></img>
+            );
+          })
+        ) : (
+          <textarea
+            className={classes.textArea}
+            placeholder="Add a few words..."
+            onChange={handleChange}
+            value={reviewText}
+          ></textarea>
+        )}
+      </div>
       {formState > 0 && (
         <Button className={classes.reviewLink} onClick={skipTextReview}>
           Skip

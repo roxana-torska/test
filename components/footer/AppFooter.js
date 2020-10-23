@@ -9,81 +9,101 @@ class AppFooter extends PureComponent {
     return (
       <Fragment>
         <div className={classes.footer}>
-          <div className={classes.footerCol}>
-            <h1 className={classes.footerColH1}>Company</h1>
-            <ul className={classes.footerColUl}>
-              <li className={classes.footerColUlLi}>About</li>
-              <li className={classes.footerColUlLi}>Mission</li>
-              <li className={classes.footerColUlLi}>Services</li>
-              <li className={classes.footerColUlLi}>Social</li>
-              <li className={classes.footerColUlLi}>Get in touch</li>
-            </ul>
-          </div>
-          <div className={classes.footerCol}>
-            <h1 className={classes.footerColH1}>Products</h1>
-            <ul className={classes.footerColUl}>
-              <li className={classes.footerColUlLi}>About</li>
-              <li className={classes.footerColUlLi}>Mission</li>
-              <li className={classes.footerColUlLi}>Services</li>
-              <li className={classes.footerColUlLi}>Social</li>
-              <li className={classes.footerColUlLi}>Get in touch</li>
-            </ul>
-          </div>
-          <div className={classes.footerCol}>
-            <h1 className={classes.footerColH1}>Products</h1>
-            <ul className={classes.footerColUl}>
-              <li className={classes.footerColUlLi}>About</li>
-              <li className={classes.footerColUlLi}>Mission</li>
-              <li className={classes.footerColUlLi}>Services</li>
-              <li className={classes.footerColUlLi}>Social</li>
-              <li className={classes.footerColUlLi}>Get in touch</li>
-            </ul>
-          </div>
+          <div>
+            <div
+              style={{
+                color: "white",
 
-          <div className={classes.footerCol}>
-            <h1 className={classes.footerColH1}>Products</h1>
-            <ul className={classes.footerColUl}>
-              <li className={classes.footerColUlLi}>Webmail</li>
-              <li className={classes.footerColUlLi}>Redeem code</li>
-              <li className={classes.footerColUlLi}>WHOIS lookup</li>
-              <li className={classes.footerColUlLi}>Site map</li>
-              <li className={classes.footerColUlLi}>Web templates</li>
-              <li className={classes.footerColUlLi}>Email templates</li>
-            </ul>
+                marginTop: "12px",
+                display: "flex",
+                justifyContent: "centerhhu",
+                alignItems: "center",
+              }}
+            >
+              <img
+                style={{ filter: "invert(1)", width: "100px" }}
+                src="/static/imgs/logo.svg"
+              ></img>
+            </div>
+            <div className={classes.footerCol}>
+              <ul className={classes.footerColUl}>
+                <h1 className={classes.footerColH1}>Leagues</h1>
+                <hr
+                  style={{
+                    backgroundColor: "white",
+                    boederColor: "white",
+                    color: "white",
+                    outlineColor: "white",
+                    width: "30px",
+                  }}
+                ></hr>
+                <li className={classes.footerColUlLi}>All</li>
+                <li className={classes.footerColUlLi}>Trending</li>
+                <li className={classes.footerColUlLi}>Breakfast</li>
+                <li className={classes.footerColUlLi}>Lunch</li>
+                <li className={classes.footerColUlLi}>Dinner</li>
+                <li className={classes.footerColUlLi}>Night Out</li>
+              </ul>
+            </div>
+            <div className={classes.footerCol}>
+              <ul className={classes.footerColUl}>
+                <h1 className={classes.footerColH1}>Cities</h1>
+                <hr
+                  style={{
+                    backgroundColor: "white",
+                    boederColor: "white",
+                    color: "white",
+                    outlineColor: "white",
+                    width: "30px",
+                  }}
+                ></hr>
+                <li className={classes.footerColUlLi}>Tel Aviv</li>
+                <li className={classes.footerColUlLi}>New York</li>
+                <li className={classes.footerColUlLi}>Tokio</li>
+                <li className={classes.footerColUlLi}>Los Angeles</li>
+                <li className={classes.footerColUlLi}>San Fransisco</li>
+              </ul>
+            </div>
           </div>
-          <div className={classes.footerCol}>
-            <h1 className={classes.footerColH1}>Products</h1>
-            <ul className={classes.footerColUl}>
-              <li className={classes.footerColUlLi}>Contact us</li>
-              <li className={classes.footerColUlLi}>Web chat</li>
-              <li className={classes.footerColUlLi}>Open ticket</li>
-            </ul>
+          <div>
+            <div style={{ height: "55px" }}></div>
+            <div className={classes.footerCol}>
+              <ul className={classes.footerColUl}>
+                <h1 className={classes.footerColH1}>Navigation</h1>
+                <hr
+                  style={{
+                    backgroundColor: "white",
+                    boederColor: "white",
+                    color: "white",
+                    outlineColor: "white",
+                    width: "30px",
+                  }}
+                ></hr>
+                <li className={classes.footerColUlLi}>Home</li>
+                <li className={classes.footerColUlLi}>Search Dishes</li>
+                <li className={classes.footerColUlLi}>Profile</li>
+                <li className={classes.footerColUlLi}>Sign-Out</li>
+              </ul>
+            </div>
+            <div className={classes.footerCol}>
+              <ul className={classes.footerColUl}>
+                <h1 className={classes.footerColH1}>More</h1>
+                <hr
+                  style={{
+                    backgroundColor: "white",
+                    boederColor: "white",
+                    color: "white",
+                    outlineColor: "white",
+                    width: "30px",
+                  }}
+                ></hr>
+                <li className={classes.footerColUlLi}>Legal</li>
+                <li className={classes.footerColUlLi}>Join us</li>
+              </ul>
+            </div>
           </div>
-          <div className={classes.footerCol}>
-            <h1 className={classes.footerColH1}>Social</h1>
-            <ul className={classes.footerColUl}>
-              <li className={classes.footerSocial}>
-                <img
-                  src="https://svgshare.com/i/5fq.svg"
-                  width="32"
-                  style={{ width: "32px" }}
-                />
-
-                <img
-                  src="https://svgshare.com/i/5eA.svg"
-                  width="32"
-                  style={{ width: "32px" }}
-                />
-
-                <img
-                  src="https://svgshare.com/i/5f_.svg"
-                  style={{ width: "32px" }}
-                />
-              </li>
-            </ul>
-          </div>
-          <div style={{ height: "12px" }}></div>
         </div>
+        <div style={{ height: "40px" }}></div>
       </Fragment>
     );
   }
