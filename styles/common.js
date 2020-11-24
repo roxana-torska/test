@@ -247,7 +247,8 @@ const styles = (theme) => {
       width: "16px",
     },
     topBarIconBack: {
-      width: "11px",
+      width: "16px",
+      height: "16px",
     },
     topBarIconSearch: {
       transform: "translate(-12px,-6px)",
