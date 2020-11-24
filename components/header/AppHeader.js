@@ -46,7 +46,7 @@ const AppHeader = (props) => {
 
   if (mode === "back" || mode === "restaurant") {
     return (
-      <div className={classes.topbar} elevation={0} color="inherit">
+      <div className={classes.topbar} elevation={0} color="inherit" style={{ borderBottom: '1px solid #2E3451' }}>
         <Toolbar>
           <IconButton className={classes.topBarIconSearch} onClick={handleBack}>
             <img
